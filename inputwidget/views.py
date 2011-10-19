@@ -26,7 +26,6 @@ def remove_input(request):
     config['collections'][collection_id]['inputs'] = [input for input in config['collections'][collection_id]['inputs'] if input['id'] != input_id]
     set_collection_config(request, config)
     return_data = { 'was_last_input':False } if len(config['collections'][collection_id]['inputs']) else { 'was_last_input':True }
-    print return_data 
     return JSONResponse(return_data)
 
 def configure_input(request):
