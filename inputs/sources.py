@@ -6,6 +6,7 @@ import random
 import urllib2
 import urllib
 import time
+import re
 
 class twittersearch(object):
     def source_data(self):
@@ -187,3 +188,52 @@ class googlenews(object):
             }
         }
         
+class gmail(object):
+    def source_data(self):
+        return {
+            'type':'gmail',
+            'display_name':'Google Mail',
+        }
+    
+    def run_for_input(self, input_config):
+        user_name = input_config['config']['elements'][0]['value']
+        password = input_config['config']['elements'][1]['value']
+        from lib.gmail import extract_email_subjects
+        emails = extract_email_subjects(user_name, password)
+        return [
+            {
+                'type':'gmail',
+                'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
+                'image_url':'/media/images/icon-gmail.png',
+                'author':'',
+                'title':item['subject']
+            } for item in emails]
+    
+    def parse_request_to_config(self, request):
+        user_name = request.GET['user_name'] if re.search('@', request.GET['user_name']) else request.GET['user_name'] + "@gmail.com"
+        return {
+            'id':request.GET['id'],
+            'type':'gmail', 
+            'display_name':'Google Mail: %s' % user_name,
+            'config':{
+                'configured':True,
+                'elements':[
+                    { 'name':'user_name', 'display_name':'Username', 'type':'text', 'value':user_name },
+                    { 'name':'password', 'display_name':'Password', 'type':'password', 'value':request.GET['password'] }
+                ]
+            }
+        }
+        
+    def generate_unconfigured_config(self):
+        return {
+            'id':md5('%s' % random.random()).hexdigest(),
+            'type':'gmail', 
+            'display_name':'Google Mail',
+            'config':{ 
+                'configured':False,
+                'elements':[
+                    { 'name':'user_name', 'display_name':'Username', 'type':'text' },
+                    { 'name':'password', 'display_name':'Password', 'type':'password' }
+                ]
+            }
+        }

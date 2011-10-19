@@ -25,6 +25,7 @@ WIDGET PICKER
 
 #widget_picker .feed_widget { background-image:url('/media/images/icon-feed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .googlenews_widget { background-image:url('/media/images/icon-googlenews.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .gmail_widget { background-image:url('/media/images/icon-gmail.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
@@ -53,11 +54,12 @@ INPUT WIDGETS
 .input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .feed { background:url('/media/images/icon-feed.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .inputs .gmail { background:url('/media/images/icon-gmail.png') no-repeat 5px 5px; background-size:20px;}
 
 .input_widget .inputs .input_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
 
 .input_widget .content { font-size:70%; padding:10px; overflow:auto; height:300px;}
-.input_widget .content li { height:30px; overflow:hidden; margin-bottom:10px;}
+.input_widget .content li { height:30px; overflow:hidden; margin-bottom:10px; width:95%; }
 .input_widget .content img { float:left; height:30px; padding-right:10px; }
 
 
@@ -72,6 +74,7 @@ INPUT WIDGETS
 .input_widget_config .twitteruser .inner { background-image:url('/media/images/icon-twitter.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .feed .inner { background-image:url('/media/images/icon-feed.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .googlenews .inner { background-image:url('/media/images/icon-googlenews.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+.input_widget_config .gmail .inner { background-image:url('/media/images/icon-gmail.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
 
 /*******************************************************************************

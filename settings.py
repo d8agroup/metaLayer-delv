@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     
     'dashboard.core',
+    'dashboard.lib',
     'dashboard.customtags',
     'dashboard.inputwidget',
     'dashboard.inputwidgets.twitter',
