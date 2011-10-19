@@ -1,0 +1,56 @@
+{% extends 'inputwidget_template.html' %}
+
+{% block widget_content %}
+
+	{% if not widget_config %}
+	
+		<div class='inputwidget_config'>
+			<h2>You need to configure this widget.</h2>
+			<p>Select the tab that covers the kind of info you want to collect</p>
+			<div class='tabs'>
+				<ul>
+					<li><a href='#inputwidget_twitter_config_tab1'>Search for a hashtag</a></li>
+					<li><a href='#inputwidget_twitter_config_tab2'>Follow a user</a></li>
+				</ul>
+				<div id='inputwidget_twitter_config_tab1'>
+					<label>Enter the hashtag you want to search for:</label>
+					<input type='text' class='hashtag' />
+					<p class='info'>Remember to include the '#'</p>
+					<a href='javascript:InputwidgetTwitterSaveConfig("{{ collection }}", "hashtag")' class='button'>Save this config</a>
+				</div>
+				<div id='inputwidget_twitter_config_tab2'>
+					<label>Enter the user name you want to follow</label>
+					<input type='text' class='user_name' />
+					<p class='info'>Do not include the @</p>
+					<a href='javascript:InputwidgetTwitterSaveConfig("{{ collection }}", "user_name")' class='button'>Save this config</a>
+				</div>
+			</div>
+		</div>
+	
+	{% else %}
+		
+		<div class='input_widget_content'>
+			<a href='javascript:ReconfigureTwitterWidget("{{ collection }}")' class='button reconfigure'>configure</a>
+			{% if 'hashtag' in widget_config %}
+				<h2>Twitter Search</h2>
+				<h3>Searching for hashtag {{ widget_config.hashtag }}</h3>
+			{% else %}
+				<h2>Follow a Twitter User</h2>
+				<h3>Following user {{ widget_config.user_name }}</h3>
+			{% endif %}
+			<div class='inputwidget_contentlist'>
+				<ul class='content_list'>
+					{% for tweet in tweets.results %}
+						<li class='clearfix'>
+							<img class='profile_image' src='{{ tweet.profile_image_url }}' />
+							<span class='account_name'>{{ tweet.from_user }}</span>
+							<pand class='text'>{{ tweet.text }}</pand>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		
+	{% endif %}
+	
+{% endblock %}

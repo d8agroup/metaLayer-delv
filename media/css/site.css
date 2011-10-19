@@ -1,0 +1,68 @@
+p.info { color:#AAA; font-size:80%;}
+
+#page { width:90%; margin:0 auto; }
+#content { width:100%; }
+
+
+/*******************************************************************************
+HEADER
+*******************************************************************************/
+#header { background-color:#AAA; width:100%; }
+#header #header_left { float:left; width:20%; padding:10px; }
+#header #header_center { margin:0 auto; text-align:center; width:50%; padding:10px; }
+#header #header_right { float:right; text-align:right; width:20%; padding:10px; }
+
+/*******************************************************************************
+WIDGET PICKER
+*******************************************************************************/
+#widget_picker { display:none; }
+#widget_picker .widget_set { width:100%; float:left; }
+#widget_picker .widget_set ul { width:100%; }
+#widget_picker .draggable_widget { width:200px; float:left; margin:1px; background-color:#666; cursor:move; padding:1px; }
+#widget_picker .draggable_widget img { width:18px; height:21px; position:relative; top:2px; }
+#widget_picker .draggable_widget span.id { display:none; }
+
+/*******************************************************************************
+COLLECTION LEVEL
+*******************************************************************************/
+.collection { width:24%; float:left; background-color:#333; margin:.5%;}
+
+/*******************************************************************************
+INPUT WIDGETS
+*******************************************************************************/
+.input_widget_droppable p.drop_prompt { font-size:80%; color:#AAA; text-align:center; padding:120px 60px; }
+.input_widget_droppable_active { background-color:#555; }
+.input_widget_droppable_active p.drop_prompt { color:#FFF; }
+.input_widget_droppable_hover { background-color:#AAA }
+.input_widget_droppable_hover p.drop_prompt { color:black; }
+
+.input_widget { color:#DDD; width:100%;}
+.input_widget .inputs { width:100%; border-bottom:1px solid}
+.input_widget .inputs li { width:100%; }
+.input_widget .inputs .display_name { display:block; padding:10px 0 7px 30px; font-size:70%;}
+.input_widget .inputs .actions { float:right; padding:5px; }
+.input_widget .inputs .actions img { width:15px;}
+.input_widget .inputs .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .inputs .feed { background:url('/media/images/icon-feed.png') no-repeat 5px 5px; background-size:20px;}
+
+.input_widget .inputs .input_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
+
+.input_widget .content { font-size:70%; padding:10px; overflow:auto; height:300px;}
+.input_widget .content li { height:30px; overflow:hidden; margin-bottom:10px;}
+.input_widget .content img { float:left; height:30px; padding-right:10px; }
+
+
+.input_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
+.input_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
+.input_widget_config .inner h3 { font-style:italic; font-size:80%; padding:0 0 20px}
+
+.input_widget_config .twittersearch .inner,
+.input_widget_config .twitteruser .inner { background-image:url('/media/images/icon-twitter.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+.input_widget_config .feed .inner { background-image:url('/media/images/icon-feed.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+
+
+/*******************************************************************************
+JQUERYUI OVERRIDES
+*******************************************************************************/
+.ui-widget { font-size:70%; }

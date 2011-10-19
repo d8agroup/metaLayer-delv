@@ -1,0 +1,16 @@
+<div class='input_widget_config'>
+	<div class='{{ input.type }}'>
+		<div class='inner'>
+			<input type='hidden' name='collection_id' value='{{ collection_id }}' />
+			<input type='hidden' name='type' value='{{ input.type }}' />
+			<input type='hidden' name='id' value='{{ input.id }}' />
+			<h2>{{ input.display_name }}</h2>
+			<h3>You need to configure this widget.</h3>
+			{% for element in input.config.elements %}
+				<label>{{ element.display_name }}</label>
+				<input type='{{ element.type }}' name='{{ element.name }}' />
+			{% endfor %}
+			<a href='JavaScript:SaveInputWidgetConfig("{{ collection_id }}")'>Save</a>
+		</div>
+	</div>
+</div>
