@@ -70,6 +70,7 @@ function ReloadInputWidget(collection_id)
 			input_widget_container.children().remove();
 			input_widget_container.append(template);
 			ApplyInputWidgetDroppable();
+			ApplyUIElements();
 		}
 	)
 }
@@ -91,9 +92,19 @@ function RemoveInput(collection_id, input_id)
 	$.get
 	(
 		URL_REMOVE_INPUT + "?collection_id=" + collection_id + "&input_id=" + input_id,
-		function()
+		function(return_data)
 		{
-			ReloadInputWidget(collection_id);
+			if(return_data.was_last_input)
+			{
+				var collection = $('#' + collection_id); 
+				collection.children().remove()
+				collection.append(HTML_ADD_INPUT_WIDGET)
+				ApplyInputWidgetDroppable()
+			}
+			else
+			{
+				ReloadInputWidget(collection_id);
+			}
 		}
 	);
 }

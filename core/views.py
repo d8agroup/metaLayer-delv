@@ -6,14 +6,14 @@ from core.utils import set_collection_config as utils_set_collection_config
 from core.utils import JSONResponse
 
 def home_page(request):
-    return render_to_response('home.html')
+    return render_to_response('html/home.html')
 
 def core_javascript(request):
     return render_to_response('js/core.js')
 
 def widget_picker_render(request):
     return format_template_and_json_response(
-        'widgetpicker.html',
+        'html/widgetpicker.html',
         {
             'input_widgets':get_widget_data_by_widget_type('inputwidgets'),
             'action_widgets':get_widget_data_by_widget_type('actionwidgets'),

@@ -1,0 +1,14 @@
+<div class='tabs'>
+	<ul>
+		<li><a href='#input_widgets'>Inputs</a></li>
+	</ul>
+
+	<div id='input_widgets' class='widget_set'>
+		<ul class='clearfix'>
+			{% for widget in input_widgets %}
+				{% include 'html/draggable_widget.html' with widget_type='input' widget=widget %}
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+

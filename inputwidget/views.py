@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from core.utils import set_collection_config
+from core.utils import JSONResponse
 from inputwidget.utils import get_config_ensuring_collection
 from inputwidget.utils import run_all_inputs_and_combine_results
 import inputs.sources as sources
@@ -24,7 +25,9 @@ def remove_input(request):
     config = get_config_ensuring_collection(request, collection_id)
     config['collections'][collection_id]['inputs'] = [input for input in config['collections'][collection_id]['inputs'] if input['id'] != input_id]
     set_collection_config(request, config)
-    return HttpResponse()
+    return_data = { 'was_last_input':False } if len(config['collections'][collection_id]['inputs']) else { 'was_last_input':True }
+    print return_data 
+    return JSONResponse(return_data)
 
 def configure_input(request):
     type = request.GET['type']

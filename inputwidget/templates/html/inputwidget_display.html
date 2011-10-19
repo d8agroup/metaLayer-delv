@@ -6,7 +6,7 @@
 				<li class='{{ input.type }} clearfix'>
 					<div class='actions'>
 						<a href='JavaScript:ReconfigureInput("{{ collection_id }}", "{{ input.id }}", "{{ input.type }}")'><img src='/media/images/icon-config.png' title='configure'/></a>
-						<a href='JavaScript:RemoveInput("{{ collection_id }}", "{{ input.id }}")' class='button'><img src='/media/images/icon-cross.png' title='remove' /></a>
+						<a href='JavaScript:RemoveInput("{{ collection_id }}", "{{ input.id }}")' ><img src='/media/images/icon-cross.png' title='remove' /></a>
 					</div>
 					<span class='display_name'>{{ input.display_name|safe|cut:"http://"|cut:"https://"|truncate_chars:35 }}</span>
 				</li>

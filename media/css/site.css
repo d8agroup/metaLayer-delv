@@ -1,26 +1,32 @@
+html { font-family:Arial; background-color:#DDD;}
 p.info { color:#AAA; font-size:80%;}
 
-#page { width:90%; margin:0 auto; }
+#page { width:100%; margin:0 auto; }
 #content { width:100%; }
-
+.form_row { width:100%; }
 
 /*******************************************************************************
 HEADER
 *******************************************************************************/
-#header { background-color:#AAA; width:100%; }
+#header { background-color:#555; width:100%; color:#FFF;}
 #header #header_left { float:left; width:20%; padding:10px; }
-#header #header_center { margin:0 auto; text-align:center; width:50%; padding:10px; }
+#header #header_center { margin:0 auto; text-align:center; width:50%; padding:10px; font-size:120%; }
 #header #header_right { float:right; text-align:right; width:20%; padding:10px; }
 
 /*******************************************************************************
 WIDGET PICKER
 *******************************************************************************/
-#widget_picker { display:none; }
+#widget_picker { display:none; background:#FFF; border-bottom:2px solid #333;}
 #widget_picker .widget_set { width:100%; float:left; }
 #widget_picker .widget_set ul { width:100%; }
-#widget_picker .draggable_widget { width:200px; float:left; margin:1px; background-color:#666; cursor:move; padding:1px; }
-#widget_picker .draggable_widget img { width:18px; height:21px; position:relative; top:2px; }
+#widget_picker .draggable_widget { width:150px; float:left; margin:5px 5px 0 5px; background-color:#666; cursor:move; padding:7px; color:#DDD;}
 #widget_picker .draggable_widget span.id { display:none; }
+#widget_picker .draggable_widget span.name { padding-left:20px;}
+
+#widget_picker .feed_widget { background-image:url('/media/images/icon-feed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .googlenews_widget { background-image:url('/media/images/icon-googlenews.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 /*******************************************************************************
 COLLECTION LEVEL
@@ -42,9 +48,11 @@ INPUT WIDGETS
 .input_widget .inputs .display_name { display:block; padding:10px 0 7px 30px; font-size:70%;}
 .input_widget .inputs .actions { float:right; padding:5px; }
 .input_widget .inputs .actions img { width:15px;}
+
 .input_widget .inputs .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .feed { background:url('/media/images/icon-feed.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:20px;}
 
 .input_widget .inputs .input_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
 
@@ -56,10 +64,14 @@ INPUT WIDGETS
 .input_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
 .input_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
 .input_widget_config .inner h3 { font-style:italic; font-size:80%; padding:0 0 20px}
+.input_widget_config .inner label { display:block; float:left; width:40%; font-size:80%; padding:4px 0 0 4px; }
+.input_widget_config .inner input { display:block; float:right; width:50%; font-size:80%; }
+.input_widget_config .inner .button { width:80%; display:block; margin:10px auto; }
 
 .input_widget_config .twittersearch .inner,
 .input_widget_config .twitteruser .inner { background-image:url('/media/images/icon-twitter.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .feed .inner { background-image:url('/media/images/icon-feed.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+.input_widget_config .googlenews .inner { background-image:url('/media/images/icon-googlenews.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
 
 /*******************************************************************************

@@ -141,3 +141,49 @@ class feed(object):
             }
         }
         
+
+class googlenews(object):
+    def source_data(self):
+        return {
+            'type':'googlenews',
+            'display_name':'Google News',
+        }
+    
+    def run_for_input(self, input_config):
+        feed_url = 'http://news.google.com/news?hl=en&gl=us&q=%s&safe=on&output=rss' % input_config['config']['elements'][0]['value']
+        feed = feedparser.parse(feed_url)
+        return [
+            {
+                'type':'googlenews',
+                'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
+                'image_url':'/media/images/icon-googlenews.png',
+                'author':'',
+                'title':item['title']
+            } for item in feed['items']]
+    
+    def parse_request_to_config(self, request):
+        return {
+            'id':request.GET['id'],
+            'type':'googlenews', 
+            'display_name':'Google News Search for: %s' % request.GET['search'],
+            'config':{
+                'configured':True,
+                'elements':[
+                    { 'name':'search', 'display_name':'Keywords', 'type':'text', 'value':request.GET['search']}
+                ]
+            }
+        }
+        
+    def generate_unconfigured_config(self):
+        return {
+            'id':md5('%s' % random.random()).hexdigest(),
+            'type':'googlenews', 
+            'display_name':'Google News Search',
+            'config':{ 
+                'configured':False,
+                'elements':[
+                    { 'name':'search', 'display_name':'Keywords', 'type':'text' }
+                ]
+            }
+        }
+        

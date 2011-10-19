@@ -6,9 +6,10 @@ $(document).ready
 (
 	function ()
 	{
-		LoadWidgetPicker()
-		LoadCollections()
-		ClearCollectionConfig()
+		LoadWidgetPicker();
+		LoadCollections();
+		ClearCollectionConfig();
+		ApplyUIElements();
 	}
 )
 
@@ -26,6 +27,7 @@ function LoadWidgetPicker()
 			widget_picker.append(return_data.template)
 			$.getScript(widget_picker_script_url)
 			widget_picker.slideDown()
+			ApplyUIElements();
 		}
 	)
 }
@@ -45,4 +47,10 @@ function LoadCollections()
 function ClearCollectionConfig()
 {
 	$.get('/config/clear');
+}
+
+function ApplyUIElements()
+{
+	$('.button').button();
+	$('.tabs').tabs();
 }

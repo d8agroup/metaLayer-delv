@@ -1,16 +1,18 @@
 <div class='input_widget_config'>
 	<div class='{{ input.type }}'>
-		<div class='inner'>
+		<div class='inner ui-corner-all'>
 			<input type='hidden' name='collection_id' value='{{ collection_id }}' />
 			<input type='hidden' name='type' value='{{ input.type }}' />
 			<input type='hidden' name='id' value='{{ input.id }}' />
 			<h2>{{ input.display_name }}</h2>
 			<h3>You need to configure this widget.</h3>
 			{% for element in input.config.elements %}
-				<label>{{ element.display_name }}</label>
-				<input type='{{ element.type }}' name='{{ element.name }}' />
+				<div class='clearfix form_row'>
+					<label>{{ element.display_name }}</label>
+					<input type='{{ element.type }}' name='{{ element.name }}' />
+				</div>
 			{% endfor %}
-			<a href='JavaScript:SaveInputWidgetConfig("{{ collection_id }}")'>Save</a>
+			<a href='JavaScript:SaveInputWidgetConfig("{{ collection_id }}")' class='button'>Save</a>
 		</div>
 	</div>
 </div>
