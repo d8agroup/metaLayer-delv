@@ -151,8 +151,6 @@ INSTALLED_APPS = (
     'dashboard.lib',
     'dashboard.customtags',
     'dashboard.inputwidget',
-    'dashboard.inputwidgets.twitter',
-    'dashboard.inputwidgets.googlenews',
 )
 
 # A sample logging configuration. The only tangible logging

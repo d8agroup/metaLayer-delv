@@ -4,24 +4,25 @@ p.info { color:#AAA; font-size:80%;}
 #page { width:100%; margin:0 auto; }
 #content { width:100%; }
 .form_row { width:100%; }
+.loading { width:100%; text-align:center;}
 
 /*******************************************************************************
 HEADER
 *******************************************************************************/
-#header { background-color:#555; width:100%; color:#FFF;}
-#header #header_left { float:left; width:20%; padding:10px; }
-#header #header_center { margin:0 auto; text-align:center; width:50%; padding:10px; font-size:120%; }
-#header #header_right { float:right; text-align:right; width:20%; padding:10px; }
+#header { width:100%; }
 
 /*******************************************************************************
 WIDGET PICKER
 *******************************************************************************/
-#widget_picker { display:none; background:#FFF; border-bottom:2px solid #333;}
-#widget_picker .widget_set { width:100%; float:left; }
+#widget_picker { display:none; }
+#widget_picker .widget_set { width:24%; float:left; }
+#widget_picker .widget_set h2 { width:100%; text-align:center; text-transform:uppercase; font-size:80%; font-weight:bold; padding:5px 0;}
 #widget_picker .widget_set ul { width:100%; }
-#widget_picker .draggable_widget { width:150px; float:left; margin:5px 5px 0 5px; background-color:#666; cursor:move; padding:7px; color:#DDD;}
+#widget_picker .draggable_widget { width:100px; float:left; margin:5px 1% 0 2%; background-color:#666; cursor:move; padding:7px; color:#DDD; font-size:70%; }
 #widget_picker .draggable_widget span.id { display:none; }
 #widget_picker .draggable_widget span.name { padding-left:20px;}
+
+#widget_picker #document_widgets, #widget_picker #output_widgets { width:12%; }
 
 #widget_picker .feed_widget { background-image:url('/media/images/icon-feed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .googlenews_widget { background-image:url('/media/images/icon-googlenews.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
@@ -44,11 +45,14 @@ INPUT WIDGETS
 .input_widget_droppable_hover p.drop_prompt { color:black; }
 
 .input_widget { color:#DDD; width:100%;}
-.input_widget .inputs { width:100%; border-bottom:1px solid}
+.input_widget .inputs { width:100%; border-bottom:1px solid; }
 .input_widget .inputs li { width:100%; }
 .input_widget .inputs .display_name { display:block; padding:10px 0 7px 30px; font-size:70%;}
 .input_widget .inputs .actions { float:right; padding:5px; }
 .input_widget .inputs .actions img { width:15px;}
+
+.input_widget .inputs .summary { display:none; cursor:pointer; }
+.input_widget .inputs .summary li { width:30px; height:30px; float:left;}
 
 .input_widget .inputs .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
@@ -56,7 +60,7 @@ INPUT WIDGETS
 .input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .gmail { background:url('/media/images/icon-gmail.png') no-repeat 5px 5px; background-size:20px;}
 
-.input_widget .inputs .input_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
+.input_widget .inputs .input_or_action_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
 
 .input_widget .content { font-size:70%; padding:10px; overflow:auto; height:300px;}
 .input_widget .content li { height:30px; overflow:hidden; margin-bottom:10px; width:95%; }

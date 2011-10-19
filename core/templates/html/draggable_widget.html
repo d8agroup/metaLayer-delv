@@ -1,4 +1,5 @@
-<li class='draggable_widget {{ widget.type }}_widget ui-corner-all'>
+<li class='draggable_widget {{ widget.type }}_widget {{ parent_type }}_draggable ui-corner-all'>
+	<span class='parent_type hidden'>{{ parent_type }}</span>
 	<span class='type hidden'>{{ widget.type }}</span>
 	<span class='name'>{{ widget.display_name }}</span>
 </li>

@@ -1,7 +1,7 @@
 {% load custom_tags %}
 <div class='input_widget'>
 	<div class='inputs'>
-		<ul>
+		<ul class='full'>
 			{% for input in inputs %}
 				<li class='{{ input.type }} clearfix'>
 					<div class='actions'>
@@ -11,8 +11,13 @@
 					<span class='display_name'>{{ input.display_name|safe|cut:"http://"|cut:"https://"|truncate_chars:35 }}</span>
 				</li>
 			{% endfor %}
-			<li class='input_widget_droppable'><p class='drop_prompt'>drag extra input widgets here</p></li>
 		</ul>
+		<ul class='summary clearfix'>
+			{% for input in inputs %}
+				<li class='{{ input.type }} clearfix' title='{{ input.display_name|safe|cut:"http://"|cut:"https://"|truncate_chars:35 }}'>&nbsp;</li>
+			{% endfor %}
+		</ul>
+		<div class='input_or_action_widget_droppable'><p class='drop_prompt'>drag extra input widgets here</p></div>
 	</div>
 	<div class='content'>
 		<ul>
