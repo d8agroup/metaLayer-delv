@@ -8,30 +8,14 @@
 </div>
 <div id='document_widgets' class='widget_set'>
 	<h2>Documents</h2>
-	<ul class='clearfix'>
-		<li class='draggable_widget csvupload_widget ui-corner-all document_draggable'>
-			<span class='parent_type hidden'>document</span>
-			<span class='type hidden'>csvupload</span>
-			<span class='name'>CSV Upload</span>
-		</li>
-		<li class='draggable_widget pdfupload_widget ui-corner-all document_draggable'>
-			<span class='parent_type hidden'>document</span>
-			<span class='type hidden'>pdfupload</span>
-			<span class='name'>PDF Upload</span>
-		</li>
-	</ul>
+	<p style='width:100%;text-align:center;font-style:italic;'>TBC</p>
 </div>
 <div id='action_widgets' class='widget_set'>
-	<h2>Actions/Filters</h2>
+	<h2>Actions</h2>
 	<ul class='clearfix'>
 		{% for widget in action_widgets %}
 			{% include 'html/draggable_widget.html' with widget=widget parent_type='action' %}
 		{% endfor %}
-		<li class='draggable_widget taxonomy_widget ui-corner-all action_draggable'>
-			<span class='parent_type hidden'>action</span>
-			<span class='type hidden'>taxonomy</span>
-			<span class='name'>Taxonomy</span>
-		</li>
 	</ul>
 </div>
 <div id='chart_widgets' class='widget_set'>
