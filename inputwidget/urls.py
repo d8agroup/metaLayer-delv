@@ -4,7 +4,7 @@ from inputwidget.views import add_new_input
 from inputwidget.views import configure_input
 from inputwidget.views import render_js
 from inputwidget.views import clear_configuration_for_input
-from inputwidget.views import remove_input 
+from inputwidget.views import remove_input
 
 urlpatterns = patterns('',
     url(r'/js', render_js),

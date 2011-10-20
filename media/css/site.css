@@ -54,7 +54,7 @@ INPUT WIDGETS
 .input_widget .inputs .full { display:none; }
 .input_widget .inputs .summary { cursor:pointer; }
 .input_widget .inputs .summary li { width:30px; height:25px; float:left;}
-.input_widget .inputs .summary li.title { width:70px; font-size:80%; padding:0 0 0 10px; position:relative; top:8px;}
+.input_widget .inputs .summary li.title { width:70px; font-size:80%; padding:0 0 0 10px; position:relative; top:8px; display:none;}
 
 .input_widget .inputs .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
@@ -69,9 +69,16 @@ INPUT WIDGETS
 .input_widget .content { font-size:70%; padding:10px; overflow:auto; height:300px;}
 .input_widget .content li { height:30px; overflow:hidden; margin-bottom:10px; width:95%; }
 .input_widget .content img { float:left; height:30px; padding-right:10px; }
+.input_widget .content .sentiment { float:right; width:25px; height:25px; }
+.input_widget .content .sentiment-text { display:none; }
+.input_widget .content .sentiment-positive { background:url('/media/images/icon-sentiment-up.png') 0 0 no-repeat;  }
+.input_widget .content .sentiment-negative { background:url('/media/images/icon-sentiment-down.png') 0 0 no-repeat;  }
+.input_widget .content .sentiment-flat { background:url('../images/icon-sentiment-flat.png') 0 0 no-repeat; background-size:25px; }
 
 
 .input_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
+.input_widget_config .inner .cancel { float:right; }
+.input_widget_config .inner .cancel img { width:20px; }
 .input_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
 .input_widget_config .inner h3 { font-style:italic; font-size:80%; padding:0 0 20px}
 .input_widget_config .inner label { display:block; float:left; width:40%; font-size:80%; padding:4px 0 0 4px; }
@@ -85,6 +92,8 @@ INPUT WIDGETS
 .input_widget_config .gmail .inner { background-image:url('/media/images/icon-gmail.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
 .action_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
+.action_widget_config .inner .cancel { float:right; }
+.action_widget_config .inner .cancel img { width:20px; }
 .action_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
 .action_widget_config .inner h3 { font-style:italic; font-size:80%; padding:0 0 10px}
 .action_widget_config .inner input[type=text] { display:block; float:right; width:50%; font-size:80%; }

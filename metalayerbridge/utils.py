@@ -7,7 +7,8 @@ def get_sentiment_from_text(text):
     text = unicode(text).encode('ascii', 'ignore')
     text_hash = md5(text).hexdigest()
     try:
-        return float(SentimentCache.objects.get(text_hash=text_hash).sentiment)
+        return_data = float(SentimentCache.objects.get(text_hash=text_hash).sentiment)
+        return return_data
     except SentimentCache.DoesNotExist:
         data = { 'text':text }
         request = urllib2.Request('http://api.metalayer.com/s/dashboard/1/sentiment', data=urllib.urlencode(data))

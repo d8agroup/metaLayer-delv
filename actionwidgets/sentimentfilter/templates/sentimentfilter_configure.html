@@ -1,12 +1,15 @@
 {% extends 'actionwidget_configure.html' %}
 {% block action_widget_config %}
-	<p>Choose the level of the sentiment filter you want to apply</p>
+	<p>Filter the contet in this window by sentiment?</p>
 	<div class='sentiment_sellection'>
+		<div class='form-row'>
+			<input type='radio' name='filter' value='any' CHECKED /><img src='/media/images/icon-any.png' />Do not filter by sentiment
+		</div>
 		<div class='form-row'>
 			<input type='radio' name='filter' value='pp' /><img src='/media/images/icon-extremelypositive.png' />Show only extremely positive
 		</div>
 		<div class='form-row'>
-			<input type='radio' name='filter' value='p' CHECKED/><img src='/media/images/icon-positive.png' />Show only positive
+			<input type='radio' name='filter' value='p' /><img src='/media/images/icon-positive.png' />Show only positive
 		</div>
 		<div class='form-row'>
 			<input type='radio' name='filter' value='n' /><img src='/media/images/icon-negative.png' />Show only negative

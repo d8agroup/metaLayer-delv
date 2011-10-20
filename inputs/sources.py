@@ -1,6 +1,7 @@
 from django.utils import simplejson
 from dateutil import parser as dateutil_parser
 from hashlib import md5
+from core.models import CacheEntry
 import feedparser
 import random
 import urllib2
@@ -17,7 +18,23 @@ class twittersearch(object):
     
     def run_for_input(self, input_config):
         search = input_config['config']['elements'][0]['value']
-        tweets = simplejson.loads(urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=%s' % urllib.quote(search)).read())
+        cache_key = 'twittersearch_%s' % search
+        
+        try:
+            cache_entry = CacheEntry.objects.get(key=cache_key)
+            if int(time.time()) - cache_entry.time > 120:
+                cache_entry.delete()
+                raise CacheEntry.DoesNotExist
+            tweets = simplejson.loads(cache_entry.cache)
+        except CacheEntry.DoesNotExist:
+            raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=%s' % urllib.quote(search)).read()
+            tweets = simplejson.loads(raw_json)
+            cache_entry = CacheEntry()
+            cache_entry.cache = raw_json
+            cache_entry.key = cache_key
+            cache_entry.time = int(time.time())
+            cache_entry.save()
+            
         return [
             {
                 'type':'twittersearch',
@@ -61,7 +78,23 @@ class twitteruser(object):
     
     def run_for_input(self, input_config):
         user_name = input_config['config']['elements'][0]['value']
-        tweets = simplejson.loads(urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=from:%s' % urllib.quote(user_name)).read())
+        cache_key = 'twitteruser_%s' % user_name
+        
+        try:
+            cache_entry = CacheEntry.objects.get(key=cache_key)
+            if int(time.time()) - cache_entry.time > 120:
+                cache_entry.delete()
+                raise CacheEntry.DoesNotExist
+            tweets = simplejson.loads(cache_entry.cache)
+        except CacheEntry.DoesNotExist:
+            raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=from:%s' % urllib.quote(user_name)).read()
+            tweets = simplejson.loads(raw_json)
+            cache_entry = CacheEntry()
+            cache_entry.cache = raw_json
+            cache_entry.key = cache_key
+            cache_entry.time = int(time.time())
+            cache_entry.save()
+
         return [
             {
                 'type':'twitteruser',

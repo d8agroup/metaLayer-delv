@@ -3,6 +3,7 @@ from django.utils import simplejson
 from django.template.loader import get_template
 from django.template import Context
 from django.conf import settings
+from django.db import models
 import inputs.sources as sources
 import datetime
 import inspect
@@ -26,7 +27,7 @@ def run_widget_url(request, widget_type, widget_name, function_name):
     
 def get_widget_data_by_widget_type(widget_type):
     if widget_type == 'inputwidgets':
-        return [getattr(obj(), 'source_data')() for name, obj in inspect.getmembers(sources) if inspect.isclass(obj)]
+        return [getattr(obj(), 'source_data')() for name, obj in inspect.getmembers(sources) if inspect.isclass(obj) and not issubclass(obj, models.Model)]
     else:
         return [getattr(my_import('%s.views' % name), 'widget_data')() for name in settings.INSTALLED_APPS if re.search(r'%s' % widget_type, name)]
     

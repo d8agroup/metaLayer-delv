@@ -1,6 +1,7 @@
 <div class='input_widget_config'>
 	<div class='{{ input.type }}'>
 		<div class='inner ui-corner-all'>
+			<a href='JavaScript:CancelInputWidgetConfig("{{ collection_id }}", "{{ input.id }}")' class='cancel'><img src='/media/images/icon-cross.png' /></a>
 			<input type='hidden' name='collection_id' value='{{ collection_id }}' />
 			<input type='hidden' name='type' value='{{ input.type }}' />
 			<input type='hidden' name='id' value='{{ input.id }}' />

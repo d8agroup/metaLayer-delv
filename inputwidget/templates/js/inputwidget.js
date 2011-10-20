@@ -31,6 +31,11 @@ function SaveInputWidgetConfig(collection_id)
 	)
 }
 
+function CancelInputWidgetConfig(collection_id, input_id)
+{
+	RemoveInput(collection_id, input_id);
+}
+
 function ApplyInputWidgetDroppable()
 {
 	/* APPLY TO THE EMPTY INPUT WIDGET SLOTS */
@@ -54,6 +59,7 @@ function ApplyInputWidgetDroppable()
 						var outer_droppable = $('#' + collection_id + " .input_widget_container");
 						outer_droppable.removeClass('input_widget_droppable');
 						outer_droppable.droppable('destroy');
+						outer_droppable.addClass('input_or_action_widget_droppable')
 						ReloadInputWidget(collection_id);
 					}
 				)
@@ -203,6 +209,11 @@ function RemoveAction(collection_id, action_id, action_type)
 			ReloadInputWidget(collection_id);
 		}
 	);
+}
+
+function CancelActionWidgetConfig(collection_id, action_id, action_type)
+{
+	RemoveAction(collection_id, action_id, action_type);
 }
 
 function SaveActionWidgetConfig(collection_id)

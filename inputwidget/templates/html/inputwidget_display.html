@@ -33,12 +33,23 @@
 				<li class='{{ action.type }} clearfix' title='{{ action.display_name|safe|truncate_chars:35 }}'>&nbsp;</li>
 			{% endfor %}
 		</ul>
-		<div class='input_or_action_widget_droppable'><p class='drop_prompt'>drag extra inputs or actions here</p></div>
+		<div class='input_or_action_widget_droppable hidden'><p class='drop_prompt'>drag extra inputs or actions here</p></div>
 	</div>
 	<div class='content'>
 		<ul>
 			{% for item in content %}
 				<li class='{{ item.type }} clearfix'>
+					{% if item.sentiment  %}
+						{% if item.sentiment == 0 %}
+							<span class='sentiment sentiment-flat' title='sentiment: neutral'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span> neutral</span></span>
+						{% else %}
+						    {% if item.sentiment > 0 %}
+								<span class='sentiment sentiment-positive' title='sentiment: positive'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span>positive</span></span>
+						    {% else %}
+								<span class='sentiment sentiment-negative' title='sentiment: negative'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span>negative</span></span>
+						    {% endif %}
+						{% endif %}
+					{% endif %}
 					<img src='{{ item.image_url }}' />
 					<span class='author'>{{ item.author }}</span>
 					<span class='title'>{{ item.title }}</span>

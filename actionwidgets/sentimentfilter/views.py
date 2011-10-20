@@ -14,7 +14,7 @@ def generate_unconfigured_config():
     return {
         'id':md5('%s' % random.random()).hexdigest(),
         'type':'sentimentfilter', 
-        'display_name':'Sentiment Filter',
+        'display_name':'Sentiment Analysis and Filter',
         'config':{ 
             'configured':False,
             'elements':[
@@ -36,12 +36,18 @@ def run_action_for_content(request, collection_id, action_id, content):
         sentiment_condition = [-0.1, -5.1]
     elif config['config']['elements'][0]['value'] == 'nn': 
         sentiment_condition = [-2.1, -5.1]
+    else:
+        sentiment_condition = False
     
     include_neutral = True if config['config']['elements'][1]['value'] == 'on' else False
     
     return_content = []
     for item in content:
         sentiment = get_sentiment_from_text(item['title'] + item['text'])
+        item['sentiment'] = sentiment
+        if not sentiment_condition:
+            return_content.append(item)
+            continue
         if sentiment == 0 and include_neutral:
             return_content.append(item)
             continue
@@ -97,6 +103,8 @@ def save_config(request):
         display_name = 'Sentiment Filter - Negative Only'
     elif filter == 'nn':
         display_name = 'Sentiment Filter - Extremely Negative Only'
+    else:
+        display_name = 'Sentiment'
     
     action_config = {
         'id':id,
