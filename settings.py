@@ -134,6 +134,7 @@ ROOT_URLCONF = 'dashboard.core.urls'
 
 TEMPLATE_DIRS = (
     ROOT_PATH + "/templates",
+    ROOT_PATH + "/actionwidgets/templates",
 )
 
 INSTALLED_APPS = (
@@ -149,8 +150,10 @@ INSTALLED_APPS = (
     
     'dashboard.core',
     'dashboard.lib',
+    'dashboard.metalayerbridge',
     'dashboard.customtags',
     'dashboard.inputwidget',
+    'dashboard.actionwidgets.sentimentfilter',
 )
 
 # A sample logging configuration. The only tangible logging

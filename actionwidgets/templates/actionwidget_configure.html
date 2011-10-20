@@ -1,3 +1,15 @@
-<div class='action_widget_configure {{ widget.type }}_action_widget'>
-	
+<div class='action_widget_config'>
+	<div class='{{ action.type }}'>
+		<div class='inner ui-corner-all'>
+			<form>
+				<input type='hidden' name='collection_id' value='{{ collection_id }}' />
+				<input type='hidden' name='type' value='{{ action.type }}' class='type' />
+				<input type='hidden' name='id' value='{{ action.id }}' />
+				<h2>{{ action.display_name }}</h2>
+				<h3>You need to configure this action.</h3>
+				{% block action_widget_config %}{% endblock %}
+				<a href='JavaScript:SaveActionWidgetConfig("{{ collection_id }}")' class='button'>Save</a>
+			</form>
+		</div>
+	</div>
 </div>

@@ -21,8 +21,6 @@ function SaveInputWidgetConfig(collection_id)
 		query_string.push($(config_elements[x]).attr('name') + "=" + encodeURIComponent($(config_elements[x]).val()) + "");
 	query_string = query_string.join('&');
 	
-	ShowLoadingForInputWidget(collection_id);
-	
 	$.get
 	(
 		URL_SAVE_CONFIG + "?" + query_string,
@@ -93,7 +91,7 @@ function ApplyInputWidgetDroppable()
 				{
 					$.get
 					(
-						URL_ADD_NEW_ACTION + "?collection_id=" + collection_id + "&type=" + input_type,
+						'/widget/actionwidgets/' + draggable.find('.type').html() + '/add_new?collection_id=' + collection_id,
 						function()
 						{
 							ReloadInputWidget(collection_id);
@@ -107,6 +105,8 @@ function ApplyInputWidgetDroppable()
 
 function ReloadInputWidget(collection_id)
 {
+	ShowLoadingForInputWidget(collection_id);
+
 	$.get
 	(
 		URL_RELOAD_INPUT_WIDGET + "?collection_id=" + collection_id,
@@ -117,32 +117,23 @@ function ReloadInputWidget(collection_id)
 			input_widget_container.append(template);
 			ApplyInputWidgetDroppable();
 			ApplyUIElements();
-			setTimeout
+			input_widget_container.find('.summary').click
 			(
 				function()
 				{
-					input_widget_container.find('.full').slideUp();
-					input_widget_container.find('.summary').slideDown();
-					input_widget_container.find('.summary').click
+					input_widget_container.find('.summary').slideUp();
+					input_widget_container.find('.full').slideDown();
+					setTimeout
 					(
 						function()
 						{
-							input_widget_container.find('.summary').slideUp();
-							input_widget_container.find('.full').slideDown();
-							setTimeout
-							(
-								function()
-								{
-									input_widget_container.find('.full').slideUp();
-									input_widget_container.find('.summary').slideDown();
-								},
-								5000
-							);
-						}
+							input_widget_container.find('.full').slideUp();
+							input_widget_container.find('.summary').slideDown();
+						},
+						5000
 					);
-				},
-				2000
-			)
+				}
+			);
 		}
 	)
 }
@@ -188,4 +179,44 @@ function RemoveInput(collection_id, input_id)
 			}
 		}
 	);
+}
+
+function ReconfigureAction(collection_id, action_id, action_type)
+{
+	$.get
+	(
+		'/widget/actionwidgets/' + action_type + "/clear_config?collection_id=" + collection_id + "&action_id=" + action_id,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
+}
+
+function RemoveAction(collection_id, action_id, action_type)
+{
+	$.get
+	(
+		'/widget/actionwidgets/' + action_type + "/remove?collection_id=" + collection_id + "&action_id=" + action_id,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
+}
+
+function SaveActionWidgetConfig(collection_id)
+{
+	form = $('#' + collection_id + ' .action_widget_config form');
+	
+	query_string = form.serialize();
+	
+	$.get
+	(
+		'/widget/actionwidgets/' + form.find('input.type').val() + "/save_config?" + query_string,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	)
 }

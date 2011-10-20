@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^config/set', set_collection_config),
     
     url(r'^widget/(\w+)/(\w+)/(\w+)', run_widget_url),
+    
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
     
     url(r'^core/js$', core_javascript),

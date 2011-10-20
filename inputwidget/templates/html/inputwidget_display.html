@@ -1,6 +1,6 @@
 {% load custom_tags %}
 <div class='input_widget'>
-	<div class='inputs'>
+	<div class='inputs actions'>
 		<ul class='full'>
 			{% for input in inputs %}
 				<li class='{{ input.type }} clearfix'>
@@ -11,13 +11,29 @@
 					<span class='display_name'>{{ input.display_name|safe|cut:"http://"|cut:"https://"|truncate_chars:35 }}</span>
 				</li>
 			{% endfor %}
+			{% for action in actions %}
+				<li class='{{ action.type }} clearfix'>
+					<div class='actions'>
+						<a href='JavaScript:ReconfigureAction("{{ collection_id }}", "{{ action.id }}", "{{ action.type }}")'><img src='/media/images/icon-config.png' title='configure'/></a>
+						<a href='JavaScript:RemoveAction("{{ collection_id }}", "{{ action.id }}", "{{ action.type }}")' ><img src='/media/images/icon-cross.png' title='remove' /></a>
+					</div>
+					<span class='display_name'>{{ action.display_name|safe|truncate_chars:35 }}</span>
+				</li>
+			{% endfor %}
 		</ul>
 		<ul class='summary clearfix'>
+			<li class='title clearfix'><span>INPUTS:</span></li>
 			{% for input in inputs %}
 				<li class='{{ input.type }} clearfix' title='{{ input.display_name|safe|cut:"http://"|cut:"https://"|truncate_chars:35 }}'>&nbsp;</li>
 			{% endfor %}
 		</ul>
-		<div class='input_or_action_widget_droppable'><p class='drop_prompt'>drag extra input widgets here</p></div>
+		<ul class='summary clearfix'>
+			<li class='title clearfix' {% if not actions %}style='display:none'{% endif %}><span>ACTIONS:</span></li>
+			{% for action in actions %}
+				<li class='{{ action.type }} clearfix' title='{{ action.display_name|safe|truncate_chars:35 }}'>&nbsp;</li>
+			{% endfor %}
+		</ul>
+		<div class='input_or_action_widget_droppable'><p class='drop_prompt'>drag extra inputs or actions here</p></div>
 	</div>
 	<div class='content'>
 		<ul>

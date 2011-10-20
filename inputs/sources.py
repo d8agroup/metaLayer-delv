@@ -24,7 +24,8 @@ class twittersearch(object):
                 'time':int(time.mktime(dateutil_parser.parse(tweet['created_at']).timetuple())),
                 'image_url':tweet['profile_image_url'],
                 'author':tweet['from_user'],
-                'title':tweet['text']
+                'title':tweet['text'],
+                'text':''
             } for tweet in tweets['results']]
     
     def parse_request_to_config(self, request):
@@ -67,7 +68,8 @@ class twitteruser(object):
                 'time':int(time.mktime(dateutil_parser.parse(tweet['created_at']).timetuple())),
                 'image_url':tweet['profile_image_url'],
                 'author':tweet['from_user'],
-                'title':tweet['text']
+                'title':tweet['text'],
+                'text':''
             } for tweet in tweets['results']]
     
     def parse_request_to_config(self, request):
@@ -113,7 +115,8 @@ class feed(object):
                 'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
                 'image_url':'/media/images/icon-feed.png',
                 'author':'',
-                'title':item['title']
+                'title':item['title'],
+                'text':''
             } for item in feed['items']]
     
     def parse_request_to_config(self, request):
@@ -159,7 +162,8 @@ class googlenews(object):
                 'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
                 'image_url':'/media/images/icon-googlenews.png',
                 'author':'',
-                'title':item['title']
+                'title':item['title'],
+                'text':''
             } for item in feed['items']]
     
     def parse_request_to_config(self, request):
@@ -206,7 +210,8 @@ class gmail(object):
                 'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
                 'image_url':'/media/images/icon-gmail.png',
                 'author':'',
-                'title':item['subject']
+                'title':item['subject'],
+                'text':''
             } for item in emails]
     
     def parse_request_to_config(self, request):

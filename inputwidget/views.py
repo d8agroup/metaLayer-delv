@@ -1,9 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from core.utils import set_collection_config
 from core.utils import JSONResponse
-from inputwidget.utils import get_config_ensuring_collection
+from core.utils import get_config_ensuring_collection
 from inputwidget.utils import run_all_inputs_and_combine_results
+from inputwidget.utils import apply_actions
 import inputs.sources as sources
 
 def render_js(request):
@@ -58,12 +59,19 @@ def render_input_widget(request):
     un_configured_inputs = [input for input in config['collections'][collection_id]['inputs'] if input['config']['configured'] == False]
     if un_configured_inputs:
         return render_to_response('html/inputwidget_configure.html', { 'input':un_configured_inputs[0], 'collection_id':collection_id })
+    un_configured_actions = [action for action in config['collections'][collection_id]['actions'] if action['config']['configured'] == False]
+    if un_configured_actions:
+        return HttpResponseRedirect('/widget/actionwidgets/%s/render_config?collection_id=%s&id=%s' % (un_configured_actions[0]['type'], collection_id, un_configured_actions[0]['id']))
     inputs = config['collections'][collection_id]['inputs']
+    actions = config['collections'][collection_id]['actions']
+    content = run_all_inputs_and_combine_results(inputs)
+    content = apply_actions(request, collection_id, content, actions) 
     return render_to_response(
         'html/inputwidget_display.html',
         {
             'inputs': inputs,
-            'content': run_all_inputs_and_combine_results(inputs),
+            'actions':actions,
+            'content': content,
             'collection_id':collection_id 
         })
     

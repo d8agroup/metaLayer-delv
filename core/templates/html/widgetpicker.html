@@ -24,11 +24,9 @@
 <div id='action_widgets' class='widget_set'>
 	<h2>Actions/Filters</h2>
 	<ul class='clearfix'>
-		<li class='draggable_widget sentiment_widget ui-corner-all action_draggable'>
-			<span class='parent_type hidden'>action</span>
-			<span class='type hidden'>sentiment</span>
-			<span class='name'>Sentiment</span>
-		</li>
+		{% for widget in action_widgets %}
+			{% include 'html/draggable_widget.html' with widget=widget parent_type='action' %}
+		{% endfor %}
 		<li class='draggable_widget taxonomy_widget ui-corner-all action_draggable'>
 			<span class='parent_type hidden'>action</span>
 			<span class='type hidden'>taxonomy</span>
