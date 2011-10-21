@@ -10,8 +10,33 @@ $(document).ready
 	function()
 	{
 		ApplyInputWidgetDroppable();
+		setTimeout
+		(
+			function()
+			{
+				var collections = $('.collection');
+				for(var x=0; x<collections.length; x++)
+				{
+					var collection_id = $(collections[x]).attr('id');
+					RefreshAll(collection_id);
+				}
+			},
+			60000
+		);
 	}
 );
+
+function RefreshAll(collection_id)
+{
+	if ($('#' + collection_id + ' .input_widget').length > 0)
+	{
+		ShowReloadingForInputWidget(collection_id)
+		var reload_func = function() { ReloadInputWidget(collection_id, true); }
+		setTimeout(reload_func, 5000);
+	}
+	var func = function() { RefreshAll(collection_id); }
+	setTimeout(func, 60000);
+}
 
 function SaveInputWidgetConfig(collection_id)
 {
@@ -109,10 +134,11 @@ function ApplyInputWidgetDroppable()
 	);
 }
 
-function ReloadInputWidget(collection_id)
+function ReloadInputWidget(collection_id, polling)
 {
-	ShowLoadingForInputWidget(collection_id);
-
+	if (polling != true)
+		ShowLoadingForInputWidget(collection_id);
+	
 	$.get
 	(
 		URL_RELOAD_INPUT_WIDGET + "?collection_id=" + collection_id,
@@ -151,6 +177,12 @@ function ShowLoadingForInputWidget(collection_id)
 	var loading_html = $("<div class='loading' style='height:" + height + "px'><img src='/media/images/loading_bar.gif' style='margin-top:" + parseInt(height/2) + "px'/></div>");
 	input_widget_container.children().remove();
 	input_widget_container.append(loading_html);
+}
+
+function ShowReloadingForInputWidget(collection_id)
+{
+	var input_widget_container = $('#' + collection_id + " .input_widget_container");
+	input_widget_container.prepend("<div class='reloading'><span>reloading</span><img src='/media/images/loading_bar.gif' /></div>")
 }
 
 function ReconfigureInput(collection_id, input_id, input_type)

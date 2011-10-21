@@ -155,19 +155,17 @@ class feed(object):
                 raise CacheEntry.DoesNotExist
             items = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            items = feedparser.parse(feed_url)['items']
+            items = [{'title':i['title'], 'date':int(time.mktime(dateutil_parser.parse(i['date']).timetuple())) } for i in feedparser.parse(feed_url)['items']]
             cache_entry = CacheEntry()
             cache_entry.cache = safe_json_dumps(items)
             cache_entry.key = cache_key
             cache_entry.time = int(time.time())
             cache_entry.save()
             
-        print items
-            
         return [
             {
-                'type':'twittersearch',
-                'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
+                'type':'feed',
+                'time':int(item['date']),
                 'image_url':'/media/images/icon-feed.png',
                 'author':'',
                 'title':item['title'],
@@ -210,16 +208,31 @@ class googlenews(object):
     
     def run_for_input(self, input_config):
         feed_url = 'http://news.google.com/news?hl=en&gl=us&q=%s&safe=on&output=rss' % input_config['config']['elements'][0]['value']
-        feed = feedparser.parse(feed_url)
+        cache_key = 'googlenews_%s' % md5(feed_url).hexdigest(),
+        
+        try:
+            cache_entry = CacheEntry.objects.get(key=cache_key)
+            if int(time.time()) - cache_entry.time > 120:
+                cache_entry.delete()
+                raise CacheEntry.DoesNotExist
+            items = simplejson.loads(cache_entry.cache)
+        except CacheEntry.DoesNotExist:
+            items = [{'title':i['title'], 'date':int(time.mktime(dateutil_parser.parse(i['date']).timetuple())) } for i in feedparser.parse(feed_url)['items']]
+            cache_entry = CacheEntry()
+            cache_entry.cache = safe_json_dumps(items)
+            cache_entry.key = cache_key
+            cache_entry.time = int(time.time())
+            cache_entry.save()
+            
         return [
             {
                 'type':'googlenews',
-                'time':int(time.mktime(dateutil_parser.parse(item['date']).timetuple())),
+                'time':int(item['date']),
                 'image_url':'/media/images/icon-googlenews.png',
                 'author':'',
                 'title':item['title'],
                 'text':''
-            } for item in feed['items']]
+            } for item in items]
     
     def parse_request_to_config(self, request):
         return {
@@ -257,8 +270,24 @@ class gmail(object):
     def run_for_input(self, input_config):
         user_name = input_config['config']['elements'][0]['value']
         password = input_config['config']['elements'][1]['value']
+        cache_key = 'gmail_%s' % user_name
+        
         from lib.gmail import extract_email_subjects
-        emails = extract_email_subjects(user_name, password)
+        
+        try:
+            cache_entry = CacheEntry.objects.get(key=cache_key)
+            if int(time.time()) - cache_entry.time > 120:
+                cache_entry.delete()
+                raise CacheEntry.DoesNotExist
+            emails = simplejson.loads(cache_entry.cache)
+        except CacheEntry.DoesNotExist:
+            emails = extract_email_subjects(user_name, password)
+            cache_entry = CacheEntry()
+            cache_entry.cache = safe_json_dumps(emails)
+            cache_entry.key = cache_key
+            cache_entry.time = int(time.time())
+            cache_entry.save()
+
         return [
             {
                 'type':'gmail',
