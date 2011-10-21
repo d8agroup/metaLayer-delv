@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'dashboard.customtags',
     'dashboard.inputwidget',
     'dashboard.actionwidgets.sentimentfilter',
+    'dashboard.actionwidgets.tagging',
 )
 
 # A sample logging configuration. The only tangible logging

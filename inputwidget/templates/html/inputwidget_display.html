@@ -38,21 +38,31 @@
 	<div class='content'>
 		<ul>
 			{% for item in content %}
-				<li class='{{ item.type }} clearfix'>
-					{% if item.sentiment  %}
-						{% if item.sentiment == 0 %}
-							<span class='sentiment sentiment-flat' title='sentiment: neutral'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span> neutral</span></span>
-						{% else %}
-						    {% if item.sentiment > 0 %}
-								<span class='sentiment sentiment-positive' title='sentiment: positive'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span>positive</span></span>
-						    {% else %}
-								<span class='sentiment sentiment-negative' title='sentiment: negative'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span>negative</span></span>
-						    {% endif %}
+				<li class='{{ item.type }} clearfix content_item'>
+					<div class='content_item_details'>
+						{% if item.sentiment  %}
+							{% if item.sentiment == 0 %}
+								<span class='sentiment sentiment-flat' title='sentiment: neutral'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span> neutral</span></span>
+							{% else %}
+							    {% if item.sentiment > 0 %}
+									<span class='sentiment sentiment-positive' title='sentiment: positive'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span>positive</span></span>
+							    {% else %}
+									<span class='sentiment sentiment-negative' title='sentiment: negative'><span class='sentiment-text'><span class='sentiment-title'>sentiment:</span>negative</span></span>
+							    {% endif %}
+							{% endif %}
 						{% endif %}
+						<img src='{{ item.image_url }}' />
+						<span class='author'>{{ item.author }}</span>
+						<span class='title'>{{ item.title }}</span>
+					</div>
+					{% if item.tags %}
+						<ul class='tags clearfix'>
+							<li class='title'>tags:</li>
+							{% for tag in item.tags %}
+								<li>{{ tag }}</li>
+							{% endfor %}
+						</ul>
 					{% endif %}
-					<img src='{{ item.image_url }}' />
-					<span class='author'>{{ item.author }}</span>
-					<span class='title'>{{ item.title }}</span>
 				</li>
 			{% endfor %}
 		</ul>

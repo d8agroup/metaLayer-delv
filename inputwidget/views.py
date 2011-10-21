@@ -48,8 +48,9 @@ def clear_configuration_for_input(request):
     source_bridge = getattr(sources, input_type)()
     input_config = source_bridge.generate_unconfigured_config()
     config = get_config_ensuring_collection(request, collection_id)
-    config['collections'][collection_id]['inputs'] = [input for input in config['collections'][collection_id]['inputs'] if input['id'] != input_id]
-    config['collections'][collection_id]['inputs'].append(input_config)
+    for input in config['collections'][collection_id]['inputs']:
+        if input['id'] == input_id:
+            input['config']['configured'] = False
     set_collection_config(request, config)
     return HttpResponse()
     

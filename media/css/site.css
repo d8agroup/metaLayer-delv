@@ -1,7 +1,7 @@
 html { font-family:Arial; background-color:#DDD;}
 p.info { color:#AAA; font-size:80%;}
 
-#page { width:100%; margin:0 auto; }
+#page { width:1024px; margin:0 auto; }
 #content { width:100%; }
 .form_row { width:100%; }
 .loading { width:100%; text-align:center;}
@@ -29,6 +29,10 @@ WIDGET PICKER
 #widget_picker .gmail_widget { background-image:url('/media/images/icon-gmail.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .flickrsearch_widget { background-image:url('/media/images/icon-flickr.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+
+#widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .tagging_widget { background-image:url('/media/images/icon-tagging.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 /*******************************************************************************
 COLLECTION LEVEL
@@ -61,22 +65,35 @@ INPUT WIDGETS
 .input_widget .inputs .feed { background:url('/media/images/icon-feed.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:20px;}
 .input_widget .inputs .gmail { background:url('/media/images/icon-gmail.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .inputs .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat 5px 5px; background-size:20px;}
 
 .input_widget .actions .sentimentfilter { background:url('/media/images/icon-sentiment-flat.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .actions .tagging { background:url('/media/images/icon-tagging.png') no-repeat 5px 5px; background-size:20px;}
 
 .input_widget .inputs .input_or_action_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
 
 .input_widget .content { font-size:70%; padding:10px; overflow:auto; height:300px;}
-.input_widget .content li { height:30px; overflow:hidden; margin-bottom:10px; width:95%; }
-.input_widget .content img { float:left; height:30px; padding-right:10px; }
-.input_widget .content .sentiment { float:right; width:25px; height:25px; }
-.input_widget .content .sentiment-text { display:none; }
-.input_widget .content .sentiment-positive { background:url('/media/images/icon-sentiment-up.png') 0 0 no-repeat;  }
-.input_widget .content .sentiment-negative { background:url('/media/images/icon-sentiment-down.png') 0 0 no-repeat;  }
-.input_widget .content .sentiment-flat { background:url('../images/icon-sentiment-flat.png') 0 0 no-repeat; background-size:25px; }
+.input_widget .content .content_item { margin-bottom:10px; padding-bottom:10px; border-bottom:1px dashed #555; width:98%;}
+.input_widget .content .content_item_details { height:30px; overflow:hidden; width:90% }
+.input_widget .content .content_item_details img { float:left; height:30px; padding-right:10px; }
+.input_widget .content .content_item_details .sentiment { float:right; width:25px; height:25px; }
+.input_widget .content .content_item_details .sentiment-text { display:none; }
+.input_widget .content .content_item_details .sentiment-positive { background:url('/media/images/icon-sentiment-up.png') 0 0 no-repeat;  }
+.input_widget .content .content_item_details .sentiment-negative { background:url('/media/images/icon-sentiment-down.png') 0 0 no-repeat;  }
+.input_widget .content .content_item_details .sentiment-flat { background:url('../images/icon-sentiment-flat.png') 0 0 no-repeat; background-size:25px; }
+.input_widget .content .tags { height:12px; overflow:hidden; padding-top:3px;}
+.input_widget .content .tags li { float:left; padding: 0 5px 0 0; font-weight:bold}
+.input_widget .content .tags li.title { }
+
+.input_widget .content .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat right 5px; background-size:20px;}
+.input_widget .content .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat right 5px; background-size:20px;}
+.input_widget .content .feed { background:url('/media/images/icon-feed.png') no-repeat right 5px; background-size:20px;}
+.input_widget .content .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat right 5px; background-size:20px;}
+.input_widget .content .gmail { background:url('/media/images/icon-gmail.png') no-repeat right 5px; background-size:20px;}
+.input_widget .content .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat right 5px; background-size:20px;}
 
 
-.input_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
+.input_widget_config .inner { margin:10px 10px; padding:5px; color:#FFF; }
 .input_widget_config .inner .cancel { float:right; }
 .input_widget_config .inner .cancel img { width:20px; }
 .input_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
@@ -90,6 +107,7 @@ INPUT WIDGETS
 .input_widget_config .feed .inner { background-image:url('/media/images/icon-feed.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .googlenews .inner { background-image:url('/media/images/icon-googlenews.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .gmail .inner { background-image:url('/media/images/icon-gmail.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+.input_widget_config .flickrsearch .inner { background-image:url('/media/images/icon-flickr.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
 .action_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
 .action_widget_config .inner .cancel { float:right; }
@@ -103,6 +121,7 @@ INPUT WIDGETS
 .action_widget_config .inner .include_neutral { font-size:80%; }
 
 .action_widget_config .sentimentfilter .inner { background-image:url('/media/images/icon-sentiment-flat.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+.action_widget_config .tagging .inner { background-image:url('/media/images/icon-tagging.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
 /*******************************************************************************
 JQUERYUI OVERRIDES

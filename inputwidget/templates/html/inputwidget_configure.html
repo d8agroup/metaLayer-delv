@@ -10,7 +10,7 @@
 			{% for element in input.config.elements %}
 				<div class='clearfix form_row'>
 					<label>{{ element.display_name }}</label>
-					<input type='{{ element.type }}' name='{{ element.name }}' />
+					<input type='{{ element.type }}' name='{{ element.name }}' value='{{ element.value }}' />
 				</div>
 			{% endfor %}
 			<a href='JavaScript:SaveInputWidgetConfig("{{ collection_id }}")' class='button'>Save</a>
