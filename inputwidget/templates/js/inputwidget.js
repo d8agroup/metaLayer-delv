@@ -28,7 +28,7 @@ $(document).ready
 
 function RefreshAll(collection_id)
 {
-	if ($('#' + collection_id + ' .input_widget').length > 0)
+	if ($('#' + collection_id + ' .input_widget').length > 0 && $('#' + collection_id + ' .reloading').length == 0)
 	{
 		ShowReloadingForInputWidget(collection_id)
 		var reload_func = function() { ReloadInputWidget(collection_id, true); }
