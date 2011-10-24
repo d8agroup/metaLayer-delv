@@ -115,14 +115,14 @@ INPUT WIDGETS
 .input_widget_config .gmail .inner { background-image:url('/media/images/icon-gmail.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .flickrsearch .inner { background-image:url('/media/images/icon-flickr.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
-.action_widget_config .inner { background-color:#AAA; margin:10px 10px; padding:5px; }
+.action_widget_config .inner { margin:10px 10px; padding:5px; color:#FFF; }
 .action_widget_config .inner .cancel { float:right; }
 .action_widget_config .inner .cancel img { width:20px; }
 .action_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
 .action_widget_config .inner h3 { font-style:italic; font-size:80%; padding:0 0 10px}
 .action_widget_config .inner input[type=text] { display:block; float:right; width:50%; font-size:80%; }
 .action_widget_config .inner .button { width:80%; display:block; margin:10px auto; }
-.action_widget_config .inner p { padding:10px 0; font-style:italic; color:#333;}
+.action_widget_config .inner p { padding:10px 0; font-style:italic; color:#AAA;}
 .action_widget_config .inner .sentiment_sellection { font-size:80%; }
 .action_widget_config .inner .include_neutral { font-size:80%; }
 

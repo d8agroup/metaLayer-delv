@@ -38,8 +38,10 @@ def clear_config(request):
     collection_id = request.GET['collection_id']
     id = request.GET['action_id']
     config = get_config_ensuring_collection(request, collection_id)
+    this_config = [a for a in config['collections'][collection_id]['actions'] if a['id'] == id][0]
+    this_config['config']['configured'] = False
     config['collections'][collection_id]['actions'] = [a for a in config['collections'][collection_id]['actions'] if a['id'] != id]
-    config['collections'][collection_id]['actions'].append(generate_unconfigured_config())
+    config['collections'][collection_id]['actions'].append(this_config)
     set_collection_config(request, config)
     return HttpResponse()
     
