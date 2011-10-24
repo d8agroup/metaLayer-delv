@@ -50,6 +50,7 @@ function SaveInputWidgetConfig(collection_id)
 		query_string.push($(config_elements[x]).attr('name') + "=" + encodeURIComponent($(config_elements[x]).val()) + "");
 	query_string = query_string.join('&');
 	
+	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
 		URL_SAVE_CONFIG + "?" + query_string,
@@ -79,6 +80,7 @@ function ApplyInputWidgetDroppable()
 				var draggable = ui.draggable;
 				var droppable = $(this);
 				var collection_id = droppable.parents('.collection').attr('id');
+				ShowLoadingForInputWidget(collection_id);
 				if(draggable.is('.input_widget'))
 				{
 					var new_collection_id = collection_id;
@@ -129,6 +131,7 @@ function ApplyInputWidgetDroppable()
 				var droppable = $(this);
 				var collection_id = droppable.parents('.collection').attr('id');
 				var input_type = draggable.find('.type').html();
+				ShowLoadingForInputWidget(collection_id);
 				if ( draggable.is('.input_draggable') )
 				{
 					$.get
@@ -198,9 +201,10 @@ function ApplyInputWidgetDraggable()
 
 function ReloadInputWidget(collection_id, polling)
 {
+	/*
 	if (polling != true)
 		ShowLoadingForInputWidget(collection_id);
-	
+	*/
 	$.get
 	(
 		URL_RELOAD_INPUT_WIDGET + "?collection_id=" + collection_id,
@@ -263,6 +267,7 @@ function ShowReloadingForInputWidget(collection_id)
 
 function ReconfigureInput(collection_id, input_id, input_type)
 {
+	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
 		URL_CLEAR_CONFIG + "?collection_id=" + collection_id + "&input_id=" + input_id + "&input_type=" + input_type,
@@ -275,6 +280,7 @@ function ReconfigureInput(collection_id, input_id, input_type)
 
 function RemoveInput(collection_id, input_id)
 {
+	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
 		URL_REMOVE_INPUT + "?collection_id=" + collection_id + "&input_id=" + input_id,
@@ -297,6 +303,7 @@ function RemoveInput(collection_id, input_id)
 
 function ReconfigureAction(collection_id, action_id, action_type)
 {
+	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
 		'/widget/actionwidgets/' + action_type + "/clear_config?collection_id=" + collection_id + "&action_id=" + action_id,
@@ -309,6 +316,7 @@ function ReconfigureAction(collection_id, action_id, action_type)
 
 function RemoveAction(collection_id, action_id, action_type)
 {
+	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
 		'/widget/actionwidgets/' + action_type + "/remove?collection_id=" + collection_id + "&action_id=" + action_id,
@@ -326,6 +334,8 @@ function CancelActionWidgetConfig(collection_id, action_id, action_type)
 
 function SaveActionWidgetConfig(collection_id)
 {
+	ShowLoadingForInputWidget(collection_id);
+	
 	form = $('#' + collection_id + ' .action_widget_config form');
 	
 	query_string = form.serialize();
