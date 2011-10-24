@@ -62,3 +62,4 @@ class InputRunner(threading.Thread):
     def run(self):
         source_bridge = getattr(sources, self.input['type'])()
         self.result = source_bridge.run_for_input(self.input)
+        

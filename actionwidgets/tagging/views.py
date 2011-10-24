@@ -6,7 +6,10 @@ from django.shortcuts import render_to_response
 from core.utils import get_config_ensuring_collection
 from core.utils import set_collection_config
 from hashlib import md5
+from Queue import Queue
+import threading
 import random
+import time
 
 def widget_data():
     return { 'type':'tagging', 'display_name':'Tagging' }
@@ -17,17 +20,17 @@ def generate_unconfigured_config():
         'type':'tagging', 
         'display_name':'Tagging and Taxonomy',
         'config':{ 
-            'configured':False,
+            'configured':True,
             'elements':[]
         }
     }
     
 def run_action_for_content(request, collection_id, action_id, content):
     return_content = []
-    for item in content:
-        tags = get_tags_from_text(item['title'] + item['text'])
-        item['tags'] = tags
-        return_content.append(item)
+    n = 10
+    for r in [content[i:i+n] for i in range(0, len(content), n)]:
+        return_content = return_content + threaded_get_tags(r)
+        
     return return_content   
     
     
@@ -81,3 +84,51 @@ def save_config(request):
     set_collection_config(request, config)
     return HttpResponse()
  
+def threaded_get_tags(content):
+    def producer(q, _items):
+        for _item in _items:
+            thread = ServiceRunner(_item)
+            thread.start()
+            q.put(thread, True)
+ 
+    finished = []
+    
+    def consumer(q, total_items):
+        while len(finished) < total_items:
+            thread = q.get(True)
+            thread.join()
+            finished.append(thread.get_result())
+ 
+    q = Queue()
+    prod_thread = threading.Thread(target=producer, args=(q, content))
+    cons_thread = threading.Thread(target=consumer, args=(q, len(content)))
+    prod_thread.start()
+    cons_thread.start()
+    prod_thread.join()
+    cons_thread.join()    
+
+    all_content = []
+    
+    for result in finished:
+        all_content.append(result) 
+    return all_content
+
+class ServiceRunner(threading.Thread):
+    def __init__(self, item):
+        self.item = item
+        threading.Thread.__init__(self)
+    
+    def get_result(self):
+        return self.item
+    
+    def run(self):
+        try_count = 0
+        worked = False
+        while try_count < 3 and not worked:
+            try:
+                try_count = try_count + 1 
+                tags = get_tags_from_text(self.item['title'] + self.item['text'])
+                worked = True
+            except:
+                time.sleep(1)
+        self.item['tags'] = tags if worked else []

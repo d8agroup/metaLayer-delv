@@ -5,7 +5,10 @@ from django.shortcuts import render_to_response
 from core.utils import get_config_ensuring_collection
 from core.utils import set_collection_config
 from hashlib import md5
+from Queue import Queue
+import threading
 import random
+import time
 
 def widget_data():
     return { 'type':'sentimentfilter', 'display_name':'Sentiment' }
@@ -16,10 +19,10 @@ def generate_unconfigured_config():
         'type':'sentimentfilter', 
         'display_name':'Sentiment Analysis and Filter',
         'config':{ 
-            'configured':False,
+            'configured':True,
             'elements':[
-                { 'name':'filter' },
-                { 'name':'include_neutral' }
+                { 'name':'filter', 'value':'any' },
+                { 'name':'include_neutral', 'value':'on' }
             ]
         }
     }
@@ -40,11 +43,17 @@ def run_action_for_content(request, collection_id, action_id, content):
         sentiment_condition = False
     
     include_neutral = True if config['config']['elements'][1]['value'] == 'on' else False
+
+    all_content = []
     
+    n = 10
+    for r in [content[i:i+n] for i in range(0, len(content), n)]:
+        all_content = all_content + threaded_get_sentiment(r)
+
     return_content = []
-    for item in content:
-        sentiment = get_sentiment_from_text(item['title'] + item['text'])
-        item['sentiment'] = sentiment
+    
+    for item in all_content:
+        sentiment = item['sentiment']
         if not sentiment_condition:
             return_content.append(item)
             continue
@@ -125,3 +134,52 @@ def save_config(request):
     set_collection_config(request, config)
     return HttpResponse()
  
+ 
+def threaded_get_sentiment(content):
+    def producer(q, _items):
+        for _item in _items:
+            thread = ServiceRunner(_item)
+            thread.start()
+            q.put(thread, True)
+ 
+    finished = []
+    
+    def consumer(q, total_items):
+        while len(finished) < total_items:
+            thread = q.get(True)
+            thread.join()
+            finished.append(thread.get_result())
+ 
+    q = Queue()
+    prod_thread = threading.Thread(target=producer, args=(q, content))
+    cons_thread = threading.Thread(target=consumer, args=(q, len(content)))
+    prod_thread.start()
+    cons_thread.start()
+    prod_thread.join()
+    cons_thread.join()    
+
+    all_content = []
+    
+    for result in finished:
+        all_content.append(result) 
+    return all_content
+
+class ServiceRunner(threading.Thread):
+    def __init__(self, item):
+        self.item = item
+        threading.Thread.__init__(self)
+    
+    def get_result(self):
+        return self.item
+    
+    def run(self):
+        try_count = 0
+        worked = False
+        while try_count < 3 and not worked:
+            try:
+                try_count = try_count + 1 
+                sentiment = get_sentiment_from_text(self.item['title'] + self.item['text'])
+                worked = True
+            except:
+                time.sleep(1)
+        self.item['sentiment'] = sentiment if worked else 0

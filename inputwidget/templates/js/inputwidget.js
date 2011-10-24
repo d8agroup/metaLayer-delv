@@ -4,12 +4,14 @@ var URL_ADD_NEW_INPUT = '/inputs/add';
 var URL_CLEAR_CONFIG = '/inputs/clearconfig';
 var URL_REMOVE_INPUT = '/inputs/remove';
 var URL_ADD_NEW_ACTION = '/actions/add';
+var URL_MOVE_INPUT_WIDGET = '/inputs/move';
 
 $(document).ready
 (
 	function()
 	{
 		ApplyInputWidgetDroppable();
+		ApplyInputWidgetDraggable();
 		setTimeout
 		(
 			function()
@@ -30,6 +32,8 @@ function RefreshAll(collection_id)
 {
 	if ($('#' + collection_id + ' .input_widget').length > 0 && $('#' + collection_id + ' .reloading').length == 0)
 	{
+		$('#' + collection_id).draggable('destroy');
+		$('#' + collection_id).droppable('destroy');
 		ShowReloadingForInputWidget(collection_id)
 		var reload_func = function() { ReloadInputWidget(collection_id, true); }
 		setTimeout(reload_func, 5000);
@@ -69,25 +73,46 @@ function ApplyInputWidgetDroppable()
 		{
 			activeClass:'input_widget_droppable_active',
 			hoverClass:'input_widget_droppable_hover',
-			accept:'.input_draggable',
+			accept:'.input_draggable, .input_widget',
 			drop:function(event, ui)
 			{
 				var draggable = ui.draggable;
 				var droppable = $(this);
 				var collection_id = droppable.parents('.collection').attr('id');
-				var input_type = draggable.find('.type').html();
-				$.get
-				(
-					URL_ADD_NEW_INPUT + "?collection_id=" + collection_id + "&type=" + input_type,
-					function()
-					{
-						var outer_droppable = $('#' + collection_id + " .input_widget_container");
-						outer_droppable.removeClass('input_widget_droppable');
-						outer_droppable.droppable('destroy');
-						outer_droppable.addClass('input_or_action_widget_droppable')
-						ReloadInputWidget(collection_id);
-					}
-				)
+				if(draggable.is('.input_widget'))
+				{
+					var new_collection_id = collection_id;
+					var old_collection_id = draggable.parents('.collection').attr('id');
+					$.get
+					(
+						URL_MOVE_INPUT_WIDGET + '?new_collection_id=' + new_collection_id + "&old_collection_id=" + old_collection_id,
+						function()
+						{
+							ReloadInputWidget(new_collection_id);
+							draggable.remove();
+							var collection = $('#' + old_collection_id); 
+							collection.children().remove()
+							collection.append(HTML_ADD_INPUT_WIDGET)
+							ApplyInputWidgetDroppable()						
+						}
+					)
+				}
+				else
+				{
+					var input_type = draggable.find('.type').html();
+					$.get
+					(
+						URL_ADD_NEW_INPUT + "?collection_id=" + collection_id + "&type=" + input_type,
+						function()
+						{
+							var outer_droppable = $('#' + collection_id + " .input_widget_container");
+							outer_droppable.removeClass('input_widget_droppable');
+							outer_droppable.droppable('destroy');
+							outer_droppable.addClass('input_or_action_widget_droppable')
+							ReloadInputWidget(collection_id);
+						}
+					)
+				}
 			}
 		}
 	);
@@ -97,13 +122,10 @@ function ApplyInputWidgetDroppable()
 		{
 			activeClass:'input_widget_droppable_active',
 			hoverClass:'input_widget_droppable_hover',
+			accept:'.input_draggable, .action_draggable, .input_widget',
 			drop:function(event, ui)
 			{
 				var draggable = ui.draggable;
-				
-				if(!draggable.is('.input_draggable') && !draggable.is('.action_draggable'))
-					return;
-				
 				var droppable = $(this);
 				var collection_id = droppable.parents('.collection').attr('id');
 				var input_type = draggable.find('.type').html();
@@ -117,6 +139,24 @@ function ApplyInputWidgetDroppable()
 							ReloadInputWidget(collection_id);
 						}
 					);
+				}
+				else if(draggable.is('.input_widget'))
+				{
+					var new_collection_id = collection_id;
+					var old_collection_id = draggable.parents('.collection').attr('id');
+					$.get
+					(
+						URL_MOVE_INPUT_WIDGET + '?new_collection_id=' + new_collection_id + "&old_collection_id=" + old_collection_id,
+						function()
+						{
+							ReloadInputWidget(new_collection_id);
+							draggable.remove();
+							var collection = $('#' + old_collection_id); 
+							collection.children().remove()
+							collection.append(HTML_ADD_INPUT_WIDGET)
+							ApplyInputWidgetDroppable()						
+						}
+					)
 				}
 				else
 				{
@@ -134,6 +174,28 @@ function ApplyInputWidgetDroppable()
 	);
 }
 
+function ApplyInputWidgetDraggable()
+{
+	$('.input_widget').draggable
+	(
+		{
+			revert:true,
+			handle:'.inputs',
+			stack:'.input_widget',
+			start:function()
+			{
+				$(this).parents('.input_widget_container').droppable('destroy');
+			},
+			stop:function()
+			{
+				ApplyInputWidgetDroppable();
+				ApplyInputWidgetDraggable();
+				ApplyDraggable(); //this calls the elements in the widgetpicker to ensure z axis
+			}
+		}
+	);
+}
+
 function ReloadInputWidget(collection_id, polling)
 {
 	if (polling != true)
@@ -144,10 +206,24 @@ function ReloadInputWidget(collection_id, polling)
 		URL_RELOAD_INPUT_WIDGET + "?collection_id=" + collection_id,
 		function(template)
 		{
+			if (!$(template).is('.input_widget_config') && !$(template).is('.action_widget_config'))
+			{	
+				if($(template).find('.inputs ul.full li').length == 0)
+				{
+					var collection = $('#' + collection_id); 
+					collection.children().remove();
+					collection.append(HTML_ADD_INPUT_WIDGET);
+					ApplyInputWidgetDroppable();
+					return;
+				}
+			}
+			
 			var input_widget_container = $('#' + collection_id + " .input_widget_container");
 			input_widget_container.children().remove();
 			input_widget_container.append(template);
 			ApplyInputWidgetDroppable();
+			ApplyInputWidgetDraggable();
+			ApplyDraggable(); //this calls the elements in the widgetpicker to ensure z axis
 			ApplyUIElements();
 			input_widget_container.find('.summary').click
 			(

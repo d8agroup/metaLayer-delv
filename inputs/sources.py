@@ -32,10 +32,19 @@ class twittersearch(object):
                 raise CacheEntry.DoesNotExist
             tweets = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=%s' % urllib.quote(search)).read()
-            tweets = simplejson.loads(raw_json)
+            try_count = 0
+            got_result = False
+            while not got_result and try_count < 3:
+                try_count = try_count + 1
+                try:
+                    raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=%s' % urllib.quote(search)).read()
+                    got_result = True
+                except:
+                    time.sleep(1)
+
+            tweets = simplejson.loads(raw_json) if got_result else []
             cache_entry = CacheEntry()
-            cache_entry.cache = raw_json
+            cache_entry.cache =  raw_json if got_result else "[]"
             cache_entry.key = cache_key
             cache_entry.time = int(time.time())
             cache_entry.save()
@@ -92,10 +101,19 @@ class twitteruser(object):
                 raise CacheEntry.DoesNotExist
             tweets = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=from:%s' % urllib.quote(user_name)).read()
-            tweets = simplejson.loads(raw_json)
+            try_count = 0
+            got_result = False
+            while not got_result and try_count < 3:
+                try_count = try_count + 1
+                try:
+                    raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=from:%s' % urllib.quote(user_name)).read()
+                    got_result = True
+                except:
+                    time.sleep(1)
+            
+            tweets = simplejson.loads(raw_json) if got_result else []
             cache_entry = CacheEntry()
-            cache_entry.cache = raw_json
+            cache_entry.cache = raw_json if got_result else "[]"
             cache_entry.key = cache_key
             cache_entry.time = int(time.time())
             cache_entry.save()

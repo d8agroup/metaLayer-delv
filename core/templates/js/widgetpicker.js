@@ -10,5 +10,5 @@ $(document).ready
 
 function ApplyDraggable()
 {
-	$('.draggable_widget').draggable({ revert:true, helper:"clone" })
+	$('.draggable_widget').draggable({ revert:true, helper:"clone", stack:'.input_widget' })
 }

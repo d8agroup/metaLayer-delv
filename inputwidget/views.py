@@ -75,4 +75,14 @@ def render_input_widget(request):
             'content': content,
             'collection_id':collection_id 
         })
+
+def move_input_widget(request):
+    new_collection_id = request.GET['new_collection_id']
+    old_collection_id = request.GET['old_collection_id']
+    config = get_config_ensuring_collection(request, new_collection_id)
+    for type in ['inputs', 'actions']:
+        config['collections'][new_collection_id][type] = config['collections'][new_collection_id][type] + [i for i in config['collections'][old_collection_id][type]]
+        config['collections'][old_collection_id][type] = []
+    set_collection_config(request, config)
+    return HttpResponse()
     

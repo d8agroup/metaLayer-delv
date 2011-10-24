@@ -5,6 +5,7 @@ from inputwidget.views import configure_input
 from inputwidget.views import render_js
 from inputwidget.views import clear_configuration_for_input
 from inputwidget.views import remove_input
+from inputwidget.views import move_input_widget
 
 urlpatterns = patterns('',
     url(r'/js', render_js),
@@ -12,5 +13,6 @@ urlpatterns = patterns('',
     url(r'/remove', remove_input),
     url(r'/configure', configure_input),
     url(r'/clearconfig', clear_configuration_for_input),
-    url(r'/render', render_input_widget),             
+    url(r'/render', render_input_widget),  
+    url(r'/move', move_input_widget),           
 )
