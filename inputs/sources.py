@@ -1,4 +1,5 @@
 from django.utils import simplejson
+from django.conf import settings
 from dateutil import parser as dateutil_parser
 from hashlib import md5
 from core.models import CacheEntry
@@ -37,7 +38,7 @@ class twittersearch(object):
             while not got_result and try_count < 3:
                 try_count = try_count + 1
                 try:
-                    raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=%s' % urllib.quote(search)).read()
+                    raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=%i&q=%s' % (settings.INPUT_ITEM_LIMIT, urllib.quote(search))).read()
                     got_result = True
                 except:
                     time.sleep(1)
@@ -106,7 +107,7 @@ class twitteruser(object):
             while not got_result and try_count < 3:
                 try_count = try_count + 1
                 try:
-                    raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=50&q=from:%s' % urllib.quote(user_name)).read()
+                    raw_json = urllib2.urlopen('http://search.twitter.com/search.json?rpp=%i&q=from:%s' % (settings.INPUT_ITEM_LIMIT, urllib.quote(user_name))).read()
                     got_result = True
                 except:
                     time.sleep(1)
@@ -173,7 +174,7 @@ class feed(object):
                 raise CacheEntry.DoesNotExist
             items = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            items = [{'title':i['title'], 'date':int(time.mktime(dateutil_parser.parse(i['date']).timetuple())) } for i in feedparser.parse(feed_url)['items']]
+            items = [{'title':i['title'], 'date':int(time.mktime(dateutil_parser.parse(i['date']).timetuple())) } for i in feedparser.parse(feed_url)['items']][0:settings.INPUT_ITEM_LIMIT]
             cache_entry = CacheEntry()
             cache_entry.cache = safe_json_dumps(items)
             cache_entry.key = cache_key
@@ -235,7 +236,7 @@ class googlenews(object):
                 raise CacheEntry.DoesNotExist
             items = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            items = [{'title':i['title'], 'date':int(time.mktime(dateutil_parser.parse(i['date']).timetuple())) } for i in feedparser.parse(feed_url)['items']]
+            items = [{'title':i['title'], 'date':int(time.mktime(dateutil_parser.parse(i['date']).timetuple())) } for i in feedparser.parse(feed_url)['items']][0:settings.INPUT_ITEM_LIMIT]
             cache_entry = CacheEntry()
             cache_entry.cache = safe_json_dumps(items)
             cache_entry.key = cache_key
@@ -299,7 +300,7 @@ class gmail(object):
                 raise CacheEntry.DoesNotExist
             emails = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            emails = extract_email_subjects(user_name, password)
+            emails = extract_email_subjects(user_name, password)[0:settings.INPUT_ITEM_LIMIT]
             cache_entry = CacheEntry()
             cache_entry.cache = safe_json_dumps(emails)
             cache_entry.key = cache_key
@@ -360,7 +361,7 @@ class flickrsearch(object):
                 raise CacheEntry.DoesNotExist
             pics = simplejson.loads(cache_entry.cache)
         except CacheEntry.DoesNotExist:
-            raw_json = urllib2.urlopen('http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ff9c57320434f28ec322da1838161da6&text=%s&format=json&nojsoncallback=1&sort=date-posted-desc&extras=date_upload,tags' % urllib.quote(search)).read()
+            raw_json = urllib2.urlopen('http://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=%i&api_key=ff9c57320434f28ec322da1838161da6&text=%s&format=json&nojsoncallback=1&sort=date-posted-desc&extras=date_upload,tags' % (settings.INPUT_ITEM_LIMIT, urllib.quote(search))).read()
             pics = simplejson.loads(raw_json)
             cache_entry = CacheEntry()
             cache_entry.cache = raw_json

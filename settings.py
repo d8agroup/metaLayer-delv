@@ -193,4 +193,4 @@ SOLR_SEARCH_PARAMS = "sort=date+desc&facet=on&wt=json&facet.field=csubtype&facet
 SOLR_FACETS = ['ctype', 'csubtype', 'sname', 'tags', 'rawlocations']
 SOLR_RANGES = ['date']
 
-DEFAULT_WIDGET_LAYOUT = { 'left_column_widgets':[], 'center_column_widgets':['itemlist']}
+INPUT_ITEM_LIMIT = 10
