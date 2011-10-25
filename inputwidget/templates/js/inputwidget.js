@@ -92,9 +92,11 @@ function ApplyInputWidgetDroppable()
 						{
 							ReloadInputWidget(new_collection_id);
 							draggable.remove();
-							var collection = $('#' + old_collection_id); 
-							collection.children().remove()
-							collection.append(HTML_ADD_INPUT_WIDGET)
+							var old_collection = $('#' + old_collection_id); 
+							old_collection.children().remove()
+							old_collection.append(HTML_ADD_INPUT_WIDGET)
+							var new_collection = $('#' + new_collection_id);
+							new_collection.find('.input_widget_container').removeClass('input_widget_droppable').addClass('input_or_action_widget_droppable');
 							ApplyInputWidgetDroppable()						
 						}
 					)
