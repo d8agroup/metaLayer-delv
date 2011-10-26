@@ -53,4 +53,5 @@ function ApplyUIElements()
 {
 	$('.button').button();
 	$('.tabs').tabs();
+	$('.accordion').accordion();
 }

@@ -29,12 +29,12 @@ def get_widget_data_by_widget_type(widget_type):
     if widget_type == 'inputwidgets':
         return [getattr(obj(), 'source_data')() for name, obj in inspect.getmembers(sources) if inspect.isclass(obj) and not issubclass(obj, models.Model)]
     else:
-        return [getattr(my_import('%s.views' % name), 'widget_data')() for name in settings.INSTALLED_APPS if re.search(r'%s' % widget_type, name)]
+        return [getattr(my_import('%s.views' % name), 'widget_data')() for name in settings.INSTALLED_APPS if re.search(r'%s.' % widget_type, name)]
     
 def get_config_ensuring_collection(request, collection_id):
     all_collections_config = get_collection_config(request)
     if collection_id not in all_collections_config['collections']:
-        all_collections_config['collections'][collection_id] = { 'inputs':[], 'actions':[] }
+        all_collections_config['collections'][collection_id] = { 'inputs':[], 'actions':[], 'visuals':[] }
     return all_collections_config
 
 def set_collection_config(request, config):

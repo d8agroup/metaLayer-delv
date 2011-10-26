@@ -1,3 +1,6 @@
+from inputwidget.utils import run_all_inputs_and_combine_results
+from inputwidget.utils import apply_actions
+from visualwidgets.piechart.views import chart_source_type
 from metalayerbridge.utils import get_sentiment_from_text
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -10,8 +13,10 @@ import threading
 import random
 import time
 
+type ='sentimentfilter' 
+
 def widget_data():
-    return { 'type':'sentimentfilter', 'display_name':'Sentiment' }
+    return { 'type':type, 'display_name':'Sentiment' }
 
 def generate_unconfigured_config():
     return {
@@ -119,7 +124,7 @@ def save_config(request):
     
     action_config = {
         'id':id,
-        'type':'sentimentfilter', 
+        'type':type, 
         'display_name':display_name,
         'config':{ 
             'configured':True,
@@ -136,6 +141,55 @@ def save_config(request):
     set_collection_config(request, config)
     return HttpResponse()
  
+def chart_piechart_configuration():
+    return {
+        'name':'Sentiment Split',
+        'config':{
+            'type':type,
+            'module':'actionwidgets.sentimentfilter.views',
+            'function':'chart_piechart_sentimentsplit',
+            'elements':[]
+        }
+    } 
+
+def chart_piechart_sentimentsplit(request, collection_id, content, visual_id):
+    config = get_config_ensuring_collection(request, collection_id)
+    visual = [v for v in config['collections'][collection_id]['visuals'] if v['id'] == visual_id][0]
+    
+    if not visual['config']['configured']:
+        return chart_source_type(request, collection_id, content, visual_id)
+    
+    url = '/widget/actionwidgets/sentimentfilter/chart_piechart_sentimentsplit_js?collection_id=%s&visual_id=%s' % (collection_id, visual_id)
+    visual_data = {
+        'id':visual_id,
+        'type':visual['type'],
+        'url':url,
+        'display_name':visual['display_name']
+    }
+    return render_to_response('chartwidget_base.html', { 'visual':visual_data, 'collection_id':collection_id })
+
+def chart_piechart_sentimentsplit_js(request):
+    collection_id = request.GET['collection_id']
+    visual_id = request.GET['visual_id']
+    config = get_config_ensuring_collection(request, collection_id)
+    inputs = config['collections'][collection_id]['inputs']
+    actions = config['collections'][collection_id]['actions']
+    content = run_all_inputs_and_combine_results(inputs)
+    content = apply_actions(request, collection_id, content, actions)
+    return_data = {}
+    for item in content:
+        if 'sentiment' in item and item['sentiment'] > 0:
+            type = 'positive'
+        elif 'sentiment' in item and item['sentiment'] < 0:
+            type = 'negative'
+        else:
+            type = 'neutral/none'
+        if type not in return_data:
+            return_data[type] = 0;
+        return_data[type] = return_data[type] + 1
+    return_data = [[k,return_data[k]] for k in return_data.keys()]
+    return render_to_response('render_piechart.js', { 'chart_data':return_data, 'id':visual_id })
+
  
 def threaded_get_sentiment(content):
     def producer(q, _items):

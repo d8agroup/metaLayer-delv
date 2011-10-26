@@ -4,7 +4,7 @@ p.info { color:#AAA; font-size:80%;}
 #page { width:1024px; margin:0 auto; }
 #content { width:100%; }
 .form_row { width:100%; }
-.loading { width:100%; text-align:center;}
+.loading { width:100%; text-align:center; background-color:#333; }
 
 /*******************************************************************************
 HEADER
@@ -14,15 +14,14 @@ HEADER
 /*******************************************************************************
 WIDGET PICKER
 *******************************************************************************/
-#widget_picker { display:none; }
-#widget_picker .widget_set { width:24%; float:left; }
+#widget_picker { display:none; padding:0 10px;}
+#widget_picker .widget_set { width:25%; float:left; }
 #widget_picker .widget_set h2 { width:100%; text-align:center; text-transform:uppercase; font-size:80%; font-weight:bold; padding:5px 0;}
 #widget_picker .widget_set ul { width:100%; }
-#widget_picker .draggable_widget { width:100px; float:left; margin:5px 1% 0 2%; background-color:#666; cursor:move; padding:7px; color:#DDD; font-size:70%; }
+#widget_picker .draggable_widget { width:100px; float:left; margin:5px 1% 0 1px; background-color:#666; cursor:move; padding:7px; color:#DDD; font-size:70%; }
 #widget_picker .draggable_widget span.id { display:none; }
 #widget_picker .draggable_widget span.name { padding-left:20px;}
 
-#widget_picker #document_widgets, #widget_picker #output_widgets { width:12%; }
 
 #widget_picker .feed_widget { background-image:url('/media/images/icon-feed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .googlenews_widget { background-image:url('/media/images/icon-googlenews.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
@@ -30,6 +29,7 @@ WIDGET PICKER
 #widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .flickrsearch_widget { background-image:url('/media/images/icon-flickr.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .piechart_widget { background-image:url('/media/images/icon-piechart.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 #widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .tagging_widget { background-image:url('/media/images/icon-tagging.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
@@ -37,12 +37,12 @@ WIDGET PICKER
 /*******************************************************************************
 COLLECTION LEVEL
 *******************************************************************************/
-.collection { width:24%; float:left; background-color:#333; margin:.5%;}
+.collection { width:24%; float:left; margin:.5%;}
 
 /*******************************************************************************
 INPUT WIDGETS
 *******************************************************************************/
-.input_widget_droppable p.drop_prompt { font-size:80%; color:#AAA; text-align:center; padding:120px 60px; }
+.input_widget_droppable p.drop_prompt { font-size:80%; color:#AAA; text-align:center; padding:120px 60px; background-color:#333;}
 .input_widget_droppable_active { background-color:#555; }
 .input_widget_droppable_active p.drop_prompt { color:#FFF; }
 .input_widget_droppable_hover { background-color:#AAA }
@@ -54,7 +54,7 @@ INPUT WIDGETS
 .input_widget_container .reloading img { float:right; }
 .input_widget_container .reloading span { position:relative; top:4px; left:4px;}
 
-.input_widget { color:#DDD; width:100%; background-color:#333;}
+.input_widget { color:#DDD; width:100%; }
 .input_widget .inputs { width:100%; border-bottom:1px solid; background-color:#222;}
 .input_widget .inputs li { width:100%; }
 .input_widget .inputs .display_name { display:block; padding:10px 0 7px 30px; font-size:70%;}
@@ -78,7 +78,7 @@ INPUT WIDGETS
 
 .input_widget .inputs .input_or_action_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
 
-.input_widget .content { font-size:70%; padding:10px; overflow:auto; height:300px;}
+.input_widget .content { font-size:70%; padding:10px; overflow:auto; height:224px; background-color:#333; }
 .input_widget .content .content_item { margin-bottom:10px; padding-bottom:10px; border-bottom:1px dashed #555; width:98%;}
 .input_widget .content .content_item_details { height:30px; overflow:hidden; width:90% }
 .input_widget .content .content_item_details img { float:left; height:30px; padding-right:10px; }
@@ -98,8 +98,8 @@ INPUT WIDGETS
 .input_widget .content .gmail { background:url('/media/images/icon-gmail.png') no-repeat right 5px; background-size:20px;}
 .input_widget .content .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat right 5px; background-size:20px;}
 
-
-.input_widget_config .inner { margin:10px 10px; padding:5px; color:#FFF; }
+.input_widget_config { background-color:#333; }
+.input_widget_config .inner { margin:0 10px; padding:5px; color:#FFF; }
 .input_widget_config .inner .cancel { float:right; }
 .input_widget_config .inner .cancel img { width:20px; }
 .input_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
@@ -115,7 +115,8 @@ INPUT WIDGETS
 .input_widget_config .gmail .inner { background-image:url('/media/images/icon-gmail.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .flickrsearch .inner { background-image:url('/media/images/icon-flickr.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 
-.action_widget_config .inner { margin:10px 10px; padding:5px; color:#FFF; }
+.action_widget_config { background-color:#333; }
+.action_widget_config .inner { margin:0 10px; padding:5px; color:#FFF; }
 .action_widget_config .inner .cancel { float:right; }
 .action_widget_config .inner .cancel img { width:20px; }
 .action_widget_config .inner h2 { padding:15px 0 30px 55px; font-weight:bold;}
@@ -128,6 +129,24 @@ INPUT WIDGETS
 
 .action_widget_config .sentimentfilter .inner { background-image:url('/media/images/icon-sentiment-flat.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
 .action_widget_config .tagging .inner { background-image:url('/media/images/icon-tagging.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 5px;}
+
+
+.visuals { width:100%; }
+.visuals p.drag_message { padding:20px 0; width:100%; text-align:center; font-size:80%; display:none; }
+.visuals .visual_widget_droppable_active { background-color:#333; margin:10px auto 10px auto; }
+.visuals .visual_widget_droppable_hover { background-color:#AAA }
+.visuals .visual_widget_droppable_active p { display:block; }
+.visuals h2 { background-color:#222; width:100%; text-align:center; margin-top:10px; padding:10px 0;}
+.visuals h2 a { float:right; padding-right:5px;}
+.visuals h2 a img { width:15px; }
+.visuals .visual { width:100%; height:200px; background-color:#333; margin-bottom:10px; }
+.visuals .refresh_link { display:none; }
+
+.visuals .visual_configure { width:100%; background-color:#333; margin:10px 0; padding:10px 0;}
+.visuals .visual_configure .accordion { width:90%; margin:0 auto;}
+.visuals .visual_configure .accordion .accordion_section { height:150px !important; overflow:auto; }
+.visuals .visual_configure .accordion .accordion_section .button { width:90%; margin:0 auto; }
+.visuals .visual_configure .accordion .accordion_section .empty_message { width:100%; text-align:center; padding:10px 0;}
 
 /*******************************************************************************
 JQUERYUI OVERRIDES

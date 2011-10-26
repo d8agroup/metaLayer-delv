@@ -50,6 +50,15 @@ def apply_actions(request, collection_id, content, actions):
         content = function(request, collection_id, action['id'], content)
     return content
 
+def apply_visuals(request, collection_id, content, visuals):
+    return_data = []
+    for visual in visuals:
+        views = my_import(visual['config']['chart_types'][visual['config']['active_chart_type']]['module'])
+        function = getattr(views, visual['config']['chart_types'][visual['config']['active_chart_type']]['function'])
+        return_data.append(function(request, collection_id, content, visual['id']))
+    return return_data
+    
+
 class InputRunner(threading.Thread):
     def __init__(self, input):
         self.input = input

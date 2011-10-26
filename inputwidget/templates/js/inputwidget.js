@@ -177,6 +177,34 @@ function ApplyInputWidgetDroppable()
 			}
 		}
 	);
+	
+	$('.visual_droppable').droppable
+	(
+		{
+			activeClass:'visual_widget_droppable_active',
+			hoverClass:'visual_widget_droppable_hover',
+			accept:'.visual_draggable',
+			drop:function(event, ui)
+			{
+				var draggable = ui.draggable;
+				var droppable = $(this);
+				var collection_id = droppable.parents('.collection').attr('id');
+				var visual_type = draggable.find('.type').html();
+				var url = '/widget/visualwidgets/' + visual_type + '/add_new?collection_id=' + collection_id;
+				var loading_html = $("<div class='loading' style='margin:10px 0;'><img src='/media/images/loading_bar.gif' style='margin:20px 0'/></div>");
+				droppable.after(loading_html);
+				droppable.remove();
+				$.get
+				(
+					url,
+					function()
+					{
+						ReloadInputWidget(collection_id);
+					}
+				);
+			}
+		}
+	);
 }
 
 function ApplyInputWidgetDraggable()
@@ -231,6 +259,7 @@ function ReloadInputWidget(collection_id, polling)
 			ApplyInputWidgetDraggable();
 			ApplyDraggable(); //this calls the elements in the widgetpicker to ensure z axis
 			ApplyUIElements();
+			RunVisualJS(collection_id);
 			input_widget_container.find('.summary').click
 			(
 				function()
@@ -256,7 +285,7 @@ function ShowLoadingForInputWidget(collection_id)
 {
 	var input_widget_container = $('#' + collection_id + " .input_widget_container");
 	var height = input_widget_container.height();
-	var loading_html = $("<div class='loading' style='height:" + height + "px'><img src='/media/images/loading_bar.gif' style='margin-top:" + parseInt(height/2) + "px'/></div>");
+	var loading_html = $("<div class='loading'><img src='/media/images/loading_bar.gif' style='margin:125px 0;'/></div>");
 	input_widget_container.children().remove();
 	input_widget_container.append(loading_html);
 }
@@ -336,18 +365,70 @@ function CancelActionWidgetConfig(collection_id, action_id, action_type)
 
 function SaveActionWidgetConfig(collection_id)
 {
+	var form = $('#' + collection_id + ' .action_widget_config form');
+	var type = form.find('input.type').val();
+	var query_string = form.serialize();
+	
 	ShowLoadingForInputWidget(collection_id);
-	
-	form = $('#' + collection_id + ' .action_widget_config form');
-	
-	query_string = form.serialize();
 	
 	$.get
 	(
-		'/widget/actionwidgets/' + form.find('input.type').val() + "/save_config?" + query_string,
+		'/widget/actionwidgets/' + type + "/save_config?" + query_string,
 		function()
 		{
 			ReloadInputWidget(collection_id);
 		}
 	)
+}
+
+function RunVisualJS(collection_id)
+{
+	$('#' + collection_id + ' .refresh_link').each
+	(
+		function()
+		{
+			var link_url = $(this).html();
+			link_url = link_url.replace(/\&amp;/g, "&");
+			$.getScript(link_url);
+		}	
+	);
+}
+
+function RemoveVisualWidget(collection_id, visual_id, visual_type)
+{
+	url = '/widget/visualwidgets/' + visual_type + '/remove?collection_id=' + collection_id + '&visual_id=' + visual_id;
+	$.get
+	(
+		url,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
+}
+
+function ReconfigureVisualWidget(collection_id, visual_id, visual_type)
+{
+	url = '/widget/visualwidgets/' + visual_type + '/clear_config?collection_id=' + collection_id + '&visual_id=' + visual_id;
+	$.get
+	(
+		url,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
+}
+
+function SaveVisualConfig(collection_id, visual_type, visual_id, config_type)
+{
+	url = '/widget/visualwidgets/' + visual_type + '/configure?collection_id=' + collection_id + '&visual_id=' + visual_id + '&type=' + config_type;
+	$.get
+	(
+		url,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
 }

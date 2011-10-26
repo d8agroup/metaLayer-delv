@@ -5,6 +5,7 @@ from core.utils import JSONResponse
 from core.utils import get_config_ensuring_collection
 from inputwidget.utils import run_all_inputs_and_combine_results
 from inputwidget.utils import apply_actions
+from inputwidget.utils import apply_visuals
 import inputs.sources as sources
 
 def render_js(request):
@@ -65,14 +66,17 @@ def render_input_widget(request):
         return HttpResponseRedirect('/widget/actionwidgets/%s/render_config?collection_id=%s&id=%s' % (un_configured_actions[0]['type'], collection_id, un_configured_actions[0]['id']))
     inputs = config['collections'][collection_id]['inputs']
     actions = config['collections'][collection_id]['actions']
+    visuals = config['collections'][collection_id]['visuals']
     content = run_all_inputs_and_combine_results(inputs)
-    content = apply_actions(request, collection_id, content, actions) 
+    content = apply_actions(request, collection_id, content, actions)
+    visuals = apply_visuals(request, collection_id, content, visuals) 
     return render_to_response(
         'html/inputwidget_display.html',
         {
             'inputs': inputs,
             'actions':actions,
-            'content': content,
+            'content':content,
+            'visuals':visuals,
             'collection_id':collection_id 
         })
 
@@ -80,7 +84,7 @@ def move_input_widget(request):
     new_collection_id = request.GET['new_collection_id']
     old_collection_id = request.GET['old_collection_id']
     config = get_config_ensuring_collection(request, new_collection_id)
-    for type in ['inputs', 'actions']:
+    for type in ['inputs', 'actions', 'visuals']:
         config['collections'][new_collection_id][type] = config['collections'][new_collection_id][type] + [i for i in config['collections'][old_collection_id][type]]
         config['collections'][old_collection_id][type] = []
     set_collection_config(request, config)

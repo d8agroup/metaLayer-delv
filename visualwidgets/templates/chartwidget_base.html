@@ -1,0 +1,11 @@
+<div class='visual_container'>
+	<div class='{{ visual.type }}_visual'>
+		<span class='refresh_link'>{{ visual.url|safe }}</span>
+		<h2>
+			{{ visual.display_name }}
+			<a href='JavaScript:RemoveVisualWidget("{{ collection_id }}", "{{ visual.id }}", "{{ visual.type }}")' class='cancel'><img src='/media/images/icon-cross.png' /></a>
+			<a href='JavaScript:ReconfigureVisualWidget("{{ collection_id }}", "{{ visual.id }}", "{{ visual.type }}")' class='cancel'><img src='/media/images/icon-config.png' /></a>
+		</h2>
+		<div class='visual' id='{{ visual.id }}'></div>
+	</div>
+</div>

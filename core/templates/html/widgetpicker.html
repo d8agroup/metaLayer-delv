@@ -6,10 +6,6 @@
 		{% endfor %}
 	</ul>
 </div>
-<div id='document_widgets' class='widget_set'>
-	<h2>Documents</h2>
-	<p style='width:100%;text-align:center;font-style:italic;'>TBC</p>
-</div>
 <div id='action_widgets' class='widget_set'>
 	<h2>Actions</h2>
 	<ul class='clearfix'>
@@ -20,7 +16,11 @@
 </div>
 <div id='chart_widgets' class='widget_set'>
 	<h2>Charts</h2>
-	<p style='width:100%;text-align:center;font-style:italic;'>TBC</p>
+	<ul class='clearfix'>
+		{% for widget in visual_widgets %}
+			{% include 'html/draggable_widget.html' with widget=widget parent_type='visual' %}
+		{% endfor %}
+	</ul>
 </div>
 <div id='output_widgets' class='widget_set'>
 	<h2>Outputs</h2>

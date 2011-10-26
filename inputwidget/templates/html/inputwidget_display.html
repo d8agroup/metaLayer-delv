@@ -67,4 +67,11 @@
 			{% endfor %}
 		</ul>
 	</div>
+	<div class='visuals'>
+		<div class='visual_droppable'><p class='drag_message'>drag visuals here</p></div>
+		{% for visual in visuals %}
+			{{ visual|safe|cut:'Content-Type: text/html; charset=utf-8' }}
+			<div class='visual_droppable'><p class='drag_message'>drag visuals here</p></div>
+		{% endfor %}
+	</div>
 </div>
