@@ -58,6 +58,13 @@ def apply_visuals(request, collection_id, content, visuals):
         return_data.append(function(request, collection_id, content, visual['id']))
     return return_data
     
+def apply_outputs(request, collection_id, outputs):
+    return_data = []
+    for output in outputs:
+        views = my_import('outputwidgets.%s.views' % output['type'])
+        function = getattr(views, 'render')
+        return_data.append(function(collection_id, output['id']))
+    return return_data 
 
 class InputRunner(threading.Thread):
     def __init__(self, input):

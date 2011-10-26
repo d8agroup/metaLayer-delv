@@ -205,6 +205,34 @@ function ApplyInputWidgetDroppable()
 			}
 		}
 	);
+	
+	$('.output_droppable').droppable
+	(
+		{
+			activeClass:'output_widget_droppable_active',
+			hoverClass:'output_widget_droppable_hover',
+			accept:'.output_draggable',
+			drop:function(event, ui)
+			{
+				var draggable = ui.draggable;
+				var droppable = $(this);
+				var collection_id = droppable.parents('.collection').attr('id');
+				var type = draggable.find('.type').html();
+				var url = '/widget/outputwidgets/' + type + '/add_new?collection_id=' + collection_id;
+				var loading_html = $("<div class='loading' style='margin:10px 0;'><img src='/media/images/loading_bar.gif' style='margin:20px 0'/></div>");
+				droppable.after(loading_html);
+				droppable.remove();
+				$.get
+				(
+					url,
+					function()
+					{
+						ReloadInputWidget(collection_id);
+					}
+				);
+			}
+		}
+	);
 }
 
 function ApplyInputWidgetDraggable()
@@ -423,6 +451,19 @@ function ReconfigureVisualWidget(collection_id, visual_id, visual_type)
 function SaveVisualConfig(collection_id, visual_type, visual_id, config_type)
 {
 	url = '/widget/visualwidgets/' + visual_type + '/configure?collection_id=' + collection_id + '&visual_id=' + visual_id + '&type=' + config_type;
+	$.get
+	(
+		url,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
+}
+
+function RemoveOutputWidget(collection_id, output_id, output_type)
+{
+	url = '/widget/outputwidgets/' + output_type + '/remove?collection_id=' + collection_id + '&output_id=' + output_id;
 	$.get
 	(
 		url,

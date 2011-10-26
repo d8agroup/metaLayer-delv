@@ -34,7 +34,7 @@ def get_widget_data_by_widget_type(widget_type):
 def get_config_ensuring_collection(request, collection_id):
     all_collections_config = get_collection_config(request)
     if collection_id not in all_collections_config['collections']:
-        all_collections_config['collections'][collection_id] = { 'inputs':[], 'actions':[], 'visuals':[] }
+        all_collections_config['collections'][collection_id] = { 'inputs':[], 'actions':[], 'visuals':[], 'outputs':[] }
     return all_collections_config
 
 def set_collection_config(request, config):

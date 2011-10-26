@@ -157,6 +157,8 @@ INSTALLED_APPS = (
     'dashboard.actionwidgets.tagging',
     'dashboard.visualwidgets',
     'dashboard.visualwidgets.piechart',
+    'dashboard.outputwidgets',
+    'dashboard.outputwidgets.spreadsheet',
 )
 
 # A sample logging configuration. The only tangible logging

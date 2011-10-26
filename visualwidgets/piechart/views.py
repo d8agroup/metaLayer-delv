@@ -42,6 +42,11 @@ def generate_unconfigured_config(config, collection_id):
             return_data['config']['chart_types'][additional_config['name']] = additional_config['config']
         except:
             pass
+        
+    #if there is more than one type then show the config first
+    for t in return_data['config']['chart_types'].values():
+        if t['type'] in [a['type'] for a in config['collections'][collection_id]['actions']]:
+            return_data['config']['configured'] = False
     
     return return_data
 
@@ -99,7 +104,7 @@ def chart_source_type(request, collection_id, content, visual_id):
             'id':visual_id,
             'type':visual['type'],
             'url':url,
-            'display_name':visual['display_name']
+            'display_name':visual['config']['active_chart_type']
         }
         return render_to_response('chartwidget_base.html', { 'visual':visual_data, 'collection_id':collection_id })
     else:

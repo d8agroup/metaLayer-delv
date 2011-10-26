@@ -24,5 +24,9 @@
 </div>
 <div id='output_widgets' class='widget_set'>
 	<h2>Outputs</h2>
-	<p style='width:100%;text-align:center;font-style:italic;'>TBC</p>
+	<ul class='clearfix'>
+		{% for widget in output_widgets %}
+			{% include 'html/draggable_widget.html' with widget=widget parent_type='output' %}
+		{% endfor %}
+	</ul>
 </div>

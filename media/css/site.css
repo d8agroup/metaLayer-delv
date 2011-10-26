@@ -30,6 +30,7 @@ WIDGET PICKER
 #widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .flickrsearch_widget { background-image:url('/media/images/icon-flickr.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .piechart_widget { background-image:url('/media/images/icon-piechart.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 #widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .tagging_widget { background-image:url('/media/images/icon-tagging.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
@@ -142,11 +143,24 @@ INPUT WIDGETS
 .visuals .visual { width:100%; height:200px; background-color:#333; margin-bottom:10px; }
 .visuals .refresh_link { display:none; }
 
-.visuals .visual_configure { width:100%; background-color:#333; margin:10px 0; padding:10px 0;}
+.visuals .visual_configure { width:100%; background-color:#333; margin:10px 0; padding-bottom:10px;}
+.visuals .visual_configure h2 { margin-bottom:10px;}
 .visuals .visual_configure .accordion { width:90%; margin:0 auto;}
-.visuals .visual_configure .accordion .accordion_section { height:150px !important; overflow:auto; }
+.visuals .visual_configure .accordion .accordion_section { }
 .visuals .visual_configure .accordion .accordion_section .button { width:90%; margin:0 auto; }
 .visuals .visual_configure .accordion .accordion_section .empty_message { width:100%; text-align:center; padding:10px 0;}
+
+.outputs { width:100%; }
+.outputs .output_container { background-color:#333; margin:10px 0; padding:10px 0; }
+.outputs p.drag_message { padding:20px 0; width:100%; text-align:center; font-size:80%; display:none; }
+.outputs .output_widget_droppable_active { background-color:#333; margin:10px auto 10px auto; }
+.outputs .output_widget_droppable_hover { background-color:#AAA }
+.outputs .output_widget_droppable_active p { display:block; }
+.outputs h3 { width:100%; text-align:center; }
+.outputs .button { width:90%; margin:5%; }
+.outputs a.cancel { float:right; padding-right:5px;}
+.outputs a.cancel img { width:15px; }
+
 
 /*******************************************************************************
 JQUERYUI OVERRIDES

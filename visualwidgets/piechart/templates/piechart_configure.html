@@ -1,5 +1,6 @@
 <div class='visual_configure'>
 	<div class='{{ visual.type }} {{ visual.id }}'>
+		<h2>Configure {{ visual.display_name }}</h2>
 		<div class='accordion'>
 			{% for type in visual.config.chart_types %}
 				<h3><a href='#'>{{ type }}</a></h3>

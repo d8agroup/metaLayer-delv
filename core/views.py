@@ -18,6 +18,7 @@ def widget_picker_render(request):
             'input_widgets':get_widget_data_by_widget_type('inputwidgets'),
             'action_widgets':get_widget_data_by_widget_type('actionwidgets'),
             'visual_widgets':get_widget_data_by_widget_type('visualwidgets'),
+            'output_widgets':get_widget_data_by_widget_type('outputwidgets'),
         },
         {})
 

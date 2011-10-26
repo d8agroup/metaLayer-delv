@@ -15,6 +15,17 @@ var chart_{{ id }} = jQuery.jqplot
 				showDataLabels: true,
 				dataLabels:'label'
 			}
-		}
+		},
+		legend: 
+		{ 
+			show:false,
+		},
+		grid: 
+		{ 
+			shadow:false,
+			background:'transparent',
+			borderWidth:0,
+            borderColor: 'transparent' 
+		},
 	}
 );

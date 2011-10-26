@@ -74,4 +74,10 @@
 			<div class='visual_droppable'><p class='drag_message'>drag visuals here</p></div>
 		{% endfor %}
 	</div>
+	<div class='outputs'>
+		{% for output in outputs %}
+			{{ output|safe|cut:'Content-Type: text/html; charset=utf-8' }}
+		{% endfor %}
+		<div class='output_droppable'><p class='drag_message'>drag outputs here</p></div>
+	</div>
 </div>
