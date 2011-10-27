@@ -23,16 +23,17 @@ def add_new_input(request):
     return HttpResponse()
 
 def remove_input(request):
-    input_id = request.GET['input_id']
+    input_id = request.GET['input_id'] if 'input_id' in request.GET else None 
     collection_id = request.GET['collection_id']
     config = get_config_ensuring_collection(request, collection_id)
-    if len(config['collections'][collection_id]['inputs']) > 1:
+    if input_id and len(config['collections'][collection_id]['inputs']) > 1:
         config['collections'][collection_id]['inputs'] = [input for input in config['collections'][collection_id]['inputs'] if input['id'] != input_id]
     else:
         config['collections'][collection_id]['inputs'] = []
         config['collections'][collection_id]['actions'] = []
         config['collections'][collection_id]['visuals'] = []
         config['collections'][collection_id]['outputs'] = []
+        config['collections'][collection_id]['collapsed'] = False
     set_collection_config(request, config)
     return_data = { 'was_last_input':False } if len(config['collections'][collection_id]['inputs']) else { 'was_last_input':True }
     return JSONResponse(return_data)
@@ -79,6 +80,9 @@ def render_input_widget(request):
     content = apply_actions(request, collection_id, content, actions)
     visuals = apply_visuals(request, collection_id, content, visuals) 
     outputs = apply_outputs(request, collection_id, outputs)
+    
+    collapsed = config['collections'][collection_id]['collapsed'] if 'collapsed' in config['collections'][collection_id] else False 
+    
     return render_to_response(
         'html/inputwidget_display.html',
         {
@@ -87,6 +91,7 @@ def render_input_widget(request):
             'content':content,
             'visuals':visuals,
             'outputs':outputs,
+            'collapsed':collapsed,
             'collection_id':collection_id 
         })
 
@@ -94,9 +99,25 @@ def move_input_widget(request):
     new_collection_id = request.GET['new_collection_id']
     old_collection_id = request.GET['old_collection_id']
     config = get_config_ensuring_collection(request, new_collection_id)
-    for type in ['inputs', 'actions', 'visuals']:
+    for type in ['inputs', 'actions', 'visuals']: #collections
         config['collections'][new_collection_id][type] = config['collections'][new_collection_id][type] + [i for i in config['collections'][old_collection_id][type]]
         config['collections'][old_collection_id][type] = []
+    for type in ['collapsed']: #values
+        config['collections'][new_collection_id][type] = config['collections'][old_collection_id][type]
+        config['collections'][old_collection_id].pop(type) 
+    set_collection_config(request, config)
+    return HttpResponse()
+
+def input_collapse(request):
+    collection_id = request.GET['collection_id']
+    config = get_config_ensuring_collection(request, collection_id)
+    config['collections'][collection_id]['collapsed'] = True
     set_collection_config(request, config)
     return HttpResponse()
     
+def input_expand(request):
+    collection_id = request.GET['collection_id']
+    config = get_config_ensuring_collection(request, collection_id)
+    config['collections'][collection_id]['collapsed'] = False
+    set_collection_config(request, config)
+    return HttpResponse()

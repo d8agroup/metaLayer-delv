@@ -20,6 +20,11 @@
 		{% for widget in visual_widgets %}
 			{% include 'html/draggable_widget.html' with widget=widget parent_type='visual' %}
 		{% endfor %}
+		<li class='draggable_widget map_widget visual_draggable ui-corner-all'>
+			<span class='parent_type hidden'>visual</span>
+			<span class='type hidden'>map</span>
+			<span class='name'>Map</span>
+		</li>
 	</ul>
 </div>
 <div id='output_widgets' class='widget_set'>

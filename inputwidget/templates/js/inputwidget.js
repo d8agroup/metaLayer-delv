@@ -5,6 +5,8 @@ var URL_CLEAR_CONFIG = '/inputs/clearconfig';
 var URL_REMOVE_INPUT = '/inputs/remove';
 var URL_ADD_NEW_ACTION = '/actions/add';
 var URL_MOVE_INPUT_WIDGET = '/inputs/move';
+var URL_COLLAPSE = '/inputs/collapse';
+var URL_EXPAND = '/inputs/expand';
 
 $(document).ready
 (
@@ -27,6 +29,37 @@ $(document).ready
 		);
 	}
 );
+
+function RemoveInputWidget(collection_id)
+{
+	var collection = $('#' + collection_id);
+	collection.children().remove()
+	collection.append(HTML_ADD_INPUT_WIDGET)
+	ApplyInputWidgetDroppable()
+	$.get(URL_REMOVE_INPUT + "?collection_id=" + collection_id)
+}
+
+function ToggleInputWidget(collection_id)
+{
+	var collection = $('#' + collection_id);
+	var button = collection.find('.toggle_button img');
+	var content = collection.find('.content');
+	
+	if (content.is(':visible'))
+	{
+		content.slideUp();
+		button.attr('src', '/media/images/icon-max.png');
+		button.attr('alt', 'Maximise');
+		$.get(URL_COLLAPSE + "?collection_id=" + collection_id);
+	}
+	else
+	{
+		content.slideDown();
+		button.attr('src', '/media/images/icon-min.png');
+		button.attr('alt', 'Minimise');
+		$.get(URL_EXPAND + "?collection_id=" + collection_id);
+	}
+}
 
 function RefreshAll(collection_id)
 {
@@ -187,6 +220,13 @@ function ApplyInputWidgetDroppable()
 			drop:function(event, ui)
 			{
 				var draggable = ui.draggable;
+				
+				if(draggable.is('.map_widget'))
+				{
+					alert('Sorry, this type of visual widget is not avaliable in this release');
+					return;
+				}
+				
 				var droppable = $(this);
 				var collection_id = droppable.parents('.collection').attr('id');
 				var visual_type = draggable.find('.type').html();

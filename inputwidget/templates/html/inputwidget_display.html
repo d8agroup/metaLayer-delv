@@ -1,6 +1,12 @@
 {% load custom_tags %}
 <div class='input_widget'>
 	<div class='inputs actions'>
+		<a href='JavaScript:ToggleInputWidget("{{ collection_id }}")' class='toggle_button'>
+			{% if collapsed %}<img src='/media/images/icon-max.png' alt='Maximise' />{% else %}<img src='/media/images/icon-min.png' alt='Minimise' />{% endif %}
+		</a>
+		<a href='JavaScript:RemoveInputWidget("{{ collection_id }}")' class='remove_button'>
+			<img src='/media/images/icon-cross.png' />
+		</a>		
 		<ul class='full'>
 			{% for input in inputs %}
 				<li class='{{ input.type }} clearfix'>
@@ -35,7 +41,7 @@
 		</ul>
 		<div class='input_or_action_widget_droppable hidden'><p class='drop_prompt'>drag extra inputs or actions here</p></div>
 	</div>
-	<div class='content'>
+	<div class='content {% if collapsed %}hidden{% endif %}'>
 		<ul>
 			{% for item in content %}
 				<li class='{{ item.type }} clearfix content_item'>

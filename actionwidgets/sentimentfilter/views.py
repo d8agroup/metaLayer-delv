@@ -164,7 +164,7 @@ def chart_piechart_sentimentsplit(request, collection_id, content, visual_id):
         'id':visual_id,
         'type':visual['type'],
         'url':url,
-        'display_name':visual['display_name']
+        'display_name':'Sentiment'
     }
     return render_to_response('chartwidget_base.html', { 'visual':visual_data, 'collection_id':collection_id })
 
