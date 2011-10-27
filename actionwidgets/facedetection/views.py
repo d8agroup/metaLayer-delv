@@ -1,3 +1,4 @@
+from visualwidgets.piechart.views import chart_source_type
 from metalayerbridge.utils import get_sentiment_from_text
 from metalayerbridge.utils import get_faces_from_image
 from inputwidget.utils import run_all_inputs_and_combine_results
