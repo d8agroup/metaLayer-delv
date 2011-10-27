@@ -25,8 +25,7 @@ def generate_unconfigured_config():
         'type':'facedetection', 
         'display_name':'Face Detection',
         'config':{ 
-            'configured':True,
-            'elements':[]
+            'configured':True
         }
     }
     

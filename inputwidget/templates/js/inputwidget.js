@@ -101,6 +101,15 @@ function CancelInputWidgetConfig(collection_id, input_id)
 
 function ApplyInputWidgetDroppable()
 {
+	var input_widget_containers = $('.input_widget_container');
+	for (var x=0; x<input_widget_containers.length; x++)
+	{
+		var container = $(input_widget_containers[x]);
+		if (container.find('.drop_prompt').lenght == 0)
+			container.removeClass('input_widget_droppable').addClass('input_or_action_widget_droppable');
+	}
+	
+	
 	/* APPLY TO THE EMPTY INPUT WIDGET SLOTS */
 	$('.input_widget_droppable').droppable
 	(
@@ -503,6 +512,7 @@ function SaveVisualConfig(collection_id, visual_type, visual_id, config_type)
 
 function RemoveOutputWidget(collection_id, output_id, output_type)
 {
+	$('.' + output_id).remove();
 	url = '/widget/outputwidgets/' + output_type + '/remove?collection_id=' + collection_id + '&output_id=' + output_id;
 	$.get
 	(

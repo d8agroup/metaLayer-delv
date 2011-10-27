@@ -20,7 +20,9 @@
 			{% for action in actions %}
 				<li class='{{ action.type }} clearfix'>
 					<div class='actions'>
-						<a href='JavaScript:ReconfigureAction("{{ collection_id }}", "{{ action.id }}", "{{ action.type }}")'><img src='/media/images/icon-config.png' title='configure'/></a>
+						{% if action.config.elements %}
+							<a href='JavaScript:ReconfigureAction("{{ collection_id }}", "{{ action.id }}", "{{ action.type }}")'><img src='/media/images/icon-config.png' title='configure'/></a>
+						{% endif %}
 						<a href='JavaScript:RemoveAction("{{ collection_id }}", "{{ action.id }}", "{{ action.type }}")' ><img src='/media/images/icon-cross.png' title='remove' /></a>
 					</div>
 					<span class='display_name'>{{ action.display_name|safe|truncate_chars:35 }}</span>

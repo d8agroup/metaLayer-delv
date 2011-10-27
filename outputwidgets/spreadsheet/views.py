@@ -36,12 +36,16 @@ def remove(request):
     collection_id = request.GET['collection_id']
     id = request.GET['output_id']
     config = get_config_ensuring_collection(request, collection_id)
+    print 'before', config
     config['collections'][collection_id]['outputs'] = [a for a in config['collections'][collection_id]['outputs'] if a['id'] != id]
+    print 'after', config
     set_collection_config(request, config)
     return HttpResponse()
 
 def render(collection_id, output_id):
-    return render_to_response('spreadsheet_basic.html', { 'output':generate_unconfigured_config(), 'collection_id':collection_id })
+    config = generate_unconfigured_config()
+    config['id'] = output_id
+    return render_to_response('spreadsheet_basic.html', { 'output':config, 'collection_id':collection_id })
 
 def export(request):
     collection_id = request.GET['collection_id']
@@ -65,15 +69,17 @@ def export(request):
     ws.write(0,1, 'Content Source', header_row_style)
     ws.write(0,2, 'Author', header_row_style)
     ws.write(0,3, 'Title', header_row_style)
-    ws.write(0,4, 'Sentiment', header_row_style)
-    ws.write(0,5, 'Tags', header_row_style)
+    ws.write(0,4, 'Image', header_row_style)
+    ws.write(0,5, 'Sentiment', header_row_style)
+    ws.write(0,6, 'Tags', header_row_style)
     
     ws.col(0).width = max([len(datetime.datetime.fromtimestamp(i['time']).strftime("%Y-%m-%d %H:%M")) for i in content]) * 256
     ws.col(1).width = max([len(i['type']) for i in content] + [len('Content Source')]) * 256
     ws.col(2).width = max([len(i['author']) for i in content]) * 256
     ws.col(3).width = max([len(i['title']) for i in content]) * 256
-    ws.col(4).width = max([len("%f" % i['sentiment']) for i in content if 'sentiment' in i] + [10]) * 256
-    ws.col(5).width = max([len(' | '.join(i['tags'])) for i in content if 'tags' in i] + [10]) * 256
+    ws.col(4).width = max([len(i['image_url']) for i in content if 'image_url' in i] + [12]) * 256
+    ws.col(5).width = max([len("%f" % i['sentiment']) for i in content if 'sentiment' in i] + [10]) * 256
+    ws.col(6).width = max([len(' | '.join(i['tags'])) for i in content if 'tags' in i] + [10]) * 256
     
     row_count = 1
     for i in content:
@@ -81,8 +87,9 @@ def export(request):
         ws.write(row_count, 1, i['type'])
         ws.write(row_count, 2, i['author'])
         ws.write(row_count, 3, i['title'])
-        ws.write(row_count, 4, i['sentiment'] if 'sentiment' in i else '')
-        ws.write(row_count, 5, ' | '.join(i['tags']) if 'tags' in i else '')
+        ws.write(row_count, 4, i['image_url'] if i['type'] in ['flickrsearch', 'twittersearch', 'twitteruser'] else '')
+        ws.write(row_count, 5, i['sentiment'] if 'sentiment' in i else '')
+        ws.write(row_count, 6, ' | '.join(i['tags']) if 'tags' in i else '')
         row_count = row_count + 1
         
     response = HttpResponse(mimetype="application/ms-excel")

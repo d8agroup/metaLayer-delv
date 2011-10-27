@@ -20,8 +20,7 @@ def generate_unconfigured_config():
         'type':'tagging', 
         'display_name':'Tagging and Taxonomy',
         'config':{ 
-            'configured':True,
-            'elements':[]
+            'configured':True
         }
     }
     
