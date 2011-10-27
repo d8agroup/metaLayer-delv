@@ -92,7 +92,7 @@ def save_config(request):
 
 def chart_piechart_configuration():
     return {
-        'name':'Pictures Containing',
+        'name':'Pictures Containing Faces',
         'config':{
             'type':type,
             'module':'actionwidgets.facedetection.views',
