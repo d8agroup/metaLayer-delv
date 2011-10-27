@@ -103,8 +103,9 @@ def move_input_widget(request):
         config['collections'][new_collection_id][type] = config['collections'][new_collection_id][type] + [i for i in config['collections'][old_collection_id][type]]
         config['collections'][old_collection_id][type] = []
     for type in ['collapsed']: #values
-        config['collections'][new_collection_id][type] = config['collections'][old_collection_id][type]
-        config['collections'][old_collection_id].pop(type) 
+        if type in config['collections'][old_collection_id]:
+            config['collections'][new_collection_id][type] = config['collections'][old_collection_id][type]
+            config['collections'][old_collection_id].pop(type) 
     set_collection_config(request, config)
     return HttpResponse()
 

@@ -7,3 +7,4 @@ class SentimentCache(models.Model):
 class TaggingCache(models.Model):
     text_hash = models.CharField(max_length=255, unique=True)
     json = models.TextField()
+

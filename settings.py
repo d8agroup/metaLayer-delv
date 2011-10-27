@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'dashboard.inputwidget',
     'dashboard.actionwidgets.sentimentfilter',
     'dashboard.actionwidgets.tagging',
+    'dashboard.actionwidgets.facedetection',
     'dashboard.visualwidgets',
     'dashboard.visualwidgets.piechart',
     'dashboard.outputwidgets',

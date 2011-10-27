@@ -45,6 +45,9 @@
 		<ul>
 			{% for item in content %}
 				<li class='{{ item.type }} clearfix content_item'>
+					{% if item.has_faces %}
+						<img class='has_faces' src='/media/images/icon-face.png' />
+					{% endif %}
 					<div class='content_item_details'>
 						{% if item.sentiment  %}
 							{% if item.sentiment == 0 %}

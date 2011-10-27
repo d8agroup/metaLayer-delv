@@ -3,6 +3,11 @@ from django.utils import simplejson
 from hashlib import md5 
 import urllib, urllib2
 
+from poster.encode import multipart_encode, MultipartParam
+from poster.streaminghttp import register_openers
+import urllib
+import StringIO
+
 def get_sentiment_from_text(text):
     text = unicode(text).encode('ascii', 'ignore')
     text_hash = md5(text).hexdigest()
@@ -37,5 +42,24 @@ def get_tags_from_text(text):
         cache.save()
         return tags
     
-
-        
+def get_faces_from_image(image_url):
+    image_hash = md5(image_url).hexdigest()
+    try:
+        return_data = simplejson.loads(TaggingCache.objects.get(text_hash=image_hash).json)
+    except TaggingCache.DoesNotExist:
+        register_openers()
+        image = StringIO.StringIO(urllib.urlopen(image_url).read())
+        image_id = 'temp'
+        items = []
+        items.append(MultipartParam(name='image_id', value=image_id))
+        items.append(MultipartParam(name='image', filename='image.tiff', fileobj=image))
+        datagen, headers = multipart_encode(items)
+        request = urllib2.Request('http://api.metalayer.com/s/imglayer/1/dashboardfaces', datagen, headers)
+        raw_json = urllib2.urlopen(request).read()
+        cache = TaggingCache()
+        cache.text_hash = image_hash
+        cache.json = raw_json
+        cache.save()
+        return_data = simplejson.loads(raw_json)
+    return len(return_data['response']['objectdetection']['faces']) > 0
+    

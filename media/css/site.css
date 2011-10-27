@@ -39,6 +39,7 @@ WIDGET PICKER
 
 #widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .tagging_widget { background-image:url('/media/images/icon-tagging.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .facedetection_widget { background-image:url('/media/images/icon-face.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 /*******************************************************************************
 COLLECTION LEVEL
@@ -92,6 +93,12 @@ INPUT WIDGETS
 .input_widget .content .content_item { margin-bottom:10px; padding-bottom:10px; border-bottom:1px dashed #555; width:98%;}
 .input_widget .content .content_item_details { height:30px; overflow:hidden; width:90% }
 .input_widget .content .content_item_details img { float:left; height:30px; padding-right:10px; }
+
+.input_widget .content .flickrsearch .content_item_details img { float:left; height:80px; padding-right:10px; }
+.input_widget .content .flickrsearch .content_item_details { height:80px; overflow:hidden; width:90% }
+
+.input_widget .content .has_faces { float:right; width:20px; height:20px; padding:30px 0 0 0;}
+
 .input_widget .content .content_item_details .sentiment { float:right; width:25px; height:25px; }
 .input_widget .content .content_item_details .sentiment-text { display:none; }
 .input_widget .content .content_item_details .sentiment-positive { background:url('/media/images/icon-sentiment-up.png') 0 0 no-repeat;  }
