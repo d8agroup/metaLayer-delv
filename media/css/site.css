@@ -35,6 +35,7 @@ WIDGET PICKER
 #widget_picker .map_widget { background-image:url('/media/images/icon-map.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 #widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .sendemail_widget { background-image:url('/media/images/icon-email.png'); background-repeat:no-repeat; background-position:3px 5px; background-size:20px; }
 
 
 #widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }

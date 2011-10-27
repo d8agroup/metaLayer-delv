@@ -264,6 +264,13 @@ function ApplyInputWidgetDroppable()
 			drop:function(event, ui)
 			{
 				var draggable = ui.draggable;
+				
+				if(draggable.is('.sendemail_widget'))
+				{
+					alert('Sorry, this type of output widget is not avaliable in this release');
+					return;
+				}
+				
 				var droppable = $(this);
 				var collection_id = droppable.parents('.collection').attr('id');
 				var type = draggable.find('.type').html();
