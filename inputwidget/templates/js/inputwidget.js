@@ -565,6 +565,10 @@ function SaveSearch(collection_id)
 	{
 		var checked = sentiment.find('input:checked');
 		var selection = checked.next('label').find('span').html();
+		if (selection == '+')
+			selection = 'p';
+		if (selection == '-')
+			selection = 'n';
 		url += "&sentiment=" + selection; 
 	}	
 	var faces = search.find('.faces');

@@ -61,9 +61,9 @@
 					<h4>show sentiment</h4>
 					<div class='radio_group control'>
 						<input {% if sentiment_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_1' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_1'>all</label>
-						<input {% if sentiment_filter == 'p' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_2' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_2'>p</label>
+						<input {% if sentiment_filter == 'p' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_2' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_2'>+</label>
 						<input {% if sentiment_filter == 'o' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_3' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_3'>o</label>
-						<input {% if sentiment_filter == 'n' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_4' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_4'>n</label>
+						<input {% if sentiment_filter == 'n' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_4' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_4'>-</label>
 					</div>
 				</div>
 			{% endif %}
