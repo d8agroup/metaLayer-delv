@@ -7,6 +7,7 @@ var URL_ADD_NEW_ACTION = '/actions/add';
 var URL_MOVE_INPUT_WIDGET = '/inputs/move';
 var URL_COLLAPSE = '/inputs/collapse';
 var URL_EXPAND = '/inputs/expand';
+var URL_SEARCH = '/inputs/search';
 
 $(document).ready
 (
@@ -63,12 +64,18 @@ function ToggleInputWidget(collection_id)
 
 function RefreshAll(collection_id)
 {
-	if ($('#' + collection_id + ' .input_widget').length > 0 && $('#' + collection_id + ' .reloading').length == 0)
+	if ($('#' + collection_id + ' .input_widget').length > 0 && $('#' + collection_id + ' .reloading').length == 0 && $('#' + collection_id + ' .search').is(':hidden'))
 	{
 		$('#' + collection_id).draggable('destroy');
 		$('#' + collection_id).droppable('destroy');
 		ShowReloadingForInputWidget(collection_id)
-		var reload_func = function() { ReloadInputWidget(collection_id, true); }
+		var reload_func = function() 
+		{ 
+			if($('#' + collection_id + ' .search').is(':hidden'))
+				ReloadInputWidget(collection_id, true);
+			else
+				$('#' + collection_id + " .input_widget_container .refresh_button img").attr('src', '/media/images/icon-clock.gif');
+		}
 		setTimeout(reload_func, 5000);
 	}
 	var func = function() { RefreshAll(collection_id); }
@@ -376,8 +383,9 @@ function ShowLoadingForInputWidget(collection_id)
 
 function ShowReloadingForInputWidget(collection_id)
 {
-	var input_widget_container = $('#' + collection_id + " .input_widget_container");
-	input_widget_container.prepend("<div class='reloading'><span>reloading</span><img src='/media/images/loading_bar.gif' /></div>")
+	var reloading_image = $('#' + collection_id + " .input_widget_container .refresh_button img");
+	var loading_image_url = '/media/images/loading_circle.gif';
+	reloading_image.attr('src', loading_image_url);
 }
 
 function ReconfigureInput(collection_id, input_id, input_type)
@@ -529,4 +537,52 @@ function RemoveOutputWidget(collection_id, output_id, output_type)
 			ReloadInputWidget(collection_id);
 		}
 	);
+}
+
+function ToggleSearch(collection_id)
+{
+	var collection = $('#' + collection_id);
+	var search =collection.find('.search');
+	if (search.is(':visible'))
+	{	
+		search.slideUp();
+	}
+	else
+	{	
+		search.slideDown();
+	}
+}
+
+function SaveSearch(collection_id)
+{
+	var collection = $('#' + collection_id);
+	var search = collection.find('.search');
+
+	var url = URL_SEARCH + "?collection_id=" + collection_id;
+	
+	var sentiment = search.find('.sentiment');
+	if (sentiment.length > 0)
+	{
+		var checked = sentiment.find('input:checked');
+		var selection = checked.next('label').find('span').html();
+		url += "&sentiment=" + selection; 
+	}	
+	var faces = search.find('.faces');
+	if (faces.length > 0)
+	{
+		var checked = faces.find('input:checked');
+		var selection = checked.next('label').find('span').html();
+		url += "&faces=" + selection;
+	}
+
+	ShowLoadingForInputWidget(collection_id);
+	$.get
+	(
+		url,
+		function()
+		{
+			ReloadInputWidget(collection_id);
+		}
+	);
+	
 }

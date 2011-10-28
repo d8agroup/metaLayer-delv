@@ -52,6 +52,7 @@ function ClearCollectionConfig()
 function ApplyUIElements()
 {
 	$('.button').button();
+	$('.radio_group').buttonset();
 	$('.tabs').tabs();
 	$('.accordion').accordion();
 }

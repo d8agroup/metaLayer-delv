@@ -36,9 +36,7 @@ def remove(request):
     collection_id = request.GET['collection_id']
     id = request.GET['output_id']
     config = get_config_ensuring_collection(request, collection_id)
-    print 'before', config
     config['collections'][collection_id]['outputs'] = [a for a in config['collections'][collection_id]['outputs'] if a['id'] != id]
-    print 'after', config
     set_collection_config(request, config)
     return HttpResponse()
 

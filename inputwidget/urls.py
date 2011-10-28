@@ -8,6 +8,7 @@ from inputwidget.views import remove_input
 from inputwidget.views import move_input_widget
 from inputwidget.views import input_collapse
 from inputwidget.views import input_expand
+from inputwidget.views import apply_search_filter
 
 urlpatterns = patterns('',
     url(r'/js', render_js),
@@ -18,5 +19,6 @@ urlpatterns = patterns('',
     url(r'/render', render_input_widget),  
     url(r'/move', move_input_widget),
     url(r'/collapse', input_collapse),
-    url(r'/expand', input_expand),           
+    url(r'/expand', input_expand),
+    url(r'/search', apply_search_filter),     
 )

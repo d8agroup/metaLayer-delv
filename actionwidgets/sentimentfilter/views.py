@@ -24,6 +24,19 @@ def generate_unconfigured_config():
         'type':'sentimentfilter', 
         'display_name':'Sentiment Analysis and Filter',
         'config':{ 
+            'configured':True
+        }
+    }
+
+"""
+Before I removed the config elements
+    
+def generate_unconfigured_config():
+    return {
+        'id':md5('%s' % random.random()).hexdigest(),
+        'type':'sentimentfilter', 
+        'display_name':'Sentiment Analysis and Filter',
+        'config':{ 
             'configured':True,
             'elements':[
                 { 'name':'filter', 'value':'any' },
@@ -31,11 +44,15 @@ def generate_unconfigured_config():
             ]
         }
     }
+"""
     
 def run_action_for_content(request, collection_id, action_id, content):
     config = get_config_ensuring_collection(request, collection_id)
+    sentiment_condition = config['collections'][collection_id]['search'][type] if type in config['collections'][collection_id]['search'] else 'all'
+
     config = [a for a in config['collections'][collection_id]['actions'] if a['id'] == action_id][0]
     
+    """
     if config['config']['elements'][0]['value'] == 'pp':
         sentiment_condition = [5, 2]
     elif config['config']['elements'][0]['value'] == 'p':
@@ -48,7 +65,8 @@ def run_action_for_content(request, collection_id, action_id, content):
         sentiment_condition = False
     
     include_neutral = True if config['config']['elements'][1]['value'] == 'on' else False
-
+    """
+    
     all_content = []
     
     n = 10
@@ -59,13 +77,16 @@ def run_action_for_content(request, collection_id, action_id, content):
     
     for item in all_content:
         sentiment = item['sentiment']
-        if not sentiment_condition:
+        if sentiment_condition == 'all':
             return_content.append(item)
             continue
-        if sentiment == 0 and include_neutral:
+        if sentiment == 0 and sentiment_condition == 'o':
             return_content.append(item)
             continue
-        if sentiment <= sentiment_condition[0] and sentiment > sentiment_condition[1]:
+        if sentiment > 0 and sentiment_condition =='p':
+            return_content.append(item)
+            continue
+        if sentiment < 0 and sentiment_condition =='n':
             return_content.append(item)
             continue
 

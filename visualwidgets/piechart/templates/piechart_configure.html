@@ -1,6 +1,7 @@
 <div class='visual_configure'>
 	<div class='{{ visual.type }} {{ visual.id }}'>
 		<h2>Configure {{ visual.display_name }}</h2>
+		<p>Choose the type of chart you want</p>
 		<div class='accordion'>
 			{% for type in visual.config.chart_types %}
 				<h3><a href='#'>{{ type }}</a></h3>
@@ -10,10 +11,8 @@
 							<label>{{ element.display_name }}</label>
 							<input type='{{ element.type }}' name='{{ element.name }}' value='{{ element.value }}' />
 						</div>
-					{% empty %}
-						<p class='empty_message'>There is no further configuration required for this type of chart</p>
 					{% endfor %}
-					<a href='JavaScript:SaveVisualConfig("{{ collection_id }}", "{{ visual.type }}", "{{ visual.id }}", "{{ type }}")' class='button'>Save</a>
+					<a href='JavaScript:SaveVisualConfig("{{ collection_id }}", "{{ visual.type }}", "{{ visual.id }}", "{{ type }}")' class='button'>Show this chart</a>
 				</div>
 			{% endfor %}
 		</div>

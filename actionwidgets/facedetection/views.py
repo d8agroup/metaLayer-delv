@@ -35,7 +35,24 @@ def run_action_for_content(request, collection_id, action_id, content):
     n = 10
     for r in [content[i:i+n] for i in range(0, len(content), n)]:
         return_content = return_content + threaded_get_faces(r)
-    return return_content   
+    
+    config = get_config_ensuring_collection(request, collection_id)
+    sentiment_condition = config['collections'][collection_id]['search'][type] if type in config['collections'][collection_id]['search'] else 'all'
+    
+    refined_content = []
+    
+    for c in return_content:
+        if sentiment_condition == 'all':
+            refined_content.append(c)
+        elif sentiment_condition == 'with':
+            if 'has_faces' in c and c['has_faces']:
+                refined_content.append(c)
+        elif sentiment_condition == 'without':
+            if 'has_faces' not in c or not c['has_faces']:
+                refined_content.append(c)
+    
+    
+    return refined_content
     
     
 def clear_config(request):
@@ -187,6 +204,5 @@ class ServiceRunner(threading.Thread):
                 has_faces = get_faces_from_image(self.item['image_url'].replace('_s.jpg', '_b.jpg'))
                 worked = True
             except Exception, e:
-                print e
                 time.sleep(1)
         self.item['has_faces'] = has_faces if worked else False

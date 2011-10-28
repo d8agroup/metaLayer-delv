@@ -1,3 +1,4 @@
+from core.utils import set_collection_config
 from core.utils import get_collection_config
 from core.utils import my_import
 import inputs.sources as sources
@@ -78,4 +79,12 @@ class InputRunner(threading.Thread):
     def run(self):
         source_bridge = getattr(sources, self.input['type'])()
         self.result = source_bridge.run_for_input(self.input)
+        
+        
+def fake_search(request, type, config, collection_id):
+    if not [a for a in config['collections'][collection_id]['actions'] if a['type'] == type]:
+        return None
+    return config['collections'][collection_id]['search'][type] if type in config['collections'][collection_id]['search'] else 'all' 
+
+        
         

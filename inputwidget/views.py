@@ -7,6 +7,7 @@ from inputwidget.utils import run_all_inputs_and_combine_results
 from inputwidget.utils import apply_actions
 from inputwidget.utils import apply_visuals
 from inputwidget.utils import apply_outputs
+from inputwidget.utils import fake_search
 import inputs.sources as sources
 
 def render_js(request):
@@ -92,6 +93,8 @@ def render_input_widget(request):
             'visuals':visuals,
             'outputs':outputs,
             'collapsed':collapsed,
+            'sentiment_filter':fake_search(request, 'sentimentfilter', config, collection_id),
+            'faces_filter':fake_search(request, 'facedetection', config, collection_id),
             'collection_id':collection_id 
         })
 
@@ -122,3 +125,14 @@ def input_expand(request):
     config['collections'][collection_id]['collapsed'] = False
     set_collection_config(request, config)
     return HttpResponse()
+
+def apply_search_filter(request):
+    collection_id = request.GET['collection_id']
+    sentiment = request.GET['sentiment'] if 'sentiment' in request.GET else 'all'
+    faces = request.GET['faces'] if 'faces' in request.GET else 'all'
+    config = get_config_ensuring_collection(request, collection_id)
+    config['collections'][collection_id]['search']['sentimentfilter'] = sentiment
+    config['collections'][collection_id]['search']['facedetection'] = faces
+    set_collection_config(request, config)
+    return HttpResponse()
+    
