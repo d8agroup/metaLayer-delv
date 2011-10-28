@@ -127,6 +127,7 @@ INPUT WIDGETS
 .input_widget .search .search_control h4 { float:left; width:45%; padding:3px}
 .input_widget .search .search_control .control { float:right; width:45%; text-align:right;}
 .input_widget .search .search_control .control input[type=text] { width:90%; }
+.input_widget .search .no_search_message p { width:70%; text-align:center; font-size:90%; margin:10px auto}
 
 .input_widget_config { background-color:#333; }
 .input_widget_config .inner { margin:0 10px; padding:5px; color:#FFF; }
