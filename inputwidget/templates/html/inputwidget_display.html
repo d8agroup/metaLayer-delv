@@ -71,7 +71,16 @@
 					</div>
 				</div>
 			{% endif %}
-			{% if not faces_filter and not sentiment_filter %}
+			{% if influence_filter %}
+				<div class='search_control clearfix influence'>
+					<h4>influence</h4>
+					<div class='radio_group control'>
+						<input {% if influence_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_influence_{{ collection_id }}_1' name='search_influence'/><label for='search_influence_{{ collection_id }}_1'>all</label>
+						<input {% if influence_filter == 'influential' %}checked='CHECKED'{% endif %} type='radio' id='search_influence_{{ collection_id }}_2' name='search_influence'/><label for='search_influence_{{ collection_id }}_2'>influential</label>
+					</div>
+				</div>
+			{% endif %}
+			{% if not faces_filter and not sentiment_filter and not influence_filter %}
 				<div class='no_search_message'>
 					<p>There are no filter options available yet, why not add an action or two?</p>
 				</div>
@@ -86,6 +95,9 @@
 		<ul>
 			{% for item in content %}
 				<li class='{{ item.type }} clearfix content_item'>
+					{% if item.influence %}
+						<span class='influence'>{{ item.influence|floatformat:0 }}%</span>
+					{% endif %}
 					{% if item.has_faces %}
 						<img class='has_faces' src='/media/images/icon-face.png' />
 					{% endif %}

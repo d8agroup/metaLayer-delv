@@ -1,94 +1,57 @@
 from inputwidget.utils import run_all_inputs_and_combine_results
 from inputwidget.utils import apply_actions
 from visualwidgets.piechart.views import chart_source_type
-from metalayerbridge.utils import get_sentiment_from_text
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.shortcuts import render_to_response
 from core.utils import get_config_ensuring_collection
 from core.utils import set_collection_config
+from core.models import CacheEntry
 from hashlib import md5
 from Queue import Queue
+import urllib2
 import threading
 import random
 import time
 
-type ='sentimentfilter' 
+type ='klout' 
+supported_types = ['twittersearch', 'twitteruser']
 
 def widget_data():
-    return { 'type':type, 'display_name':'Sentiment' }
+    return { 'type':type, 'display_name':'Influence' }
 
 def generate_unconfigured_config():
     return {
         'id':md5('%s' % random.random()).hexdigest(),
-        'type':'sentimentfilter', 
-        'display_name':'Sentiment Analysis and Filter',
+        'type':type, 
+        'display_name':'Influence (Klout)',
         'config':{ 
             'configured':True
         }
     }
-
-"""
-Before I removed the config elements
-    
-def generate_unconfigured_config():
-    return {
-        'id':md5('%s' % random.random()).hexdigest(),
-        'type':'sentimentfilter', 
-        'display_name':'Sentiment Analysis and Filter',
-        'config':{ 
-            'configured':True,
-            'elements':[
-                { 'name':'filter', 'value':'any' },
-                { 'name':'include_neutral', 'value':'on' }
-            ]
-        }
-    }
-"""
     
 def run_action_for_content(request, collection_id, action_id, content):
     config = get_config_ensuring_collection(request, collection_id)
-    sentiment_condition = config['collections'][collection_id]['search'][type] if type in config['collections'][collection_id]['search'] else 'all'
+    klout_condition = config['collections'][collection_id]['search'][type] if type in config['collections'][collection_id]['search'] else 'all'
 
     config = [a for a in config['collections'][collection_id]['actions'] if a['id'] == action_id][0]
-    
-    """
-    if config['config']['elements'][0]['value'] == 'pp':
-        sentiment_condition = [5, 2]
-    elif config['config']['elements'][0]['value'] == 'p':
-        sentiment_condition = [5, 0]
-    elif config['config']['elements'][0]['value'] == 'n': 
-        sentiment_condition = [-0.1, -5.1]
-    elif config['config']['elements'][0]['value'] == 'nn': 
-        sentiment_condition = [-2.1, -5.1]
-    else:
-        sentiment_condition = False
-    
-    include_neutral = True if config['config']['elements'][1]['value'] == 'on' else False
-    """
-    
+        
     all_content = []
     
     n = 10
     for r in [content[i:i+n] for i in range(0, len(content), n)]:
-        all_content = all_content + threaded_get_sentiment(r)
+        all_content = all_content + threaded_get_klout(r)
 
     return_content = []
     
     for item in all_content:
-        sentiment = item['sentiment']
-        if sentiment_condition == 'all':
+        if klout_condition == 'all':
             return_content.append(item)
             continue
-        if sentiment == 0 and sentiment_condition == 'o':
-            return_content.append(item)
-            continue
-        if sentiment > 0 and sentiment_condition =='p':
-            return_content.append(item)
-            continue
-        if sentiment < 0 and sentiment_condition =='n':
-            return_content.append(item)
-            continue
+        if klout_condition == 'influential':
+            if 'influence' in item and item['influence'] > 50: 
+                return_content.append(item)
+                continue
 
     return return_content 
     
@@ -118,78 +81,35 @@ def remove(request):
     config['collections'][collection_id]['actions'] = [a for a in config['collections'][collection_id]['actions'] if a['id'] != id]
     set_collection_config(request, config)
     return HttpResponse()
-
-def render_config(request):
-    collection_id = request.GET['collection_id']
-    id = request.GET['id']
-    config = get_config_ensuring_collection(request, collection_id)
-    return render_to_response(
-        'sentimentfilter_configure.html',
-        { 'action':[c for c in config['collections'][collection_id]['actions'] if c['id'] == id][0], 'collection_id':collection_id })
-
-def save_config(request):
-    collection_id = request.GET['collection_id']
-    id = request.GET['id']
-    filter = request.GET['filter']
-    include_neutral = request.GET['include_neutral'] if 'include_neutral' in request.GET else 'off' 
-    if filter == 'pp':
-        display_name = 'Sentiment Filter - Extremely Positive Only'
-    elif filter == 'p':
-        display_name = 'Sentiment Filter - Positive Only'
-    elif filter == 'n':
-        display_name = 'Sentiment Filter - Negative Only'
-    elif filter == 'nn':
-        display_name = 'Sentiment Filter - Extremely Negative Only'
-    else:
-        display_name = 'Sentiment'
-    
-    action_config = {
-        'id':id,
-        'type':type, 
-        'display_name':display_name,
-        'config':{ 
-            'configured':True,
-            'elements':[
-                { 'name':'filter', 'value':filter },
-                { 'name':'include_neutral', 'value':include_neutral }
-            ]
-        }
-    }
-    
-    config = get_config_ensuring_collection(request, collection_id)
-    config['collections'][collection_id]['actions'] = [a for a in config['collections'][collection_id]['actions'] if a['id'] != id]
-    config['collections'][collection_id]['actions'].append(action_config)
-    set_collection_config(request, config)
-    return HttpResponse()
  
 def chart_piechart_configuration():
     return {
-        'name':'Sentiment Split',
+        'name':'Influential Contributors',
         'config':{
             'type':type,
-            'module':'actionwidgets.sentimentfilter.views',
-            'function':'chart_piechart_sentimentsplit',
+            'module':'actionwidgets.klout.views',
+            'function':'chart_piechart_influence',
             'elements':[]
         }
     } 
 
-def chart_piechart_sentimentsplit(request, collection_id, content, visual_id):
+def chart_piechart_influence(request, collection_id, content, visual_id):
     config = get_config_ensuring_collection(request, collection_id)
     visual = [v for v in config['collections'][collection_id]['visuals'] if v['id'] == visual_id][0]
     
     if not visual['config']['configured']:
         return chart_source_type(request, collection_id, content, visual_id)
     
-    url = '/widget/actionwidgets/sentimentfilter/chart_piechart_sentimentsplit_js?collection_id=%s&visual_id=%s' % (collection_id, visual_id)
+    url = '/widget/actionwidgets/klout/chart_piechart_influence_js?collection_id=%s&visual_id=%s' % (collection_id, visual_id)
     visual_data = {
         'id':visual_id,
         'type':visual['type'],
         'url':url,
-        'display_name':'Sentiment'
+        'display_name':'Influential Contributors'
     }
     return render_to_response('chartwidget_base.html', { 'visual':visual_data, 'collection_id':collection_id })
 
-def chart_piechart_sentimentsplit_js(request):
+def chart_piechart_influence_js(request):
     collection_id = request.GET['collection_id']
     visual_id = request.GET['visual_id']
     config = get_config_ensuring_collection(request, collection_id)
@@ -199,12 +119,12 @@ def chart_piechart_sentimentsplit_js(request):
     content = apply_actions(request, collection_id, content, actions)
     return_data = {}
     for item in content:
-        if 'sentiment' in item and item['sentiment'] > 0:
-            type = 'positive'
-        elif 'sentiment' in item and item['sentiment'] < 0:
-            type = 'negative'
+        if 'influence' in item and item['influence'] > 50:
+            type = 'high influence'
+        elif 'influence' in item:
+            type = 'low influence'
         else:
-            type = 'neutral'
+            type = 'no influence'
         if type not in return_data:
             return_data[type] = 0;
         return_data[type] = return_data[type] + 1
@@ -212,7 +132,7 @@ def chart_piechart_sentimentsplit_js(request):
     return render_to_response('render_piechart.js', { 'chart_data':return_data, 'id':visual_id })
 
  
-def threaded_get_sentiment(content):
+def threaded_get_klout(content):
     def producer(q, _items):
         for _item in _items:
             thread = ServiceRunner(_item)
@@ -250,13 +170,42 @@ class ServiceRunner(threading.Thread):
         return self.item
     
     def run(self):
-        try_count = 0
-        worked = False
-        while try_count < 3 and not worked:
+        if self.item['type'] not in supported_types:
+            return
+        
+        cache_key = 'klout_%s' % self.item['author']
+        try:
+            cache_entry = CacheEntry.objects.get(key=cache_key)
+            if int(time.time()) - cache_entry.time > 86400: # cache for 24 hours
+                cache_entry.delete()
+                raise CacheEntry.DoesNotExist
+            klout = cache_entry.cache
+        except CacheEntry.DoesNotExist:
+            try_count = 0
+            got_result = False
+            while not got_result and try_count < 3:
+                try_count = try_count + 1
+                try:
+                    raw_json = urllib2.urlopen('http://api.klout.com/1/klout.json?users=%s&key=mer6tdvh3fex4tkww39k8wte' % self.item['author']).read()
+                    got_result = True
+                except Exception, e:
+                    time.sleep(1)
+                    
+            if not got_result:
+                return
+            
+            #Try to get from cache one more time - race condition
             try:
-                try_count = try_count + 1 
-                sentiment = get_sentiment_from_text(self.item['title'] + self.item['text'])
-                worked = True
-            except:
-                time.sleep(1)
-        self.item['sentiment'] = sentiment if worked else 0
+                cache_entry = CacheEntry.objects.get(key=cache_key)
+                return cache_entry.cache
+            except CacheEntry.DoesNotExist:
+                pass
+            
+            klout = simplejson.loads(raw_json)['users'][0]['kscore']
+            cache_entry = CacheEntry()
+            cache_entry.cache =  klout
+            cache_entry.key = cache_key
+            cache_entry.time = int(time.time())
+            cache_entry.save()
+            
+        self.item['influence'] = float(klout)

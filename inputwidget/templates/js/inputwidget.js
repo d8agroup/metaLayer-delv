@@ -578,7 +578,15 @@ function SaveSearch(collection_id)
 		var selection = checked.next('label').find('span').html();
 		url += "&faces=" + selection;
 	}
-
+	
+	var klout = search.find('.influence')
+	if(klout.length > 0)
+	{
+		var checked = klout.find('input:checked');
+		var selection = checked.next('label').find('span').html();
+		url += "&klout=" + selection;
+	}
+	
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(

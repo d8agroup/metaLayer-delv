@@ -95,6 +95,7 @@ def render_input_widget(request):
             'collapsed':collapsed,
             'sentiment_filter':fake_search(request, 'sentimentfilter', config, collection_id),
             'faces_filter':fake_search(request, 'facedetection', config, collection_id),
+            'influence_filter':fake_search(request, 'klout', config, collection_id),
             'collection_id':collection_id 
         })
 
@@ -130,9 +131,11 @@ def apply_search_filter(request):
     collection_id = request.GET['collection_id']
     sentiment = request.GET['sentiment'] if 'sentiment' in request.GET else 'all'
     faces = request.GET['faces'] if 'faces' in request.GET else 'all'
+    klout = request.GET['klout'] if 'klout' in request.GET else 'all'
     config = get_config_ensuring_collection(request, collection_id)
     config['collections'][collection_id]['search']['sentimentfilter'] = sentiment
     config['collections'][collection_id]['search']['facedetection'] = faces
+    config['collections'][collection_id]['search']['klout'] = klout
     set_collection_config(request, config)
     return HttpResponse()
     
