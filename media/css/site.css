@@ -1,7 +1,7 @@
 html { font-family:Arial; background-color:#DDD;}
 p.info { color:#AAA; font-size:80%;}
 
-body { margin:0; padding:130px 0 0 0; }
+body { margin:0; padding:135px 0 0 0; }
 
 #content { width:100%;  }
 .form_row { width:100%; }
@@ -10,7 +10,7 @@ body { margin:0; padding:130px 0 0 0; }
 /*******************************************************************************
 HEADER
 *******************************************************************************/
-#header { width:100%; height:130px; position:fixed; top:0; left:0; z-index:300; background-color:#BBB; }
+#header { width:100%; height:135px; position:fixed; top:0; left:0; z-index:300; background-color:#BBB; }
 
 /*******************************************************************************
 WIDGET PICKER
@@ -195,6 +195,22 @@ INPUT WIDGETS
 .outputs a.cancel { float:right; padding:10px 5px 0 0;}
 .outputs a.cancel img { width:15px; }
 
+
+/*******************************************************************************
+FEEDBACK
+*******************************************************************************/
+#feedbackandhelp { width:100%; background-color:#333; font-size:80%; padding:2px; text-align:right;}
+#feedbackandhelp a { color:#DDD; text-decoration:none; font-weight:bold; padding-right:20px; }
+#feedbackandhelp a:hover { color:#FFF; }
+
+#givefeedback { width:400px; margin:0 auto; }
+#givefeedback label { display:block; margin:5px;}
+#givefeedback input[type=text] { width:100%; padding:5px;}
+#givefeedback textarea { width:100%; padding:5px;}
+#givefeedback p { font-style:italic; font-size:80%; padding:10px;}
+#givefeedback h1 { font-size:180%; width:100%; text-align:center; margin-bottom:20px; border-bottom:1px solid; padding-bottom:2px;}
+#givefeedback input[type=submit] { width:100%; margin:10px; font-size:120%; padding:2px;}
+#sent_message { width:100%; text-align:center; font-size:180%;}
 
 /*******************************************************************************
 JQUERYUI OVERRIDES

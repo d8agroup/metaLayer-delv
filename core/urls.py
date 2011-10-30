@@ -15,6 +15,9 @@ from core.utils import run_widget_url
 urlpatterns = patterns('',
           
     url(r'^inputs', include('inputwidget.urls')),
+    
+    url(r'feedback', include('feedbackandhelp.urls')),
+    url(r'help', include('feedbackandhelp.urls')),
           
     url(r'^config/clear', clear_collection_config),             
     url(r'^config/get', get_collection_config),

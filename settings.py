@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     
     'dashboard.core',
     'dashboard.lib',
+    'dashboard.feedbackandhelp',
     'dashboard.metalayerbridge',
     'dashboard.customtags',
     'dashboard.inputwidget',
@@ -185,6 +186,14 @@ LOGGING = {
         },
     }
 }
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mrmatthewgriffiths@gmail.com'
+EMAIL_HOST_PASSWORD = 'hellit'
+EMAIL_PORT = 587
+
+
 
 #Added the user profile modules
 #AUTH_PROFILE_MODULE = 'webapp.UserProfile'

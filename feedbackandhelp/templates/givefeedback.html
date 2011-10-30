@@ -12,21 +12,28 @@
         <script type="text/javascript" src="/media/js/jquery-ui.js"></script>
         <script type="text/javascript" src='/media/js/jquery-jqplot.js'></script>
 		<script type="text/javascript" src="/media/js/jqplot-plugins/jqplot.pieRenderer.min.js"></script>
-        
-	    <script type="text/javascript" src='/core/js'></script>
-	    <script type="text/javascript" src='/inputs/js'></script>
 	</head>
 	<body>
 		<div id='page'>
-			<div id='header' class='clearfix'>
-				<div id='feedbackandhelp'>
-					<a href='/feedback/givefeedback' target='_blank'>feedback</a>
-				</div>
-				<div id='widget_picker' class='clearfix'>
-				</div>
-			</div>
 			<div id='content' class='clearfix'>
-				{% block content %}{% endblock %} 
+				{% if sent %}
+					<h1 id='sent_message'>Your feedback has been sent, Thanks!</h1>
+				{% else %}
+					<form id='givefeedback' action='/feedback/givefeedback' method='POST'>
+						<h1>Please give us feedback!</h1>
+						<p>
+							We really value your opinion, if you enjoyed using our software or ... god forbid ... 
+							something went wrong for you, then please take a few moments to tell us about it.
+						</p>
+						<label>Your Name:</label>
+						<input name='name' id='name' type='text' />
+						<label>Your Email:</label>
+						<input name='email' id='email' type='text' />
+						<label>Your Feedback:</label>
+						<textarea name='feedback'></textarea>
+						<input type='submit' value='send this feedback' />
+					</form>
+				{% endif %} 
 			</div>
 		</div>
 	</body>
