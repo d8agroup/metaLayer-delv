@@ -196,6 +196,7 @@ INPUT WIDGETS
 .outputs a.cancel img { width:15px; }
 .outputs label { display:block; padding:10px;}
 .outputs input[type=text] { padding:5px; width:80%; margin:0 8%;}
+.outputs .emailme_postsend p { font-size:80%; padding:10px;}
 
 
 /*******************************************************************************
