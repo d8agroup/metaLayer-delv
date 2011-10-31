@@ -36,6 +36,7 @@ WIDGET PICKER
 
 #widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 #widget_picker .emailme_widget { background-image:url('/media/images/icon-email.png'); background-repeat:no-repeat; background-position:3px 5px; background-size:20px; }
+#widget_picker .embed_widget { background-image:url('/media/images/icon-embed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 
 #widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
@@ -196,7 +197,9 @@ INPUT WIDGETS
 .outputs a.cancel img { width:15px; }
 .outputs label { display:block; padding:10px;}
 .outputs input[type=text] { padding:5px; width:80%; margin:0 8%;}
-.outputs .emailme_postsend p { font-size:80%; padding:10px;}
+.outputs p { font-size:80%; padding:10px;}
+.outputs textarea { width:80%; margin:0 10% 0 10%; font-size:80%; height:70px;}  
+
 
 
 /*******************************************************************************
