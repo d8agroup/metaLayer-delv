@@ -598,3 +598,13 @@ function SaveSearch(collection_id)
 	);
 	
 }
+
+function EmailMeSend(collection_id)
+{
+	var collection = $('#' + collection_id);
+	var email_address = collection.find('.emailme_email').val();
+	var url = '/widget/outputwidgets/emailme/export?collection_id=' + collection_id + "&email_address=" + email_address;
+	$.get(url);
+	collection.find('.emailme_presend').slideUp();
+	collection.find('.emailme_postsend').slideDown();
+}

@@ -35,7 +35,7 @@ WIDGET PICKER
 #widget_picker .map_widget { background-image:url('/media/images/icon-map.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
 
 #widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .sendemail_widget { background-image:url('/media/images/icon-email.png'); background-repeat:no-repeat; background-position:3px 5px; background-size:20px; }
+#widget_picker .emailme_widget { background-image:url('/media/images/icon-email.png'); background-repeat:no-repeat; background-position:3px 5px; background-size:20px; }
 
 
 #widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
@@ -194,6 +194,8 @@ INPUT WIDGETS
 .outputs .button { width:90%; margin:5%; }
 .outputs a.cancel { float:right; padding:10px 5px 0 0;}
 .outputs a.cancel img { width:15px; }
+.outputs label { display:block; padding:10px;}
+.outputs input[type=text] { padding:5px; width:80%; margin:0 8%;}
 
 
 /*******************************************************************************

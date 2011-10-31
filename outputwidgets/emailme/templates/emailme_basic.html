@@ -1,0 +1,11 @@
+{% extends 'outputwidget_basic.html' %}
+{% block outputwidget_content %}
+	<div class='emailme_presend'>
+		<label>Your Email Address:</label>
+		<input class='emailme_email' type='text' />
+		<a href='JavaScript:EmailMeSend("{{ collection_id }}")' class='button'>Email Me</a>
+	</div>
+	<div class='emailme_postsend hidden'>
+		<p>You have been emailed - in later releases you will be able to set up regular email schedules!</p>
+	</div>
+{% endblock %}
