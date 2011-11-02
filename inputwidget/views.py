@@ -35,6 +35,7 @@ def remove_input(request):
         config['collections'][collection_id]['visuals'] = []
         config['collections'][collection_id]['outputs'] = []
         config['collections'][collection_id]['collapsed'] = False
+        config['collections'][collection_id]['search'] = {}
     set_collection_config(request, config)
     return_data = { 'was_last_input':False } if len(config['collections'][collection_id]['inputs']) else { 'was_last_input':True }
     return JSONResponse(return_data)
