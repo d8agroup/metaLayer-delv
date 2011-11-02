@@ -119,7 +119,7 @@ def chart_piechart_influence_js(request):
     content = apply_actions(request, collection_id, content, actions)
     return_data = {}
     for item in content:
-        if 'influence' in item and item['influence'] > 50:
+        if 'influence' in item and item['influence'] > 40:
             type = 'high influence'
         elif 'influence' in item:
             type = 'low influence'
