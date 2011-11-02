@@ -49,7 +49,7 @@ def run_action_for_content(request, collection_id, action_id, content):
             return_content.append(item)
             continue
         if klout_condition == 'influential':
-            if 'influence' in item and item['influence'] > 50: 
+            if 'influence' in item and item['influence'] > 40: 
                 return_content.append(item)
                 continue
 
