@@ -38,7 +38,7 @@ def run_action_for_content(request, collection_id, action_id, content):
         
     all_content = []
     
-    n = 10
+    n = 2
     for r in [content[i:i+n] for i in range(0, len(content), n)]:
         all_content = all_content + threaded_get_klout(r)
 

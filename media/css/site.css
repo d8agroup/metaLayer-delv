@@ -1,7 +1,7 @@
-html { font-family:Arial; background-color:#DDD;}
+html { font-family:Arial; background-color:#FFF;}
 p.info { color:#AAA; font-size:80%;}
 
-body { margin:0; padding:135px 0 0 0; }
+body { margin:0; padding:115px 0 0 0; }
 
 #content { width:100%;  }
 .form_row { width:100%; }
@@ -10,7 +10,7 @@ body { margin:0; padding:135px 0 0 0; }
 /*******************************************************************************
 HEADER
 *******************************************************************************/
-#header { width:100%; height:135px; position:fixed; top:0; left:0; z-index:300; background-color:#BBB; }
+#header { width:100%; height:115px; position:fixed; top:0; left:0; z-index:300; background-color:#e6e6e6; }
 
 /*******************************************************************************
 WIDGET PICKER
@@ -19,40 +19,40 @@ WIDGET PICKER
 #widget_picker .widget_set { width:23%; float:left; margin:0 1%;}
 #widget_picker .widget_set h2 { width:100%; text-align:center; text-transform:uppercase; font-size:80%; font-weight:bold; padding:5px 0;}
 #widget_picker .widget_set ul { width:100%; }
-#widget_picker .draggable_widget { width:42%; max-width:150px; float:left; margin:5px 1% 0 1px; background-color:#666; cursor:move; padding:7px; color:#DDD; font-size:70%; }
+#widget_picker .draggable_widget { width:42%; max-width:150px; float:left; margin:5px 1% 0 1px; background-color:#232323; cursor:move; padding:3px; color:#ddd; font-size:65%; }
 #widget_picker .draggable_widget span.id { display:none; }
 #widget_picker .draggable_widget span.name { padding-left:20px;}
 
 
-#widget_picker .feed_widget { background-image:url('/media/images/icon-feed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .googlenews_widget { background-image:url('/media/images/icon-googlenews.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .gmail_widget { background-image:url('/media/images/icon-gmail.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .flickrsearch_widget { background-image:url('/media/images/icon-flickr.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .feed_widget { background-image:url('/media/images/icon-feed.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .googlenews_widget { background-image:url('/media/images/icon-googlenews.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .gmail_widget { background-image:url('/media/images/icon-gmail.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .flickrsearch_widget { background-image:url('/media/images/icon-flickr.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
 
-#widget_picker .piechart_widget { background-image:url('/media/images/icon-piechart.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .map_widget { background-image:url('/media/images/icon-map.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .piechart_widget { background-image:url('/media/images/icon-piechart.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .map_widget { background-image:url('/media/images/icon-map.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
 
-#widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .emailme_widget { background-image:url('/media/images/icon-email.png'); background-repeat:no-repeat; background-position:3px 5px; background-size:20px; }
-#widget_picker .embed_widget { background-image:url('/media/images/icon-embed.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .emailme_widget { background-image:url('/media/images/icon-email.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:12px; }
+#widget_picker .embed_widget { background-image:url('/media/images/icon-embed.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
 
 
-#widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .tagging_widget { background-image:url('/media/images/icon-tagging.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .facedetection_widget { background-image:url('/media/images/icon-face.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
-#widget_picker .klout_widget { background-image:url('/media/images/icon-influence.png'); background-repeat:no-repeat; background-position:3px 3px; background-size:20px; }
+#widget_picker .sentimentfilter_widget { background-image:url('/media/images/icon-sentiment-flat.png'); background-repeat:no-repeat; background-position:2px 3px; background-size:12px; }
+#widget_picker .tagging_widget { background-image:url('/media/images/icon-tagging.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .facedetection_widget { background-image:url('/media/images/icon-face.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
+#widget_picker .klout_widget { background-image:url('/media/images/icon-influence.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:12px; }
 
 /*******************************************************************************
 COLLECTION LEVEL
 *******************************************************************************/
-.collection { width:24%; float:left; margin:.5%;}
+.collection { width:24.8%; float:left; margin:3px 0.1%;}
 
 /*******************************************************************************
 INPUT WIDGETS
 *******************************************************************************/
-.input_widget_droppable p.drop_prompt { font-size:80%; color:#AAA; text-align:center; padding:120px 60px; background-color:#333;}
+.input_widget_droppable p.drop_prompt { font-size:80%; color:#AAA; text-align:center; padding:124px 60px; background-color:#333;}
 .input_widget_droppable_active { background-color:#555; }
 .input_widget_droppable_active p.drop_prompt { color:#FFF; }
 .input_widget_droppable_hover { background-color:#AAA }
@@ -65,15 +65,15 @@ INPUT WIDGETS
 .input_widget_container .reloading span { position:relative; top:4px; left:4px;}
 
 .input_widget { color:#DDD; width:100%; }
-.input_widget .toggle_button { float:right; padding:3px 2px 0 0; }
-.input_widget .toggle_button img { width:25px;}
-.input_widget .remove_button { float:right; padding:5px 2px 0 0;}
-.input_widget .remove_button img { width:20px;}
-.input_widget .refresh_button { float:right; padding:5px 5px 0}
-.input_widget .refresh_button img { width:20px;}
-.input_widget .search_button { float:right; padding:5px 2px 0}
-.input_widget .search_button img { width:20px;}
-.input_widget .inputs { width:100%; border-bottom:1px solid; background-color:#222;}
+.input_widget .toggle_button { float:right; padding:5px 2px 0 0; }
+.input_widget .toggle_button img { width:20px;}
+.input_widget .remove_button { float:right; padding:7px 2px 0 0;}
+.input_widget .remove_button img { width:15px;}
+.input_widget .refresh_button { float:right; padding:5px 3px 0 0}
+.input_widget .refresh_button img { width:17px;}
+.input_widget .search_button { float:right; padding:6px 2px 0}
+.input_widget .search_button img { width:18px;}
+.input_widget .inputs { width:100%; background-color:#232323; line-height:10px;}
 .input_widget .inputs li { width:100%; }
 .input_widget .inputs .display_name { display:block; padding:10px 0 7px 30px; font-size:70%;}
 .input_widget .inputs .actions { float:right; padding:5px; }
@@ -84,17 +84,17 @@ INPUT WIDGETS
 .input_widget .inputs .summary li { width:30px; height:25px; float:left;}
 .input_widget .inputs .summary li.title { width:70px; font-size:80%; padding:0 0 0 10px; position:relative; top:8px; display:none;}
 
-.input_widget .inputs .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .inputs .feed { background:url('/media/images/icon-feed.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .inputs .gmail { background:url('/media/images/icon-gmail.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .inputs .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .inputs .twittersearch { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .inputs .twitteruser { background:url('/media/images/icon-twitter.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .inputs .feed { background:url('/media/images/icon-feed.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .inputs .gmail { background:url('/media/images/icon-gmail.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .inputs .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat 5px 5px; background-size:18px;}
 
-.input_widget .actions .sentimentfilter { background:url('/media/images/icon-sentiment-flat.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .actions .tagging { background:url('/media/images/icon-tagging.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .actions .facedetection { background:url('/media/images/icon-face.png') no-repeat 5px 5px; background-size:20px;}
-.input_widget .actions .klout { background:url('/media/images/icon-influence.png') no-repeat 5px 5px; background-size:20px;}
+.input_widget .actions .sentimentfilter { background:url('/media/images/icon-sentiment-flat.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .actions .tagging { background:url('/media/images/icon-tagging.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .actions .facedetection { background:url('/media/images/icon-face.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .actions .klout { background:url('/media/images/icon-influence.png') no-repeat 5px 5px; background-size:18px;}
 
 .input_widget .inputs .input_or_action_widget_droppable p { font-size:80%; padding:5px; text-align:center; font-style:italic; }
 
@@ -125,7 +125,8 @@ INPUT WIDGETS
 .input_widget .content .gmail { background:url('/media/images/icon-gmail.png') no-repeat right 5px; background-size:20px;}
 .input_widget .content .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat right 5px; background-size:20px;}
 
-.input_widget .search { width:90%; margin:0 auto 10px auto; padding:5px; font-size:80%; background:url('/media/images/icon-search.png') no-repeat 5px 2px; background-color:#333; background-size:20px; }
+.input_widget .search { padding-bottom:10px;} 
+.input_widget .search form { width:90%; margin:0 auto; padding:5px; font-size:80%; background:url('/media/images/icon-search.png') no-repeat 5px 2px; background-color:#333; background-size:20px; }
 .input_widget .search h3 { text-align:center; padding:2px;}
 .input_widget .search .search_control { width:100%; border-top:1px dashed #222; margin-top:5px; padding-top:5px; font-size:90%; }
 .input_widget .search .search_control h4 { float:left; width:45%; padding:3px}

@@ -48,48 +48,50 @@
 			{% endfor %}
 		</ul>
 		<div class='input_or_action_widget_droppable hidden'><p class='drop_prompt'>drag extra inputs or actions here</p></div>
-		<form class='search ui-corner-all hidden'>
-			<h3>search and filter this content</h3>
-			{% if sentiment_filter %}		
-				<div class='search_control clearfix sentiment'>
-					<h4>show sentiment</h4>
-					<div class='radio_group control'>
-						<input {% if sentiment_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_1' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_1'>all</label>
-						<input {% if sentiment_filter == 'p' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_2' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_2'>+</label>
-						<input {% if sentiment_filter == 'o' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_3' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_3'>o</label>
-						<input {% if sentiment_filter == 'n' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_4' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_4'>-</label>
+		<div  class='search hidden'>
+			<form class='ui-corner-all'>
+				<h3>search and filter this content</h3>
+				{% if sentiment_filter %}		
+					<div class='search_control clearfix sentiment'>
+						<h4>show sentiment</h4>
+						<div class='radio_group control'>
+							<input {% if sentiment_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_1' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_1'>all</label>
+							<input {% if sentiment_filter == 'p' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_2' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_2'>+</label>
+							<input {% if sentiment_filter == 'o' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_3' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_3'>o</label>
+							<input {% if sentiment_filter == 'n' %}checked='CHECKED'{% endif %} type='radio' id='search_sentiment_{{ collection_id }}_4' name='search_sentiment'/><label for='search_sentiment_{{ collection_id }}_4'>-</label>
+						</div>
 					</div>
-				</div>
-			{% endif %}
-			{% if faces_filter %}
-				<div class='search_control clearfix faces'>
-					<h4>pictures with faces</h4>
-					<div class='radio_group control'>
-						<input {% if faces_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_faces_{{ collection_id }}_1' name='search_faces'/><label for='search_faces_{{ collection_id }}_1'>all</label>
-						<input {% if faces_filter == 'with' %}checked='CHECKED'{% endif %} type='radio' id='search_faces_{{ collection_id }}_2' name='search_faces'/><label for='search_faces_{{ collection_id }}_2'>with</label>
-						<input {% if faces_filter == 'without' %}checked='CHECKED'{% endif %} type='radio' id='search_faces_{{ collection_id }}_3' name='search_faces'/><label for='search_faces_{{ collection_id }}_3'>without</label>
+				{% endif %}
+				{% if faces_filter %}
+					<div class='search_control clearfix faces'>
+						<h4>pictures with faces</h4>
+						<div class='radio_group control'>
+							<input {% if faces_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_faces_{{ collection_id }}_1' name='search_faces'/><label for='search_faces_{{ collection_id }}_1'>all</label>
+							<input {% if faces_filter == 'with' %}checked='CHECKED'{% endif %} type='radio' id='search_faces_{{ collection_id }}_2' name='search_faces'/><label for='search_faces_{{ collection_id }}_2'>with</label>
+							<input {% if faces_filter == 'without' %}checked='CHECKED'{% endif %} type='radio' id='search_faces_{{ collection_id }}_3' name='search_faces'/><label for='search_faces_{{ collection_id }}_3'>without</label>
+						</div>
 					</div>
-				</div>
-			{% endif %}
-			{% if influence_filter %}
-				<div class='search_control clearfix influence'>
-					<h4>influence</h4>
-					<div class='radio_group control'>
-						<input {% if influence_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_influence_{{ collection_id }}_1' name='search_influence'/><label for='search_influence_{{ collection_id }}_1'>all</label>
-						<input {% if influence_filter == 'influential' %}checked='CHECKED'{% endif %} type='radio' id='search_influence_{{ collection_id }}_2' name='search_influence'/><label for='search_influence_{{ collection_id }}_2'>influential</label>
+				{% endif %}
+				{% if influence_filter %}
+					<div class='search_control clearfix influence'>
+						<h4>influence</h4>
+						<div class='radio_group control'>
+							<input {% if influence_filter == 'all' %}checked='CHECKED'{% endif %} type='radio' id='search_influence_{{ collection_id }}_1' name='search_influence'/><label for='search_influence_{{ collection_id }}_1'>all</label>
+							<input {% if influence_filter == 'influential' %}checked='CHECKED'{% endif %} type='radio' id='search_influence_{{ collection_id }}_2' name='search_influence'/><label for='search_influence_{{ collection_id }}_2'>influential</label>
+						</div>
 					</div>
-				</div>
-			{% endif %}
-			{% if not faces_filter and not sentiment_filter and not influence_filter %}
-				<div class='no_search_message'>
-					<p>There are no filter options available yet, why not add an action or two?</p>
-				</div>
-			{% else %}
-				<div class='submit search_control'>
-					<a href='JavaScript:SaveSearch("{{ collection_id }}");' class='button'>apply these filters</a>
-				</div>
-			{% endif %}
-		</form>
+				{% endif %}
+				{% if not faces_filter and not sentiment_filter and not influence_filter %}
+					<div class='no_search_message'>
+						<p>There are no filter options available yet, why not add an action or two?</p>
+					</div>
+				{% else %}
+					<div class='submit search_control'>
+						<a href='JavaScript:SaveSearch("{{ collection_id }}");' class='button'>apply these filters</a>
+					</div>
+				{% endif %}
+			</form>
+		</div>
 	</div>
 	<div class='content {% if collapsed %}hidden{% endif %}'>
 		<ul>

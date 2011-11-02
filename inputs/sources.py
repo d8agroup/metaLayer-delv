@@ -160,7 +160,7 @@ class feed(object):
     def source_data(self):
         return {
             'type':'feed',
-            'display_name':'RSS/ATOM',
+            'display_name':'Web Feeds',
         }
     
     def run_for_input(self, input_config):
