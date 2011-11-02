@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'dashboard.actionwidgets.facedetection',
     'dashboard.visualwidgets',
     'dashboard.visualwidgets.piechart',
+    'dashboard.visualwidgets.barchart',
     'dashboard.outputwidgets',
     'dashboard.outputwidgets.spreadsheet',
     'dashboard.outputwidgets.emailme',

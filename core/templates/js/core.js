@@ -56,3 +56,8 @@ function ApplyUIElements()
 	$('.tabs').tabs();
 	$('.accordion').accordion();
 }
+
+function Feedback()
+{
+	$("#fdbk_tab").click(); 
+}
