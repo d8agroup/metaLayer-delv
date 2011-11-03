@@ -13,12 +13,12 @@ ROOT_PATH = os.path.dirname(__file__)
 #else:
     #DEBUG = False
 
-DEBUG = True
+DEBUG = DEVELOPMENT
 
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('matt', 'mg@metalayer.com'),
 )
 
 MANAGERS = ADMINS
@@ -26,9 +26,9 @@ MANAGERS = ADMINS
 if DEVELOPMENT:
     DATABASES = {
             'default': {
-                'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-                'NAME': '/home/matt/code/metaLayer/metaDashboard/dashboard/dashboard.db',                      # Or path to database file if using sqlite3.
-                'USER': '',                      # Not used with sqlite3.
+                'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+                'NAME': 'ml_dashboard',                      # Or path to database file if using sqlite3.
+                'USER': 'root',                      # Not used with sqlite3.
                 'PASSWORD': '',                  # Not used with sqlite3.
                 'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
                 'PORT': '',                      # Set to empty string for default. Not used with sqlite3.

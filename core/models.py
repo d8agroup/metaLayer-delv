@@ -5,4 +5,8 @@ class CacheEntry(models.Model):
     cache = models.TextField()
     time = models.IntegerField()
     
+class RegisteredEmail(models.Model):
+    email = models.CharField(max_length=255, unique=True)
+    approved = models.BooleanField()
+    
     

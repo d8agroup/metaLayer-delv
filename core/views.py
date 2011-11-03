@@ -1,12 +1,17 @@
 from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
 from core.utils import format_template_and_json_response
 from core.utils import get_widget_data_by_widget_type
 from core.utils import get_collection_config as utils_get_collection_config 
 from core.utils import set_collection_config as utils_set_collection_config
 from core.utils import JSONResponse
+from core.models import RegisteredEmail
+import re
 
 def home_page(request):
-    return render_to_response('html/home.html')
+    if 'email' not in request.session:
+        return HttpResponseRedirect('/login')
+    return render_to_response('html/home.html', { 'email': request.session['email'] })
 
 def core_javascript(request):
     return render_to_response('js/core.js')
@@ -35,3 +40,31 @@ def set_collection_config(request):
 def clear_collection_config(request):
     utils_set_collection_config(request, {"collections":{}})
     return JSONResponse()
+
+def login(request):
+    if 'email' not in request.GET:
+        return render_to_response('html/login.html')
+    if not re.search(r'^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$', request.GET['email']):
+        return render_to_response('html/login.html', { 'login_error':'Sorry, you did not enter a valid email address' })
+    try:
+        email = request.GET['email']
+        user = RegisteredEmail.objects.get(email=email)
+        if not user.approved:
+            return render_to_response('html/login.html', { 'login_error':'Sorry, that email address has not yet been approved for the private beta' })
+        request.session['email'] = user.email
+        return HttpResponseRedirect('/')
+    except:
+        return render_to_response('html/login.html', { 'login_error':'Sorry, that email did not match any in our records, have you registered?' })
+
+def register(request):
+    if not re.search(r'^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$', request.GET['email']):
+        return render_to_response('html/login.html', { 'register_error':'Sorry, you did not enter a valid email address' })
+    email = request.GET['email']
+    try:
+        user = RegisteredEmail.objects.get(email=email)
+        return render_to_response('html/login.html', { 'registered':True })
+    except:
+        user = RegisteredEmail()
+        user.email = email
+        user.save() 
+        return render_to_response('html/login.html', { 'registered':True })

@@ -6,6 +6,8 @@ from core.views import widget_picker_javascript
 from core.views import get_collection_config
 from core.views import set_collection_config
 from core.views import clear_collection_config
+from core.views import login
+from core.views import register 
 from core.utils import run_widget_url
 
 # Uncomment the next two lines to enable the admin:
@@ -30,6 +32,10 @@ urlpatterns = patterns('',
     url(r'^core/js$', core_javascript),
     url(r'^core/widgetpicker/render', widget_picker_render),
     url(r'^core/widgetpicker/script', widget_picker_javascript),
+    
+    url(r'^login', login),
+    url(r'^register', register),
+    
     
     url(r'^$', home_page),
                        
