@@ -206,8 +206,8 @@ INPUT WIDGETS
 /*******************************************************************************
 FEEDBACK
 *******************************************************************************/
-#feedbackandhelp { width:100%; background-color:#333; font-size:80%; padding:2px; text-align:right;}
-#feedbackandhelp a { color:#DDD; text-decoration:none; font-weight:bold; padding-right:20px; }
+#feedbackandhelp { width:100%; background-color:#333; font-size:80%; text-align:right;  padding:2px 0; }
+#feedbackandhelp a { color:#DDD; text-decoration:none; font-weight:bold;  padding-right:10px;}
 #feedbackandhelp a:hover { color:#FFF; }
 
 #givefeedback { width:400px; margin:0 auto; }

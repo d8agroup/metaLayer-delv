@@ -68,3 +68,7 @@ def register(request):
         user.email = email
         user.save() 
         return render_to_response('html/login.html', { 'registered':True })
+    
+def logout(request):
+    request.session.pop('email')
+    return HttpResponseRedirect('/')
