@@ -50,11 +50,11 @@ def login(request):
         email = request.GET['email']
         user = RegisteredEmail.objects.get(email=email)
         if not user.approved:
-            return render_to_response('html/login.html', { 'login_error':'Sorry, that email address has not yet been approved for the private beta' })
+            return render_to_response('html/login.html', { 'login_error':'Sorry, looks like you\'re not in the private beta. Join the waiting list below.' })
         request.session['email'] = user.id
         return HttpResponseRedirect('/')
     except:
-        return render_to_response('html/login.html', { 'login_error':'Sorry, that email did not match any in our records, have you registered?' })
+        return render_to_response('html/login.html', { 'login_error':'Sorry, looks like you\'re not in the private beta. Join the waiting list below.' })
 
 def register(request):
     if not re.search(r'^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,4}$', request.GET['email']):
