@@ -29,42 +29,25 @@
 							<p>Thank you for your interest in this private beta program</p>
 						</div>
 					{% else %}
-						<table>
-							<tr>
-								<td class='big'>
-									<div id='login'>
-										<h2>Login with your email address</h2>
-										{% if login_error %}
-											<div class='error'>
-												<p>{{ login_error }}</p>
-											</div>
-										{% endif %}
-										<form action='/login' method='get'>
-											<label>Your email address</label>
-											<input name='email' type='text' />
-											<input type='submit' class='button' value='log in' /> 
-										</form>
-									</div>
-								</td>
-								<td class='small'></td>
-								<td class='big'>
-									<div id='register'>
-										<h2>Register you email address and apply for the private beta</h2>
-										{% if register_error %}
-											<div class='error'>
-												<p>{{ register_error }}</p>
-											</div>
-										{% endif %}
-										<form action='/register' method='get'>
-											<label>Your email address</label>
-											<input name='email' type='text' />
-											<input type='submit' class='button' value='register' /> 
-										</form>
-									</div>
-								</td>
-							</tr>
-						</table>
+						<div id='login'>
+							<h2>Login with your email address</h2>
+							{% if login_error %}
+								<div class='error'>
+									<p>{{ login_error }}</p>
+								</div>
+							{% endif %}
+							<form action='/login' method='get'>
+								<label>Your email address</label>
+								<input name='email' type='text' />
+								<input type='submit' class='button' value='log in' /> 
+							</form>
+						</div>
 					{% endif %}
+					<div id='register'>
+						<h2>If you haven't registered for our private beta yet</h2>
+						<p>click on the link below</p>
+						<a href='http://relaunch.metalayer.com'>register</a>
+					</div>
 				</div>
 			</div>
 		</div>
