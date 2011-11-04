@@ -1,11 +1,19 @@
+body, h1, h2, h3, p, quote, small, form, input, ul, li, ol, label {
+     margin: 0pt;
+     padding: 0pt;
+}
+
 body {
-    background: url("http://metalayer.com/db/img/bg.png") #020306;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.9em;
+     background: url("http://metalayer.com/db/img/bg.png") repeat scroll 0% 0% #020306;
+     font-family: Arial,Helvetica,sans-serif;
+     font-size: 0.9em;
+     height: 800px;
+     width: 100%;
 }
 
 #login_container {
-     margin: 0pt auto;
+     background: none repeat scroll 0% 0% #020306;
+     margin: 150px auto 0pt;
      width: 600px;
 }
 
@@ -14,42 +22,50 @@ body {
 }
 
 #login_container h2 {
+     color: #FFFFFF;
+     font-size: 3.3em;
      height: 60px;
-     padding: 10px;
+     padding: 20px;
      text-align: center;
-     font-weight: bold;
-     font-size: em;
 }
 
-#login_container label {
-     display: block;
-     padding: 10px;
-     text-align: center;
+#login_container h2 a {
+     border-bottom: 2px solid #0196E3;
+     color: #0196E3;
+     text-decoration: none;
 }
 
 #login_container input {
+     background: none repeat scroll 0% 0% #020306;
      display: block;
 }
 
 #login_container input[type="text"] {
+     border-color: -moz-use-text-color -moz-use-text-color #FFFFFF;
+     border-style: none none dashed;
+     border-width: 0px 0px 3px;
      margin: 20px auto;
-     padding: 5px;
+     padding: 15px;
      width: 50%;
+     color:#ffffff;
+     font-size: 2.0em;
+     font-family: Arial,Helvetica,sans-serif;
 }
 
 #login_container .button {
+     background: none repeat scroll 0% 0% #FFFFFF;
+     font-family: Arial,Helvetica,sans-serif;
+     font-size: 0.9em;
      margin: 10px auto;
-     width: 15%;
-     font-size: 40%;
+     width: 10%;
 }
 
 #login_container .error {
-     background-color: #444444;
-     border: 2px solid #222222;
-     color: #FFFFFF;
-     font-size: 70%;
-     margin: 2%;
-     padding: 5%;
+     text-align:center;
+     color: #cccccc;
+     font-size: 0.9em;
+     margin: 10px;
+     padding: 10px;
 }
 
 #registered {

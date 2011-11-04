@@ -1,5 +1,5 @@
 var HTML_EMPTY_COLLECTION = "<div class='collection'></div>"
-var HTML_ADD_INPUT_WIDGET = "<div class='input_widget_droppable input_widget_container'><p class='drop_prompt'>Drag an input widget here to start a new collection</p></div>"
+var HTML_ADD_INPUT_WIDGET = "<div class='input_widget_droppable input_widget_container'><p class='drop_prompt'>Drag & Drop Data</p></div>"
 //var HTML_INPUT_WIDGET_CONTAINER = "<div class='input_widget_container'></div>"
 
 $(document).ready
