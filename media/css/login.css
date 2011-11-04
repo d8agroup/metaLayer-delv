@@ -1,1 +1,61 @@
-body { background-color:#FFF; }
+body {
+    background: url("http://metalayer.com/db/img/bg.png") #020306;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
+}
+
+#login_container {
+     margin: 0pt auto;
+     width: 600px;
+}
+
+#login_container td.small {
+     width: 2%;
+}
+
+#login_container h2 {
+     height: 60px;
+     padding: 10px;
+     text-align: center;
+     font-weight: bold;
+     font-size: em;
+}
+
+#login_container label {
+     display: block;
+     padding: 10px;
+     text-align: center;
+}
+
+#login_container input {
+     display: block;
+}
+
+#login_container input[type="text"] {
+     margin: 20px auto;
+     padding: 5px;
+     width: 50%;
+}
+
+#login_container .button {
+     margin: 10px auto;
+     width: 15%;
+     font-size: 40%;
+}
+
+#login_container .error {
+     background-color: #444444;
+     border: 2px solid #222222;
+     color: #FFFFFF;
+     font-size: 70%;
+     margin: 2%;
+     padding: 5%;
+}
+
+#registered {
+     border: 1px solid;
+}
+
+#registered p {
+     padding: 10px;
+}

@@ -219,20 +219,7 @@ FEEDBACK
 #givefeedback input[type=submit] { width:100%; margin:10px; font-size:120%; padding:2px;}
 #sent_message { width:100%; text-align:center; font-size:180%;}
 
-/*******************************************************************************
-LOGIN
-*******************************************************************************/
-#login_container { width:600px; margin:0 auto; }
-#login_container td.big { width:48%; border:1px solid; background-color:#DDDDDD; }
-#login_container td.small { width:2%; }
-#login_container h2 { background-color:#232323; height:50px; padding:10px; color:#DDD; text-align:center; font-weight:bold; }
-#login_container label { display:block; padding:10px; }
-#login_container input { display:block; }
-#login_container input[type=text] { width:80%; padding:5px; margin:20px auto; }
-#login_container .button { width:80%; margin:10px auto;}
-#login_container .error { margin:2%; padding:5%; border:2px solid #222; background-color:#444; color:#FFF; font-size:70%;}
-#registered { border:1px solid; background-color:#DDDDDD; }
-#registered p { padding:10px;}
+
 
 /*******************************************************************************
 JQUERYUI OVERRIDES
