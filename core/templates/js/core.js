@@ -30,6 +30,7 @@ function LoadWidgetPicker()
 			ApplyUIElements();
 		}
 	)
+	_gaq.push(['_trackPageview', widget_picker_render_url]);
 }
 
 function LoadCollections()
@@ -47,6 +48,7 @@ function LoadCollections()
 function ClearCollectionConfig()
 {
 	$.get('/config/clear');
+	_gaq.push(['_trackPageview', '/config/clear']);
 }
 
 function ApplyUIElements()

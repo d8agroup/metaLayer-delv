@@ -31,13 +31,19 @@ $(document).ready
 	}
 );
 
+function RecordGA(url)
+{
+	_gaq.push(['_trackPageview', url]);
+	return url;
+}
+
 function RemoveInputWidget(collection_id)
 {
 	var collection = $('#' + collection_id);
 	collection.children().remove()
 	collection.append(HTML_ADD_INPUT_WIDGET)
 	ApplyInputWidgetDroppable()
-	$.get(URL_REMOVE_INPUT + "?collection_id=" + collection_id)
+	$.get(RecordGA(URL_REMOVE_INPUT + "?collection_id=" + collection_id));
 }
 
 function ToggleInputWidget(collection_id)
@@ -51,14 +57,14 @@ function ToggleInputWidget(collection_id)
 		content.slideUp();
 		button.attr('src', '/media/images/icon-max.png');
 		button.attr('alt', 'Maximise');
-		$.get(URL_COLLAPSE + "?collection_id=" + collection_id);
+		$.get(RecordGA(URL_COLLAPSE + "?collection_id=" + collection_id));
 	}
 	else
 	{
 		content.slideDown();
 		button.attr('src', '/media/images/icon-min.png');
 		button.attr('alt', 'Minimise');
-		$.get(URL_EXPAND + "?collection_id=" + collection_id);
+		$.get(RecordGA(URL_EXPAND + "?collection_id=" + collection_id));
 	}
 }
 
@@ -93,7 +99,7 @@ function SaveInputWidgetConfig(collection_id)
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
-		URL_SAVE_CONFIG + "?" + query_string,
+		RecordGA(URL_SAVE_CONFIG + "?" + query_string),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -136,7 +142,7 @@ function ApplyInputWidgetDroppable()
 					var old_collection_id = draggable.parents('.collection').attr('id');
 					$.get
 					(
-						URL_MOVE_INPUT_WIDGET + '?new_collection_id=' + new_collection_id + "&old_collection_id=" + old_collection_id,
+						RecordGA(URL_MOVE_INPUT_WIDGET + '?new_collection_id=' + new_collection_id + "&old_collection_id=" + old_collection_id),
 						function()
 						{
 							ReloadInputWidget(new_collection_id);
@@ -155,7 +161,7 @@ function ApplyInputWidgetDroppable()
 					var input_type = draggable.find('.type').html();
 					$.get
 					(
-						URL_ADD_NEW_INPUT + "?collection_id=" + collection_id + "&type=" + input_type,
+						RecordGA(URL_ADD_NEW_INPUT + "?collection_id=" + collection_id + "&type=" + input_type),
 						function()
 						{
 							var outer_droppable = $('#' + collection_id + " .input_widget_container");
@@ -187,7 +193,7 @@ function ApplyInputWidgetDroppable()
 				{
 					$.get
 					(
-						URL_ADD_NEW_INPUT + "?collection_id=" + collection_id + "&type=" + input_type,
+						RecordGA(URL_ADD_NEW_INPUT + "?collection_id=" + collection_id + "&type=" + input_type),
 						function()
 						{
 							ReloadInputWidget(collection_id);
@@ -200,7 +206,7 @@ function ApplyInputWidgetDroppable()
 					var old_collection_id = draggable.parents('.collection').attr('id');
 					$.get
 					(
-						URL_MOVE_INPUT_WIDGET + '?new_collection_id=' + new_collection_id + "&old_collection_id=" + old_collection_id,
+						RecordGA(URL_MOVE_INPUT_WIDGET + '?new_collection_id=' + new_collection_id + "&old_collection_id=" + old_collection_id),
 						function()
 						{
 							ReloadInputWidget(new_collection_id);
@@ -216,7 +222,7 @@ function ApplyInputWidgetDroppable()
 				{
 					$.get
 					(
-						'/widget/actionwidgets/' + draggable.find('.type').html() + '/add_new?collection_id=' + collection_id,
+						RecordGA('/widget/actionwidgets/' + draggable.find('.type').html() + '/add_new?collection_id=' + collection_id),
 						function()
 						{
 							ReloadInputWidget(collection_id);
@@ -252,7 +258,7 @@ function ApplyInputWidgetDroppable()
 				droppable.remove();
 				$.get
 				(
-					url,
+					RecordGA(url),
 					function()
 					{
 						ReloadInputWidget(collection_id);
@@ -287,7 +293,7 @@ function ApplyInputWidgetDroppable()
 				droppable.remove();
 				$.get
 				(
-					url,
+					RecordGA(url),
 					function()
 					{
 						ReloadInputWidget(collection_id);
@@ -328,7 +334,7 @@ function ReloadInputWidget(collection_id, polling)
 	*/
 	$.get
 	(
-		URL_RELOAD_INPUT_WIDGET + "?collection_id=" + collection_id,
+		RecordGA(URL_RELOAD_INPUT_WIDGET + "?collection_id=" + collection_id),
 		function(template)
 		{
 			if (!$(template).is('.input_widget_config') && !$(template).is('.action_widget_config'))
@@ -393,7 +399,7 @@ function ReconfigureInput(collection_id, input_id, input_type)
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
-		URL_CLEAR_CONFIG + "?collection_id=" + collection_id + "&input_id=" + input_id + "&input_type=" + input_type,
+		RecordGA(URL_CLEAR_CONFIG + "?collection_id=" + collection_id + "&input_id=" + input_id + "&input_type=" + input_type),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -406,7 +412,7 @@ function RemoveInput(collection_id, input_id)
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
-		URL_REMOVE_INPUT + "?collection_id=" + collection_id + "&input_id=" + input_id,
+		RecordGA(URL_REMOVE_INPUT + "?collection_id=" + collection_id + "&input_id=" + input_id),
 		function(return_data)
 		{
 			if(return_data.was_last_input)
@@ -429,7 +435,7 @@ function ReconfigureAction(collection_id, action_id, action_type)
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
-		'/widget/actionwidgets/' + action_type + "/clear_config?collection_id=" + collection_id + "&action_id=" + action_id,
+		RecordGA('/widget/actionwidgets/' + action_type + "/clear_config?collection_id=" + collection_id + "&action_id=" + action_id),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -442,7 +448,7 @@ function RemoveAction(collection_id, action_id, action_type)
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
-		'/widget/actionwidgets/' + action_type + "/remove?collection_id=" + collection_id + "&action_id=" + action_id,
+		RecordGA('/widget/actionwidgets/' + action_type + "/remove?collection_id=" + collection_id + "&action_id=" + action_id),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -465,7 +471,7 @@ function SaveActionWidgetConfig(collection_id)
 	
 	$.get
 	(
-		'/widget/actionwidgets/' + type + "/save_config?" + query_string,
+		RecordGA('/widget/actionwidgets/' + type + "/save_config?" + query_string),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -491,7 +497,7 @@ function RemoveVisualWidget(collection_id, visual_id, visual_type)
 	url = '/widget/visualwidgets/' + visual_type + '/remove?collection_id=' + collection_id + '&visual_id=' + visual_id;
 	$.get
 	(
-		url,
+		RecordGA(url),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -504,7 +510,7 @@ function ReconfigureVisualWidget(collection_id, visual_id, visual_type)
 	url = '/widget/visualwidgets/' + visual_type + '/clear_config?collection_id=' + collection_id + '&visual_id=' + visual_id;
 	$.get
 	(
-		url,
+		RecordGA(url),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -517,7 +523,7 @@ function SaveVisualConfig(collection_id, visual_type, visual_id, config_type)
 	url = '/widget/visualwidgets/' + visual_type + '/configure?collection_id=' + collection_id + '&visual_id=' + visual_id + '&type=' + config_type;
 	$.get
 	(
-		url,
+		RecordGA(url),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -531,7 +537,7 @@ function RemoveOutputWidget(collection_id, output_id, output_type)
 	url = '/widget/outputwidgets/' + output_type + '/remove?collection_id=' + collection_id + '&output_id=' + output_id;
 	$.get
 	(
-		url,
+		RecordGA(url),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -590,7 +596,7 @@ function SaveSearch(collection_id)
 	ShowLoadingForInputWidget(collection_id);
 	$.get
 	(
-		url,
+		RecordGA(url),
 		function()
 		{
 			ReloadInputWidget(collection_id);
@@ -604,7 +610,7 @@ function EmailMeSend(collection_id)
 	var collection = $('#' + collection_id);
 	var email_address = collection.find('.emailme_email').val();
 	var url = '/widget/outputwidgets/emailme/export?collection_id=' + collection_id + "&email_address=" + email_address;
-	$.get(url);
+	$.get(RecordGA(url));
 	collection.find('.emailme_presend').slideUp();
 	collection.find('.emailme_postsend').slideDown();
 }

@@ -51,7 +51,7 @@ def login(request):
         user = RegisteredEmail.objects.get(email=email)
         if not user.approved:
             return render_to_response('html/login.html', { 'login_error':'Sorry, that email address has not yet been approved for the private beta' })
-        request.session['email'] = user.email
+        request.session['email'] = user.id
         return HttpResponseRedirect('/')
     except:
         return render_to_response('html/login.html', { 'login_error':'Sorry, that email did not match any in our records, have you registered?' })
