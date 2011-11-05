@@ -10,6 +10,14 @@ $(document).ready
 		LoadCollections();
 		ClearCollectionConfig();
 		ApplyUIElements();
+        setTimeout
+        (
+            function()
+            {
+                window.location.reload(true);
+            },
+            3600000
+        );
 	}
 )
 
