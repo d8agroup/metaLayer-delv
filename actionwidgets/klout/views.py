@@ -201,7 +201,11 @@ class ServiceRunner(threading.Thread):
             except CacheEntry.DoesNotExist:
                 pass
             
-            klout = simplejson.loads(raw_json)['users'][0]['kscore']
+	    try:
+            	klout = simplejson.loads(raw_json)['users'][0]['kscore']
+	    except:
+		return
+
             cache_entry = CacheEntry()
             cache_entry.cache =  klout
             cache_entry.key = cache_key
