@@ -1,6 +1,6 @@
 # DEV and PRODUCTION switching
 import socket
-if socket.gethostname() == 'matt-griffiths':
+if socket.gethostname() in ['matt-griffiths', 'mattgriffiths']:
     DEVELOPMENT = True
 else:
     DEVELOPMENT = False
