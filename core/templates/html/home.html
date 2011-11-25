@@ -19,7 +19,7 @@
 	    <script type="text/javascript" src='/inputs/js'></script>
 	</head>
 	<body>
-		<div id='page'>
+		<div id='page' class='{{ view_type }}'>
 			<div id='header' class='clearfix'>
 				<div id='feedbackandhelp'>
 					<a href='http://vimeo.com/channels/metalayer' target='_blank'>HELP</a>
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div id='content' class='clearfix'>
-				{% block content %}{% endblock %} 
+				{% block content %}{% endblock %}
 			</div>
 		</div>
 		<script type="text/javascript" charset="utf-8">

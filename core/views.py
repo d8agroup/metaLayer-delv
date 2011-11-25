@@ -11,7 +11,12 @@ import re
 def home_page(request):
     if 'email' not in request.session:
         return HttpResponseRedirect('/login')
-    return render_to_response('html/home.html', { 'email': request.session['email'] })
+    return render_to_response(
+        'html/home.html',
+        {
+            'email': request.session['email'],
+            'view_type': 'large-view' if 'large' in request.GET else None
+        })
 
 def core_javascript(request):
     return render_to_response('js/core.js')

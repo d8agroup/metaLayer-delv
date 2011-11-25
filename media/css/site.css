@@ -230,3 +230,31 @@ FEEDBACK
 JQUERYUI OVERRIDES
 *******************************************************************************/
 .ui-widget { font-size:70%; }
+
+
+
+/*******************************************************************************
+LARGE
+*******************************************************************************/
+.large-view .collection { width:49.5%; margin:3px 0.2%; font-size:130%;}
+.large-view #collection3 { display:none;}
+.large-view #collection4 { display:none;}
+
+.large-view #widget_picker .widget_set { width:23%; margin:0 0 0 1%; }
+.large-view #widget_picker .draggable_widget { width:45%; height:20px; max-width:140px; margin:5px 1px 0 1px; background-color:#232323; cursor:move; padding:3px; color:#ffffff; font-size:1em; }
+.large-view #widget_picker .draggable_widget span.id { display:none; }
+.large-view #widget_picker .draggable_widget span.name { padding-left:25px; }
+
+.large-view #widget_picker .feed_widget,
+.large-view #widget_picker .googlenews_widget,
+.large-view #widget_picker .gmail_widget,
+.large-view #widget_picker .twittersearch_widget,
+.large-view #widget_picker .twitteruser_widget,
+.large-view #widget_picker .flickrsearch_widget,
+.large-view #widget_picker .piechart_widget,
+.large-view #widget_picker .map_widget,
+.large-view #widget_picker .spreadsheet_widget,
+.large-view #widget_picker .emailme_widget,
+.large-view #widget_picker .embed_widget { background-size:21px; }
+
+.large-view .visuals .visual { height:300px;}
