@@ -39,6 +39,7 @@ MODULE PICKER
 #widget_picker .bbc_widget { background-image:url('/media/images/icon-bbc.png'); background-repeat:no-repeat; background-position:2px 4px; background-size:16px; }
 
 #widget_picker .piechart_widget { background-image:url('/media/images/icon-piechart.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
+#widget_picker .stackchart_widget { background-image:url('/media/images/graph-stack.png'); background-repeat:no-repeat; background-position:4px 4px; background-size:22px; }
 #widget_picker .map_widget { background-image:url('/media/images/icon-map.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
 
 #widget_picker .spreadsheet_widget { background-image:url('/media/images/icon-spreadsheet.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
