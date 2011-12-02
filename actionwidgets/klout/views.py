@@ -49,7 +49,7 @@ def run_action_for_content(request, collection_id, action_id, content):
             return_content.append(item)
             continue
         if klout_condition == 'influential':
-            if 'influence' in item and item['influence'] > 40: 
+            if 'influence' in item and item['influence'] > 30:
                 return_content.append(item)
                 continue
 
@@ -119,7 +119,7 @@ def chart_piechart_influence_js(request):
     content = apply_actions(request, collection_id, content, actions)
     return_data = {}
     for item in content:
-        if 'influence' in item and item['influence'] > 40:
+        if 'influence' in item and item['influence'] > 30:
             type = 'high influence'
         elif 'influence' in item:
             type = 'low influence'
