@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'dashboard.outputwidgets',
     'dashboard.outputwidgets.spreadsheet',
     'dashboard.outputwidgets.emailme',
+    'dashboard.outputwidgets.embed',
 )
 
 # A sample logging configuration. The only tangible logging

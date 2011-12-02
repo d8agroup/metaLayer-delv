@@ -241,7 +241,7 @@ LARGE
 .large-view #collection4 { display:none;}
 
 .large-view #widget_picker .widget_set { width:23%; margin:0 0 0 1%; }
-.large-view #widget_picker .draggable_widget { width:45%; height:20px; max-width:140px; margin:5px 1px 0 1px; background-color:#232323; cursor:move; padding:3px; color:#ffffff; font-size:1em; }
+.large-view #widget_picker .draggable_widget { width:45%; height:20px; max-width:140px; margin:5px 1px 0 1px; background-color:#232323; cursor:move; padding:3px; color:#ffffff; font-size:0.9em; }
 .large-view #widget_picker .draggable_widget span.id { display:none; }
 .large-view #widget_picker .draggable_widget span.name { padding-left:25px; }
 
