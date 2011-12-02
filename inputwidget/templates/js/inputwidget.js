@@ -23,7 +23,7 @@ $(document).ready
 				for(var x=0; x<collections.length; x++)
 				{
 					var collection_id = $(collections[x]).attr('id');
-					RefreshAll(collection_id);
+					//RefreshAll(collection_id);
 				}
 			},
 			60000

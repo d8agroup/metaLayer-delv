@@ -86,7 +86,7 @@ class twittersearch(object):
             }
         }
 
-  
+"""
 class twitteruser(object):
     def source_data(self):
         return { 'type':'twitteruser', 'display_name':'Twitter User' }
@@ -154,7 +154,7 @@ class twitteruser(object):
                 ]
             }
         }
-              
+"""
         
 class feed(object):
     def source_data(self):
@@ -216,8 +216,95 @@ class feed(object):
                 ]
             }
         }
-        
 
+class cnn(object):
+    def source_data(self):
+        return {
+            'type':'cnn',
+            'display_name':'CNN',
+        }
+
+    def run_for_input(self, input_config):
+        return [
+            {
+                'type':'cnn',
+                'time':random.random() * 10000000,
+                'image_url':'/media/images/icon-cnn.png',
+                'author':'',
+                'title':i,
+                'text':''
+            } for i in ["Exclusive: Inside the offices of Occupy Wall Street","Police clear Occupy camps in Los Angeles, Philadelphia - CNN.com","Will Occupy follow tea party's path? - CNN.com","Occupy protesters celebrate Thanksgiving - CNN","Occupy LA asking court to stop eviction - CNN.com","Occupy protesters rally in Los Angeles park - CNN.com","'Occupy' protesters, police clash during 'day of action' - CNN"]]
+
+    def parse_request_to_config(self, request):
+        return {
+            'id':request.GET['id'],
+            'type':'cnn',
+            'display_name':'CNN Search For "occupy"',
+            'config':{
+                'configured':True,
+                'elements':[
+                    { 'name':'search', 'display_name':'Feed URL', 'type':'text', 'value':request.GET['search']}
+                ]
+            }
+        }
+
+    def generate_unconfigured_config(self):
+        return {
+            'id':md5('%s' % random.random()).hexdigest(),
+            'type':'cnn',
+            'display_name':'Search CNN',
+            'config':{
+                'configured':False,
+                'elements':[
+                    { 'name':'search', 'display_name':'Keywords', 'type':'text' }
+                ]
+            }
+        }
+
+class bbc(object):
+    def source_data(self):
+        return {
+            'type':'bbc',
+            'display_name':'BBC News',
+        }
+
+    def run_for_input(self, input_config):
+        return [
+            {
+                'type':'bbc',
+                'time':random.random() * 10000000,
+                'image_url':'/media/images/icon-bbc.png',
+                'author':'',
+                'title':i,
+                'text':''
+            } for i in ["Occupy Los Angeles and Philadelphia raided by police","BBC News - Occupy Los Angeles arrests made after eviction deadline","BBC News - Occupy Los Angeles and Philadelphia raided by police","BBC News - Occupy Los Angeles given City Hall Park eviction ...","BBC News - 'Occupy' protests spread across the world"]]
+
+    def parse_request_to_config(self, request):
+        return {
+            'id':request.GET['id'],
+            'type':'bbc',
+            'display_name':'BBC News Search For "occupy"',
+            'config':{
+                'configured':True,
+                'elements':[
+                    { 'name':'search', 'display_name':'Feed URL', 'type':'text', 'value':request.GET['search']}
+                ]
+            }
+        }
+
+    def generate_unconfigured_config(self):
+        return {
+            'id':md5('%s' % random.random()).hexdigest(),
+            'type':'bbc',
+            'display_name':'Search BBC News',
+            'config':{
+                'configured':False,
+                'elements':[
+                    { 'name':'search', 'display_name':'Keywords', 'type':'text' }
+                ]
+            }
+        }
+"""
 class googlenews(object):
     def source_data(self):
         return {
@@ -278,6 +365,7 @@ class googlenews(object):
                 ]
             }
         }
+"""
         
 class gmail(object):
     def source_data(self):

@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     'dashboard.visualwidgets',
     'dashboard.visualwidgets.piechart',
     'dashboard.visualwidgets.barchart',
+    'dashboard.visualwidgets.stackchart',
     'dashboard.outputwidgets',
     'dashboard.outputwidgets.spreadsheet',
     'dashboard.outputwidgets.emailme',

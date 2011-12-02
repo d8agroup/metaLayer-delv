@@ -35,6 +35,8 @@ MODULE PICKER
 #widget_picker .twittersearch_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
 #widget_picker .twitteruser_widget { background-image:url('/media/images/icon-twitter.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
 #widget_picker .flickrsearch_widget { background-image:url('/media/images/icon-flickr.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
+#widget_picker .cnn_widget { background-image:url('/media/images/icon-cnn.png'); background-repeat:no-repeat; background-position:2px 4px; background-size:16px; }
+#widget_picker .bbc_widget { background-image:url('/media/images/icon-bbc.png'); background-repeat:no-repeat; background-position:2px 4px; background-size:16px; }
 
 #widget_picker .piechart_widget { background-image:url('/media/images/icon-piechart.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
 #widget_picker .map_widget { background-image:url('/media/images/icon-map.png'); background-repeat:no-repeat; background-position:2px 2px; background-size:16px; }
@@ -95,6 +97,8 @@ DATA MODULES
 .input_widget .inputs .googlenews { background:url('/media/images/icon-googlenews.png') no-repeat 5px 5px; background-size:18px;}
 .input_widget .inputs .gmail { background:url('/media/images/icon-gmail.png') no-repeat 5px 5px; background-size:18px;}
 .input_widget .inputs .flickrsearch { background:url('/media/images/icon-flickr.png') no-repeat 5px 5px; background-size:18px;}
+.input_widget .inputs .cnn { background:url('/media/images/icon-cnn.png') no-repeat 5px 5px; background-size:29px;}
+.input_widget .inputs .bbc { background:url('/media/images/icon-bbc.png') no-repeat 5px 5px; background-size:22px;}
 
 .input_widget .actions .sentimentfilter { background:url('/media/images/icon-sentiment-flat.png') no-repeat 5px 5px; background-size:18px;}
 .input_widget .actions .tagging { background:url('/media/images/icon-tagging.png') no-repeat 5px 5px; background-size:18px;}
@@ -155,6 +159,8 @@ DATA MODULES
 .input_widget_config .googlenews .inner { background-image:url('/media/images/icon-googlenews.png'); background-size:30px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .gmail .inner { background-image:url('/media/images/icon-gmail.png'); background-size:30px; background-repeat:no-repeat; background-position:5px 5px;}
 .input_widget_config .flickrsearch .inner { background-image:url('/media/images/icon-flickr.png'); background-size:30px; background-repeat:no-repeat; background-position:5px 5px;}
+.input_widget_config .cnn .inner { background-image:url('/media/images/icon-cnn.png'); background-size:50px; background-repeat:no-repeat; background-position:5px 15px;}
+.input_widget_config .bbc .inner { background-image:url('/media/images/icon-bbc.png'); background-size:40px; background-repeat:no-repeat; background-position:5px 15px;}
 
 .action_widget_config { background-color:#333; }
 .action_widget_config .inner { margin:0 10px; padding:5px; color:#FFF; }
@@ -256,5 +262,11 @@ LARGE
 .large-view #widget_picker .spreadsheet_widget,
 .large-view #widget_picker .emailme_widget,
 .large-view #widget_picker .embed_widget { background-size:21px; }
+.large-view #widget_picker .cnn_widget { background-size:26px; }
+.large-view #widget_picker .bbc_widget { background-size:22px; }
 
 .large-view .visuals .visual { height:300px;}
+
+
+#fake-graph { width:100%; text-align:center; }
+#fake-graph img { height:300px;}
