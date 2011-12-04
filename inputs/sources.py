@@ -433,7 +433,7 @@ class gmail(object):
                 ]
             }
         }
-        
+"""
 class flickrsearch(object):
     def source_data(self):
         return { 'type':'flickrsearch', 'display_name':'Flickr Search' }
@@ -485,6 +485,83 @@ class flickrsearch(object):
             'type':'flickrsearch', 
             'display_name':'Flickr Search',
             'config':{ 
+                'configured':False,
+                'elements':[
+                    { 'name':'search', 'display_name':'Keywords', 'type':'text' }
+                ]
+            }
+        }
+    """
+class flickrsearch(object):
+    def source_data(self):
+        return { 'type':'flickrsearch', 'display_name':'Flickr Search' }
+
+    def run_for_input(self, input_config, with_filter=False):
+        """
+        search = input_config['config']['elements'][0]['value']
+        cache_key = 'flickrsearch_%s' % search
+        try:
+            cache_entry = CacheEntry.objects.get(key=cache_key)
+            if int(time.time()) - cache_entry.time > 120:
+                cache_entry.delete()
+                raise CacheEntry.DoesNotExist
+            pics = simplejson.loads(cache_entry.cache)
+        except CacheEntry.DoesNotExist:
+            raw_json = urllib2.urlopen('http://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=%i&api_key=ff9c57320434f28ec322da1838161da6&text=%s&format=json&nojsoncallback=1&sort=date-posted-desc&extras=date_upload,tags' % (settings.INPUT_ITEM_LIMIT, urllib.quote(search))).read()
+            pics = simplejson.loads(raw_json)
+            cache_entry = CacheEntry()
+            cache_entry.cache = raw_json
+            cache_entry.key = cache_key
+            cache_entry.time = int(time.time())
+            cache_entry.save()
+        """
+        if not with_filter:
+            images = [
+                'https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcTDKwHLFz17J-v2qt8ZNn0LUEHPz6so49QeyjYzF984aajuOXSZ',
+                'https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcTcLU4iu2TJxbOMJqhmQnknPjnqos9XtGtrrBgW1aG-T7CifyY4tw',
+                'https://encrypted-tbn2.google.com/images?q=tbn:ANd9GcT3syzL2XgbmxQDxFITvdVi3OkG_GMiFHjEz3i9prgNKtQta3Qh',
+                'https://encrypted-tbn3.google.com/images?q=tbn:ANd9GcTvac0fEQO-FPN3CociHGS-dvCln9orp9P_7n-7Gk6WH6Jd6cke',
+                'http://farm3.staticflickr.com/2472/3737684999_7ee79086e7_t.jpg',
+                'http://farm4.staticflickr.com/3297/3204598696_bdd6f50763_t.jpg',
+                'http://farm1.staticflickr.com/4/6789737_63c9f781bb_t.jpg',
+                'http://farm1.staticflickr.com/97/218703397_b04ffc3408_t.jpg',
+                'http://farm1.staticflickr.com/6/5605937_5d5fcaa50f_t.jpg']
+        else:
+            images = [
+                'https://encrypted-tbn3.google.com/images?q=tbn:ANd9GcRMuMgpd1TuEJHKMXNWTLBXLz_HVKkex0B-II57YLKT72VzKhymJA',
+                'https://encrypted-tbn0.google.com/images?q=tbn:ANd9GcSQIjL30aQ4Hwr_nUMxQOLVzpSxaCM0IV8B2-FtmjbOotKNREgW',
+                'https://encrypted-tbn3.google.com/images?q=tbn:ANd9GcSwdN2sxATjkojlpOpP1dw6WkO71ZnaxjNDTHTc1k6Hdc_j-au0',
+            ]
+
+        return [
+            {
+                'type':'flickrsearch',
+                'time':random.random(),
+                'image_url':p,
+                'author':'',
+                'title':'',
+                'text':'',
+            } for p in images]
+
+    def parse_request_to_config(self, request):
+        return {
+            'id':request.GET['id'],
+            'type':'flickrsearch',
+            'display_name':'Flickr Search for: %s' % request.GET['search'],
+            'config':{
+                'configured':True,
+                'elements':[
+                    { 'name':'search', 'display_name':'Keywords', 'type':'text', 'value':request.GET['search']}
+                ]
+            }
+        }
+
+    def generate_unconfigured_config(self):
+        return {
+            'id':md5('%s' % random.random()).hexdigest(),
+            'type':'flickrsearch',
+            'display_name':'Flickr Search',
+            'config':{
                 'configured':False,
                 'elements':[
                     { 'name':'search', 'display_name':'Keywords', 'type':'text' }

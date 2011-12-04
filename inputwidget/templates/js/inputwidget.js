@@ -592,6 +592,12 @@ function SaveSearch(collection_id)
 		var selection = checked.next('label').find('span').html();
 		url += "&klout=" + selection;
 	}
+
+    var keywords = search.find('.keywords input')
+    if (keywords.val().length > 0)
+    {
+        url += "&keywords=" + keywords.val();
+    }
 	
 	ShowLoadingForInputWidget(collection_id);
 	$.get

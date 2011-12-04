@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from core.utils import set_collection_config
 from core.utils import JSONResponse
 from core.utils import get_config_ensuring_collection
-from inputwidget.utils import run_all_inputs_and_combine_results
+from inputwidget.utils import run_all_inputs_and_combine_results, run_fake_inputs
 from inputwidget.utils import apply_actions
 from inputwidget.utils import apply_visuals
 from inputwidget.utils import apply_outputs
@@ -78,7 +78,12 @@ def render_input_widget(request):
     actions = config['collections'][collection_id]['actions']
     visuals = config['collections'][collection_id]['visuals']
     outputs = config['collections'][collection_id]['outputs']
-    content = run_all_inputs_and_combine_results(inputs)
+
+    if 'keywords' in config['collections'][collection_id]['search'] and config['collections'][collection_id]['search']['keywords'] != '':
+        content = run_fake_inputs(None)
+    else:
+        content = run_all_inputs_and_combine_results(inputs)
+
     content = apply_actions(request, collection_id, content, actions)
     visuals = apply_visuals(request, collection_id, content, visuals) 
     outputs = apply_outputs(request, collection_id, outputs)
@@ -133,10 +138,12 @@ def apply_search_filter(request):
     sentiment = request.GET['sentiment'] if 'sentiment' in request.GET else 'all'
     faces = request.GET['faces'] if 'faces' in request.GET else 'all'
     klout = request.GET['klout'] if 'klout' in request.GET else 'all'
+    keywords = request.GET['keywords'] if 'keywords' in request.GET else ''
     config = get_config_ensuring_collection(request, collection_id)
     config['collections'][collection_id]['search']['sentimentfilter'] = sentiment
     config['collections'][collection_id]['search']['facedetection'] = faces
     config['collections'][collection_id]['search']['klout'] = klout
+    config['collections'][collection_id]['search']['keywords'] = keywords
     set_collection_config(request, config)
     return HttpResponse()
     

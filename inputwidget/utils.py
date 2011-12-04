@@ -5,6 +5,10 @@ import inputs.sources as sources
 from Queue import Queue
 import threading
 
+def run_fake_inputs(inputs):
+    source_bridge = sources.flickrsearch()
+    return source_bridge.run_for_input(None, True)
+
 def run_all_inputs_and_combine_results(inputs):
     def producer(q, _inputs):
         for _input in _inputs:
@@ -26,7 +30,7 @@ def run_all_inputs_and_combine_results(inputs):
     prod_thread.start()
     cons_thread.start()
     prod_thread.join()
-    cons_thread.join()    
+    cons_thread.join()
 
     all_content = []
     

@@ -51,6 +51,12 @@
 		<div  class='search hidden'>
 			<form class='ui-corner-all'>
 				<h3>search and filter this content</h3>
+                <div class='search_control clearfix keywords'>
+                    <h4>keywords or objects</h4>
+                    <div class="control">
+                        <input type="text" />
+                    </div>
+                </div>
 				{% if sentiment_filter %}		
 					<div class='search_control clearfix sentiment'>
 						<h4>show sentiment</h4>
@@ -81,16 +87,10 @@
 						</div>
 					</div>
 				{% endif %}
-				{% if not faces_filter and not sentiment_filter and not influence_filter %}
-					<div class='no_search_message'>
-						<p>There are no filter options available yet, why not add an action or two?</p>
-					</div>
-				{% else %}
-					<div class='submit search_control'>
-						<a href='JavaScript:SaveSearch("{{ collection_id }}");' class='button'>apply these filters</a>
-					</div>
-				{% endif %}
-			</form>
+                <div class='submit search_control'>
+                    <a href='JavaScript:SaveSearch("{{ collection_id }}");' class='button'>apply these filters</a>
+                </div>
+		    </form>
 		</div>
 	</div>
 	<div class='content {% if collapsed %}hidden{% endif %}'>
