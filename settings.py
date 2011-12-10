@@ -1,51 +1,24 @@
-# DEV and PRODUCTION switching
-import socket
-if socket.gethostname() in ['matt-griffiths', 'mattgriffiths']:
-    DEVELOPMENT = True
-else:
-    DEVELOPMENT = False
+# Django settings for dashboard project.
 
-import os
-ROOT_PATH = os.path.dirname(__file__)
-
-#if DEVELOPMENT:
-    #DEBUG = True
-#else:
-    #DEBUG = False
-
-DEBUG = DEVELOPMENT
-
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('matt', 'mg@metalayer.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
 
-if DEVELOPMENT:
-    DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-                'NAME': 'ml_dashboard',                      # Or path to database file if using sqlite3.
-                'USER': 'root',                      # Not used with sqlite3.
-                'PASSWORD': '',                  # Not used with sqlite3.
-                'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-                'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-            }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
-else:
-        DATABASES = {
-                'default': {
-                        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-                        'NAME': 'ml_dashboard',                      # Or path to database file if using sqlite3.
-                        'USER': 'root',                      # Not used with sqlite3.
-                        'PASSWORD': 'navanti',                  # Not used with sqlite3.
-                        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-                        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-                }
-        }
-
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -72,12 +45,12 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ROOT_PATH + '/media'
+MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://localhost:8000/media'
+MEDIA_URL = ''
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -92,11 +65,8 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-if DEVELOPMENT:
-    ADMIN_MEDIA_PREFIX = '/static/admin/'
-else:
-    ADMIN_MEDIA_PREFIX = '/admin_media/'
-    
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -113,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '(t2h3^yf5555pp!x*&*(&(7f8d78f78dx9!k=t%!8ekz@y4^qt*j$_i+ee6'
+SECRET_KEY = '!%-+x&r35j^wtk$6a99g2q=4at2+#g+1p!d6$=fa9eh49rfbcu'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -125,16 +95,17 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'dashboard.core.urls'
+ROOT_URLCONF = 'dashboard.urls'
 
 TEMPLATE_DIRS = (
-    ROOT_PATH + "/templates",
-    ROOT_PATH + "/actionwidgets/templates",
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
@@ -144,28 +115,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    
-    'dashboard.core',
-    'dashboard.lib',
-    'dashboard.feedbackandhelp',
-    'dashboard.metalayerbridge',
-    'dashboard.customtags',
-    'dashboard.inputwidget',
-    'dashboard.actionwidgets.sentimentfilter',
-    'dashboard.actionwidgets.tagging',
-    'dashboard.actionwidgets.klout',
-    'dashboard.actionwidgets.facedetection',
-    'dashboard.visualwidgets',
-    'dashboard.visualwidgets.piechart',
-    'dashboard.visualwidgets.barchart',
-    'dashboard.visualwidgets.stackchart',
-    'dashboard.outputwidgets',
-    'dashboard.outputwidgets.spreadsheet',
-    'dashboard.outputwidgets.emailme',
-    'dashboard.outputwidgets.embed',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -190,26 +143,3 @@ LOGGING = {
         },
     }
 }
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mrmatthewgriffiths@gmail.com'
-EMAIL_HOST_PASSWORD = 'hellit'
-EMAIL_PORT = 587
-
-
-
-#Added the user profile modules
-#AUTH_PROFILE_MODULE = 'webapp.UserProfile'
-
-#CUSTOM SETTINGS
-if DEVELOPMENT:
-    SOLR_URL = "http://md.stage.01:8983/solr/"
-else: 
-    SOLR_URL = "http://localhost:8983/solr/"
-
-SOLR_SEARCH_PARAMS = "sort=date+desc&facet=on&wt=json&facet.field=csubtype&facet.field=ctype&facet.field=sname&&facet.range=date&f.date.facet.range.gap=%2B1DAY&f.date.facet.range.start=NOW-6MONTHS&f.date.facet.range.end=NOW&facet.field=tags&facet.field=rawlocations&rows=20"
-SOLR_FACETS = ['ctype', 'csubtype', 'sname', 'tags', 'rawlocations']
-SOLR_RANGES = ['date']
-
-INPUT_ITEM_LIMIT = 10
