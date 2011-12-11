@@ -1,6 +1,6 @@
 # Django settings for dashboard project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -115,8 +115,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+
+    'dashboard.core',
+    'dashboard.dashboards',
+    'dashboard.userprofiles',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -143,3 +146,9 @@ LOGGING = {
         },
     }
 }
+
+
+
+import socket
+if socket.gethostname() in ['mattgriffiths']:
+    from settings_development import *
