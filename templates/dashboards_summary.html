@@ -1,0 +1,12 @@
+<div class='dashboards_summary'>
+    <div class='container'>
+        <img src="{{ url_for('static', filename='image/no_image_medium.png') }}" />
+        <div class='meta'>
+            <p class="accessed">Used {{ dashboard.accessed }} time(s)</p>
+            <p class="last_accessed">Last used: {{ dashboard.last_saved|timesince }}</p>
+        </div>
+        <div class="actions">
+            <a href="{% url dashboard.core.views.dashboard dashboard.id %}">load</a>
+        </div>
+    </div>
+</div>

@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
 
+    'dashboard.customtags',
     'dashboard.core',
     'dashboard.dashboards',
     'dashboard.userprofiles',

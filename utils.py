@@ -1,3 +1,5 @@
+from django.db.models.base import ModelBase
+from django.http import HttpResponse
 from django.utils import simplejson
 from django.template.loader import get_template
 from django.template import Context
@@ -6,6 +8,8 @@ import datetime
 ################################################################################
 # DYNAMIC MODULE LOADED FUNCTIONS                                              #
 ################################################################################
+from django.utils.encoding import force_unicode
+
 def my_import(name):
     mod = __import__(name)
     components = name.split('.')
