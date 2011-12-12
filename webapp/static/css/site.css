@@ -1,0 +1,20 @@
+
+/***********************************************************************************************************************
+HEADER
+***********************************************************************************************************************/
+#header { width:100%; background-color:#333; color:#DDD; text-align:right; }
+#header_links { padding:5px; }
+#header_links a { display:inline-block; padding:0 5px;}
+
+/***********************************************************************************************************************
+USER HOME PAGE
+***********************************************************************************************************************/
+#user_home { width:80%; margin:20px auto 0 auto; background-color:#666; color:#FFF;}
+#user_home .container { padding:20px;}
+#user_home h3 { text-align:center; font-size:200%; margin:20px 0;}
+#user_home h4 { margin:40px 0 10px; font-weight:normal; font-size:150%;}
+#user_home ul { border:2px solid #FFF; background-color:#DDD; color:#666; width:100%;}
+#user_home ul li .container { padding:5px;}
+#user_home ul li { width:150px; height:150px; float:left; text-align:center; margin:0 5px;}
+#user_home ul li img.thumbnail { border:1px solid; width:120px; height:90px; display:inline-block; }
+#user_home ul li .meta { font-size:80%;}

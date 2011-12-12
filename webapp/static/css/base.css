@@ -1,0 +1,7 @@
+body { font-size:90%; }
+a { cursor:pointer; text-decoration:none; color:inherit; text-transform: uppercase;}
+a:hover { text-decoration:underline; }
+.container { padding:10px;}
+
+.alert p { padding:10px; }
+.empty { border:2px solid; background-color:#696; color:#333;}

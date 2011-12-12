@@ -35,3 +35,21 @@ class Dashboard(Model):
     def save(self, *args, **kwargs):
         self['last_saved'] = time.time()
         return super(Dashboard, self).save(*args, **kwargs)
+
+class DashboardTemplate(Model):
+    class Meta:
+        database = 'ml_dashboard'
+        collection = 'dashboard_templates'
+        #indices = ( Index(''), )
+
+    @classmethod
+    def AllForUser(cls, user):
+        #TODO this is a mock up
+        return [
+            {
+                'id':'g8f7h76j6hj5h45k46hjkhj87',
+                'display_name':'Empty Dashboard',
+                'description':'A blank dashboard ready for anything!',
+                'image':'dashboard_template_images/empty_dashboard.png',
+            }
+        ]
