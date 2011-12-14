@@ -1,0 +1,24 @@
+{% if saved_dashboards %}
+    <ul class="clearfix">
+        {% for dashboard in saved_dashboards %}
+            <li>
+                <div class='dashboard_summary' id='{{ dashboard.id }}'>
+                    <div class='container'>
+                        <img src="/static/images/site/no_image_medium.png" class="thumbnail" />
+                        <div class='meta'>
+                            <p class="accessed">Used {{ dashboard.accessed }} time(s)</p>
+                            <p class="last_accessed">Last used: {{ dashboard.last_saved }}</p>
+                        </div>
+                        <div class="actions">
+                            <a class='load_dashboard'>load</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert empty">
+        <p>You dont have any saved dashboards yet</p>
+    </div>
+{% endif %}

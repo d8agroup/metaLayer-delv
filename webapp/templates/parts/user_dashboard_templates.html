@@ -1,0 +1,18 @@
+<ul class="clearfix">
+    {% for dashboard in dashboard_templates %}
+        <li>
+            <div class="dashboard_template" id='{{ dashboard.id }}'>
+                <div class="container">
+                    <img src="/static/images/site/{{ dashboard.image }}" class="thumbnail"/>
+                    <div class="meta">
+                        <p class="display_name">{{ dashboard.display_name }}</p>
+                        <p class="description">{{ dashboard.description }}</p>
+                    </div>
+                    <div class="actions">
+                        <a class="load_template">load template</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

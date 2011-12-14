@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block css %}
-    <link rel="stylesheet" href="/static/css/site.css" />
+    <link rel="stylesheet" href="/static/css/site/site.css" />
 {% endblock %}
 
 {% block js %}
@@ -9,6 +9,7 @@
     <script type="text/javascript" src="/static/js/site/header.js"></script>
     <script type="text/javascript" src="/static/js/site/site.js"></script>
     <script type="text/javascript" src="/static/js/site/users.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard.js"></script>
     <script type="text/javascript" src="/static/js/site/init.js"></script>
 {% endblock %}
 
@@ -16,12 +17,37 @@
     <div id='page'>
         <div id='header'>
             <div id='header_links' class="clearfix">
+                <a id='user_home_link'>home</a>
                 <a id='link_help'>help</a>
                 <a id='link_logout' href="/user/logout">logout</a>
             </div>
         </div>
         <div id='content'>
-            {% include 'pages/user_home.html' %}
+            <div id='user_home'>
+                <div class="container">
+                    <h3>Home</h3>
+                    <div id='saved_dashboards'>
+                        <h4>Choose to reopen a saved dashboard</h4>
+                        <div class="list-container">
+                            Loading ...
+                        </div>
+                    </div>
+                    <div id='dashboard_templates'>
+                        <h4>Or start a new dashboard by choosing a template</h4>
+                        <div class="list-container">
+                            Loading ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="dashboard">
+                <div id='widgets'>
+
+                </div>
+                <div id='collections'>
+
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

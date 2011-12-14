@@ -8,10 +8,11 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^user/login$', user_login),
     url(r'^user/logout$', user_logout),
-    url(r'^user/home$', user_home),
+    url(r'^user/saved_dashbaords$', user_saved_dashboards),
+    url(r'^user/dashboard_templates$', user_dashboard_templates),
+    url(r'^user/new_dashboard_from_template/(\w+)$', user_new_dashboard_from_template),
 
-    url(r'dashboard/(\w+)$', dashboard),
-    url(r'new_dashboard/(\w+)$', new_dashboard),
+    url(r'dashboard/load/(\w+)$', dashboard),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),

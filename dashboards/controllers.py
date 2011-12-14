@@ -1,6 +1,3 @@
-from django.template.loader import get_template
-from django.template import Context
-from django.shortcuts import render_to_response
 from dashboards.models import Dashboard, DashboardTemplate
 
 class DashboardsController(object):
@@ -15,3 +12,8 @@ class DashboardsController(object):
 
     def get_dashboard_templates(self):
         return DashboardTemplate.AllForUser(self.user)
+
+    def create_new_dashboard_from_template(self, template_id):
+        template = DashboardTemplate.GetTemplateById(template_id)
+        dashboard = Dashboard.Create(self.user, template)
+        return dashboard
