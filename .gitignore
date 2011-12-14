@@ -1,3 +1,4 @@
 *.pyc
 *.db*
 .idea
+fabfile.py
