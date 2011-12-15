@@ -1,0 +1,21 @@
+<div class='data_point_config'>
+    <div class="image_and_title">
+        <img src='{{ image }}' />
+        <h3>{{ full_display_name }}</h3>
+    </div>
+    <p class="instructions">{{ instructions }}</p>
+    <form>
+        {% csrf_token %}
+        {% for element in elements %}
+            <div class="form-row">
+                <label for="{{ element.name }}">{{ element.display_name }}</label>
+                <input type='{{ element.type }}' name="{{ element.name }}" />
+                <p class="help">{{ element.help }}</p>
+            </div>
+        {% endfor %}
+        <div class="form-actions">
+            <input type="submit" name='cancel' value="cancel"/>
+            <input type="submit" name='save' value="save"/>
+        </div>
+    </form>
+</div>

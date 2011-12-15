@@ -26,7 +26,22 @@ DASHBOARD
 #dashboard { display:none; }
 #widget_panel { height:130px; background-color:#DDD; }
 
-.collection_container { display:inline-block; }
+.collection_container { display:inline-block; color:#DDD; }
 .collections_2 { width:50%;}
-.empty_collection { margin:2px; background-color:#666; height:300px; }
+.empty_collection, .search_widget { margin:2px; background-color:#666; height:300px; overflow:auto}
+
+
 .empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}
+
+.data_point_droppable_active { border:2px solid red; }
+
+.data_point_config { padding:20px; }
+.data_point_config .image_and_title { height:100px; overflow:hidden; }
+.data_point_config .image_and_title img { width:100px; display:inline-block; }
+.data_point_config .image_and_title h3 { display:inline-block; font-size:250%; position:relative; bottom:50px; }
+.data_point_config .instructions { color:#BBB; padding:10px; font-style:italic; }
+.data_point_config .form-row label { display:inline-block; width:45%; }
+.data_point_config .form-row input { display:inline-block; width:53%; }
+.data_point_config .form-row .help { color:#BBB; font-size:80%; padding-left:20px;}
+.data_point_config .form-actions { text-align:center; margin-top:20px;}
+.data_point_config .form-actions input { width:48%; padding:5px; }

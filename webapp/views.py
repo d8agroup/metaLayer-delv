@@ -21,6 +21,26 @@ def dashboard(request, id):
     db = dc.get_dashboard_by_id(id)
     return JSONResponse({'dashboard':db})
 
+@login_required(login_url='/user/login')
+def dashboard_render_data_point_config(request, type, sub_type):
+    #TODO: here we need to go off and get the config makeup
+    config = {
+        'type':'twitter',
+        'sub_type':'search',
+        'short_display_name':'Twitter Search',
+        'full_display_name':'Search Twitter',
+        'instructions':'To start searching twitter you will need to choose the keyword(s) you want to search for.',
+        'image':'http://www.exacta.com/sites/default/files/pictures/twitter-logo.png',
+        'elements':[
+            {'name':'keywords', 'display_name':'Keywords', 'help':'Enter the keywords you want to search for', 'type':'text', 'validation':None }
+        ]
+    }
+    return render_to_response(
+        'parts/dashboard_data_point_config.html',
+        config,
+        context_instance=RequestContext(request)
+    )
+
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS
 ########################################################################################################################
