@@ -14,7 +14,7 @@ class Dashboard(Model):
             'username': user.username,
             'created': time.time(),
             'accessed':1,
-            'configuration':template['configuration'] if template else {},
+            'collections':template['collections'] if template else {},
             'widgets':template['widgets'] if template else {}
         })
         dashboard.save()
@@ -54,8 +54,8 @@ class DashboardTemplate(Model):
                 'id':'g8f7h76j6hj5h45k46hjkhj87',
                 'display_name':'Empty Dashboard',
                 'description':'A blank dashboard ready for anything!',
-                'image':'dashboard_template_images/empty_dashboard.png',
-                'configuration':{},
+                'image':'dashboard_template_images/empty_dashboard.gif',
+                'collections':[{}, {}],
                 'widgets':{'something':{}},
             }
         ]
@@ -63,11 +63,4 @@ class DashboardTemplate(Model):
     @classmethod
     def GetTemplateById(cls, id):
         #TODO this is a mock up
-        return{
-            'id':'g8f7h76j6hj5h45k46hjkhj87',
-            'display_name':'Empty Dashboard',
-            'description':'A blank dashboard ready for anything!',
-            'image':'dashboard_template_images/empty_dashboard.png',
-            'configuration':{},
-            'widgets':{'something':{}},
-        }
+        return DashboardTemplate.AllForUser(None)[0]

@@ -24,3 +24,9 @@ USER HOME PAGE
 DASHBOARD
 ***********************************************************************************************************************/
 #dashboard { display:none; }
+#widget_panel { height:130px; background-color:#DDD; }
+
+.collection_container { display:inline-block; }
+.collections_2 { width:50%;}
+.empty_collection { margin:2px; background-color:#666; height:300px; }
+.empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}

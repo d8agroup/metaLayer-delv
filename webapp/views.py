@@ -21,10 +21,6 @@ def dashboard(request, id):
     db = dc.get_dashboard_by_id(id)
     return JSONResponse({'dashboard':db})
 
-@login_required(login_url='/user/login')
-def new_dashboard(request, id):
-    pass
-
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS
 ########################################################################################################################
