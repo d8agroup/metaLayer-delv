@@ -8,7 +8,7 @@ from webapp.utils import JSONResponse
 
 def index(request):
     if request.user.is_authenticated():
-        return render_to_response('site.html')
+        return render_to_response('site.html',{}, context_instance=RequestContext(request))
     data_dict = {}
     return render_to_response(
         'index.html',
@@ -30,6 +30,7 @@ def dashboard_render_data_point_config(request, type, sub_type):
         'sub_type':'search',
         'short_display_name':'Twitter Search',
         'full_display_name':'Search Twitter',
+        'configured_display_name':'Twitter Search for XYZ',
         'instructions':'To start searching twitter you will need to choose the keyword(s) you want to search for.',
         'image':'http://www.exacta.com/sites/default/files/pictures/twitter-logo.png',
         'elements':[

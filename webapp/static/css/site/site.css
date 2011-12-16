@@ -24,11 +24,13 @@ USER HOME PAGE
 DASHBOARD
 ***********************************************************************************************************************/
 #dashboard { display:none; }
-#widget_panel { height:130px; background-color:#DDD; }
+#widget_panel { height:130px; background-color:#DDD; padding:5px; }
+
+.data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:pointer;}
 
 .collection_container { display:inline-block; color:#DDD; }
 .collections_2 { width:50%;}
-.empty_collection, .search_widget { margin:2px; background-color:#666; height:300px; overflow:auto}
+.empty_collection, .search_widget_container { margin:2px; background-color:#666; height:300px; overflow:auto}
 
 
 .empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}
@@ -40,8 +42,15 @@ DASHBOARD
 .data_point_config .image_and_title img { width:100px; display:inline-block; }
 .data_point_config .image_and_title h3 { display:inline-block; font-size:250%; position:relative; bottom:50px; }
 .data_point_config .instructions { color:#BBB; padding:10px; font-style:italic; }
-.data_point_config .form-row label { display:inline-block; width:45%; }
-.data_point_config .form-row input { display:inline-block; width:53%; }
-.data_point_config .form-row .help { color:#BBB; font-size:80%; padding-left:20px;}
-.data_point_config .form-actions { text-align:center; margin-top:20px;}
-.data_point_config .form-actions input { width:48%; padding:5px; }
+.data_point_config .form_row label { display:inline-block; width:45%; }
+.data_point_config .form_row input { display:inline-block; width:53%; }
+.data_point_config .form_row .help { color:#BBB; font-size:80%; padding-left:20px;}
+.data_point_config .form_actions { text-align:center; margin-top:20px;}
+.data_point_config .form_actions input { width:48%; padding:5px; }
+
+.search_widget .data_points_container { background-color:#333; padding:2px; }
+.search_widget .data_points_container img { width:20px; }
+.search_widget .data_points_container .data_points_summary li { display:inline-block }
+.search_widget .data_points_container .data_points_details { padding-top:25px; }
+.search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:5px; left:5px;}
+.search_widget .data_points_container .data_points_details .actions { float:right;}

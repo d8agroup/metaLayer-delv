@@ -10,6 +10,9 @@
     {% block js %}{% endblock %}
 </head>
 <body>
+    <form id='csrf_form'>
+        {% csrf_token %}
+    </form>
     {% block body %}{% endblock %}
 </body>
 </html>

@@ -9,7 +9,30 @@ DASHBOARD - widgets panel
         {
             var widgets = data.widgets;
             this.children().remove();
-            var empty_widget_panel_html = "<div id='widget_panel'><div class='widget data_point_widget'><p class='hidden type'>twitter</p><p class='hidden sub_type'>search</p>twitter</div></div>";
+            var empty_widget_panel_html = $("<div id='widget_panel'></div>");
+
+            //TODO: this is a temp hack
+            <div class='widget data_point_widget'><p class='hidden type'>twitter</p><p class='hidden sub_type'>search</p>twitter</div>
+            var twitter_widget = $('<div class="data_point_widget">twitter</div>');
+            twitter_widget.data
+            (
+                'data_point',
+                {
+                    type:'twitter',
+                    sub_type:'search',
+                    short_display_name:'Twitter Search',
+                    full_display_name:'Search Twitter',
+                    configured_display_name:'Twitter Search for XYZ',
+                    instructions:'To start searching twitter you will need to choose the keyword(s) you want to search for.',
+                    image:'http://www.exacta.com/sites/default/files/pictures/twitter-logo.png',
+                    configured:false,
+                    elements:[
+                        {name:'keywords', display_name:'Keywords', help:'Enter the keywords you want to search for', type:'text', validation:null, value:'' }
+                    ]
+                }
+            );
+            empty_widget_panel_html.append(twitter_widget);
+
             this.html(empty_widget_panel_html);
             this.dashboard_widget_panel('apply_widget_draggable');
             return this;
@@ -76,128 +99,6 @@ DASHBOARD - collections panel
         else $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );}
 })( jQuery );
 
-/** DASHBOARD - collection ********************************************************************************************/
-(function( $ )
-{
-    var methods =
-    {
-        init:function(data)
-        {
-            var collection = data.collection;
-            this.data('configuration', collection);
-            this.dashboard_collection('render');
-            return this;
-        },
-        render:function()
-        {
-            var configuration = this.data('configuration');
-            if (configuration.data_points == null || configuration.data_points.length == 0)
-            {
-                var empty_collection_html = "<div class='empty_collection data_point_droppable'><p>Drag & Drop Data</p></div>";
-                this.html(empty_collection_html);
-            }
-            else
-            {
-
-                var search_widget_container_html = $("<div class='search_widget data_point_droppable'></div>");
-                this.html(search_widget_container_html);
-
-                var unconfigured_data_point = null;
-                for (var x=0; x<configuration.data_points.length; x++)
-                    if (!configuration.data_points[x].configured)
-                        unconfigured_data_point = configuration.data_points[x];
-
-                if (unconfigured_data_point != null)
-                {
-                    search_widget_container_html.dashboard_unconfigured_data_point(unconfigured_data_point);
-                    return;
-                }
-            }
-            this.dashboard_collection('apply_data_point_droppable');
-        },
-        data_point_start_dragging:function()
-        {
-            this.find('.data_point_droppable').addClass('data_point_droppable_active');
-        },
-        data_point_stop_dragging:function()
-        {
-            this.find('.data_point_droppable').removeClass('data_point_droppable_active');
-        },
-        apply_data_point_droppable:function()
-        {
-            var collection = this;
-            var configuration = collection.data('configuration');
-            collection.find('.data_point_droppable').droppable
-            (
-                {
-                    accept:'.data_point_widget',
-                    drop:function(event, ui)
-                    {
-                        var draggable = ui.draggable;
-                        var draggable_type = draggable.find('.type').html();
-                        var draggable_sub_type = draggable.find('.sub_type').html();
-                        if (configuration.data_points == null)
-                            configuration['data_points'] = [];
-                        configuration.data_points[configuration.data_points.length] =
-                        {
-                            id:guid(),
-                            type:draggable_type,
-                            sub_type:draggable_sub_type,
-                            configured:false
-                        };
-                        collection.data('configuration', configuration);
-                        collection.dashboard_collection('render');
-                    }
-                }
-            )
-        },
-        remove_data_point:function(data_point_id)
-        {
-            var collection = this;
-            var configuration = collection.data('configuration');
-            var new_configuration = configuration;
-            new_configuration.data_points = [];
-            for (var x=0; x<configuration.data_points.length; x++)
-                if (configuration.data_points[x].id != data_point_id)
-                    new_configuration.data_points[new_configuration.data_points.length] = configuration.data_points[x];
-            collection.data('configuration', new_configuration);
-            collection.dashboard_collection('render');
-        }
-    };
-
-    $.fn.dashboard_collection = function( method ){
-        if ( methods[method] ) return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-        else if ( typeof method === 'object' || ! method ) return methods.init.apply( this, arguments );
-        else $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );}
-})( jQuery );
-
-/** DASHBOARD - unconfigured data point *******************************************************************************/
-(function( $ )
-{
-    $.fn.dashboard_unconfigured_data_point = function(unconfigured_data_point)
-    {
-        var search_widget_container = this;
-        var id = unconfigured_data_point.id;
-        var type = unconfigured_data_point.type;
-        var sub_type = unconfigured_data_point.sub_type;
-        search_widget_container.load
-        (
-            '/dashboard/render/data_point_config/' + type + '/' + sub_type,
-            function()
-            {
-                var configuration = search_widget_container.find('.data_point_config').data('configuration');
-                search_widget_container.find('.data_point_config form .cancel').click
-                (
-                    function()
-                    {
-                        search_widget_container.parents('.collection_container').dashboard_collection('remove_data_point', id);
-                        return search_widget_container;
-                    }
-                );
-            }
-        );
-    }
-})( jQuery );
 
 /***********************************************************************************************************************
 DASHBOARD
