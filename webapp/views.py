@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.utils import simplejson as json
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
 from webapp.utils import JSONResponse
@@ -37,8 +38,7 @@ def dashboard_render_data_point_config(request, type, sub_type):
     }
     return render_to_response(
         'parts/dashboard_data_point_config.html',
-        config,
-        context_instance=RequestContext(request)
+        { 'config':config, 'config_as_json':json.dumps(config) }
     )
 
 ########################################################################################################################

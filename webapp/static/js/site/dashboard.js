@@ -91,13 +91,17 @@ DASHBOARD - collections panel
         render:function()
         {
             var configuration = this.data('configuration');
-            if (configuration.data_points == null)
+            if (configuration.data_points == null || configuration.data_points.length == 0)
             {
                 var empty_collection_html = "<div class='empty_collection data_point_droppable'><p>Drag & Drop Data</p></div>";
                 this.html(empty_collection_html);
             }
             else
             {
+
+                var search_widget_container_html = $("<div class='search_widget data_point_droppable'></div>");
+                this.html(search_widget_container_html);
+
                 var unconfigured_data_point = null;
                 for (var x=0; x<configuration.data_points.length; x++)
                     if (!configuration.data_points[x].configured)
@@ -105,11 +109,7 @@ DASHBOARD - collections panel
 
                 if (unconfigured_data_point != null)
                 {
-                    var type = unconfigured_data_point.type;
-                    var sub_type = unconfigured_data_point.sub_type;
-                    var unconfigured_data_point_container_html = $("<div class='search_widget data_point_droppable'></div>");
-                    this.html(unconfigured_data_point_container_html);
-                    unconfigured_data_point_container_html.load('/dashboard/render/data_point_config/' + type + '/' + sub_type);
+                    search_widget_container_html.dashboard_unconfigured_data_point(unconfigured_data_point);
                     return;
                 }
             }
@@ -127,7 +127,7 @@ DASHBOARD - collections panel
         {
             var collection = this;
             var configuration = collection.data('configuration');
-            collection.find('.empty_collection').droppable
+            collection.find('.data_point_droppable').droppable
             (
                 {
                     accept:'.data_point_widget',
@@ -140,6 +140,7 @@ DASHBOARD - collections panel
                             configuration['data_points'] = [];
                         configuration.data_points[configuration.data_points.length] =
                         {
+                            id:guid(),
                             type:draggable_type,
                             sub_type:draggable_sub_type,
                             configured:false
@@ -149,6 +150,18 @@ DASHBOARD - collections panel
                     }
                 }
             )
+        },
+        remove_data_point:function(data_point_id)
+        {
+            var collection = this;
+            var configuration = collection.data('configuration');
+            var new_configuration = configuration;
+            new_configuration.data_points = [];
+            for (var x=0; x<configuration.data_points.length; x++)
+                if (configuration.data_points[x].id != data_point_id)
+                    new_configuration.data_points[new_configuration.data_points.length] = configuration.data_points[x];
+            collection.data('configuration', new_configuration);
+            collection.dashboard_collection('render');
         }
     };
 
@@ -156,6 +169,34 @@ DASHBOARD - collections panel
         if ( methods[method] ) return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         else if ( typeof method === 'object' || ! method ) return methods.init.apply( this, arguments );
         else $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );}
+})( jQuery );
+
+/** DASHBOARD - unconfigured data point *******************************************************************************/
+(function( $ )
+{
+    $.fn.dashboard_unconfigured_data_point = function(unconfigured_data_point)
+    {
+        var search_widget_container = this;
+        var id = unconfigured_data_point.id;
+        var type = unconfigured_data_point.type;
+        var sub_type = unconfigured_data_point.sub_type;
+        search_widget_container.load
+        (
+            '/dashboard/render/data_point_config/' + type + '/' + sub_type,
+            function()
+            {
+                var configuration = search_widget_container.find('.data_point_config').data('configuration');
+                search_widget_container.find('.data_point_config form .cancel').click
+                (
+                    function()
+                    {
+                        search_widget_container.parents('.collection_container').dashboard_collection('remove_data_point', id);
+                        return search_widget_container;
+                    }
+                );
+            }
+        );
+    }
 })( jQuery );
 
 /***********************************************************************************************************************
