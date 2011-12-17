@@ -57,12 +57,11 @@
             function()
             {
                 var data_point = $(this).data('data_point');
-                data_point.configured = false;
                 $(this).click
                 (
                     function()
                     {
-                        search_widgets_data_points.parents('.collection_container').dashboard_collection('update_data_point', data_point);
+                        data_point.configured = false;
                         search_widgets_data_points.parents('.collection_container').dashboard_collection('render');
                     }
                 )

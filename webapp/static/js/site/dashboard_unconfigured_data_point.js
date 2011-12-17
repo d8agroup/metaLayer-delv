@@ -17,6 +17,7 @@
                                                     '</div>' +
                                                 "</form>" +
                                             "</div>");
+
         for (var x=0; x<data_point.elements.length; x++)
         {
             var element = data_point.elements[x];
@@ -46,7 +47,6 @@
                 data_point['configured'] = true;
                 for (var x=0; x < data_point.elements.length; x++)
                     data_point.elements[x]['value'] = search_widget_container.find('.data_point_config form .form_row .' + data_point.elements[x].name).val();
-                search_widget_container.parents('.collection_container').dashboard_collection('update_data_point', data_point);
                 search_widget_container.parents('.collection_container').dashboard_collection('render');
                 return search_widget_container;
             }

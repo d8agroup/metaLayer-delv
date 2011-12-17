@@ -23,16 +23,12 @@
                 var search_widget_container_html = $("<div class='search_widget_container data_point_droppable'></div>");
                 this.html(search_widget_container_html);
 
-                var unconfigured_data_point = null;
                 for (var x=0; x<configuration.data_points.length; x++)
                     if (!configuration.data_points[x].configured)
-                        unconfigured_data_point = configuration.data_points[x];
-
-                if (unconfigured_data_point != null)
-                {
-                    search_widget_container_html.dashboard_unconfigured_data_point(unconfigured_data_point);
-                    return this;
-                }
+                    {
+                        search_widget_container_html.dashboard_unconfigured_data_point(configuration.data_points[x]);
+                        return this;
+                    }
 
                 var search_widget_html = $("<div class='search_widget'></div>");
                 search_widget_container_html.html(search_widget_html);
@@ -59,9 +55,8 @@
                     drop:function(event, ui)
                     {
                         var draggable = ui.draggable;
-                        var data_point = draggable.data('data_point');
+                        var data_point = clone(draggable.data('data_point'));
                         data_point['id'] = guid();
-
                         if (configuration.data_points == null)
                             configuration['data_points'] = [];
                         configuration.data_points[configuration.data_points.length] = data_point;
@@ -73,29 +68,24 @@
         },
         remove_data_point:function(data_point_id)
         {
-            var collection = this;
-            var configuration = collection.data('configuration');
-            var new_configuration = configuration;
-            new_configuration.data_points = [];
+            var configuration = this.data('configuration');
+            var new_data_points = [];
             for (var x=0; x<configuration.data_points.length; x++)
                 if (configuration.data_points[x].id != data_point_id)
-                    new_configuration.data_points[new_configuration.data_points.length] = configuration.data_points[x];
-            collection.data('configuration', new_configuration);
-            return collection;
+                    new_data_points[new_data_points.length] = configuration.data_points[x];
+            this.data('configuration').data_points = new_data_points;
+            return this;
         },
         update_data_point:function(data_point_configuration)
         {
-            var collection = this;
-            var configuration = collection.data('configuration');
+            var configuration = this.data('configuration');
             var new_data_points = [];
             for (var x=0; x<configuration.data_points.length; x++)
-                if (configuration.data_points[x].id != data_point_configuration.id)
-                    new_data_points[new_data_points.length] = configuration.data_points[x];
-                else
-                    new_data_points[new_data_points.length] = data_point_configuration;
-            configuration.data_points = new_data_points;
-            collection.data('configuration', configuration);
-            return collection;
+                new_data_points[new_data_points.length] = (configuration.data_points[x].id != data_point_configuration.id)
+                    ? configuration.data_points[x]
+                    : data_point_configuration;
+            this.data('configuration').data_points = new_data_points;
+            return this;
         }
     };
 
