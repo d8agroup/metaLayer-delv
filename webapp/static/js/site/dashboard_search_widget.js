@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- DASHBOARD - dashboard_search_widget
+ DASHBOARD - dashboard_search_widget_data_points
 ***********************************************************************************************************************/
 (function( $ )
 {
@@ -13,15 +13,15 @@
         for (var x=0; x<data_points.length; x++)
         {
             data_points_summary_html.append('<li><a><img src="' + data_points[x].image + '" /></a></li>');
-            var data_point_detail_html = $("<li>" +
-                                            "<img src='" + data_points[x].image + "' />" +
-                                            "<span class='display_name'>" + data_points[x].configured_display_name + "</span>" +
-                                            "<span class='actions'>" +
-                                                "<a class='configure_data_point'>" +
-                                                    "<img src='/static/images/site/icon_config.png'/>" +
-                                                "</a>" +
-                                            "</span>" +
-                                        "</li>");
+            var data_point_detail_html =  $("<li>" +
+                                                "<img src='" + data_points[x].image + "' />" +
+                                                "<span class='display_name'>" + data_points[x].configured_display_name + "</span>" +
+                                                "<span class='actions'>" +
+                                                    "<a class='configure_data_point'>" +
+                                                        "<img src='/static/images/site/icon_config.png'/>" +
+                                                    "</a>" +
+                                                "</span>" +
+                                            "</li>");
             data_point_detail_html.find('.configure_data_point').data('data_point', data_points[x])
             data_points_details_html.append(data_point_detail_html);
         }
@@ -73,20 +73,44 @@
 })( jQuery );
 
 /***********************************************************************************************************************
+ DASHBOARD - dashboard_search_widget_control_panel
+***********************************************************************************************************************/
+(function( $ )
+{
+    $.fn.dashboard_search_widget_options_panel = function(options)
+    {
+        this.append('<a class="close_collection"><img src="/static/images/site/icon_cross.png" /></a>');
+        this.find('a.close_collection').click
+        (
+            function()
+            {
+                $(this).parents('.collection_container').dashboard_collection('remove');
+            }
+        );
+        return this;
+    };
+})( jQuery );
+
+/***********************************************************************************************************************
  DASHBOARD - dashboard_search_widget
 ***********************************************************************************************************************/
 (function( $ )
 {
     var methods =
     {
-        init:function()
+        init:function(configuration)
         {
+            this.data('configuration', configuration);
             this.dashboard_search_widget('render');
             return this;
         },
         render:function()
         {
-            var configuration = this.parents('.collection_container').data('configuration');
+            var configuration = this.data('configuration');
+
+            var options = configuration.options;
+            var options_container_html = $("<div class='options_container'></div>");
+            this.append(options_container_html.dashboard_search_widget_options_panel(options));
 
             var data_points = configuration.data_points;
             var data_points_container_html = $("<div class='data_points_container'></div>");

@@ -13,7 +13,6 @@ urlpatterns = patterns('',
     url(r'^user/new_dashboard_from_template/(\w+)$', user_new_dashboard_from_template),
 
     url(r'dashboard/load/(\w+)$', dashboard),
-    url(r'dashboard/render/data_point_config/(\w+)/(\w+)$', dashboard_render_data_point_config),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),

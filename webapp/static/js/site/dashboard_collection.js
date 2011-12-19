@@ -6,6 +6,13 @@
         init:function(data)
         {
             var collection = data.collection;
+
+            if (collection.options == null)
+                collection.options = {};
+
+            if (collection.search_filters == null)
+                collection.search_filters = {};
+
             this.data('configuration', collection);
             this.dashboard_collection('render');
             return this;
@@ -32,9 +39,14 @@
 
                 var search_widget_html = $("<div class='search_widget'></div>");
                 search_widget_container_html.html(search_widget_html);
-                search_widget_html.dashboard_search_widget();
+                search_widget_html.dashboard_search_widget(configuration);
             }
             this.dashboard_collection('apply_data_point_droppable');
+        },
+        remove:function()
+        {
+            this.dashboard_collection({collection:{}});
+            return this;
         },
         data_point_start_dragging:function()
         {
@@ -73,17 +85,6 @@
             for (var x=0; x<configuration.data_points.length; x++)
                 if (configuration.data_points[x].id != data_point_id)
                     new_data_points[new_data_points.length] = configuration.data_points[x];
-            this.data('configuration').data_points = new_data_points;
-            return this;
-        },
-        update_data_point:function(data_point_configuration)
-        {
-            var configuration = this.data('configuration');
-            var new_data_points = [];
-            for (var x=0; x<configuration.data_points.length; x++)
-                new_data_points[new_data_points.length] = (configuration.data_points[x].id != data_point_configuration.id)
-                    ? configuration.data_points[x]
-                    : data_point_configuration;
             this.data('configuration').data_points = new_data_points;
             return this;
         }
