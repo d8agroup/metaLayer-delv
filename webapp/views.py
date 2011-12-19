@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
+from datapoints.controllers import DataPointController
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
 from webapp.utils import JSONResponse
@@ -21,6 +22,12 @@ def dashboard(request, id):
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
     return JSONResponse({'dashboard':db})
+
+@login_required(login_url='/user/login')
+def dashboard_get_all_data_points(request):
+    #TODO: Need to get the options from the request.user and pass them to the controller
+    data_points = DataPointController.GetAllForTemplateOptions(None)
+    return JSONResponse({'data_points':data_points})
 
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS

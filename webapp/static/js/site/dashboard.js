@@ -8,34 +8,28 @@ DASHBOARD - widgets panel
         init:function(data)
         {
             var widgets = data.widgets;
-            this.children().remove();
+            var widget_panel = this;
+            widget_panel.children().remove();
             var empty_widget_panel_html = $("<div id='widget_panel'></div>");
 
-            //TODO: this is a temp hack
-            <div class='widget data_point_widget'><p class='hidden type'>twitter</p><p class='hidden sub_type'>search</p>twitter</div>
-            var twitter_widget = $('<div class="data_point_widget">twitter</div>');
-            twitter_widget.data
+            $.get
             (
-                'data_point',
+                '/dashboard/data_points/get_all',
+                function(data)
                 {
-                    type:'twitter',
-                    sub_type:'search',
-                    short_display_name:'Twitter Search',
-                    full_display_name:'Search Twitter',
-                    configured_display_name:'Twitter Search for XYZ',
-                    instructions:'To start searching twitter you will need to choose the keyword(s) you want to search for.',
-                    image:'http://www.exacta.com/sites/default/files/pictures/twitter-logo.png',
-                    configured:false,
-                    elements:[
-                        {name:'keywords', display_name:'Keywords', help:'Enter the keywords you want to search for', type:'text', validation:null, value:'' }
-                    ]
-                }
+                    var data_points = data.data_points;
+                    for (var x=0; x<data_points.length; x++)
+                    {
+                        var data_point_html = $('<div class="data_point_widget">' + data_points[x].short_display_name + '</div>');
+                        data_point_html.data('data_point', data_points[x]);
+                        empty_widget_panel_html.append(data_point_html);
+                    }
+                    widget_panel.html(empty_widget_panel_html);
+                    widget_panel.dashboard_widget_panel('apply_widget_draggable');
+                },
+                'JSON'
             );
-            empty_widget_panel_html.append(twitter_widget);
-
-            this.html(empty_widget_panel_html);
-            this.dashboard_widget_panel('apply_widget_draggable');
-            return this;
+            return widget_panel;
         },
         apply_widget_draggable:function()
         {

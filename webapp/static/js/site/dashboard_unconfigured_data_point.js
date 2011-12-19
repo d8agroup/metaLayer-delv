@@ -6,7 +6,7 @@
         var search_widget_container = this;
         var unconfigured_data_point_html = $("<div class='data_point_config'>" +
                                                 "<div class='image_and_title'>" +
-                                                    "<img src='" + data_point.image + "' />" +
+                                                    "<img src='" + data_point.image_large + "' />" +
                                                     "<h3>" + data_point.full_display_name + "</h3>" +
                                                 "</div>" +
                                                 "<p class='instructions'>" + data_point.instructions + "</p>" +
