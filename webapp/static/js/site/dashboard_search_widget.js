@@ -12,9 +12,9 @@
 
         for (var x=0; x<data_points.length; x++)
         {
-            data_points_summary_html.append('<li><a><img src="' + data_points[x].image + '" /></a></li>');
+            data_points_summary_html.append('<li><a><img src="' + data_points[x].image_small + '" /></a></li>');
             var data_point_detail_html =  $("<li>" +
-                                                "<img src='" + data_points[x].image + "' />" +
+                                                "<img src='" + data_points[x].image_small + "' />" +
                                                 "<span class='display_name'>" + data_points[x].configured_display_name + "</span>" +
                                                 "<span class='actions'>" +
                                                     "<a class='configure_data_point'>" +
@@ -62,6 +62,7 @@
                     function()
                     {
                         data_point.configured = false;
+                        $.post('/dashboard/data_points/remove_data_point', { data_point:JSON.stringify(data_point), csrfmiddlewaretoken:$('#csrf_form input').val() })
                         search_widgets_data_points.parents('.collection_container').dashboard_collection('render');
                     }
                 )

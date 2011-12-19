@@ -42,12 +42,53 @@
         );
         unconfigured_data_point_html.find('.save').click
         (
-            function()
+            function(event)
             {
-                data_point['configured'] = true;
+                event.preventDefault();
+                unconfigured_data_point_html.find('.errors').remove();
                 for (var x=0; x < data_point.elements.length; x++)
                     data_point.elements[x]['value'] = search_widget_container.find('.data_point_config form .form_row .' + data_point.elements[x].name).val();
-                search_widget_container.parents('.collection_container').dashboard_collection('render');
+                $.post
+                (
+                    '/dashboard/data_points/validate',
+                    { data_point:JSON.stringify(data_point), csrfmiddlewaretoken:$('#csrf_form input').val() },
+                    function(data)
+                    {
+                        var passed = data.passed;
+                        if (passed)
+                        {
+                            data_point['configured'] = true;
+                            $.post
+                            (
+                                '/dashboard/data_points/get_configured_name',
+                                { data_point:JSON.stringify(data_point), csrfmiddlewaretoken:$('#csrf_form input').val() },
+                                function(data)
+                                {
+                                    data_point['configured_display_name'] = data.configured_display_name;
+                                    $.post('/dashboard/data_points/add_data_point', { data_point:JSON.stringify(data_point), csrfmiddlewaretoken:$('#csrf_form input').val() })
+                                    search_widget_container.parents('.collection_container').dashboard_collection('render');
+                                }
+                            );
+                        }
+                        else
+                        {
+                            unconfigured_data_point_html.find('.instructions').before
+                            (
+                                "<div class='alert errors'>" +
+                                    "<p>Sorry, we couldn't save this data point, please review the errors below</p>" +
+                                "</div>"
+                            );
+                            for (var error_group in data.errors)
+                            {
+                                var error_html = $("<div class='errors alert'></div>");
+                                for (var x=0; x<data.errors[error_group].length; x++)
+                                    error_html.append("<p>" + data.errors[error_group][x] + "</p>");
+                                unconfigured_data_point_html.find('.form_row .' + error_group).parents('.form_row').prepend(error_html);
+                            }
+                        }
+                    },
+                    'JSON'
+                );
                 return search_widget_container;
             }
         );

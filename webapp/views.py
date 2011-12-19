@@ -29,6 +29,38 @@ def dashboard_get_all_data_points(request):
     data_points = DataPointController.GetAllForTemplateOptions(None)
     return JSONResponse({'data_points':data_points})
 
+@login_required(login_url='/user/login')
+def dashboard_validate_data_point(request):
+    data_point = request.POST['data_point']
+    data_point = json.loads(data_point)
+    dpc = DataPointController(data_point)
+    passed, errors = dpc.is_valid();
+    return JSONResponse({'passed':passed, 'errors':errors})
+
+@login_required(login_url='/user/login')
+def dashboard_get_configured_data_point_name(request):
+    data_point = request.POST['data_point']
+    data_point = json.loads(data_point)
+    dpc = DataPointController(data_point)
+    configured_display_name = dpc.get_configured_display_name()
+    return JSONResponse({'configured_display_name':configured_display_name})
+
+@login_required(login_url='/user/login')
+def dashboard_remove_data_point(request):
+    data_point = request.POST['data_point']
+    data_point = json.loads(data_point)
+    dpc = DataPointController(data_point)
+    dpc.data_point_removed()
+    return JSONResponse()
+
+@login_required(login_url='/user/login')
+def dashboard_add_data_point(request):
+    data_point = request.POST['data_point']
+    data_point = json.loads(data_point)
+    dpc = DataPointController(data_point)
+    dpc.data_point_added()
+    return JSONResponse()
+
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS
 ########################################################################################################################

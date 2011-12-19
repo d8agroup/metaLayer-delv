@@ -1,3 +1,6 @@
+.errors { border:1px solid #933; background-color:#C96; color:#000; padding:2px; }
+.form_row .errors { padding:0px; font-size:80%; margin:5px 0;}
+
 
 /***********************************************************************************************************************
 HEADER

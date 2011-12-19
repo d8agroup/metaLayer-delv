@@ -5,7 +5,7 @@ from datapoints.controllers import MetaLayerAggregatorController
 class DataPoint(object):
     def get_unconfigured_config(self):
         return {
-            'type':'webfeed',
+            'type':'feed',
             'short_display_name':'Web Feed',
             'full_display_name':'Web Feed (rss/atom)',
             'instructions':'Use this data point to subscribe to any web feed published using either rss or atom syndication.',
@@ -35,12 +35,17 @@ class DataPoint(object):
             return False, { 'url':['This url does not seem to point to a feed?'] }
         return True, {}
 
-    def save_config(self, config):
+    def generate_configured_display_name(self, config):
+        url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
+        parsed_url = urlparse(url)
+        return 'Web Feed: %s%s' % (parsed_url.netloc, parsed_url.path)
+
+    def data_point_added(self, config):
         type = config['type']
         config = { 'url':[e for e in config['elements'] if e['name'] == 'url'][0]['value'] }
         MetaLayerAggregatorController.AddSourceToAggregator(type, config)
 
-    def remove_config(self, config):
+    def data_point_removed(self, config):
         type = config['type']
         config = { 'url':[e for e in config['elements'] if e['name'] == 'url'][0]['value'] }
         MetaLayerAggregatorController.RemoveSourceFromAggregator(type, config)

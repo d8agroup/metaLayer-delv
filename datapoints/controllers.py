@@ -6,10 +6,34 @@ from datapoints.models import DataPoint
 from logger import Logger
 
 class DataPointController(object):
+    def __init__(self, data_point):
+        self.data_point = data_point
+
     @classmethod
     def GetAllForTemplateOptions(cls, options):
         #TODO: need to take account of options
         return [dp.load_configuration() for dp in DataPoint.objects.all()]
+
+    def is_valid(self):
+        type = self.data_point['type']
+        data_point = DataPoint.LoadDataPoint(type)
+        passed, errors = data_point.validate_config(self.data_point)
+        return passed, errors
+
+    def get_configured_display_name(self):
+        type = self.data_point['type']
+        data_point = DataPoint.LoadDataPoint(type)
+        return data_point.generate_configured_display_name(self.data_point)
+
+    def data_point_added(self):
+        type = self.data_point['type']
+        data_point = DataPoint.LoadDataPoint(type)
+        data_point.data_point_added(self.data_point)
+
+    def data_point_removed(self):
+        type = self.data_point['type']
+        data_point = DataPoint.LoadDataPoint(type)
+        data_point.data_point_removed(self.data_point)
 
 class MetaLayerAggregatorController(object):
     @classmethod
