@@ -138,8 +138,6 @@ LOGGING = {
     }
 }
 
-
-
 import socket
 if socket.gethostname() in ['mattgriffiths']:
     from settings_development import *
