@@ -35,6 +35,11 @@ class DataPointController(object):
         data_point = DataPoint.LoadDataPoint(type)
         data_point.data_point_removed(self.data_point)
 
+    def generate_configured_guid(self):
+        type = self.data_point['type']
+        data_point = DataPoint.LoadDataPoint(type)
+        return data_point.generate_configured_guid(self.data_point)
+
 class MetaLayerAggregatorController(object):
     @classmethod
     def _call_aggregator(cls, add_source_endpoint_url, config, sub_type, type):

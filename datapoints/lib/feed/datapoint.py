@@ -1,6 +1,7 @@
-from urlparse import urlparse
-import feedparser
 from datapoints.controllers import MetaLayerAggregatorController
+from urlparse import urlparse
+from hashlib import md5
+import feedparser
 
 class DataPoint(object):
     def get_unconfigured_config(self):
@@ -24,6 +25,15 @@ class DataPoint(object):
             ]
         }
 
+    def generate_configured_guid(self, config):
+        url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
+        return md5(url).hexdigest()
+
+    def generate_configured_display_name(self, config):
+        url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
+        parsed_url = urlparse(url)
+        return 'Web Feed: %s%s' % (parsed_url.netloc, parsed_url.path)
+
     def validate_config(self, config):
         url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
         if not url or url == '':
@@ -35,11 +45,6 @@ class DataPoint(object):
         if not feed['feed']:
             return False, { 'url':['This url does not seem to point to a feed?'] }
         return True, {}
-
-    def generate_configured_display_name(self, config):
-        url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
-        parsed_url = urlparse(url)
-        return 'Web Feed: %s%s' % (parsed_url.netloc, parsed_url.path)
 
     def data_point_added(self, config):
         type = config['type']

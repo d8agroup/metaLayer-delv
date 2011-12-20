@@ -138,9 +138,10 @@ LOGGING = {
     }
 }
 
+
 import socket
 if socket.gethostname() in ['mattgriffiths']:
-    from settings_development import *
+    from settings_mattgriffiths import *
 else:
     #TODO this needs to be changed to support multiple envs
     from settings_development import *

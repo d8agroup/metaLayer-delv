@@ -16,9 +16,31 @@ DATABASES = {
 ENDPOINTS = {
     'datapoints':{
         'metalayer_aggregator':{
-            'add_source':'http://localhost:5000/sources/add',
-            'remove_source':'http://localhost:5000/sources/remove'
+            'add_source':'http://md.dev.01/aggregator/sources/add',
+            'remove_source':'http://md.dev.01/aggregator/sources/remove'
         }
     }
 }
+
+SOLR_CONFIG = {
+    'default_page_size':20,
+    'solr_url':'http://md.dev.01:8080/solr',
+    'solr_params':'wt=json&facet=on',
+    'solr_facets':{
+        'source_display_name':{
+            'display_name':'Source',
+            'enabled':True,
+            },
+        'channel_type':{
+            'display_name':'Type',
+            'enabled':True,
+            },
+        'tags':{
+            'display_name':'Tags',
+            'enabled':True,
+            }
+    }
+}
+
+
 

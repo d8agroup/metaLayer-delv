@@ -3,6 +3,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
 from datapoints.controllers import DataPointController
+from search.controllers import SearchController
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
 from webapp.utils import JSONResponse
@@ -60,6 +61,16 @@ def dashboard_add_data_point(request):
     dpc = DataPointController(data_point)
     dpc.data_point_added()
     return JSONResponse()
+
+@login_required(login_url='/user/login')
+def dashboard_run_search(request):
+    configuration = {
+        'data_points':json.loads(request.POST['data_points']),
+        'search_filters':json.loads(request.POST['search_filters'])
+    }
+    sc = SearchController(configuration)
+    search_results = sc.run_search_and_return_results()
+    return JSONResponse({'search_results':search_results})
 
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS

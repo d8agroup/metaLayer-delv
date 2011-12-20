@@ -20,3 +20,25 @@ ENDPOINTS = {
     }
 }
 
+SOLR_CONFIG = {
+    'default_page_size':20,
+    'solr_url':'http://localhost:8080/solr',
+    'solr_params':'wt=json&facet=on',
+    'solr_facets':{
+        'source_display_name':{
+            'display_name':'Source',
+            'enabled':True,
+            },
+        'channel_type':{
+            'display_name':'Type',
+            'enabled':True,
+            },
+        'tags':{
+            'display_name':'Tags',
+            'enabled':True,
+            }
+    }
+}
+
+
+

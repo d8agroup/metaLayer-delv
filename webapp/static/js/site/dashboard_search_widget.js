@@ -120,6 +120,10 @@
             var search_filters = configuration.search_filters;
 
             return this;
+        },
+        search_results_updated:function()
+        {
+
         }
     }
 

@@ -13,6 +13,9 @@
             if (collection.search_filters == null)
                 collection.search_filters = {};
 
+            if (collection.search_results == null)
+                collection.search_results = {};
+
             this.data('configuration', collection);
             this.dashboard_collection('render');
             return this;
@@ -40,6 +43,28 @@
                 var search_widget_html = $("<div class='search_widget'></div>");
                 search_widget_container_html.html(search_widget_html);
                 search_widget_html.dashboard_search_widget(configuration);
+                setTimeout
+                (
+                    function()
+                    {
+                        $.post
+                        (
+                            '/dashboard/run_search',
+                            {
+                                data_points:JSON.stringify(configuration.data_points),
+                                search_filters:JSON.stringify(configuration.search_filters),
+                                csrfmiddlewaretoken:$('#csrf_form input').val()
+                            },
+                            function(data)
+                            {
+                                var search_results = data.search_results;
+                                configuration.search_results = search_results;
+                                search_widget_html.dashboard_search_widget('search_results_updated');
+                            }
+                        )
+                    },
+                    1000
+                );
             }
             this.dashboard_collection('apply_data_point_droppable');
         },
