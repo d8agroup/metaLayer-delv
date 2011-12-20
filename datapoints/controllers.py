@@ -49,14 +49,14 @@ class MetaLayerAggregatorController(object):
         return status
 
     @classmethod
-    def AddSourceToAggregator(cls, type, config, sub_type=None):
+    def AddSourceToAggregator(cls, type, sub_type, config):
         add_source_endpoint_url = settings.ENDPOINTS['datapoints']['metalayer_aggregator']['add_source']
         status = cls._call_aggregator(add_source_endpoint_url, config, sub_type, type)
         if status == 'failure':
             Logger.Error('AddSourceToAggregator Failed - type = %s, config = %s, sub_type = %s' % (type, json.dumps(config), sub_type))
 
     @classmethod
-    def RemoveSourceFromAggregator(cls, type, config, sub_type=None):
+    def RemoveSourceFromAggregator(cls, type, sub_type, config):
         remove_source_endpoint_url = settings.ENDPOINTS['datapoints']['metalayer_aggregator']['remove_source']
         status = cls._call_aggregator(remove_source_endpoint_url, config, sub_type, type)
         if status == 'failure':

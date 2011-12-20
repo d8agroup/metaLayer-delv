@@ -6,6 +6,7 @@ class DataPoint(object):
     def get_unconfigured_config(self):
         return {
             'type':'feed',
+            'sub_type':'feed',
             'short_display_name':'Web Feed',
             'full_display_name':'Web Feed (rss/atom)',
             'instructions':'Use this data point to subscribe to any web feed published using either rss or atom syndication.',
@@ -42,13 +43,15 @@ class DataPoint(object):
 
     def data_point_added(self, config):
         type = config['type']
+        sub_type = config['sub_type']
         config = { 'url':[e for e in config['elements'] if e['name'] == 'url'][0]['value'] }
-        MetaLayerAggregatorController.AddSourceToAggregator(type, config)
+        MetaLayerAggregatorController.AddSourceToAggregator(type, sub_type, config)
 
     def data_point_removed(self, config):
         type = config['type']
+        sub_type = config['sub_type']
         config = { 'url':[e for e in config['elements'] if e['name'] == 'url'][0]['value'] }
-        MetaLayerAggregatorController.RemoveSourceFromAggregator(type, config)
+        MetaLayerAggregatorController.RemoveSourceFromAggregator(type, sub_type, config)
 
     def tick(self, config):
         #Tick is controlled by the aggregator
