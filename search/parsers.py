@@ -1,6 +1,7 @@
 from django.conf import settings
 from urllib import quote
 from datapoints.controllers import DataPointController
+from datetime import datetime
 
 class SearchDataPointParser(object):
     def __init__(self, data_points):
@@ -23,7 +24,7 @@ class SearchQueryParser(object):
         return '&'.join([part for part in [self._parse_keywords(), self._parse_pagination(), self._parse_facets()] if part != ''])
 
     def _parse_keywords(self):
-        return 'q=%s' % (quote(self.params['keywords'])) if 'keywords' in self.params and self.params['keywords'] != '' else 'q=*'
+        return 'q=%s' % (quote(self.params['keywords'])) if 'keywords' in self.params and self.params['keywords'] != '' and self.params['keywords'] != None else 'q=*'
 
     def _parse_pagination(self):
         parsed_params = []
@@ -52,7 +53,7 @@ class SearchResultsParser(object):
             }
 
     def _extract_content_items(self, solr_response):
-        return solr_response['response']['docs']
+        return [self._apply_late_fixes(item) for item in solr_response['response']['docs']]
 
     def _extract_facets(self, solr_response):
         if not solr_response:
@@ -93,5 +94,9 @@ class SearchResultsParser(object):
     def _construct_breadcrumb_link(self, request_base, current_request_args, facet_name, facet_value):
         link = '%s?%s' % (request_base, '&'.join(['%s=%s' % (k, current_request_args[k]) for k in current_request_args.keys() if k != facet_name and current_request_args[k] != facet_value]))
         return link if not link.endswith('?') else link[0:-1]
+
+    def _apply_late_fixes(self, item):
+        item['date'] = datetime.fromtimestamp(item['time']).strftime('%Y-%m-%d %H:%M:%S')
+        return item
 
 

@@ -1,5 +1,5 @@
 body { font-size:90%; }
-a { cursor:pointer; text-decoration:none; color:inherit; text-transform: uppercase;}
+a { cursor:pointer; text-decoration:none; color:inherit; font-weight:bold;}
 a:hover { text-decoration:underline; }
 .container { padding:10px;}
 

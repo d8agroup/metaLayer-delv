@@ -28,6 +28,12 @@ function clone(object)
     return newObj;
 };
 
+function display_time(time)
+{
+    var d = new Date(time * 1000);
+    return d.toUTCString();
+}
+
 $(document).ready
 (
     function()
@@ -35,4 +41,20 @@ $(document).ready
         $('#page').site();
     }
 )
-
+/***********************************************************************************************************************
+SITE WIDE TEMPLATES
+***********************************************************************************************************************/
+$(document).ready
+(
+    function()
+    {
+        /* Waiting Large Area*****************************************************************/
+        $.template
+        (
+            'waiting_large',
+            "<div class='waiting waiting_large'>" +
+                "<p>WAITING ...</p>" +
+            "</div>"
+        );
+    }
+);

@@ -60,3 +60,19 @@ DASHBOARD
 .search_widget .data_points_container .data_points_details { padding-top:25px; }
 .search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:5px; left:5px;}
 .search_widget .data_points_container .data_points_details .actions { float:right;}
+
+.search_widget .search_results_header { background-color:#444; padding:2px;}
+.search_widget .search_results_header .filters_link { float:right;}
+.search_widget .search_results_header .filters { padding:15px 5px; }
+.search_widget .search_results_header .filters .filter_row { padding:10px; }
+.search_widget .search_results_header .filters .filter_row .filter_name { display:inline-block; width:48%; }
+.search_widget .search_results_header .filters .filter_row input[type=text] { display:inline-block; width:48%; }
+.search_widget .search_results_header .filters .filter_actions { padding-top:5px; }
+.search_widget .search_results_header .filters .filter_actions input { display:inline-block; width:48%; padding:2px; }
+
+
+.search_widget .content_item { margin:5px; border-bottom:1px solid #444; padding:5px;}
+.search_widget .content_item .date { float:right; }
+.search_widget .content_item .title { font-weight:bold; margin-bottom:5px; }
+.search_widget .content_item .text_container { max-height:80px; overflow:auto; font-size:80%; }
+.search_widget .content_item .text_container p { margin-bottom:5px; }
