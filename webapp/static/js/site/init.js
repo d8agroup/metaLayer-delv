@@ -63,6 +63,6 @@ $(document).ready
             "</div>"
         );
 
-        $.get('/static/html/dashboard_search_results_header.html', function(t) { $.template('dashboard_search_results_header', t)});
+        $.get('/static/html/parts/dashboard_search_results_header.html', function(t) { $.template('dashboard_search_results_header', t)});
     }
 );
