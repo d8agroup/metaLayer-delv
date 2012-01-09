@@ -28,12 +28,8 @@ class DataPoint(object):
     def get_content_item_template(self):
         return "" \
             "<li style='width:100%;'>" \
-                "" \
-                "<div class='clearfix' style='width:100%;'>" \
-                    "<p style='float:right;'>NEW ${date}</p>" \
-                    "<p style='float:left;'>${author}</p>" \
-                "</div>" \
-                "<p style='font-weight:bold;'>${title}</p>" \
+                "<img src='http://imgur.com/images/blog_rss.png' style='width:20px; padding-right:10px;' align='left'/>" \
+                "<span style='font-weight:bold'>${author}:&nbsp;</span>${title}" \
             "</li>"
 
     def generate_configured_guid(self, config):

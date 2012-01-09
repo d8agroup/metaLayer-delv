@@ -40,13 +40,26 @@ function wait(ms)
     while (new Date() < ms){}
 }
 
+function apply_waiting(element, text)
+{
+    var waiting_template = $.tmpl('waiting_large', {text:text});
+    waiting_template.css({ opacity:0.7,top:element.offset().top, width:element.outerWidth(), height:element.outerHeight() });
+    waiting_template.find('p').css({ top:(element.height() / 2) });
+    element.append(waiting_template);
+}
+
+function remove_waiting(element)
+{
+    element.find('.waiting').remove();
+}
+
 $(document).ready
 (
     function()
     {
         $('#page').site();
     }
-)
+);
 /***********************************************************************************************************************
 SITE WIDE TEMPLATES
 ***********************************************************************************************************************/
@@ -59,7 +72,7 @@ $(document).ready
         (
             'waiting_large',
             "<div class='waiting waiting_large'>" +
-                "<p>WAITING ...</p>" +
+                "<p>${text}<img src='/static/images/site/loading_circle.gif' /></p>" +
             "</div>"
         );
 

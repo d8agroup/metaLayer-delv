@@ -55,7 +55,7 @@ class DashboardTemplate(Model):
                 'display_name':'Empty Dashboard',
                 'description':'A blank dashboard ready for anything!',
                 'image':'dashboard_template_images/empty_dashboard.gif',
-                'collections':[{}, {}],
+                'collections':[{}, {}, {}, {}],
                 'widgets':{'something':{}},
             }
         ]

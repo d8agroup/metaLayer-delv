@@ -67,6 +67,7 @@
                 );
             }
             this.dashboard_collection('apply_data_point_droppable');
+            return this;
         },
         remove:function()
         {

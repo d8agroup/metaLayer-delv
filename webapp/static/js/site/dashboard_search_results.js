@@ -10,17 +10,14 @@
             var search_results = data.search_results;
             var search_filters = data.search_filters;
             if ($.isEmptyObject(search_results))
-                return this.dashboard_search_results('render_waiting');
+            {
+                this.children().remove();
+                this.append('<p>waiting</p>');
+                return this;
+            }
             this.data('search_results', search_results);
             this.data('search_filters', search_filters);
             return this.dashboard_search_results('render');
-        },
-        render_waiting:function()
-        {
-            var search_results_container = this;
-            search_results_container.children().remove();
-            $.tmpl('waiting_large').appendTo(this);
-            return this;
         },
         render:function()
         {

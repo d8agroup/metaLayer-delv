@@ -44,6 +44,7 @@
         (
             function(event)
             {
+                apply_waiting(search_widget_container, 'Validating');
                 event.preventDefault();
                 unconfigured_data_point_html.find('.errors').remove();
                 for (var x=0; x < data_point.elements.length; x++)
@@ -57,6 +58,7 @@
                         var passed = data.passed;
                         if (passed)
                         {
+                            remove_waiting(search_widget_container);
                             data_point['configured'] = true;
                             $.post
                             (
@@ -85,6 +87,7 @@
                                     error_html.append("<p>" + data.errors[error_group][x] + "</p>");
                                 unconfigured_data_point_html.find('.form_row .' + error_group).parents('.form_row').prepend(error_html);
                             }
+                            remove_waiting(search_widget_container);
                         }
                     },
                     'JSON'
