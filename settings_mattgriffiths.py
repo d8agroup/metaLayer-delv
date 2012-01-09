@@ -23,6 +23,10 @@ ENDPOINTS = {
     }
 }
 
+TEMPLATE_DIRS = (
+    '/home/matt/code/metaLayer/dashboard/webapp/static/html/'
+)
+
 SOLR_CONFIG = {
     'default_page_size':20,
     'solr_url':'http://md.dev.01:8080/solr',

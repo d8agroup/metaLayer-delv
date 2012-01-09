@@ -20,6 +20,10 @@ ENDPOINTS = {
     }
 }
 
+TEMPLATE_DIRS = (
+    '/usr/local/metaLayer-dashboard/dashboard/webapp/static/html/'
+)
+
 SOLR_CONFIG = {
     'default_page_size':20,
     'solr_url':'http://localhost:8080/solr',

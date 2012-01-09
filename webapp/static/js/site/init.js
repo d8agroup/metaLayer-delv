@@ -34,6 +34,12 @@ function display_time(time)
     return d.toUTCString();
 }
 
+function wait(ms)
+{
+    ms += new Date().getTime();
+    while (new Date() < ms){}
+}
+
 $(document).ready
 (
     function()
@@ -56,5 +62,7 @@ $(document).ready
                 "<p>WAITING ...</p>" +
             "</div>"
         );
+
+        $.get('/static/html/dashboard_search_results_header.html', function(t) { $.template('dashboard_search_results_header', t)});
     }
 );

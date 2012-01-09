@@ -23,6 +23,18 @@ DASHBOARD - widgets panel
                         var data_point_html = $('<div class="data_point_widget">' + data_points[x].short_display_name + '</div>');
                         data_point_html.data('data_point', data_points[x]);
                         empty_widget_panel_html.append(data_point_html);
+
+                        //Also load the content item templates
+                        $.get
+                        (
+                            '/dashboard/data_points/get_content_item_template/' + data_points[x].type + '/' + data_points[x].sub_type,
+                            function(data)
+                            {
+                                var template = data.template;
+                                var template_name = 'dashboard_search_results_content_items_' + data.type + '_' + data.sub_type;
+                                $.template(template_name, template);
+                            }
+                        );
                     }
                     widget_panel.html(empty_widget_panel_html);
                     widget_panel.dashboard_widget_panel('apply_widget_draggable');

@@ -25,6 +25,17 @@ class DataPoint(object):
             ]
         }
 
+    def get_content_item_template(self):
+        return "" \
+            "<li style='width:100%;'>" \
+                "" \
+                "<div class='clearfix' style='width:100%;'>" \
+                    "<p style='float:right;'>NEW ${date}</p>" \
+                    "<p style='float:left;'>${author}</p>" \
+                "</div>" \
+                "<p style='font-weight:bold;'>${title}</p>" \
+            "</li>"
+
     def generate_configured_guid(self, config):
         url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
         return md5(url).hexdigest()

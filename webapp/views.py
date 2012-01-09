@@ -72,6 +72,13 @@ def dashboard_run_search(request):
     search_results = sc.run_search_and_return_results()
     return JSONResponse({'search_results':search_results})
 
+@login_required(login_url='/user/login')
+def dashboard_get_content_item_template(request, type, sub_type):
+    data_point = { 'type':type, 'sub_type':sub_type }
+    dpc = DataPointController(data_point)
+    template = dpc.get_content_item_template()
+    return JSONResponse({'template':template, 'type':type, 'sub_type':sub_type})
+
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS
 ########################################################################################################################
@@ -79,13 +86,13 @@ def dashboard_run_search(request):
 def user_saved_dashboards(request):
     dc = DashboardsController(request.user)
     saved_dashboards = dc.get_saved_dashboards()
-    return render_to_response( 'parts/user_saved_dashboards.html', { 'saved_dashboards':saved_dashboards, })
+    return render_to_response('parts/user_saved_dashboards.html', { 'saved_dashboards':saved_dashboards, })
 
 @login_required(login_url='/user/login')
 def user_dashboard_templates(request):
     dc = DashboardsController(request.user)
     dashboard_templates = dc.get_dashboard_templates()
-    return render_to_response( 'parts/user_dashboard_templates.html', { 'dashboard_templates':dashboard_templates, })
+    return render_to_response('parts/user_dashboard_templates.html', { 'dashboard_templates':dashboard_templates, })
 
 def user_login(request):
     data_dict = {}
