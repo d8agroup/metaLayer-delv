@@ -70,12 +70,17 @@
                 );
             }
             this.dashboard_collection('apply_data_point_droppable');
+            $('#dashboard').dashboard('save');
             return this;
         },
         remove:function()
         {
-            this.dashboard_collection({collection:{}});
-            return this;
+            var configuration = this.data('configuration');
+            configuration.options = {};
+            configuration.search_filters = {};
+            configuration.search_results = {};
+            configuration.data_points = [];
+            return this.dashboard_collection('render');
         },
         data_point_start_dragging:function()
         {
