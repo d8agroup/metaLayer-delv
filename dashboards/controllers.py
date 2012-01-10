@@ -17,3 +17,9 @@ class DashboardsController(object):
         template = DashboardTemplate.GetTemplateById(template_id)
         dashboard = Dashboard.Create(self.user, template)
         return dashboard
+
+    def update_dashboard(self, dashboard):
+        db = self.get_dashboard_by_id(dashboard['id'])
+        db['collections'] = dashboard['collections']
+        db.save()
+        return

@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'dashboard/data_points/add_data_point$', dashboard_add_data_point),
     url(r'dashboard/run_search$', dashboard_run_search),
     url(r'dashboard/data_points/get_content_item_template/(\w+)/(\w+)', dashboard_get_content_item_template),
+    url(r'dashboard/save$', dashboard_save),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),

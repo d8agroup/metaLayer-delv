@@ -16,6 +16,9 @@
             if (collection.search_results == null)
                 collection.search_results = {};
 
+            if (collection.data_points == null)
+                collection.data_points = [];
+
             this.data('configuration', collection);
             this.dashboard_collection('render');
             return this;
@@ -23,7 +26,7 @@
         render:function()
         {
             var configuration = this.data('configuration');
-            if (configuration.data_points == null || configuration.data_points.length == 0)
+            if (configuration.data_points.length == 0)
             {
                 var empty_collection_html = "<div class='empty_collection data_point_droppable'><p>Drag & Drop Data</p></div>";
                 this.html(empty_collection_html);

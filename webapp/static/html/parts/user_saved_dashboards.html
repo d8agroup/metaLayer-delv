@@ -2,7 +2,7 @@
     <ul class="clearfix">
         {% for dashboard in saved_dashboards %}
             <li>
-                <div class='dashboard_summary' id='{{ dashboard.id }}'>
+                <div class='dashboard_summary'>
                     <div class='container'>
                         <img src="/static/images/site/no_image_medium.gif" class="thumbnail" />
                         <div class='meta'>
@@ -10,7 +10,7 @@
                             <p class="last_accessed">Last used: {{ dashboard.last_saved }}</p>
                         </div>
                         <div class="actions">
-                            <a class='load_dashboard'>load</a>
+                            <a class='load_dashboard' id='{{ dashboard.id }}'>load</a>
                         </div>
                     </div>
                 </div>

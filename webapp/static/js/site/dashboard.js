@@ -81,10 +81,11 @@ DASHBOARD - collections panel
             this.children().remove();
             var collections = data.collections;
             var collection_class = 'collections_' + collections.length;
-            for (collection in collections)
+            for (var x=0; x<collections.length; x++)
             {
+                var collection = collections[x];
                 var collection_container_html = '<div class="collection_container ' + collection_class + '"></div>';
-                var collection_container = $(collection_container_html).dashboard_collection({ collection:collections });
+                var collection_container = $(collection_container_html).dashboard_collection({ collection:collection });
                 this.append(collection_container);
             }
             return this;
@@ -116,8 +117,18 @@ DASHBOARD
         init:function(data)
         {
             var dashboard = data.dashboard;
+            this.data('dashboard', dashboard);
             this.find('#widgets').dashboard_widget_panel({widgets:dashboard.widgets});
             this.find('#collections').dashboard_collections_panel({'collections':dashboard.collections})
+        },
+        save:function()
+        {
+            var dashboard = this.data('dashboard');
+            $.post
+            (
+                '/dashboard/save',
+                { dashboard:JSON.stringify(dashboard),csrfmiddlewaretoken:$('#csrf_form input').val() }
+            );
         }
     }
 

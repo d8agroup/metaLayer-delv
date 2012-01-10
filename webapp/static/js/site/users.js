@@ -37,7 +37,7 @@ Dashboard Templates
     $.fn.dashboard_template_list = function()
     {
         var container = this;
-        container.html('loading ...');
+        container.html('loading...');
         $.get
         (
             '/user/dashboard_templates',
@@ -57,20 +57,12 @@ Dashboard Templates
 {
     $.fn.saved_dashboard = function()
     {
-        var id = this.attr('id');
         this.find('a.load_dashboard').click
         (
             function()
             {
                 $('#page').site('show_dashboard');
-                setTimeout
-                (
-                    function()
-                    {
-                        $('#page').site('load_dashboard', { dashboard_id:id})
-                    },
-                    500
-                );
+                $('#page').site('load_dashboard', { dashboard_id:$(this).attr('id')})
             }
         )
     }

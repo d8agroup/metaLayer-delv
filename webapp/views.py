@@ -79,6 +79,14 @@ def dashboard_get_content_item_template(request, type, sub_type):
     template = dpc.get_content_item_template()
     return JSONResponse({'template':template, 'type':type, 'sub_type':sub_type})
 
+@login_required(login_url='/user/login')
+def dashboard_save(request):
+    dashboard = json.loads(request.POST['dashboard'])
+    user = request.user
+    dbc = DashboardsController(user)
+    dbc.update_dashboard(dashboard)
+    return JSONResponse()
+
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS
 ########################################################################################################################
