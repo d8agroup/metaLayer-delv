@@ -7,7 +7,7 @@ class DashboardsController(object):
     def get_saved_dashboards(self):
         return Dashboard.AllForUser(self.user)
 
-    def get_dashboard_by_id(self):
+    def get_dashboard_by_id(self, id):
         return Dashboard.Load(id, True)
 
     def get_dashboard_templates(self):
