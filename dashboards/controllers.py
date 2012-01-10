@@ -7,8 +7,8 @@ class DashboardsController(object):
     def get_saved_dashboards(self):
         return Dashboard.AllForUser(self.user)
 
-    def get_dashboard_by_id(self, id):
-        return Dashboard.Load(id)
+    def get_dashboard_by_id(self):
+        return Dashboard.Load(id, True)
 
     def get_dashboard_templates(self):
         return DashboardTemplate.AllForUser(self.user)
@@ -19,7 +19,7 @@ class DashboardsController(object):
         return dashboard
 
     def update_dashboard(self, dashboard):
-        db = self.get_dashboard_by_id(dashboard['id'])
+        db = Dashboard.Load(dashboard['id'])
         db['collections'] = dashboard['collections']
         db.save()
         return

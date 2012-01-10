@@ -29,9 +29,9 @@ class Dashboard(Model):
         return dashboards
 
     @classmethod
-    def Load(cls, id):
+    def Load(cls, id, increment_load_count = False):
         dashboard = Dashboard.collection.find_one({'_id':ObjectId(id)})
-        if dashboard:
+        if dashboard and increment_load_count:
             dashboard['accessed'] += 1
             dashboard.save()
         return dashboard
