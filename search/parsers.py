@@ -8,11 +8,11 @@ class SearchDataPointParser(object):
         self.data_points = data_points
 
     def parse_data_points(self):
-        return '&'.join([self._parse_data_point(dp) for dp in self.data_points])
+        return 'fq=%s' % '+OR+'.join([self._parse_data_point(dp) for dp in self.data_points])
 
     def _parse_data_point(self, data_point):
         dpc = DataPointController(data_point)
-        return 'fq=source_id:%s' % dpc.generate_configured_guid()
+        return 'source_id:%s' % dpc.generate_configured_guid()
 
 
 class SearchQueryParser(object):

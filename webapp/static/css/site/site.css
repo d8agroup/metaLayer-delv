@@ -31,7 +31,7 @@ DASHBOARD
 #dashboard { display:none; }
 #widget_panel { height:130px; background-color:#DDD; padding:5px; }
 
-.data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:pointer;}
+.data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:move;}
 
 .collection_container { display:inline-block; color:#DDD; }
 .collections_2 { width:50%;}
@@ -41,7 +41,7 @@ DASHBOARD
 
 .empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}
 
-.data_point_droppable_active { border:2px solid red; }
+.data_point_droppable_active { border:1px solid #F33; }
 
 .data_point_config { padding:20px; }
 .data_point_config .image_and_title { height:100px; overflow:hidden; }
@@ -54,19 +54,21 @@ DASHBOARD
 .data_point_config .form_actions { text-align:center; margin-top:20px;}
 .data_point_config .form_actions input { width:48%; padding:5px; }
 
-.search_widget .options_container { float:right; padding:2px; }
-.search_widget .options_container img { width:20px; }
+.search_widget .options_container { float:right; padding:2px 4px 2px 0; }
+.search_widget .options_container .drag_handle { height:14px; position:relative; bottom:1px; cursor:move; }
+.search_widget .options_container .close_collection img { position:relative; top:2px }
 
-.search_widget .data_points_container { background-color:#333; padding:2px; }
-.search_widget .data_points_container img { width:20px; }
+
+.search_widget .data_points_container { background-color:#333; padding:2px; font-size:80%;}
+.search_widget .data_points_container img { width:20px; margin:1px 2px 0;}
 .search_widget .data_points_container .data_points_summary li { display:inline-block }
 .search_widget .data_points_container .data_points_details { padding-top:25px; }
-.search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:5px; left:5px;}
+.search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:2px; left:5px; display:inline-block; width:80%; height:15px; overflow:hidden; }
 .search_widget .data_points_container .data_points_details .actions { float:right;}
 
 .search_widget .search_results_container .waiting_container { width:100%; height:100%;}
 
-.search_widget .search_results_header { background-color:#444; padding:2px;}
+.search_widget .search_results_header { background-color:#444; padding:2px; font-size:80%;}
 .search_widget .search_results_header .filters_link { float:right;}
 .search_widget .search_results_header .filters { padding:15px 5px; }
 .search_widget .search_results_header .filters .filter_row { padding:10px; }

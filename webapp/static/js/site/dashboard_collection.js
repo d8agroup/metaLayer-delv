@@ -70,6 +70,15 @@
                 );
             }
             this.dashboard_collection('apply_data_point_droppable');
+            this.dashboard_collection('apply_dashboard_collection_droppable');
+            this.draggable
+            (
+                {
+                    revert:true,
+                    handle:'img.drag_handle',
+                    stack:'.collection_container'
+                }
+            );
             $('#dashboard').dashboard('save');
             return this;
         },
@@ -111,6 +120,26 @@
                     }
                 }
             );
+        },
+        apply_dashboard_collection_droppable:function()
+        {
+            var collection = this;
+            var configuration = collection.data('configuration');
+            this.droppable
+            (
+                {
+                    accept:'.collection_container',
+                    drop:function(event, ui)
+                    {
+                        var dragged_collection = ui.draggable;
+                        var dragged_configuration = dragged_collection.data('configuration');
+                        for (var x=0; x<dragged_configuration.data_points.length; x++)
+                            configuration.data_points[configuration.data_points.length] = dragged_configuration.data_points[x];
+                        $(dragged_collection).dashboard_collection('remove');
+                        collection.dashboard_collection('render');
+                    }
+                }
+            )
         },
         remove_data_point:function(data_point_id)
         {

@@ -50,6 +50,7 @@ DASHBOARD - widgets panel
                 {
                     revert:true,
                     helper:"clone",
+                    stack:'.data_point_widget, .collection_container',
                     start:function()
                     {
                         $('#collections').dashboard_collections_panel('data_point_start_dragging');
