@@ -6,7 +6,7 @@ from datapoints.controllers import DataPointController
 from search.controllers import SearchController
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
-from webapp.utils import JSONResponse
+from utils import JSONResponse
 
 def index(request):
     if request.user.is_authenticated():

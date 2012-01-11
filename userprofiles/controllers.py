@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from userprofiles.models import UserStatistics
 
 class UserController(object):
@@ -14,6 +15,10 @@ class UserController(object):
             return False, ['Sorry, your account is not currently active']
         login(request, user)
         return True, []
+
+    @classmethod
+    def GetAllUsers(cls):
+        return User.objects.all()
 
     def logout_user(self, request):
         logout(request)

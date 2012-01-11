@@ -1,9 +1,21 @@
+from threading import Thread
 from django.db.models.base import ModelBase
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.template.loader import get_template
 from django.template import Context
 import datetime
+
+################################################################################
+# ASYNC REQUESTS                                                               #
+################################################################################
+def async(gen):
+    def func(*args, **kwargs):
+        it = gen(*args, **kwargs)
+        result = it.next()
+        Thread(target=lambda: list(it)).start()
+        return result
+    return func
 
 ################################################################################
 # DYNAMIC MODULE LOADED FUNCTIONS                                              #

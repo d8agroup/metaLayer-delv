@@ -97,6 +97,7 @@ class SearchResultsParser(object):
 
     def _apply_late_fixes(self, item):
         item['date'] = datetime.fromtimestamp(item['time']).strftime('%Y-%m-%d %H:%M:%S')
+        item['author_display_name'] = '' if item['author_display_name'] == 'none' else item['author_display_name']
         return item
 
 

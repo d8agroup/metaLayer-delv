@@ -72,7 +72,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '!%-+x&r35j^wtk$6a99g2q=4at2+#g+1p!d6$=fa9eh49rfbcu'
+SECRET_KEY = '!%-+x&r35j^wtJHJHjdhkjhfdfueur73878397rey$=fa9eh49rfbcu'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -89,7 +89,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'dashboard.webapp.urls'
+ROOT_URLCONF = 'dashboard.urls'
 
 INSTALLED_APPS = (
     'django.contrib.auth',

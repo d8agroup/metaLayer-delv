@@ -1,7 +1,13 @@
+import logging
+
 DEBUG = True
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+)
 
 DATABASES = {
     'default': {

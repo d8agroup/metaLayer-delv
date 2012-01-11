@@ -23,3 +23,6 @@ class DashboardsController(object):
         db['collections'] = dashboard['collections']
         db.save()
         return
+
+
+

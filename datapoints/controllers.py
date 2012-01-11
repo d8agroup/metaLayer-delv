@@ -45,6 +45,11 @@ class DataPointController(object):
         data_point = DataPoint.LoadDataPoint(type)
         return data_point.get_content_item_template()
 
+    def run_data_point(self):
+        type = self.data_point['type']
+        data_point = DataPoint.LoadDataPoint(type)
+        return data_point.tick(self.data_point)
+
 class MetaLayerAggregatorController(object):
     @classmethod
     def _call_aggregator(cls, add_source_endpoint_url, config, sub_type, type):

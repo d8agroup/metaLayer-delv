@@ -2,6 +2,7 @@ from datapoints.controllers import MetaLayerAggregatorController
 from urlparse import urlparse
 from hashlib import md5
 import feedparser
+from logger import Logger
 
 class DataPoint(object):
     def get_unconfigured_config(self):
@@ -29,7 +30,8 @@ class DataPoint(object):
         return "" \
             "<li style='width:100%;'>" \
                 "<img src='http://imgur.com/images/blog_rss.png' style='width:20px; padding-right:10px;' align='left'/>" \
-                "<span style='font-weight:bold'>${author}:&nbsp;</span>${title}" \
+                "<p style='margin-bottom:2px;'>${source_display_name}</p>" \
+                "<p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p>" \
             "</li>"
 
     def generate_configured_guid(self, config):
@@ -66,5 +68,7 @@ class DataPoint(object):
         MetaLayerAggregatorController.RemoveSourceFromAggregator(type, sub_type, config)
 
     def tick(self, config):
+        Logger.Debug('%s - tick - started - with config: %s' % (__name__, config))
+        Logger.Debug('%s - tick - finished' % __name__)
         #Tick is controlled by the aggregator
-        pass
+        return []

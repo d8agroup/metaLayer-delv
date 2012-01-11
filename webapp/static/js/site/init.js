@@ -43,9 +43,9 @@ function wait(ms)
 function apply_waiting(element, text)
 {
     var waiting_template = $.tmpl('waiting_large', {text:text});
-    waiting_template.css({ opacity:0.7,top:element.offset().top, width:element.outerWidth(), height:element.outerHeight() });
-    waiting_template.find('p').css({ top:(element.height() / 2) });
     element.append(waiting_template);
+    waiting_template.css({ opacity:0.7,top:2, width:element.outerWidth(), height:element.outerHeight() });
+    waiting_template.find('p').css({ top:(element.height() / 2) });
 }
 
 function remove_waiting(element)

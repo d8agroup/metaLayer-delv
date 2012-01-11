@@ -31,7 +31,7 @@ DASHBOARD
 #dashboard { display:none; }
 #widget_panel { height:130px; background-color:#DDD; padding:5px; }
 
-.data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:move;}
+.data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300;}
 
 .collection_container { display:inline-block; color:#DDD; }
 .collections_2 { width:50%;}

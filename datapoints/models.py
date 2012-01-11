@@ -22,3 +22,5 @@ class DataPoint(models.Model):
     def load_configuration(self):
         data_point = DataPoint.LoadDataPoint(self.name)
         return data_point.get_unconfigured_config()
+
+
