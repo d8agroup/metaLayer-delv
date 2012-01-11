@@ -51,16 +51,19 @@
             var data_points_container_html = $("<div class='data_points_container'></div>");
             this.append(data_points_container_html.dashboard_search_widget_data_points(data_points));
 
-            var search_results = configuration.search_results;
-            var search_filters = configuration.search_filters;
-            var search_results_html = $("<div class='search_results_container'></div>");
-            this.append(search_results_html.dashboard_search_results({search_results:search_results, search_filters:search_filters}));
+            this.dashboard_search_widget('search_results_updated');
 
             return this;
         },
         search_results_updated:function()
         {
-            this.dashboard_search_widget('render');
+            var configuration = this.data('configuration');
+            this.find('.search_results_container').remove();
+            var search_results = configuration.search_results;
+            var search_filters = configuration.search_filters;
+            var search_results_html = $("<div class='search_results_container'></div>");
+            this.append(search_results_html.dashboard_search_results({search_results:search_results, search_filters:search_filters}));
+
             return this;
         }
     }

@@ -9,12 +9,6 @@
         {
             var search_results = data.search_results;
             var search_filters = data.search_filters;
-            if ($.isEmptyObject(search_results))
-            {
-                this.children().remove();
-                this.append('<p>waiting</p>');
-                return this;
-            }
             this.data('search_results', search_results);
             this.data('search_filters', search_filters);
             return this.dashboard_search_results('render');
@@ -27,12 +21,27 @@
 
             search_results_container.children().remove();
 
-            var search_results_header_html = $('<div class="search_results_header"></div>');
-            search_results_container.append(search_results_header_html.dashboard_search_results_header({search_results:search_results, search_filters:search_filters}));
+            if ($.isEmptyObject(search_results))
+            {
+                setTimeout
+                (
+                    function()
+                    {
+                        var empty_search_results_html = $("<div class='empty_search_results'></div>");
+                        search_results_container.append(empty_search_results_html);
+                        apply_waiting(empty_search_results_html, 'Refreshing Results');
+                    },
+                    500
+                )
+            }
+            else
+            {
+                var search_results_header_html = $('<div class="search_results_header"></div>');
+                search_results_container.append(search_results_header_html.dashboard_search_results_header({search_results:search_results, search_filters:search_filters}));
 
-            var search_results_content_items_html = $('<ul class="content_items"></ul>');
-            search_results_container.append(search_results_content_items_html.dashboard_search_results_content_items(search_results));
-
+                var search_results_content_items_html = $('<ul class="content_items"></ul>');
+                search_results_container.append(search_results_content_items_html.dashboard_search_results_content_items(search_results));
+            }
             return search_results_container;
         },
         search_results_updated:function()

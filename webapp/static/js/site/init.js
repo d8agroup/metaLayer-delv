@@ -44,7 +44,7 @@ function apply_waiting(element, text)
 {
     var waiting_template = $.tmpl('waiting_large', {text:text});
     element.append(waiting_template);
-    waiting_template.css({ opacity:0.7,top:2, width:element.outerWidth(), height:element.outerHeight() });
+    waiting_template.css({ opacity:0.7,top:0, width:element.outerWidth(), height:element.outerHeight() });
     waiting_template.find('p').css({ top:(element.height() / 2) });
 }
 
@@ -73,7 +73,7 @@ $(document).ready
         (
             'waiting_large',
             "<div class='waiting waiting_large'>" +
-                "<p>${text}<img src='/static/images/site/loading_circle.gif' /></p>" +
+                "<p>{{html text}}<img src='/static/images/site/loading_circle.gif' /></p>" +
             "</div>"
         );
 
