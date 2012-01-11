@@ -34,9 +34,9 @@ TEMPLATE_DIRS = (
 )
 
 SOLR_CONFIG = {
-    'default_page_size':20,
+    'default_page_size':100,
     'solr_url':'http://md.dev.01:8080/solr',
-    'solr_params':'wt=json&facet=on&sort=time+desc',
+    'solr_params':'wt=json&facet=on&sort=time+desc&rows=100',
     'solr_facets':{
         'source_display_name':{
             'display_name':'Source',
@@ -51,6 +51,13 @@ SOLR_CONFIG = {
             'enabled':True,
             }
     }
+}
+
+DATA_POINTS_CONFIG = {
+    'enbaled_data_points':[
+        'feed',
+        'googleplusactivitysearch',
+    ]
 }
 
 

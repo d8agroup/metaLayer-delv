@@ -2,7 +2,6 @@ from django.conf import settings
 from urllib2 import Request, urlopen
 from urllib import urlencode
 from django.utils import simplejson as json
-from datapoints.models import DataPoint
 from logger import Logger
 
 class DataPointController(object):
@@ -12,44 +11,57 @@ class DataPointController(object):
     @classmethod
     def GetAllForTemplateOptions(cls, options):
         #TODO: need to take account of options
-        return [dp.load_configuration() for dp in DataPoint.objects.all()]
+        return [DataPointController.LoadDataPoint(dp).get_unconfigured_config() for dp in settings.DATA_POINTS_CONFIG['enbaled_data_points']]
 
     def is_valid(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         passed, errors = data_point.validate_config(self.data_point)
         return passed, errors
 
     def get_configured_display_name(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         return data_point.generate_configured_display_name(self.data_point)
 
     def data_point_added(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         data_point.data_point_added(self.data_point)
 
     def data_point_removed(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         data_point.data_point_removed(self.data_point)
 
     def generate_configured_guid(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         return data_point.generate_configured_guid(self.data_point)
 
     def get_content_item_template(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         return data_point.get_content_item_template()
 
     def run_data_point(self):
         type = self.data_point['type']
-        data_point = DataPoint.LoadDataPoint(type)
+        data_point = DataPointController.LoadDataPoint(type)
         return data_point.tick(self.data_point)
 
+    @classmethod
+    def LoadDataPoint(cls, data_point_name):
+        def custom_import(name):
+            mod = __import__(name)
+            components = name.split('.')
+            for comp in components[1:]:
+                mod = getattr(mod, comp)
+            return mod
+        data_point = custom_import('dashboard.datapoints.lib.%s.datapoint' % data_point_name)
+        data_point = getattr(data_point, 'DataPoint')()
+        return data_point
+
+    
 class MetaLayerAggregatorController(object):
     @classmethod
     def _call_aggregator(cls, add_source_endpoint_url, config, sub_type, type):
