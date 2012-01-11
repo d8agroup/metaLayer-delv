@@ -57,6 +57,7 @@ DATA_POINTS_CONFIG = {
     'enbaled_data_points':[
         'feed',
         'googleplusactivitysearch',
+        'twittersearch',
     ]
 }
 
