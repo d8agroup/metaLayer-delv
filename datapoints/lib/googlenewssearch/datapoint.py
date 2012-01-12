@@ -36,7 +36,7 @@ class DataPoint(object):
                "<li style='width:100%;'>"\
                    "<img src='http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png' style='width:20px; padding-right:10px;' align='left'/>"\
                    "<p style='margin-bottom:2px;'>${source_display_name}</p>"\
-                   "<p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p>"\
+                   "<a href='${link}' class='tool_tip' title='click to view the original article'><p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p></a>"\
                "</li>"
 
 
