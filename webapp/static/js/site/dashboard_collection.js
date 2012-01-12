@@ -63,7 +63,7 @@
         {
             var collection = this;
             var configuration = collection.data('configuration');
-            this.droppable
+            collection.droppable
             (
                 {
                     accept:'.collection_container',
@@ -87,7 +87,6 @@
             (
                 {
                     accept:'.data_point_widget',
-                    activeClass:'data_point_droppable_active',
                     drop:function(event, ui)
                     {
                         var draggable = ui.draggable;
