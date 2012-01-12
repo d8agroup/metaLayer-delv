@@ -1,5 +1,6 @@
 from hashlib import md5
 from urllib2 import urlopen
+from urllib import quote
 from aggregator.views import run_aggregator_for_data_point
 from logger import Logger
 from django.utils import simplejson as json
@@ -30,14 +31,15 @@ class DataPoint(object):
 
     def get_content_item_template(self):
         return ""\
-                "<li style='width:100%;' class='clearfix'>"\
-                    "<div style='float:left; width:25px; overflow:hidden'>"\
-                        "<img src='http://www.studentnews.ie/wp-content/uploads/2011/11/Twitter-Blue-Transparent-t-3D-Button-Logo60.png' style='width:20px; padding:1px;'/>"\
-                        "<img src='${author_image}' style='width:20px; padding:1px;' />"\
-                    "</div>"\
-                    "<p style='margin-bottom:2px;padding-left:30px;'>${source_display_name} : ${date}</p>"\
-                    "<p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p>"\
-                "</li>"
+               "<li style='width:100%;'>"\
+                   "<img src='${author_image}' style='width:50px; padding:1px; box-shadow: 3px 3px 3px #333;' align='left' class='helper_corner' />"\
+                   "<p style='float:left; padding:2px 0 0 8px;font-weight:bold;width:50%;overflow:hidden;height:12px;'>${author_display_name}</p>"\
+                   "<p style='margin-bottom:2px;text-align:right'>"\
+                       "<span style='position:relative;bottom:4px;right:10px;'>${pretty_date}</span>"\
+                       "<img src='http://www.studentnews.ie/wp-content/uploads/2011/11/Twitter-Blue-Transparent-t-3D-Button-Logo60.png' style='width:15px; box-shadow: 2px 2px 3px #333;'/>"\
+                   "</p>"\
+                   "<p style='padding-left:60px;'>${title}</p>"\
+               "</li>"
 
 
     def generate_configured_guid(self, config):
@@ -65,6 +67,7 @@ class DataPoint(object):
     def tick(self, config):
         Logger.Debug('%s - tick - started - with config: %s' % (__name__, config))
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
+        keywords = quote(keywords)
         url = 'http://search.twitter.com/search.json?q=%s&rpp=100' % keywords
         response = urlopen(url).read()
         Logger.Debug('%s - tick - raw response: %s' % (__name__, response))

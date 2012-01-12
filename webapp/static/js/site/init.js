@@ -58,6 +58,11 @@ function apply_tipped(elements)
     Tipped.create(elements);
 }
 
+function apply_helper_class_functions(element)
+{
+    element.find('.helper_corner').corner();
+}
+
 $(document).ready
 (
     function()
