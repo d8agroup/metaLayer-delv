@@ -61,6 +61,42 @@ function apply_tipped(elements)
 function apply_helper_class_functions(element)
 {
     element.find('.helper_corner').corner();
+    Tipped.create(element.find('.tool_tip'));
+    element.find('.tool_tip_ajax').each
+    (
+        function(i, e)
+        {
+            var tipped_function = function(element)
+            {
+                Tipped.create
+                (
+                    element,
+                    '/dashboard/ajax_bridge',
+                    {
+                        ajax:
+                        {
+                            data:'request_url=' + $(element).attr("title") + '&csrfmiddlewaretoken=' + $('#csrf_form input').val(),
+                            type:'POST'
+                        }
+                    }
+                );
+            };
+            setTimeout(function() { tipped_function(e); }, 500);
+        }
+    );
+
+    //Tipped.create(element.find('.tool_tip_ajax'), {ajax:true});
+}
+
+function clean_user_generated_html(element)
+{
+    element.find('a').each
+    (
+        function()
+        {
+            $(this).attr('target', '_blank');
+        }
+    )
 }
 
 $(document).ready

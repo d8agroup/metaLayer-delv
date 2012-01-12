@@ -1,12 +1,15 @@
 from django.shortcuts import render_to_response, redirect
+from django.http import HttpResponse, HttpResponseServerError
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
 from datapoints.controllers import DataPointController
+from logger import Logger
 from search.controllers import SearchController
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
 from utils import JSONResponse
+from urllib2 import urlopen
 
 def index(request):
     if request.user.is_authenticated():
@@ -17,6 +20,15 @@ def index(request):
         data_dict,
         context_instance=RequestContext(request)
     )
+
+def ajax_bridge(request):
+    request_url = request.POST['request_url']
+    try:
+        response = urlopen(request_url).read()
+        return HttpResponse(response)
+    except Exception, e:
+        Logger.Error('%s - ajax_bridge - error: %s' % (__name__, e))
+        return HttpResponseServerError()
 
 @login_required(login_url='/user/login')
 def dashboard(request, id):
