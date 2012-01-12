@@ -1,0 +1,105 @@
+from hashlib import md5
+from urllib2 import urlopen
+from urllib import quote
+import urlparse
+from aggregator.views import run_aggregator_for_data_point
+from logger import Logger
+from django.utils import simplejson as json
+from dateutil import parser as dateutil_parser
+import feedparser
+import time
+
+class DataPoint(object):
+    def get_unconfigured_config(self):
+        return {
+            'type':'googlenewssearch',
+            'sub_type':'googlenewssearch',
+            'short_display_name':'Google News Search',
+            'full_display_name':'Google News Search',
+            'instructions':'Use this data point to search Google news.',
+            'image_large':'http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png',
+            'image_small':'http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png',
+            'configured':False,
+            'elements':[
+                {
+                    'name':'keywords',
+                    'display_name':'What to search for',
+                    'help':'The keywords that you want to use to search Google News',
+                    'type':'text',
+                    'value':''
+                },
+            ]
+        }
+
+    def get_content_item_template(self):
+        return ""\
+               "<li style='width:100%;'>"\
+                   "<img src='http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png' style='width:20px; padding-right:10px;' align='left'/>"\
+                   "<p style='margin-bottom:2px;'>${source_display_name}</p>"\
+                   "<p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p>"\
+               "</li>"
+
+
+    def generate_configured_guid(self, config):
+        base_string = 'google_news_search %s' % [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
+        return md5(base_string).hexdigest()
+
+    def generate_configured_display_name(self, config):
+        keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
+        return '%s: %s' % (config['short_display_name'], keywords)
+
+    def validate_config(self, config):
+        keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
+        if not keywords or not keywords.strip():
+            return False, { 'keywords':['You must search for something'] }
+        return True, {}
+
+    def data_point_added(self, config):
+        #todo this is a hack
+        run_aggregator_for_data_point(config)
+        pass
+
+    def data_point_removed(self, config):
+        pass
+
+    def tick(self, config):
+        Logger.Debug('%s - tick - started - with config: %s' % (__name__, config))
+        keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
+        keywords = quote(keywords)
+        url = 'http://news.google.com/news?hl=en&gl=us&q=%s&safe=on&output=rss' % keywords
+        feed = feedparser.parse(url)
+        content = [self._map_feed_item_to_content_item(config, item) for item in feed['items']]
+        Logger.Debug('%s - tick - finished' % __name__)
+        return content
+
+    def _map_feed_item_to_content_item(self, config, item):
+        return {
+            'id':md5(item['link']).hexdigest(),
+            'text':[
+                    {
+                    'title': item['title'],
+                    'text':[
+                        item['summary']
+                    ],
+                    'tags':[t['term'] for t in item['tags']] if 'tags' in item else []
+                }
+            ],
+            'time': time.mktime(dateutil_parser.parse(item['updated']).timetuple()),
+            'link':item['link'],
+            'author':{
+                'display_name':item['author'] if 'author' in item else 'none',
+            },
+            'channel':{
+                'id':md5(config['type'] + config['sub_type'] if 'sub_type' in config else '').hexdigest(),
+                'type':config['type'],
+                'sub_type':config['sub_type'] if 'sub_type' in config else None
+            },
+            'source':{
+                'id':self.generate_configured_guid(config),
+                'display_name':self.generate_configured_display_name(config),
+            }
+        }
+    
+    def _clean_url_for_display_name(self, url):
+        parsed_url = urlparse.urlparse(url)
+        return parsed_url.netloc + '-'.join(parsed_url.path.split('/'))

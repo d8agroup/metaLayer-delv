@@ -49,6 +49,7 @@ DATA_POINTS_CONFIG = {
         'feed',
         'googleplusactivitysearch',
         'twittersearch',
+        'googlenewssearch',
     ]
 }
 
