@@ -23,6 +23,7 @@ DASHBOARD - widgets panel
                         var data_point_html = $('<div class="data_point_widget">' + data_points[x].short_display_name + '</div>');
                         data_point_html.data('data_point', data_points[x]);
                         empty_widget_panel_html.append(data_point_html);
+                        data_point_html.corner();
 
                         //Also load the content item templates
                         $.get

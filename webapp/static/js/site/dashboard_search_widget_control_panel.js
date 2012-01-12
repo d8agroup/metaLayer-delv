@@ -9,8 +9,7 @@
             (
                 '<a class="close_collection tipped" title="remove this collection from your dashboard">' +
                     '<img src="/static/images/site/icon_cross.png" />' +
-                    '</a>' +
-                    '<img src="/static/images/site/icon_drag.png" title="click and drag this search box" />'
+                '</a>'
             );
         this.find('a.close_collection').click
             (

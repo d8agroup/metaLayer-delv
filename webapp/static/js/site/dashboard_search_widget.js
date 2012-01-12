@@ -57,6 +57,11 @@
             var really_run_search_function = function(search_widget)
             {
                 var configuration = search_widget.data('configuration');
+                if (configuration == null)
+                {
+                    debugger;
+                    alert('hi');
+                }
                 $.post
                 (
                     '/dashboard/run_search',
