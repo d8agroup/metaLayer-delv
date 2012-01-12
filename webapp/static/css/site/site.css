@@ -33,10 +33,10 @@ DASHBOARD
 
 .data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:2px;}
 
-.collection_container { display:inline-block; color:#DDD; }
+.collection_container { float:left; color:#DDD; }
 .collections_2 { width:50%;}
 .collections_4 { width:25%; }
-.empty_collection, .search_widget_container { margin:2px; background-color:#666; height:300px; overflow:auto}
+.empty_collection { margin:2px; background-color:#666; height:300px; overflow:auto}
 
 
 .empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}
@@ -54,6 +54,9 @@ DASHBOARD
 .data_point_config .form_actions { text-align:center; margin-top:20px;}
 .data_point_config .form_actions input { width:48%; padding:5px; }
 
+.search_widget { margin:2px; background-color:#666; }
+
+.search_widget .data_points_container { min-height:23px; }
 .search_widget .options_container { float:right; padding:2px 4px 2px 0; }
 .search_widget .options_container .drag_handle { height:14px; position:relative; bottom:1px; cursor:move; }
 .search_widget .options_container .close_collection img { position:relative; top:2px }
@@ -66,8 +69,8 @@ DASHBOARD
 .search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:2px; left:5px; display:inline-block; width:80%; height:15px; overflow:hidden; }
 .search_widget .data_points_container .data_points_details .actions { float:right;}
 
-.search_widget .empty_search_results { width:100%; height:274px; position:relative;}
-.search_widget .search_results_container .waiting_container { width:100%; height:100%;}
+.search_widget .search_results_container { height:274px; overflow:auto;}
+.search_widget .search_results_container .waiting { width:100%; height:100%; opacity:0.7; padding-top:95px; top:28px; display:none; }
 
 .search_widget .search_results_header { background-color:#444; padding:2px; font-size:80%;}
 .search_widget .search_results_header .filters_link { float:right;}

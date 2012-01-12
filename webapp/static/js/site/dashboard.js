@@ -50,15 +50,7 @@ DASHBOARD - widgets panel
                 {
                     revert:true,
                     helper:"clone",
-                    stack:'.collection_container',
-                    start:function()
-                    {
-                        $('#collections').dashboard_collections_panel('data_point_start_dragging');
-                    },
-                    stop:function()
-                    {
-                        $('#collections').dashboard_collections_panel('data_point_stop_dragging');
-                    }
+                    stack:'.collection_container'
                 }
             );
         }

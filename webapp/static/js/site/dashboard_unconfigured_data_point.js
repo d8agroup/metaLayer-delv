@@ -33,10 +33,10 @@
 
         unconfigured_data_point_html.find('.cancel').click
         (
-            function()
+            function(event)
             {
-                search_widget_container.parents('.collection_container').dashboard_collection('remove_data_point', data_point.id);
-                search_widget_container.parents('.collection_container').dashboard_collection('render');
+                event.preventDefault();
+                search_widget_container.parents('.search_widget').dashboard_search_widget('remove_data_point', data_point.id);
                 return search_widget_container;
             }
         );

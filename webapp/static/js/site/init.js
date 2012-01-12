@@ -53,6 +53,11 @@ function remove_waiting(element)
     element.find('.waiting').remove();
 }
 
+function apply_tipped(elements)
+{
+    Tipped.create(elements);
+}
+
 $(document).ready
 (
     function()
