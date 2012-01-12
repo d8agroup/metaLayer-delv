@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^user/', include('dashboard.webapp.urls')),
     url(r'^dashboard/', include('dashboard.webapp.urls')),
 
-    url(r'^aggregator/', include('dashboard.aggregator.urls')),
+    url(r'^system/aggregator/', include('dashboard.aggregator.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 
