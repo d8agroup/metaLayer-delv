@@ -17,7 +17,6 @@
         {
             var search_results_container = this;
             var search_results = search_results_container.data('search_results');
-            var search_filters = search_results_container.data('search_filters');
 
             search_results_container.children().remove();
 
@@ -36,9 +35,6 @@
             }
             else
             {
-                var search_results_header_html = $('<div class="search_results_header"></div>');
-                search_results_container.append(search_results_header_html.dashboard_search_results_header({search_results:search_results, search_filters:search_filters}));
-
                 var search_results_content_items_html = $('<ul class="content_items"></ul>');
                 search_results_container.append(search_results_content_items_html.dashboard_search_results_content_items(search_results));
             }

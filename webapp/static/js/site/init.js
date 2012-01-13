@@ -123,6 +123,6 @@ $(document).ready
             "</div>"
         );
 
-        $.get('/static/html/parts/dashboard_search_results_header.html', function(t) { $.template('dashboard_search_results_header', t)});
+        $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
     }
 );

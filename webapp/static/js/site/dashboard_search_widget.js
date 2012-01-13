@@ -34,6 +34,9 @@
             var data_points_container_html = $("<div class='data_points_container'></div>");
             this.append(data_points_container_html.dashboard_search_widget_data_points(data_points));
 
+            var search_filters_html = $('<div class="search_filters"></div>');
+            this.append(search_filters_html);
+
             var search_results_html = $("<div class='search_results_container'></div>");
             this.append(search_results_html);
 
@@ -57,35 +60,37 @@
             var really_run_search_function = function(search_widget)
             {
                 var configuration = search_widget.data('configuration');
-                $.post
-                (
-                    '/dashboard/run_search',
-                    {
-                        data_points:JSON.stringify(configuration.data_points),
-                        search_filters:JSON.stringify(configuration.search_filters),
-                        csrfmiddlewaretoken:$('#csrf_form input').val()
-                    },
-                    function(data)
-                    {
-                        var search_results = data.search_results;
-                        configuration.search_results = search_results;
-                        var search_filters = configuration.search_filters;
-                        search_widget.find('.search_results_container').dashboard_search_results({search_results:search_results, search_filters:search_filters});
-                        search_widget.find('.search_results_container').jScrollPane
-                        (
-                            {
-                                topCapHeight:40,
-                                bottomCapHeight:40
-                            }
-                        );
-                        var run_search_at_interval_function = function(search_widget)
+                if (configuration != null)
+                    $.post
+                    (
+                        '/dashboard/run_search',
                         {
-                            search_widget.dashboard_search_widget('run_search');
-                        };
+                            data_points:JSON.stringify(configuration.data_points),
+                            search_filters:JSON.stringify(configuration.search_filters),
+                            csrfmiddlewaretoken:$('#csrf_form input').val()
+                        },
+                        function(data)
+                        {
+                            var search_results = data.search_results;
+                            configuration.search_results = search_results;
+                            var search_filters = configuration.search_filters;
+                            search_widget.find('.search_results_container').dashboard_search_results({search_results:search_results, search_filters:search_filters});
+                            search_widget.find('.search_filters').dashboard_search_widget_search_filters({search_results:search_results, search_filters:search_filters});
+                            search_widget.find('.search_results_container').jScrollPane
+                            (
+                                {
+                                    topCapHeight:40,
+                                    bottomCapHeight:40
+                                }
+                            );
+                            var run_search_at_interval_function = function(search_widget)
+                            {
+                                search_widget.dashboard_search_widget('run_search');
+                            };
 
-                        setTimeout(function() { run_search_at_interval_function(search_widget) }, 30000);
-                    }
-                )
+                            setTimeout(function() { run_search_at_interval_function(search_widget) }, 60000);
+                        }
+                    );
             };
 
             setTimeout(function() { really_run_search_function(search_widget); }, 2000);
