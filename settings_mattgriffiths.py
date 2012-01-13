@@ -5,7 +5,7 @@ DEBUG = True
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(
-    level = logging.DEBUG,
+    level = logging.INFO,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 

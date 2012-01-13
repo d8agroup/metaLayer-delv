@@ -42,7 +42,7 @@ class DataPoint(object):
                     "<a href='${author_link}'>" \
                         "<img src='${author_image}' style='width:50px; padding:1px; box-shadow: 3px 3px 3px #333;' align='left' class='helper_corner tool_tip' title='<b>${author_display_name}</b> - click to view their profile in Google+' />" \
                     "</a>" \
-                    "<p style='float:left; padding:2px 0 0 8px;font-weight:bold;width:50%;overflow:hidden;height:12px;'>${author_display_name}</p>"\
+                    "<p style='float:left; padding:2px 0 0 8px;font-weight:bold;width:40%;overflow:hidden;height:12px;'>${author_display_name}</p>"\
                     "<p style='margin-bottom:2px;text-align:right'>"\
                         "<span style='position:relative;bottom:4px;right:10px;'>${pretty_date}</span>"\
                         "<img src='http://www.ethankociela.com/images/icons/google-plus.png' style='width:15px; box-shadow: 2px 2px 3px #333;'/>"\
