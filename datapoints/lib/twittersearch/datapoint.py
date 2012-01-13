@@ -1,7 +1,7 @@
 from hashlib import md5
 from urllib2 import urlopen
 from urllib import quote
-from aggregator.views import run_aggregator_for_data_point
+from aggregator.controllers import AggregationController
 from logger import Logger
 from django.utils import simplejson as json
 from dateutil import parser as dateutil_parser
@@ -60,14 +60,14 @@ class DataPoint(object):
 
     def data_point_added(self, config):
         #todo this is a hack
-        run_aggregator_for_data_point(config)
+        AggregationController.AggregateSingleDataPoint(config)
         pass
 
     def data_point_removed(self, config):
         pass
 
     def tick(self, config):
-        Logger.Debug('%s - tick - started - with config: %s' % (__name__, config))
+        Logger.Info('%s - tick - started - with config: %s' % (__name__, config))
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
         keywords = quote(keywords)
         url = 'http://search.twitter.com/search.json?q=%s&rpp=100' % keywords
@@ -76,7 +76,7 @@ class DataPoint(object):
         response = json.loads(response)
         Logger.Debug('%s - tick - JSON response: %s' % (__name__, response))
         content = [self._map_twitter_item_to_content_item(config, item) for item in response['results']]
-        Logger.Debug('%s - tick - finished' % __name__)
+        Logger.Info('%s - tick - finished' % __name__)
         return content
 
     def _map_twitter_item_to_content_item(self, config, item):

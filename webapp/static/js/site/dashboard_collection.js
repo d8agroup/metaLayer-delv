@@ -36,16 +36,15 @@
                 var search_widget_html = $("<div class='search_widget data_point_droppable'></div>");
                 this.html(search_widget_html);
                 search_widget_html.dashboard_search_widget(configuration);
-                this.dashboard_collection('apply_dashboard_collection_droppable');
                 this.draggable
                 (
                     {
                         revert:true,
-                        handle:'img.drag_handle',
                         stack:'.collection_container'
                     }
                 );
             }
+            this.dashboard_collection('apply_dashboard_collection_droppable');
             this.dashboard_collection('apply_data_point_droppable');
             $('#dashboard').dashboard('save');
             return this;
@@ -71,6 +70,9 @@
                     {
                         var dragged_collection = ui.draggable;
                         var dragged_configuration = dragged_collection.data('configuration');
+                        if (dragged_configuration.data_points.length == 0)
+                            return;
+
                         for (var x=0; x<dragged_configuration.data_points.length; x++)
                             configuration.data_points[configuration.data_points.length] = dragged_configuration.data_points[x];
                         $(dragged_collection).dashboard_collection('remove');
