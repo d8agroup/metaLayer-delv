@@ -7,7 +7,7 @@
 /***********************************************************************************************************************
 HEADER
 ***********************************************************************************************************************/
-#header { width:100%; background-color:#333; color:#DDD; text-align:right; }
+#header { width:100%; background-color:#222; color:#DDD; text-align:right; }
 #header_links { padding:5px; }
 #header_links a { display:inline-block; padding:0 5px;}
 #header_links #user_home_link { display:none; }
@@ -15,11 +15,11 @@ HEADER
 /***********************************************************************************************************************
 USER HOME PAGE
 ***********************************************************************************************************************/
-#user_home { width:80%; margin:20px auto 0 auto; background-color:#444; color:#FFF;}
+#user_home { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF;}
 #user_home .container { padding:20px;}
 #user_home h3 { text-align:center; font-size:200%; margin:20px 0;}
 #user_home h4 { margin:40px 0 10px; font-weight:normal; font-size:150%;}
-#user_home .list-container { border:2px solid #FFF; background-color:#DDD; color:#444; width:100%; height:150px;overflow:auto;}
+#user_home .list-container { border:2px solid #FFF; background-color:#DDD; color:#333; width:100%; height:150px;overflow:auto;}
 #user_home ul li .container { padding:5px;}
 #user_home ul li { width:150px; height:150px; float:left; text-align:center; margin:0 5px;}
 #user_home ul li img.thumbnail { border:1px solid; width:120px; height:90px; display:inline-block; }
@@ -31,12 +31,12 @@ DASHBOARD
 #dashboard { display:none; }
 #widget_panel { height:130px; background-color:#DDD; padding:5px; }
 
-.data_point_widget { width:200px; background-color:#333; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:2px;}
+.data_point_widget { width:200px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:2px;}
 
 .collection_container { float:left; color:#DDD; }
 .collections_2 { width:50%;}
 .collections_4 { width:25%; }
-.empty_collection { margin:2px; background-color:#444; height:300px; overflow:auto}
+.empty_collection { margin:2px; background-color:#333; height:300px; overflow:auto}
 
 
 .empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}
@@ -54,24 +54,26 @@ DASHBOARD
 .data_point_config .form_actions { text-align:center; margin-top:20px;}
 .data_point_config .form_actions input { width:48%; padding:5px; }
 
-.search_widget { margin:2px; background-color:#444; }
+.search_widget { margin:2px; background-color:#333; }
+.search_widget .jScrollPaneTrack { margin-right:5px; background-color:#222;}
+.search_widget .jScrollPaneDrag { background-color:#DDD}
 
 .search_widget .data_points_container { min-height:23px; }
 .search_widget .options_container { float:right; padding:2px 4px 2px 0; }
 .search_widget .options_container .close_collection img { position:relative; top:2px }
 
 
-.search_widget .data_points_container { background-color:#333; padding:2px; font-size:80%;}
+.search_widget .data_points_container { background-color:#222; padding:2px; font-size:80%;}
 .search_widget .data_points_container img { width:20px; margin:1px 2px 0;}
 .search_widget .data_points_container .data_points_summary li { display:inline-block }
 .search_widget .data_points_container .data_points_details { padding-top:25px; }
 .search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:2px; left:5px; display:inline-block; width:80%; height:15px; overflow:hidden; }
 .search_widget .data_points_container .data_points_details .actions { float:right;}
 
-.search_widget .search_results_container { height:274px; overflow:auto;}
+.search_widget .search_results_container { height:274px; overflow:auto; }
 .search_widget .search_results_container .waiting { width:100%; height:100%; opacity:0.7; padding-top:95px; top:0px; display:none; }
 
-.search_widget .search_results_header { background-color:#444; padding:2px; font-size:80%;}
+.search_widget .search_results_header { background-color:#333; padding:2px; font-size:80%;}
 .search_widget .search_results_header .filters_link { float:right;}
 .search_widget .search_results_header .filters { padding:15px 5px; }
 .search_widget .search_results_header .filters .filter_row { padding:10px; }
@@ -81,4 +83,4 @@ DASHBOARD
 .search_widget .search_results_header .filters .filter_actions input { display:inline-block; width:48%; padding:2px; }
 
 .search_widget .content_items { padding:0 5px;}
-.search_widget .content_items li { padding:5px 0 35px 0;; font-size:80%;}
+.search_widget .content_items li { padding:5px 0 35px 0;; font-size:80%; }
