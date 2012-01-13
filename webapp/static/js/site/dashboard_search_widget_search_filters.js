@@ -18,7 +18,9 @@
         var keywords_mask = 'filter by keywords';
 
         var template_data = {
-            keywords:(search_results.keywords == '') ? keywords_mask : search_results.keywords
+            keywords:(search_results.keywords == '') ? keywords_mask : search_results.keywords,
+            pagination:search_results.pagination,
+            items_shown:(search_results.pagination.total > search_results.pagination.pagesize) ? search_results.pagination.pagesize : search_results.pagination.total
         }
 
         $.tmpl('dashboard_search_widget_search_filters', template_data).appendTo(search_filters_container);

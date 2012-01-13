@@ -29,9 +29,9 @@ USER HOME PAGE
 DASHBOARD
 ***********************************************************************************************************************/
 #dashboard { display:none; }
-#widget_panel { height:130px; background-color:#DDD; padding:5px; }
+#widget_panel { height:90px; background-color:#DDD; padding:5px; }
 
-.data_point_widget { width:200px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:2px;}
+.data_point_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
 
 .collection_container { float:left; color:#DDD; }
 .collections_2 { width:50%;}
@@ -72,7 +72,8 @@ DASHBOARD
 .search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:2px; left:5px; display:inline-block; width:80%; height:15px; overflow:hidden; }
 .search_widget .data_points_container .data_points_details .actions { float:right;}
 
-.search_widget .search_filters { background-color:#222; font-size:80%; display:none; padding:10px 0;}
+.search_widget .search_filters { background-color:#222; font-size:80%; display:none; padding:15px 0;}
+.search_widget .pagination { padding:0 0 15px; text-align:center; font-size:90%; color:#AAA; width:90%; margin:0 auto;}
 .search_widget .search_filters .keywords { width:210px; margin:0 auto; }
 .search_widget .search_filters .keywords .keywords_container { background-color:#FFF; width:200px; padding:5px; magin:0 auto;}
 .search_widget .search_filters .keywords .keywords_container input { border:none; width:180px; font-size:70%; margin-left:2px;}
