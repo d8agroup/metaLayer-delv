@@ -33,12 +33,12 @@ class DataPoint(object):
         return ""\
                 "<li style='width:100%;'>"\
                     "<a href='${author_link}'>"\
-                        "<img src='${author_image}' style='width:50px; padding:1px; box-shadow: 3px 3px 3px #333;' align='left' class='helper_corner tool_tip' title='<b>${author_display_name}</b> - click to view their profile on Twitter' />" \
+                        "<img src='${author_image}' style='width:50px; padding:1px; box-shadow: 3px 3px 3px #111;' align='left' class='helper_corner tool_tip' title='<b>${author_display_name}</b> - click to view their profile on Twitter' />" \
                     "</a>"\
                     "<p style='float:left; padding:2px 0 0 8px;font-weight:bold;width:40%;overflow:hidden;height:12px;'>${author_display_name}</p>"\
                     "<p style='margin-bottom:2px;text-align:right'>"\
                     "<span style='position:relative;bottom:4px;right:10px;'>${pretty_date}</span>"\
-                    "<img src='http://www.studentnews.ie/wp-content/uploads/2011/11/Twitter-Blue-Transparent-t-3D-Button-Logo60.png' style='width:15px; box-shadow: 2px 2px 3px #333;'/>"\
+                    "<img src='http://www.studentnews.ie/wp-content/uploads/2011/11/Twitter-Blue-Transparent-t-3D-Button-Logo60.png' style='width:15px; box-shadow: 2px 2px 3px #111;'/>"\
                     "</p>"\
                     "<a href='${link}'><p style='padding-left:60px;' class='tool_tip' title='click to see original post on Twitter+'>${title}</p></a>"\
                 "</li>"
