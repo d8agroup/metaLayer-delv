@@ -59,7 +59,9 @@ DASHBOARD
 .search_widget .jScrollPaneDrag { background-color:#DDD}
 
 .search_widget .options_container { float:right; padding:2px 4px 2px 0; }
-.search_widget .options_container .explore_data img { position:relative; left:5px; width:17px}
+.search_widget .options_container .refresh_data img { position:relative; left:7px; bottom:1px; width:17px; }
+.search_widget .options_container .refresh_data img.loading { width:15px; }
+.search_widget .options_container .explore_data img { position:relative; left:5px; width:17px; }
 .search_widget .options_container .close_collection img { position:relative; top:2px }
 
 .search_widget .data_points_container { min-height:23px; }

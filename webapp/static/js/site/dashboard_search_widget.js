@@ -40,22 +40,35 @@
             var search_results_html = $("<div class='search_results_container'></div>");
             this.append(search_results_html);
 
-            this.dashboard_search_widget('run_search');
+            this.dashboard_search_widget('run_search', { first_run:true });
 
             return this;
         },
-        run_search:function()
+        run_search:function(data)
         {
             var search_widget = this;
             var search_results_html = this.find('.search_results_container');
-            var search_results_loading_html = $
-            (
-                "<div class='waiting waiting_large'>" +
-                    "<p>Reloading Results<img src='/static/images/site/loading_circle.gif' /></p>" +
-                "</div>"
-            );
-            search_results_html.append(search_results_loading_html);
-            search_results_loading_html.fadeIn();
+
+            if (data.first_run)
+            {
+                var search_results_loading_html = $
+                    (
+                        "<div class='waiting waiting_large'>" +
+                            "<p>Reloading Results<img src='/static/images/site/loading_circle.gif' /></p>" +
+                        "</div>"
+                    );
+                search_results_html.append(search_results_loading_html);
+                search_results_loading_html.fadeIn();
+            }
+            else
+            {
+                search_widget.find('.options_container .refresh_data img').attr
+                    (
+                        'src',
+                        '/static/images/site/icon_clock_loading.gif'
+                    )
+                    .addClass('loading');
+            }
 
             var really_run_search_function = function(search_widget)
             {
@@ -77,18 +90,24 @@
                             search_widget.find('.search_results_container').dashboard_search_results({search_results:search_results, search_filters:search_filters});
                             search_widget.find('.search_filters').dashboard_search_widget_search_filters({search_results:search_results, search_filters:search_filters});
                             search_widget.find('.search_results_container').jScrollPane
-                            (
-                                {
-                                    topCapHeight:40,
-                                    bottomCapHeight:40
-                                }
-                            );
+                                (
+                                    {
+                                        topCapHeight:40,
+                                        bottomCapHeight:40
+                                    }
+                                );
+                            search_widget.find('.options_container .refresh_data img').attr
+                                (
+                                    'src',
+                                    '/static/images/site/icon_clock.png'
+                                )
+                                .removeClass('loading');
                             var run_search_at_interval_function = function(search_widget)
                             {
-                                search_widget.dashboard_search_widget('run_search');
+                                search_widget.dashboard_search_widget('run_search', { first_run:false });
                             };
 
-                            setTimeout(function() { run_search_at_interval_function(search_widget) }, 60000);
+                            setTimeout(function() { run_search_at_interval_function(search_widget) }, 20000);
                         }
                     );
             };
