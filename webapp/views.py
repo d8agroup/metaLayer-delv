@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response, redirect
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotAllowed
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
@@ -16,7 +16,7 @@ def index(request):
         return render_to_response('site.html',{}, context_instance=RequestContext(request))
     data_dict = {}
     return render_to_response(
-        'index.html',
+        'login_or_register.html',
         data_dict,
         context_instance=RequestContext(request)
     )
@@ -102,18 +102,6 @@ def dashboard_save(request):
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS
 ########################################################################################################################
-@login_required(login_url='/user/login')
-def user_saved_dashboards(request):
-    dc = DashboardsController(request.user)
-    saved_dashboards = dc.get_saved_dashboards()
-    return render_to_response('parts/user_saved_dashboards.html', { 'saved_dashboards':saved_dashboards, })
-
-@login_required(login_url='/user/login')
-def user_dashboard_templates(request):
-    dc = DashboardsController(request.user)
-    dashboard_templates = dc.get_dashboard_templates()
-    return render_to_response('parts/user_dashboard_templates.html', { 'dashboard_templates':dashboard_templates, })
-
 def user_login(request):
     data_dict = {}
     if request.method == 'POST':
@@ -128,6 +116,23 @@ def user_login(request):
         data_dict,
         context_instance=RequestContext(request)
     )
+
+def user_register(request):
+    if request.method == 'GET':
+        return HttpResponseNotAllowed('Not allowed')
+
+
+@login_required(login_url='/user/login')
+def user_saved_dashboards(request):
+    dc = DashboardsController(request.user)
+    saved_dashboards = dc.get_saved_dashboards()
+    return render_to_response('parts/user_saved_dashboards.html', { 'saved_dashboards':saved_dashboards, })
+
+@login_required(login_url='/user/login')
+def user_dashboard_templates(request):
+    dc = DashboardsController(request.user)
+    dashboard_templates = dc.get_dashboard_templates()
+    return render_to_response('parts/user_dashboard_templates.html', { 'dashboard_templates':dashboard_templates, })
 
 @login_required(login_url='/user/login')
 def user_logout(request):
