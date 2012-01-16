@@ -2,6 +2,8 @@ import logging
 
 DEBUG = True
 
+SITE_ID=u'4f13f413c845b314fd00001d'
+
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(

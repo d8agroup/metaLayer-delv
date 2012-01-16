@@ -1,5 +1,8 @@
 DEBUG = True
 
+SITE_ID=u'4f13fca68451d31efe00001d'
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_engine', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
