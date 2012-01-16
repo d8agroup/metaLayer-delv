@@ -1,3 +1,3 @@
-[submodule "pychargify"]
-	path = pychargify
-	url = git@github.com:metaLayer/pychargify.git
+[submodule "chargify-python"]
+	path = chargify-python
+	url = git@github.com:metaLayer/chargify-python.git

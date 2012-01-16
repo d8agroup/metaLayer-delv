@@ -62,5 +62,10 @@ DATA_POINTS_CONFIG = {
     ]
 }
 
+CHARGIFY_SETTINGS = {
+   'api_key':'eWdDw0im7NE0lfXeiXhS',
+   'subdomain':'metalayer-dashboard'
+}
+
 
 
