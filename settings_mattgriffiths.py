@@ -2,7 +2,7 @@ import logging
 
 DEBUG = True
 
-SITE_ID=u'4f13f413c845b314fd00001d'
+SITE_ID=u'4f1408ebc845b317df00000d'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 

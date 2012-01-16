@@ -4,7 +4,7 @@ import time
 class UserStatistics(Model):
     class Meta:
         database = 'ml_dashboard'
-        collection = 'user_statistics'
+        collection = 'userprofiles_userstatistics'
         indices = ( Index('username'), )
 
     @classmethod
@@ -15,6 +15,7 @@ class UserStatistics(Model):
                 'username':username,
                 'dashboard_template_usage':{}
             })
+        user_statistics.save()
         return user_statistics
 
 
@@ -26,3 +27,54 @@ class UserStatistics(Model):
             }
         self['dashboard_template_usage'][dashboard_template_id]['count'] += 1
         self['dashboard_template_usage'][dashboard_template_id]['last_used'] = time.time()
+        self.save()
+
+class UserSubscriptions(Model):
+    class Meta:
+        database = 'ml_dashboard'
+        collections = 'userprofiles_usersubscriptions'
+        indices = ( Index('username'), )
+
+    @classmethod
+    def InitForUsername(cls, username):
+        user_subscriptions = UserSubscriptions({
+            'username':username,
+            'active_subscription':'subscription_type_1',
+            'subscription_history':[
+                {
+                    'subscription_id':'subscription_type_1',
+                    'start_time':time.time(),
+                    'extensions':{
+                        'note':'Initial Signup'
+                    }
+                }
+            ]
+        })
+        user_subscriptions.save()
+        return user_subscriptions
+
+    @classmethod
+    def GetForUsername(cls, username):
+        user_subscriptions = UserSubscriptions.collection.find_one({'username':username})
+        if not user_subscriptions:
+            user_subscriptions = UserSubscriptions.InitForUsername(username)
+        return user_subscriptions
+
+    def get_active_subscription(self):
+        for subscription in self['subscription_history']:
+            if 'end_time' not in subscription:
+                return subscription
+        return None
+
+    def subscription_changed(self, new_subscription, old_subscription_extension=None, new_subscription_extensions=None):
+        self['active_subscription'] = new_subscription['subscription_type']
+        for subscription in self['subscription_history']:
+            if 'end_time' not in subscription:
+                subscription['end_time'] = time.time()
+                subscription['extensions'] = old_subscription_extension
+        self['subscription_history'].append({
+            'subscription':new_subscription['subscription_type'],
+            'start_time':time.time(),
+            'extensions':new_subscription_extensions
+        })
+        self.save()

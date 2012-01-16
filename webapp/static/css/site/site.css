@@ -15,15 +15,24 @@ HEADER
 /***********************************************************************************************************************
 USER HOME PAGE
 ***********************************************************************************************************************/
-#user_home { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF;}
-#user_home .container { padding:20px;}
+#user_home_container { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF;}
+#user_home { width:100%;}
 #user_home h3 { text-align:center; font-size:200%; margin:20px 0;}
-#user_home h4 { margin:40px 0 10px; font-weight:normal; font-size:150%;}
-#user_home .list-container { border:2px solid #FFF; background-color:#DDD; color:#333; width:100%; height:150px;overflow:auto;}
-#user_home ul li .container { padding:5px;}
-#user_home ul li { width:150px; height:150px; float:left; text-align:center; margin:0 5px;}
-#user_home ul li img.thumbnail { border:1px solid; width:120px; height:90px; display:inline-block; }
-#user_home ul li .meta { font-size:80%;}
+#user_home .inner_container { padding:10px; }
+#user_home #dashboard_management { float:left; width:49%; }
+#user_home #dashboard_management h4 { margin-top:20px; padding:10px; font-weight:normal; font-size:150%; text-align:center; background-color:#FFF; color:#000;}
+#user_home #dashboard_management .list-container { background-color:#DDD; color:#333; height:150px;overflow:auto; border:1px solid #FFF; }
+#user_home #dashboard_management ul li .container { padding:5px;}
+#user_home #dashboard_management ul li { width:150px; height:150px; float:left; text-align:center; margin:0 5px;}
+#user_home #dashboard_management ul li img.thumbnail { border:1px solid; width:120px; height:90px; display:inline-block; }
+#user_home #dashboard_management ul li .meta { font-size:80%;}
+#user_home #account_management { float:right; width:49%; }
+#user_home #account_management h4 { background-color:#FFF; padding:4px; color:#000; margin:10px 0;}
+#user_home #account_management .subscription_image { float:left; width:20%; margin-bottom:10px;}
+#user_home #account_management .subscription_details { float:right; width:79%; }
+#user_home #account_management .subscription_details h5 { font-size:150% }
+#user_home #account_management .subscription_details p { padding:10px 0 0 0; font-weight:bold;}
+
 
 /***********************************************************************************************************************
 DASHBOARD

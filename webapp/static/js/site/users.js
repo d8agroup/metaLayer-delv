@@ -101,6 +101,8 @@ user_home
         {
             this.find('#saved_dashboards .list-container').saved_dashbaord_list();
             this.find('#dashboard_templates .list-container').dashboard_template_list();
+            this.find('#current_subscription_container').user_account_management_current_subscription();
+            this.find('#change_subscription_container').user_account_management_change_subscription();
         }
     }
 

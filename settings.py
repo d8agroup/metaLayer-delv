@@ -134,6 +134,54 @@ LOGGING = {
     }
 }
 
+SUBSCRIPTIONS_SETTINGS = {
+    'allow_subscription_migrations':True,
+    'subscriptions':{
+        'subscription_type_1':{
+            'chargify_config':None,
+            'display_data':{
+                'display_name':'Free Plan',
+                'image':'/static/images/site/no_image_medium.gif',
+                'messages':[
+                    'No monthly fee!',
+                    'Up to 2 dashboards',
+                    'Five minute data refresh rate'
+                ],
+            }
+        },
+        'subscription_type_2':{
+            'chargify_config':{
+                'product_handle':'basic-plan',
+                'product_id':85271
+            },
+            'display_data':{
+                'display_name':'Basic Plan',
+                'image':'/static/images/site/no_image_medium.gif',
+                'messages':[
+                    'Only $19 per month!',
+                    '2 always on dashboards',
+                    'Five minute data refresh rate'
+                ],
+            }
+        },
+        'subscription_type_3':{
+            'chargify_config':{
+                'product_handle':'advanced-plan',
+                'product_id':85291
+            },
+            'display_data':{
+                'display_name':'Advanced Plan',
+                'image':'/static/images/site/no_image_medium.gif',
+                'messages':[
+                    '5 always on dashboards',
+                    'Every minute data refresh rate!',
+                    'Only $99 per month'
+                ],
+            }
+        }
+    }
+}
+
 
 import socket
 if socket.gethostname() in ['mattgriffiths']:

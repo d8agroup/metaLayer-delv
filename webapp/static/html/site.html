@@ -19,6 +19,8 @@
     <script type="text/javascript" src="/static/js/site/header.js"></script>
     <script type="text/javascript" src="/static/js/site/site.js"></script>
     <script type="text/javascript" src="/static/js/site/users.js"></script>
+    <script type="text/javascript" src="/static/js/site/user_account_management_change_subscription.js"></script>
+    <script type="text/javascript" src="/static/js/site/user_account_management_current_subscription.js"></script>
     <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
     <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
     <script type="text/javascript" src="/static/js/site/dashboard_search_widget_data_points.js"></script>
@@ -41,19 +43,31 @@
             </div>
         </div>
         <div id='content'>
-            <div id='user_home'>
-                <div class="container">
+            <div id='user_home_container'>
+                <div id='user_home' class="clearfix">
                     <h3>Home</h3>
-                    <div id='saved_dashboards'>
-                        <h4>Choose to reopen a saved dashboard</h4>
-                        <div class="list-container">
-                            Loading ...
+                    <div id='dashboard_management'>
+                        <div class="inner_container">
+                            <h3>Manage your dashboards</h3>
+                            <div id='saved_dashboards'>
+                                <h4>Choose to reopen a saved dashboard</h4>
+                                <div class="list-container">
+                                    Loading ...
+                                </div>
+                            </div>
+                            <div id='dashboard_templates'>
+                                <h4>Or start a new dashboard by choosing a template</h4>
+                                <div class="list-container">
+                                    Loading ...
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id='dashboard_templates'>
-                        <h4>Or start a new dashboard by choosing a template</h4>
-                        <div class="list-container">
-                            Loading ...
+                    <div id='account_management'>
+                        <div class="inner_container">
+                            <h3>Manage your account</h3>
+                            <div id='current_subscription_container'></div>
+                            <div id='change_subscription_container'></div>
                         </div>
                     </div>
                 </div>

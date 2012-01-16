@@ -3,9 +3,9 @@ from dashboard.webapp.views import *
 
 urlpatterns = patterns('',
     #user profile urls
-    url(r'login$', user_login),
-    url(r'signup$', user_register),
     url(r'logout$', user_logout),
+    url(r'current_subscription', current_subscription),
+    url(r'change_subscription', change_subscription),
     url(r'saved_dashbaords$', user_saved_dashboards),
     url(r'dashboard_templates$', user_dashboard_templates),
     url(r'new_dashboard_from_template/(\w+)$', user_new_dashboard_from_template),

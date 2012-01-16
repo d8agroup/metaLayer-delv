@@ -5,7 +5,7 @@ import time
 class Dashboard(Model):
     class Meta:
         database = 'ml_dashboard'
-        collection = 'dashboards'
+        collection = 'dashboards_dashboards'
         #indices = ( Index(''), )
 
     @classmethod
