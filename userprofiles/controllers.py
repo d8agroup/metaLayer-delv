@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import email_re
 from django.conf import settings
 from chargifyapi.chargify import Chargify
+from logger import Logger
 from userprofiles.models import UserStatistics, UserSubscriptions
 
 class UserController(object):
@@ -67,26 +68,29 @@ class UserController(object):
             if not settings.SUBSCRIPTIONS_SETTINGS['allow_subscription_migrations']:
                 raise Exception()
             elif not active_subscription_config['chargify_config']: #Moving from free to paid
-                result = chargify.subscriptions.create({
-                    'product_handle':new_subscription_config['chargify_config']['product_handle'],
-                    'customer_attributes':{
-                        'first_name':self.user.first_name,
-                        'last_name':self.user.last_name,
-                        'email':self.user.email
-                    },
-                    'credit_card_attributes':{
-                        'full_number':credit_card['number'],
-                        'expiration_month':credit_card['expiry_month'],
-                        'expiration_year':credit_card['expiry_year']
+                result = chargify.subscriptions.create(data={
+                    'subscription':{
+                        'product_handle':new_subscription_config['chargify_config']['product_handle'],
+                        'customer_attributes':{
+                            'first_name':self.user.first_name,
+                            'last_name':self.user.last_name,
+                            'email':self.user.email
+                        },
+                        'credit_card_attributes':{
+                            'full_number':credit_card['number'],
+                            'expiration_month':credit_card['expiry_month'],
+                            'expiration_year':credit_card['expiry_year']
+                        }
                     }
                 })
+                Logger.Debug('%s' % result)
                 user_subscriptions.subscription_changed(
                     new_subscription_id,
                     active_subscription['extensions'],
                     { 'chargify':{'subscription_created':result}}
                 )
             elif not new_subscription_config['chargify_config']: #Moving to free from paid
-                chargify_subscription_id = active_subscription['extensions']['chargify']['subscription_ceated']['subscription']['id']
+                chargify_subscription_id = user_subscriptions.get_active_subscription_id()
                 result = chargify.subscriptions.delete(subscription_id=chargify_subscription_id)
                 active_subscription['extensions']['chargify']['subscription_deleted'] = result
                 user_subscriptions.subscription_changed(
@@ -95,9 +99,9 @@ class UserController(object):
                     {}
                 )
             else: #Migrating up or down subscriptions
-                chargify_subscription_id = active_subscription['extensions']['chargify']['subscription_ceated']['subscription']['id']
+                chargify_subscription_id = user_subscriptions.get_active_subscription_id()
                 result = chargify.subscriptions.migrations.create(
-                    subscription_id=123,
+                    subscription_id=chargify_subscription_id,
                     data={ 'product_id':new_subscription_config['chargify_config']['product_id'] }
                 )
                 active_subscription['extensions']['chargify']['subscription_migrated_from'] = result
@@ -107,7 +111,22 @@ class UserController(object):
                         { 'chargify':{'subscription_migrated_to':result}}
                 )
             return True
-        except:
-            #TODO Log
+        except Exception, e:
+            Logger.Error('%s' % e)
             return False
+
+    def subscription_migration_direction(self, new_subscription_id):
+        current_active_subscription_id = self.get_user_subscriptions()['active_subscription']
+        found_current_subscription = False
+        for subscription_id in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys():
+            if subscription_id == current_active_subscription_id:
+                found_current_subscription = True
+            if subscription_id == new_subscription_id:
+                return 'upgrade' if found_current_subscription else 'downgrade'
+
+    def need_to_ask_for_credit_card_details(self):
+        active_subscription_id = self.get_user_subscriptions()['active_subscription']
+        return bool(active_subscription_id == 'subscription_type_1')
+
+
 

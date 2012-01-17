@@ -17,6 +17,7 @@ USER HOME PAGE
 ***********************************************************************************************************************/
 #user_home_container { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF;}
 #user_home { width:100%;}
+#user_home .waiting { margin-top:44px;}
 #user_home h3 { text-align:center; font-size:200%; margin:20px 0;}
 #user_home .inner_container { padding:10px; }
 #user_home #dashboard_management { float:left; width:49%; }
@@ -32,6 +33,12 @@ USER HOME PAGE
 #user_home #account_management .subscription_details { float:right; width:79%; }
 #user_home #account_management .subscription_details h5 { font-size:150% }
 #user_home #account_management .subscription_details p { padding:10px 0 0 0; font-weight:bold;}
+#user_home .subscription_downgrade_upgrade .errors { margin-bottom:10px;}
+#user_home .subscription_downgrade_upgrade p { font-weight:bold; padding-bottom:5px; }
+#user_home .subscription_downgrade_upgrade li { padding:0 0 10px 10px; }
+#user_home .subscription_downgrade_upgrade .form-row label { display:inline-block; width:30%}
+#user_home .subscription_downgrade_upgrade .action-row input { width:45%;}
+#user_home .subscription_downgrade_upgrade button { width:45%;}
 
 
 /***********************************************************************************************************************

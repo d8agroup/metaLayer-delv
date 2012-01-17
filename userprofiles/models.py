@@ -66,14 +66,21 @@ class UserSubscriptions(Model):
                 return subscription
         return None
 
-    def subscription_changed(self, new_subscription, old_subscription_extension=None, new_subscription_extensions=None):
-        self['active_subscription'] = new_subscription['subscription_type']
+    def get_active_subscription_id(self):
+        subscription = self.get_active_subscription()
+        for key in ['subscription_created', 'subscription_migrated_to']:
+            if key in subscription['extensions']['chargify']:
+                return subscription['extensions']['chargify'][key]['subscription']['id']
+        return None
+
+    def subscription_changed(self, new_subscription_id, old_subscription_extension=None, new_subscription_extensions=None):
+        self['active_subscription'] = new_subscription_id
         for subscription in self['subscription_history']:
             if 'end_time' not in subscription:
                 subscription['end_time'] = time.time()
                 subscription['extensions'] = old_subscription_extension
         self['subscription_history'].append({
-            'subscription':new_subscription['subscription_type'],
+            'subscription_id':new_subscription_id,
             'start_time':time.time(),
             'extensions':new_subscription_extensions
         })

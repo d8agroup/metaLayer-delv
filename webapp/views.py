@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response, redirect
-from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseServerError
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
@@ -148,14 +148,62 @@ def current_subscription(request):
 @login_required(login_url='/')
 def change_subscription(request):
     user = request.user
-    uc = UserController(user)
-    user_subscriptions = uc.get_user_subscriptions()
-    current_active_subscription_name = user_subscriptions['active_subscription']
-    available_subscriptions = [settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][sub] for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys() if sub != current_active_subscription_name]
-    return render_to_response(
-        'parts/user_list_available_subscriptions.html',
-        { 'subscriptions':available_subscriptions }
-    )
+    if request.method == 'GET':
+        if not 'subscription_id' in request.GET:
+            uc = UserController(user)
+            user_subscriptions = uc.get_user_subscriptions()
+            current_active_subscription_name = user_subscriptions['active_subscription']
+            available_subscriptions = [settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][sub] for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys() if sub != current_active_subscription_name]
+            return render_to_response(
+                'parts/user_list_available_subscriptions.html',
+                { 'subscriptions':available_subscriptions }
+            )
+        else:
+            subscription_id = request.GET['subscription_id']
+            subscription = [sub for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].values() if sub['id'] == subscription_id][0]
+            uc = UserController(user)
+            subscription_migration_direction = uc.subscription_migration_direction(subscription['id'])
+            template_name = 'parts/change_subscriptions/%s' % subscription['templates'][subscription_migration_direction]
+            return render_to_response(
+                template_name,
+                {
+                    'subscription':subscription,
+                    'show_credit_card_form':uc.need_to_ask_for_credit_card_details()
+                },
+                context_instance=RequestContext(request)
+            )
+    else:
+        if 'credit_card_number' in request.POST:
+            credit_card_number = request.POST['credit_card_number']
+            if credit_card_number != '0' and credit_card_number != '1':
+                #TODO: this is just for the tests
+                return JSONResponse({'errors':['Enter credit card number "1" to pass and "0" to fail']})
+
+            first_name = request.POST['first_name'].strip()
+            last_name = request.POST['last_name'].strip()
+
+            if not first_name or not last_name:
+                return JSONResponse({'errors':['You must provide your first and last name']})
+
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            credit_card_data = {
+                'number':credit_card_number,
+                'expiry_month':request.POST['credit_card_expiry_month'],
+                'expiry_year':int(request.POST['credit_card_expiry_year'])
+            }
+        else:
+            credit_card_data = None
+        uc = UserController(user)
+        subscription_changed = uc.change_user_subscription(
+            request.POST['subscription_id'],
+            credit_card_data
+        )
+        if not subscription_changed:
+            return JSONResponse({'errors':['There was an error process your card details, please try again later']})
+        return JSONResponse()
+
 
 @login_required(login_url='/')
 def user_logout(request):

@@ -138,6 +138,7 @@ SUBSCRIPTIONS_SETTINGS = {
     'allow_subscription_migrations':True,
     'subscriptions':{
         'subscription_type_1':{
+            'id':'subscription_type_1',
             'chargify_config':None,
             'display_data':{
                 'display_name':'Free Plan',
@@ -147,9 +148,14 @@ SUBSCRIPTIONS_SETTINGS = {
                     'Up to 2 dashboards',
                     'Five minute data refresh rate'
                 ],
+            },
+            'templates':{
+                'upgrade':None, #its not possible to upgrade to this subscription type
+                'downgrade':'subscription_type_1_downgrade_to.html'
             }
         },
         'subscription_type_2':{
+            'id':'subscription_type_2',
             'chargify_config':{
                 'product_handle':'basic-plan',
                 'product_id':85271
@@ -162,9 +168,14 @@ SUBSCRIPTIONS_SETTINGS = {
                     '2 always on dashboards',
                     'Five minute data refresh rate'
                 ],
+            },
+            'templates':{
+                'upgrade':'subscription_type_2_upgrade_to.html',
+                'downgrade':'subscription_type_2_downgrade_to.html'
             }
         },
         'subscription_type_3':{
+            'id':'subscription_type_3',
             'chargify_config':{
                 'product_handle':'advanced-plan',
                 'product_id':85291
@@ -177,6 +188,10 @@ SUBSCRIPTIONS_SETTINGS = {
                     'Every minute data refresh rate!',
                     'Only $99 per month'
                 ],
+            },
+            'templates':{
+                'upgrade':'subscription_type_3_upgrade_to.html',
+                'downgrade':None #cant downgrade to here
             }
         }
     }
