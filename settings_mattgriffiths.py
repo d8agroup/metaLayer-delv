@@ -56,7 +56,7 @@ SOLR_CONFIG = {
 }
 
 DATA_POINTS_CONFIG = {
-    'enbaled_data_points':[
+    'enabled_data_points':[
         'feed',
         'googleplusactivitysearch',
         'twittersearch',
