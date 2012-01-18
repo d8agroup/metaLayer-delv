@@ -21,8 +21,15 @@ class UserController(object):
         return True, []
 
     @classmethod
-    def GetAllUsers(cls):
-        return User.objects.all()
+    def GetAllUsers(cls, user_subscription_filter=None):
+        def user_is_with_filter(user, subscription_filter):
+            uc = UserController(user)
+            subscription_migration_direction = uc.subscription_migration_direction(subscription_filter)
+            return bool(subscription_migration_direction == 'downgrade' or not subscription_migration_direction)
+        users = User.objects.all()
+        if not user_subscription_filter:
+            return users
+        return [user for user in users if user_is_with_filter(user, user_subscription_filter)]
 
     @classmethod
     def RegisterUser(cls, request, username, password1, password2):
@@ -123,6 +130,7 @@ class UserController(object):
                 found_current_subscription = True
             if subscription_id == new_subscription_id:
                 return 'upgrade' if found_current_subscription else 'downgrade'
+        return None
 
     def need_to_ask_for_credit_card_details(self):
         active_subscription_id = self.get_user_subscriptions()['active_subscription']

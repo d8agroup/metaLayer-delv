@@ -9,8 +9,8 @@ from userprofiles.controllers import UserController
 from django.utils import simplejson as json
 
 class AggregationController(object):
-    def __init__(self):
-        self.users = UserController.GetAllUsers()
+    def __init__(self, user_filter):
+        self.users = UserController.GetAllUsers(user_filter)
 
     def aggregate(self):
         def producer(q, users):
