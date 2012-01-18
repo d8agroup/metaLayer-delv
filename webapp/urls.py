@@ -21,5 +21,4 @@ urlpatterns = patterns('',
     url(r'run_search$', dashboard_run_search),
     url(r'data_points/get_content_item_template/(\w+)/(\w+)', dashboard_get_content_item_template),
     url(r'save$', dashboard_save),
-    url(r'ajax_bridge$', ajax_bridge),
 )

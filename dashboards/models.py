@@ -65,9 +65,9 @@ class Dashboard(Model):
         Logger.Debug('%s - Dashboard._pretty_date - started with time:%s' % (__name__, time))
         now = datetime.now()
         if type(time) is int:
-            diff = now - datetime.fromtimestamp('%i' % time)
+            diff = now - datetime.fromtimestamp(time)
         elif type(time) is float:
-            diff = now - datetime.fromtimestamp('%i' % int(time))
+            diff = now - datetime.fromtimestamp(int(time))
         elif isinstance(time,datetime):
             diff = now - time
         else:

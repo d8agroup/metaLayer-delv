@@ -13,8 +13,10 @@ from utils import JSONResponse
 from urllib2 import urlopen
 
 def index(request):
+    Logger.Info('%s - index - started' % __name__)
     if not request.user.is_authenticated():
         if not request.method == 'POST':
+            Logger.Info('%s - index - finished' % __name__)
             return render_to_response('login_or_register.html', context_instance=RequestContext(request))
         else:
             if 'login' in request.POST:
@@ -22,6 +24,7 @@ def index(request):
                 password = request.POST.get('login_password')
                 passed, errors = UserController.LoginUser(request, username, password)
                 if not passed:
+                    Logger.Info('%s - index - finished' % __name__)
                     return render_to_response(
                         'login_or_register.html',
                         { 'login_errors':errors },
@@ -33,89 +36,100 @@ def index(request):
                 password2 = request.POST.get('register_password2')
                 passed, errors = UserController.RegisterUser(request, username, password1, password2)
                 if not passed:
+                    Logger.Info('%s - index - finished' % __name__)
                     return render_to_response(
                         'login_or_register.html',
                         { 'register_errors':errors },
                         context_instance=RequestContext(request)
                     )
+    Logger.Info('%s - index - finished' % __name__)
     return render_to_response('site.html',context_instance=RequestContext(request))
-
-def ajax_bridge(request):
-    request_url = request.POST['request_url']
-    try:
-        response = urlopen(request_url).read()
-        return HttpResponse(response)
-    except Exception, e:
-        Logger.Error('%s - ajax_bridge - error: %s' % (__name__, e))
-        return HttpResponseServerError()
 
 @login_required(login_url='/')
 def dashboard(request, id):
+    Logger.Info('%s - dashboard - started' % __name__)
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
+    Logger.Info('%s - dashboard - finished' % __name__)
     return JSONResponse({'dashboard':db})
 
 @login_required(login_url='/')
 def dashboard_get_all_data_points(request):
+    Logger.Info('%s - dashboard_get_all_data_points - started' % __name__)
     #TODO: Need to get the options from the request.user and pass them to the controller
     data_points = DataPointController.GetAllForTemplateOptions(None)
+    Logger.Info('%s - dashboard_get_all_data_points - finished' % __name__)
     return JSONResponse({'data_points':data_points})
 
 @login_required(login_url='/')
 def dashboard_validate_data_point(request):
+    Logger.Info('%s - dashboard_validate_data_point - started' % __name__)
     data_point = request.POST['data_point']
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
-    passed, errors = dpc.is_valid();
+    passed, errors = dpc.is_valid()
+    Logger.Info('%s - dashboard_validate_data_point - finished' % __name__)
     return JSONResponse({'passed':passed, 'errors':errors})
 
 @login_required(login_url='/')
 def dashboard_get_configured_data_point_name(request):
+    Logger.Info('%s - dashboard_get_configured_data_point_name - started' % __name__)
     data_point = request.POST['data_point']
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
     configured_display_name = dpc.get_configured_display_name()
+    Logger.Info('%s - dashboard_get_configured_data_point_name - finished' % __name__)
     return JSONResponse({'configured_display_name':configured_display_name})
 
 @login_required(login_url='/')
 def dashboard_remove_data_point(request):
+    Logger.Info('%s - dashboard_remove_data_point - started' % __name__)
     data_point = request.POST['data_point']
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
     dpc.data_point_removed()
+    Logger.Info('%s - dashboard_remove_data_point - finished' % __name__)
     return JSONResponse()
 
 @login_required(login_url='/')
 def dashboard_add_data_point(request):
+    Logger.Info('%s - dashboard_add_data_point - started' % __name__)
     data_point = request.POST['data_point']
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
     dpc.data_point_added()
+    Logger.Info('%s - dashboard_add_data_point - finished' % __name__)
     return JSONResponse()
 
 @login_required(login_url='/')
 def dashboard_run_search(request):
+    Logger.Info('%s - dashboard_run_search - started' % __name__)
     configuration = {
         'data_points':json.loads(request.POST['data_points']),
         'search_filters':json.loads(request.POST['search_filters'])
     }
     sc = SearchController(configuration)
     search_results = sc.run_search_and_return_results()
+    Logger.Info('%s - dashboard_run_search - finished' % __name__)
     return JSONResponse({'search_results':search_results})
 
 @login_required(login_url='/')
 def dashboard_get_content_item_template(request, type, sub_type):
+    Logger.Info('%s - dashboard_get_content_item_template - started' % __name__)
     data_point = { 'type':type, 'sub_type':sub_type }
     dpc = DataPointController(data_point)
     template = dpc.get_content_item_template()
+    Logger.Info('%s - dashboard_get_content_item_template - finished' % __name__)
     return JSONResponse({'template':template, 'type':type, 'sub_type':sub_type})
 
 @login_required(login_url='/')
 def dashboard_save(request):
+    Logger.Info('%s - dashboard_save - started' % __name__)
     dashboard = json.loads(request.POST['dashboard'])
     user = request.user
     dbc = DashboardsController(user)
     dbc.update_dashboard(dashboard)
+    Logger.Info('%s - dashboard_save - finished' % __name__)
     return JSONResponse()
 
 ########################################################################################################################
@@ -123,11 +137,13 @@ def dashboard_save(request):
 ########################################################################################################################
 @login_required(login_url='/')
 def user_saved_dashboards(request):
+    Logger.Info('%s - user_saved_dashboards - started' % __name__)
     user = request.user
     dc = DashboardsController(user)
     saved_dashboards = dc.get_saved_dashboards()
     uc = UserController(user)
     maximum_number_of_saved_dashboards = uc.maximum_number_of_saved_dashboards_allowed_by_subscription()
+    Logger.Info('%s - user_saved_dashboards - finished' % __name__)
     return JSONResponse({
         'maximum_number_of_saved_dashboards':maximum_number_of_saved_dashboards,
         'saved_dashboards':saved_dashboards
@@ -135,25 +151,31 @@ def user_saved_dashboards(request):
 
 @login_required(login_url='/')
 def user_delete_dashboard(request):
+    Logger.Info('%s - user_delete_dashboard - started' % __name__)
     user = request.user
     dashboard_id = request.GET['dashboard_id']
     dc = DashboardsController(user)
     dc.delete_dashboard_by_id(dashboard_id)
+    Logger.Info('%s - user_delete_dashboard - finished' % __name__)
     return JSONResponse()
 
 @login_required(login_url='/')
 def user_dashboard_templates(request):
+    Logger.Info('%s - user_dashboard_templates - started' % __name__)
     dc = DashboardsController(request.user)
     dashboard_templates = dc.get_dashboard_templates()
+    Logger.Info('%s - user_dashboard_templates - finished' % __name__)
     return JSONResponse({'dashboard_templates':dashboard_templates})
 
 @login_required(login_url='/')
 def current_subscription(request):
+    Logger.Info('%s - current_subscription - started' % __name__)
     user = request.user
     uc = UserController(user)
     user_subscriptions = uc.get_user_subscriptions()
     current_active_subscription_name = user_subscriptions['active_subscription']
     current_active_subscription = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][current_active_subscription_name]
+    Logger.Info('%s - current_subscription - finished' % __name__)
     return render_to_response(
         'parts/user_account_management_current_subscription.html',
         { 'subscription':current_active_subscription }
@@ -161,6 +183,7 @@ def current_subscription(request):
 
 @login_required(login_url='/')
 def change_subscription(request):
+    Logger.Info('%s - change_subscription - started' % __name__)
     user = request.user
     if request.method == 'GET':
         if not 'subscription_id' in request.GET:
@@ -168,6 +191,7 @@ def change_subscription(request):
             user_subscriptions = uc.get_user_subscriptions()
             current_active_subscription_name = user_subscriptions['active_subscription']
             available_subscriptions = [settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][sub] for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys() if sub != current_active_subscription_name]
+            Logger.Info('%s - change_subscription - finished' % __name__)
             return render_to_response(
                 'parts/user_account_management_list_available_subscriptions.html',
                 { 'subscriptions':available_subscriptions }
@@ -178,6 +202,7 @@ def change_subscription(request):
             uc = UserController(user)
             subscription_migration_direction = uc.subscription_migration_direction(subscription['id'])
             template_name = 'parts/change_subscriptions/%s' % subscription['templates'][subscription_migration_direction]
+            Logger.Info('%s - change_subscription - finished' % __name__)
             return render_to_response(
                 template_name,
                 {
@@ -191,12 +216,14 @@ def change_subscription(request):
             credit_card_number = request.POST['credit_card_number']
             if credit_card_number != '0' and credit_card_number != '1':
                 #TODO: this is just for the tests
+                Logger.Info('%s - change_subscription - finished' % __name__)
                 return JSONResponse({'errors':['Enter credit card number "1" to pass and "0" to fail']})
 
             first_name = request.POST['first_name'].strip()
             last_name = request.POST['last_name'].strip()
 
             if not first_name or not last_name:
+                Logger.Info('%s - change_subscription - finished' % __name__)
                 return JSONResponse({'errors':['You must provide your first and last name']})
 
             user.first_name = first_name
@@ -217,24 +244,30 @@ def change_subscription(request):
             credit_card_data
         )
         if not subscription_changed:
+            Logger.Info('%s - change_subscription - finished' % __name__)
             return JSONResponse({'errors':['There was an error process your card details, please try again later']})
 
         maximum_number_of_dashboards = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][new_subscription_id]['config']['number_of_saved_dashboards']
         dc = DashboardsController(user)
         dc.delete_dashboards_to_match_subscription(maximum_number_of_dashboards)
 
+        Logger.Info('%s - change_subscription - finished' % __name__)
         return JSONResponse()
 
 @login_required(login_url='/')
 def user_logout(request):
+    Logger.Info('%s - user_logout - started' % __name__)
     uc = UserController(request.user)
     uc.logout_user(request)
+    Logger.Info('%s - user_logout - finished' % __name__)
     return redirect('/')
 
 @login_required(login_url='/')
 def user_new_dashboard_from_template(request, dashboard_template_id):
+    Logger.Info('%s - user_new_dashboard_from_template - started' % __name__)
     uc = UserController(request.user)
     uc.register_dashboard_template_use(dashboard_template_id)
     dc = DashboardsController(request.user)
     db = dc.create_new_dashboard_from_template(dashboard_template_id)
+    Logger.Info('%s - user_new_dashboard_from_template - finished' % __name__)
     return JSONResponse({'dashboard_id':db['id']})

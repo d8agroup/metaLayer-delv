@@ -8,31 +8,43 @@ from userprofiles.models import UserStatistics, UserSubscriptions
 
 class UserController(object):
     def __init__(self, user):
+        Logger.Info('%s - UserController.__init__ - started' % __name__)
+        Logger.Debug('%s - UserController.__init__ - started with user:%s' % (__name__, user))
         self.user = user
+        Logger.Info('%s - UserController.__init__ - finished' % __name__)
 
     @classmethod
     def LoginUser(cls, request, username, password):
+        Logger.Info('%s - UserController.LoginUser - started' % __name__)
+        Logger.Debug('%s - UserController.LoginUser - started with request:%s and username:%s and password:%s' % (__name__, request, username, password))
         user = authenticate(username=username, password=password)
+        return_values = True, []
         if user is None:
-            return False, ['Sorry, we didn\'t recognize that email and password']
+            return_values = False, ['Sorry, we didn\'t recognize that email and password']
         elif not user.is_active:
-            return False, ['Sorry, your account is not currently active']
+            return_values = False, ['Sorry, your account is not currently active']
         login(request, user)
-        return True, []
+        Logger.Info('%s - UserController.LoginUser - finished' % __name__)
+        return return_values
 
     @classmethod
     def GetAllUsers(cls, user_subscription_filter=None):
+        Logger.Info('%s - UserController.GetAllUsers - started' % __name__)
+        Logger.Debug('%s - UserController.GetAllUsers - started with user_subscription_filter:%s' % (__name__, user_subscription_filter))
         def user_is_with_filter(user, subscription_filter):
             uc = UserController(user)
             subscription_migration_direction = uc.subscription_migration_direction(subscription_filter)
             return bool(subscription_migration_direction == 'downgrade' or not subscription_migration_direction)
         users = User.objects.all()
-        if not user_subscription_filter:
-            return users
-        return [user for user in users if user_is_with_filter(user, user_subscription_filter)]
+        if user_subscription_filter:
+            users = [user for user in users if user_is_with_filter(user, user_subscription_filter)]
+        Logger.Info('%s - UserController.GetAllUsers - finished' % __name__)
+        return users
 
     @classmethod
     def RegisterUser(cls, request, username, password1, password2):
+        Logger.Info('%s - UserController.RegisterUser - started' % __name__)
+        Logger.Debug('%s - UserController.RegisterUser - started with request:%s and username:%s and password1:%s and password2:%s' % (__name__, request, username, password1, password2))
         errors = []
         if not username or not username.strip() or not bool(email_re.search(username)):
             errors.append('You have not entered a valid email address')
@@ -42,30 +54,43 @@ class UserController(object):
         except User.DoesNotExist:
             pass
         if errors:
+            Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
             return False, errors
         if len(password1) < 6:
             errors.append('Your password must be at least 6 characters long')
         if password1 != password2:
             errors.append('The passwords you entered don\'t match')
         if errors:
+            Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
             return False, errors
         User.objects.create_user(username, username, password1)
         UserSubscriptions.InitForUsername(username)
-        return UserController.LoginUser(request, username, password1)
+        user = UserController.LoginUser(request, username, password1)
+        Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
+        return user
 
     def logout_user(self, request):
+        Logger.Info('%s - UserController.logout_user - started' % __name__)
         logout(request)
+        Logger.Info('%s - UserController.logout_user - finished' % __name__)
         return
 
     def register_dashboard_template_use(self, dashboard_template_id):
+        Logger.Info('%s - UserController.register_dashboard_template_use - started' % __name__)
+        Logger.Debug('%s - UserController.register_dashboard_template_use - started with dashboard_template_id:%s' % (__name__, dashboard_template_id))
         user_statistics = UserStatistics.GetForUsername(self.user.username)
         user_statistics.increment_dashboard_template_usage(dashboard_template_id)
+        Logger.Info('%s - UserController.register_dashboard_template_use - finished' % __name__)
 
     def get_user_subscriptions(self):
+        Logger.Info('%s - UserController.get_user_subscriptions - started' % __name__)
         user_subscriptions = UserSubscriptions.GetForUsername(self.user.username)
+        Logger.Info('%s - UserController.get_user_subscriptions - finished' % __name__)
         return user_subscriptions
 
     def change_user_subscription(self, new_subscription_id, credit_card=None):
+        Logger.Info('%s - UserController.change_user_subscription - started' % __name__)
+        Logger.Debug('%s - UserController.change_user_subscription - started with new_subscription_id:%s and credit_card:%s' % (__name__, new_subscription_id, credit_card))
         user_subscriptions = UserSubscriptions.GetForUsername(self.user.username)
         active_subscription = user_subscriptions.get_active_subscription()
         active_subscription_config = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][active_subscription['subscription_id']]
@@ -117,28 +142,40 @@ class UserController(object):
                     active_subscription['extensions'],
                         { 'chargify':{'subscription_migrated_to':result}}
                 )
+            Logger.Info('%s - UserController.change_user_subscription - finished' % __name__)
             return True
         except Exception, e:
             Logger.Error('%s' % e)
+            Logger.Info('%s - UserController.change_user_subscription - finished' % __name__)
             return False
 
     def subscription_migration_direction(self, new_subscription_id):
+        Logger.Info('%s - UserController.subscription_migration_direction - started' % __name__)
+        Logger.Debug('%s - UserController.subscription_migration_direction - started with new_subscription_id:%s' % (__name__, new_subscription_id))
         current_active_subscription_id = self.get_user_subscriptions()['active_subscription']
         found_current_subscription = False
         for subscription_id in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys():
             if subscription_id == current_active_subscription_id:
                 found_current_subscription = True
             if subscription_id == new_subscription_id:
+                Logger.Info('%s - UserController.subscription_migration_direction - finished' % __name__)
                 return 'upgrade' if found_current_subscription else 'downgrade'
+        Logger.Info('%s - UserController.subscription_migration_direction - finished' % __name__)
         return None
 
     def need_to_ask_for_credit_card_details(self):
+        Logger.Info('%s - UserController.need_to_ask_for_credit_card_details - started' % __name__)
         active_subscription_id = self.get_user_subscriptions()['active_subscription']
-        return bool(active_subscription_id == 'subscription_type_1')
+        ask_for_credit_card_details = bool(active_subscription_id == 'subscription_type_1')
+        Logger.Info('%s - UserController.need_to_ask_for_credit_card_details - finished' % __name__)
+        return ask_for_credit_card_details
 
     def maximum_number_of_saved_dashboards_allowed_by_subscription(self):
+        Logger.Info('%s - UserController.maximum_number_of_saved_dashboards_allowed_by_subscription - started' % __name__)
         active_subscription_id = self.get_user_subscriptions()['active_subscription']
         active_subscription_config = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][active_subscription_id]
-        return active_subscription_config['config']['number_of_saved_dashboards']
+        number_of_saved_dashboards = active_subscription_config['config']['number_of_saved_dashboards']
+        Logger.Info('%s - UserController.maximum_number_of_saved_dashboards_allowed_by_subscription - finished' % __name__)
+        return number_of_saved_dashboards
 
 
