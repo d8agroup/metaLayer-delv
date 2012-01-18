@@ -15,24 +15,52 @@ HEADER
 /***********************************************************************************************************************
 USER HOME PAGE
 ***********************************************************************************************************************/
-#user_home_container { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF;}
+#user_home_container { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF; padding-top:10px;}
 #user_home { width:100%;}
 #user_home .waiting { margin-top:44px;}
-#user_home h3 { text-align:center; font-size:200%; margin:20px 0;}
+#user_home h3 { text-align:center; font-size:200%; margin:0 0 20px 0;}
 #user_home .inner_container { padding:10px; }
+
 #user_home #dashboard_management { float:left; width:49%; }
-#user_home #dashboard_management h4 { margin-top:20px; padding:10px; font-weight:normal; font-size:150%; text-align:center; background-color:#FFF; color:#000;}
-#user_home #dashboard_management .list-container { background-color:#DDD; color:#333; height:150px;overflow:auto; border:1px solid #FFF; }
-#user_home #dashboard_management ul li .container { padding:5px;}
-#user_home #dashboard_management ul li { width:150px; height:150px; float:left; text-align:center; margin:0 5px;}
-#user_home #dashboard_management ul li img.thumbnail { border:1px solid; width:120px; height:90px; display:inline-block; }
-#user_home #dashboard_management ul li .meta { font-size:80%;}
+#user_home #dashboard_management h4 { margin-top:20px; padding:5px; font-weight:normal; font-size:100%; text-align:center; background-color:#FFF; color:#000;}
+
+#user_home #dashboard_management #saved_dashboards { background-color:#DDD; color:#000; }
+#user_home #dashboard_management #saved_dashboards ul { width:100%; padding:5px 0; }
+#user_home #dashboard_management #saved_dashboards li { text-align:center;  overflow:hidden; float:left; position:relative; font-size:80%; }
+#user_home #dashboard_management #saved_dashboards img { max-height:140px;}
+#user_home #dashboard_management #saved_dashboards li .close_button_container { position:absolute; right:5%; background-color:#FFF; padding:4px; border:1px solid; }
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li { width:20%; }
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li img { width:90%; margin:9px 0 10px;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li .empty_saved_dashboard { background-color:#444; border:1px solid #222; height:140px; width:95%; margin:0 auto;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li .empty_saved_dashboard p { color:#DDD; padding-top:65px;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li { width:49%; }
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li img { width:90%; margin-top:2px;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li .empty_saved_dashboard { background-color:#444; border:1px solid #222; height:140px; width:90%; margin:0 auto;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li .empty_saved_dashboard p { color:#DDD; padding-top:65px;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li { width:49%; }
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li img { width:90%; margin-top:2px;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li .empty_saved_dashboard { background-color:#444; border:1px solid #222; height:140px; width:160px; margin:0 auto;}
+#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li .empty_saved_dashboard p { color:#DDD; padding-top:65px;}
+#user_home #dashboard_management #saved_dashboards_not_allowed { background-color:#DDD; color:#000;}
+#user_home #dashboard_management #saved_dashboards_not_allowed p { padding:10px; }
+
+#user_home #dashboard_management #dashboard_templates { background-color:#DDD; color:#000; }
+#user_home #dashboard_management #dashboard_templates ul { width:100%; padding:5px 0; }
+#user_home #dashboard_management #dashboard_templates li { text-align:center;  overflow:hidden; float:left; }
+#user_home #dashboard_management #dashboard_templates li { width:49%; }
+#user_home #dashboard_management #dashboard_templates img { width:160px; height:120px; margin-top:2px;}
+#user_home #dashboard_management #dashboard_templates .display_name { font-weight:bold; font-size:90%; padding-bottom:5px; }
+#user_home #dashboard_management #dashboard_templates .description { font-size:70%; padding-bottom:5px; }
+#user_home #dashboard_management #dashboard_templates ul.draggable .dashboard_template { cursor:move; }
+#user_home #dashboard_management #dashboard_templates ul.clickable .dashboard_template { cursor:pointer; }
+
 #user_home #account_management { float:right; width:49%; }
 #user_home #account_management h4 { background-color:#FFF; padding:4px; color:#000; margin:10px 0;}
 #user_home #account_management .subscription_image { float:left; width:20%; margin-bottom:10px;}
 #user_home #account_management .subscription_details { float:right; width:79%; }
 #user_home #account_management .subscription_details h5 { font-size:150% }
-#user_home #account_management .subscription_details p { padding:10px 0 0 0; font-weight:bold;}
+#user_home #account_management .subscription_details p { padding:5px 0 0 0; font-weight:bold;}
+
 #user_home .subscription_downgrade_upgrade .errors { margin-bottom:10px;}
 #user_home .subscription_downgrade_upgrade p { font-weight:bold; padding-bottom:5px; }
 #user_home .subscription_downgrade_upgrade li { padding:0 0 10px 10px; }
@@ -45,7 +73,7 @@ USER HOME PAGE
 DASHBOARD
 ***********************************************************************************************************************/
 #dashboard { display:none; }
-#widget_panel { height:90px; background-color:#DDD; padding:5px; }
+#widget_panel { height:95px; background-color:#DDD; padding:5px; }
 
 .data_point_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
 
@@ -72,7 +100,7 @@ DASHBOARD
 
 .search_widget { margin:2px; background-color:#333; }
 .search_widget .jScrollPaneTrack { margin-right:5px; background-color:#222;}
-.search_widget .jScrollPaneDrag { background-color:#DDD}
+.search_widget .jScrollPaneDrag { background-color:#DDD; }
 
 .search_widget .options_container { float:right; padding:2px 4px 2px 0; }
 .search_widget .options_container .refresh_data img { position:relative; left:7px; bottom:1px; width:17px; }

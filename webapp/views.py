@@ -123,15 +123,29 @@ def dashboard_save(request):
 ########################################################################################################################
 @login_required(login_url='/')
 def user_saved_dashboards(request):
-    dc = DashboardsController(request.user)
+    user = request.user
+    dc = DashboardsController(user)
     saved_dashboards = dc.get_saved_dashboards()
-    return render_to_response('parts/user_saved_dashboards.html', { 'saved_dashboards':saved_dashboards, })
+    uc = UserController(user)
+    maximum_number_of_saved_dashboards = uc.maximum_number_of_saved_dashboards_allowed_by_subscription()
+    return JSONResponse({
+        'maximum_number_of_saved_dashboards':maximum_number_of_saved_dashboards,
+        'saved_dashboards':saved_dashboards
+    })
+
+@login_required(login_url='/')
+def user_delete_dashboard(request):
+    user = request.user
+    dashboard_id = request.GET['dashboard_id']
+    dc = DashboardsController(user)
+    dc.delete_dashboard_by_id(dashboard_id)
+    return JSONResponse()
 
 @login_required(login_url='/')
 def user_dashboard_templates(request):
     dc = DashboardsController(request.user)
     dashboard_templates = dc.get_dashboard_templates()
-    return render_to_response('parts/user_dashboard_templates.html', { 'dashboard_templates':dashboard_templates, })
+    return JSONResponse({'dashboard_templates':dashboard_templates})
 
 @login_required(login_url='/')
 def current_subscription(request):
@@ -141,7 +155,7 @@ def current_subscription(request):
     current_active_subscription_name = user_subscriptions['active_subscription']
     current_active_subscription = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][current_active_subscription_name]
     return render_to_response(
-        'parts/user_current_subscription.html',
+        'parts/user_account_management_current_subscription.html',
         { 'subscription':current_active_subscription }
     )
 
@@ -155,7 +169,7 @@ def change_subscription(request):
             current_active_subscription_name = user_subscriptions['active_subscription']
             available_subscriptions = [settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][sub] for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys() if sub != current_active_subscription_name]
             return render_to_response(
-                'parts/user_list_available_subscriptions.html',
+                'parts/user_account_management_list_available_subscriptions.html',
                 { 'subscriptions':available_subscriptions }
             )
         else:
@@ -195,15 +209,21 @@ def change_subscription(request):
             }
         else:
             credit_card_data = None
+
+        new_subscription_id = request.POST['subscription_id']
         uc = UserController(user)
         subscription_changed = uc.change_user_subscription(
-            request.POST['subscription_id'],
+            new_subscription_id,
             credit_card_data
         )
         if not subscription_changed:
             return JSONResponse({'errors':['There was an error process your card details, please try again later']})
-        return JSONResponse()
 
+        maximum_number_of_dashboards = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][new_subscription_id]['config']['number_of_saved_dashboards']
+        dc = DashboardsController(user)
+        dc.delete_dashboards_to_match_subscription(maximum_number_of_dashboards)
+
+        return JSONResponse()
 
 @login_required(login_url='/')
 def user_logout(request):

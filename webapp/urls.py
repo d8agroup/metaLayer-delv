@@ -6,9 +6,10 @@ urlpatterns = patterns('',
     url(r'logout$', user_logout),
     url(r'current_subscription', current_subscription),
     url(r'change_subscription', change_subscription),
-    url(r'saved_dashbaords$', user_saved_dashboards),
-    url(r'dashboard_templates$', user_dashboard_templates),
-    url(r'new_dashboard_from_template/(\w+)$', user_new_dashboard_from_template),
+    url(r'dashboard_management/saved_dashboards', user_saved_dashboards),
+    url(r'dashboard_management/delete_dashboard', user_delete_dashboard),
+    url(r'dashboard_management/new_dashboard_from_template/(\w+)$', user_new_dashboard_from_template),
+    url(r'dashboard_management/get_dashboard_templates$', user_dashboard_templates),
 
     #dashboard urls
     url(r'load/(\w+)$', dashboard),

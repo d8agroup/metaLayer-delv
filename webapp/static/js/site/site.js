@@ -12,14 +12,14 @@ SITE
         },
         show_dashboard:function()
         {
-            $('#user_home').slideUp();
+            $('#user_home_container').slideUp();
             $('#dashboard').slideDown();
             $('#header').header('show_user_home_link');
         },
         show_user_home:function()
         {
             $('#dashboard').slideUp();
-            $('#user_home').slideDown(function() { $('#user_home').user_home('refresh'); });
+            $('#user_home_container').slideDown(function() { $('#user_home').user_home('refresh'); });
             $('#header').header('hide_user_home_link');
         },
         load_dashboard:function(data)

@@ -32,7 +32,7 @@ class UserStatistics(Model):
 class UserSubscriptions(Model):
     class Meta:
         database = 'ml_dashboard'
-        collections = 'userprofiles_usersubscriptions'
+        collection = 'userprofiles_usersubscriptions'
         indices = ( Index('username'), )
 
     @classmethod

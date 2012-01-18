@@ -103,17 +103,6 @@ $(document).ready
 (
     function()
     {
-        $('#page').site();
-        Tipped.setDefaultSkin('light');
-    }
-);
-/***********************************************************************************************************************
-SITE WIDE TEMPLATES
-***********************************************************************************************************************/
-$(document).ready
-(
-    function()
-    {
         /* Waiting Large Area*****************************************************************/
         $.template
         (
@@ -124,5 +113,13 @@ $(document).ready
         );
 
         $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
+        $.get('/static/html/parts/user_account_management.html', function(t) { $.template('user_account_management', t)});
+        $.get('/static/html/parts/user_dashboard_management.html', function(t) { $.template('user_dashboard_management', t)});
+        $.get('/static/html/parts/user_dashboard_management_saved_dashboards.html', function(t) { $.template('user_dashboard_management_saved_dashboards', t)});
+        $.get('/static/html/parts/user_dashboard_management_saved_dashboards_not_allowed.html', function(t) { $.template('user_dashboard_management_saved_dashboards_not_allowed', t)});
+        $.get('/static/html/parts/user_dashboard_management_dashboard_templates.html', function(t) { $.template('user_dashboard_management_dashboard_templates', t)});
+
+        setTimeout(function(){ $('#page').site(); }, 1000);
+        Tipped.setDefaultSkin('light');
     }
 );

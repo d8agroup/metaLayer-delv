@@ -128,5 +128,9 @@ class UserController(object):
         active_subscription_id = self.get_user_subscriptions()['active_subscription']
         return bool(active_subscription_id == 'subscription_type_1')
 
+    def maximum_number_of_saved_dashboards_allowed_by_subscription(self):
+        active_subscription_id = self.get_user_subscriptions()['active_subscription']
+        active_subscription_config = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][active_subscription_id]
+        return active_subscription_config['config']['number_of_saved_dashboards']
 
 

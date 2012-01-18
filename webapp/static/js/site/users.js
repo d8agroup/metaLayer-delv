@@ -99,21 +99,18 @@ user_home
         },
         refresh:function()
         {
-            this.find('#saved_dashboards .list-container').saved_dashbaord_list();
-            this.find('#dashboard_templates .list-container').dashboard_template_list();
-            this.find('#current_subscription_container').user_account_management_current_subscription();
-            this.find('#change_subscription_container').user_account_management_change_subscription();
+            //this.find('#saved_dashboards .list-container').saved_dashbaord_list();
+            //this.find('#dashboard_templates .list-container').dashboard_template_list();
+            this.find('#user_dashboard_management_container').user_dashboard_management();
+            this.find('#user_account_management_container').user_account_management();
         }
     }
 
     $.fn.user_home = function( method )
     {
-        // Method calling logic
-        if ( methods[method] )
-            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-        else if ( typeof method === 'object' || ! method )
-            return methods.init.apply( this, arguments );
-        else
-            $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
+        if ( methods[method] ) return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        else if ( typeof method === 'object' || ! method ) return methods.init.apply( this, arguments );
+        else $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
     }
 })( jQuery );
+

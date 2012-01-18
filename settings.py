@@ -145,13 +145,17 @@ SUBSCRIPTIONS_SETTINGS = {
                 'image':'/static/images/site/no_image_medium.gif',
                 'messages':[
                     'No monthly fee!',
-                    'Up to 2 dashboards',
+                    'One trial dashboard',
                     'Five minute data refresh rate'
                 ],
             },
             'templates':{
                 'upgrade':None, #its not possible to upgrade to this subscription type
                 'downgrade':'subscription_type_1_downgrade_to.html'
+            },
+            'config':{
+                'number_of_saved_dashboards':1,
+                'number_of_always_on_dashboards':0
             }
         },
         'subscription_type_2':{
@@ -172,6 +176,10 @@ SUBSCRIPTIONS_SETTINGS = {
             'templates':{
                 'upgrade':'subscription_type_2_upgrade_to.html',
                 'downgrade':'subscription_type_2_downgrade_to.html'
+            },
+            'config':{
+                'number_of_saved_dashboards':2,
+                'number_of_always_on_dashboards':2
             }
         },
         'subscription_type_3':{
@@ -185,13 +193,17 @@ SUBSCRIPTIONS_SETTINGS = {
                 'image':'/static/images/site/no_image_medium.gif',
                 'messages':[
                     '5 always on dashboards',
-                    'Every minute data refresh rate!',
-                    'Only $99 per month'
+                    'Near real time data refresh rate!',
+                    'Only $2,500 per month'
                 ],
             },
             'templates':{
                 'upgrade':'subscription_type_3_upgrade_to.html',
                 'downgrade':None #cant downgrade to here
+            },
+            'config':{
+                'number_of_saved_dashboards':5,
+                'number_of_always_on_dashboards':5
             }
         }
     }
