@@ -68,18 +68,11 @@ def dashboard_validate_data_point(request):
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
     passed, errors = dpc.is_valid()
-    Logger.Info('%s - dashboard_validate_data_point - finished' % __name__)
-    return JSONResponse({'passed':passed, 'errors':errors})
-
-@login_required(login_url='/')
-def dashboard_get_configured_data_point_name(request):
-    Logger.Info('%s - dashboard_get_configured_data_point_name - started' % __name__)
-    data_point = request.POST['data_point']
-    data_point = json.loads(data_point)
-    dpc = DataPointController(data_point)
+    if not passed:
+        Logger.Info('%s - dashboard_validate_data_point - finished' % __name__)
+        return JSONResponse({'passed':passed, 'errors':errors})
     configured_display_name = dpc.get_configured_display_name()
-    Logger.Info('%s - dashboard_get_configured_data_point_name - finished' % __name__)
-    return JSONResponse({'configured_display_name':configured_display_name})
+    return JSONResponse({'passed':passed, 'errors':errors, 'configured_display_name':configured_display_name})
 
 @login_required(login_url='/')
 def dashboard_remove_data_point(request):

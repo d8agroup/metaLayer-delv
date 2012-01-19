@@ -53,39 +53,9 @@ function remove_waiting(element)
     element.find('.waiting').remove();
 }
 
-function apply_tipped(elements)
-{
-    Tipped.create(elements);
-}
-
 function apply_helper_class_functions(element)
 {
     element.find('.helper_corner').corner();
-    Tipped.create(element.find('.tool_tip'));
-    element.find('.tool_tip_ajax').each
-    (
-        function(i, e)
-        {
-            var tipped_function = function(element)
-            {
-                Tipped.create
-                (
-                    element,
-                    '/dashboard/ajax_bridge',
-                    {
-                        ajax:
-                        {
-                            data:'request_url=' + $(element).attr("title") + '&csrfmiddlewaretoken=' + $('#csrf_form input').val(),
-                            type:'POST'
-                        }
-                    }
-                );
-            };
-            setTimeout(function() { tipped_function(e); }, 500);
-        }
-    );
-
-    //Tipped.create(element.find('.tool_tip_ajax'), {ajax:true});
 }
 
 function clean_user_generated_html(element)
@@ -113,12 +83,14 @@ $(document).ready
         );
 
         $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
+        $.get('/static/html/parts/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
+        $.get('/static/html/parts/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
+        $.get('/static/html/parts/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
         $.get('/static/html/parts/user_account_management.html', function(t) { $.template('user_account_management', t)});
         $.get('/static/html/parts/user_dashboard_management.html', function(t) { $.template('user_dashboard_management', t)});
         $.get('/static/html/parts/user_dashboard_management_saved_dashboards.html', function(t) { $.template('user_dashboard_management_saved_dashboards', t)});
         $.get('/static/html/parts/user_dashboard_management_dashboard_templates.html', function(t) { $.template('user_dashboard_management_dashboard_templates', t)});
 
         setTimeout(function(){ $('#page').site(); }, 1000);
-        Tipped.setDefaultSkin('light');
     }
 );

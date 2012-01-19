@@ -38,11 +38,6 @@
                     '/user/change_subscription',
                     function(template) { render_service_return_function(change_subscription_container, template); }
                 );
-            setTimeout
-                (
-                    function(){ apply_tipped(change_subscription_container.find('.tool_tip')) },
-                    500
-                );
         },
         render_change_to_subscription:function(data)
         {

@@ -55,7 +55,5 @@
             (
                 function(event) { dashboard_template_loaded(event, $(this)); }
             );
-
-        setTimeout(function(){ apply_tipped(user_dashboard_management_saved_dashboards_container.find('.tool_tip')) }, 500);
     }
 })( jQuery );
