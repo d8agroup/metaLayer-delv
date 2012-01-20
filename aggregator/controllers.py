@@ -2,6 +2,7 @@ from Queue import Queue
 import threading
 import urllib2
 from django.conf import settings
+from actions.controllers import ActionController
 from dashboards.controllers import DashboardsController
 from datapoints.controllers import DataPointController
 from logger import Logger
@@ -28,11 +29,32 @@ class AggregationController(object):
         Logger.Info('%s - AggregationController.aggregate - finished' % __name__)
 
     @classmethod
-    def AggregateSingleDataPoint(cls, data_point):
+    def AggregateSingleDataPoint(cls, data_point, actions=None):
         Logger.Info('%s - AggregationController.AggregateSingleDataPoint - started' % __name__)
-        Logger.Debug('%s - AggregationController.AggregateSingleDataPoint - started with data_point: %s' % (__name__, data_point))
-        run_aggregator_for_data_point(data_point)
+        Logger.Debug('%s - AggregationController.AggregateSingleDataPoint - started with data_point: %s and actions:%s' % (__name__, data_point, actions))
+        run_aggregator_for_data_point(data_point, actions)
         Logger.Info('%s - AggregationController.AggregateSingleDataPoint - finished' % __name__)
+
+    @classmethod
+    def AggregateMultipleDataPointHistoryWithAction(cls, action, data_points, historic_limit):
+        Logger.Info('%s - AggregationController.AggregateMultipleDataPointHistoryWithAction - started' % __name__)
+        Logger.Debug('%s - AggregationController.AggregateMultipleDataPointHistoryWithAction - started with action:%s and data_point:%s and historic_limit:%s' % (__name__, action, data_points, historic_limit))
+        for data_point in data_points:
+            dpc = DataPointController(data_point)
+            solr_url = settings.SOLR_CONFIG['solr_url']
+            solr_url = '%s/select/?q=*&wt=json&rows=%i&fq=source_id:%s' % (solr_url, historic_limit, dpc.generate_configured_guid())
+            try:
+                request = urllib2.Request(solr_url)
+                response = urllib2.urlopen(request)
+                response = json.loads(response.read())
+            except Exception, e:
+                Logger.Error('%s - AggregationController.AggregateMultipleDataPointHistoryWithAction - error:%s' % (__name__, e))
+                Logger.Info('%s - AggregationController.AggregateMultipleDataPointHistoryWithAction - finished' % __name__)
+                return
+            content_from_solr = response['response']['docs']
+            content_with_action_applied = apply_actions_to_content(content_from_solr, [action])
+            post_content_to_solr(content_with_action_applied)
+        Logger.Info('%s - AggregationController.AggregateMultipleDataPointHistoryWithAction - finished' % __name__)
 
 class _UserThread(threading.Thread):
     def __init__(self, user):
@@ -42,48 +64,98 @@ class _UserThread(threading.Thread):
     def run(self):
         Logger.Info('%s - AggregationController._UserThread.run - started' % __name__)
         Logger.Debug('%s - AggregationController._UserThread.run - started with user: %s' % (__name__, self.user))
-        all_data_points = []
+        all_data_points_with_actions = []
         dc = DashboardsController(self.user)
         for dashboard in dc.get_saved_dashboards():
             for collection in dashboard['collections']:
+                actions = collection['actions']
                 for data_point in collection['data_points']:
-                    all_data_points.append(data_point)
-        def producer(q, data_points):
-            for data_point in data_points:
-                thread = _DataPointThread(data_point)
+                    all_data_points_with_actions.append({'data_point':data_point, 'actions':actions})
+        def producer(q, data_points_with_actions):
+            for data_point_with_actions in data_points_with_actions:
+                thread = _DataPointThread(data_point_with_actions)
                 thread.start()
                 q.put(thread, True)
         q = Queue(3)
-        producer_thread = threading.Thread(target=producer, args=(q, all_data_points))
+        producer_thread = threading.Thread(target=producer, args=(q, all_data_points_with_actions))
         producer_thread.start()
         Logger.Info('%s - AggregationController._UserThread.run - finished' % __name__)
 
 class _DataPointThread(threading.Thread):
-    def __init__(self, data_point):
-        self.data_point = data_point
+    def __init__(self, data_point_with_actions):
+        self.data_point_with_actions = data_point_with_actions
         threading.Thread.__init__(self)
 
     def run(self):
         Logger.Info('%s - AggregationController._DataPointThread.run - started' % __name__)
-        Logger.Debug('%s - AggregationController._DataPointThread.run - started with data_point: %s' % (__name__, self.data_point))
-        run_aggregator_for_data_point(self.data_point)
+        Logger.Debug('%s - AggregationController._DataPointThread.run - started with data_point: %s' % (__name__, self.data_point_with_actions))
+        run_aggregator_for_data_point(self.data_point_with_actions['data_point'], self.data_point_with_actions['actions'])
         Logger.Info('%s - AggregationController._DataPointThread.run - finished' % __name__)
 
 
-def run_aggregator_for_data_point(data_point):
+def run_aggregator_for_data_point(data_point, actions=None):
     Logger.Info('%s - run_aggregator_for_data_point - started' % __name__)
-    Logger.Debug('%s - run_aggregator_for_data_point - started with data_point:%s' % (__name__, data_point))
+    Logger.Debug('%s - run_aggregator_for_data_point - started with data_point:%s and actions:%s' % (__name__, data_point, actions))
+    if not actions:
+        actions = []
     dpc = DataPointController(data_point)
     content = dpc.run_data_point()
     content = [_parse_content_item(item) for item in content]
+    if len(actions):
+        content = apply_actions_to_content(content, actions)
+    post_content_to_solr(content)
+    Logger.Info('%s - run_aggregator_for_data_point - finished' % __name__)
+
+def post_content_to_solr(content):
+    Logger.Info('%s - post_content_to_solr - started' % __name__)
     solr_url = settings.SOLR_CONFIG['solr_url']
     request_data = json.dumps(content)
-    Logger.Debug('%s - run_aggregator_for_data_point - posting the following to solr: %s' % (__name__, request_data))
-    request = urllib2.Request('%s/update/json/?commit=true' % solr_url, request_data, {'Content-Type': 'application/json'})
-    response = urllib2.urlopen(request)
-    response_stream = response.read()
-    Logger.Debug('%s - run_aggregator_for_data_point - solr returned: %s' % (__name__, response_stream))
+    Logger.Debug('%s - post_content_to_solr - posting the following to solr: %s' % (__name__, request_data))
+    try:
+        request = urllib2.Request('%s/update/json/?commit=true' % solr_url, request_data, {'Content-Type': 'application/json'})
+        response = urllib2.urlopen(request)
+        response_stream = response.read()
+        Logger.Debug('%s - post_content_to_solr - solr returned: %s' % (__name__, response_stream))
+    except Exception, e:
+        Logger.Error('%s - post_content_to_solr - error: %s' % (__name__, e))
     Logger.Info('%s - run_aggregator_for_data_point - finished' % __name__)
+
+def apply_actions_to_content(content, actions):
+    Logger.Info('%s - _apply_actions_to_content - stated' % __name__)
+    Logger.Debug('%s - _apply_actions_to_content - stated with content:%s and action:%s' % (__name__, content, actions))
+    solr_url = settings.SOLR_CONFIG['solr_url']
+    content_id_query_parts = ['id:%s' % item['id'] for item in content]
+    solr_url = '%s/select/?q=*&wt=json&rows=%i&fq=%s' % (solr_url, len(content_id_query_parts), '%20OR%20'.join(content_id_query_parts))
+    try:
+        request = urllib2.Request(solr_url)
+        response = urllib2.urlopen(request)
+        response = json.loads(response.read())
+    except Exception, e:
+        Logger.Error('%s - _apply_actions_to_content - error:s' % (__name__, e))
+        Logger.Info('%s - _apply_actions_to_content - finished' % __name__)
+        return content
+    content_from_solr = response['response']['docs']
+    content_ids_from_solr = [item['id'] for item in content_from_solr]
+    content_ids_not_in_solr = [item['id'] for item in content if item['id'] not in content_ids_from_solr]
+    content_not_in_solr = [item for item in content if item['id'] in content_ids_not_in_solr]
+    return_content = content[:]
+    for action in actions:
+        ac = ActionController(action)
+        content_id_in_solr_requiring_action = ac.extract_ids_of_content_without_action_applied(content_from_solr)
+        content_in_solr_requiring_action = [item for item in content_from_solr if item['id'] in content_id_in_solr_requiring_action]
+        content_requiring_action = content_not_in_solr + content_in_solr_requiring_action
+        content_with_action_applied = ac.run_action(content_requiring_action)
+        for item in content_with_action_applied:
+            already_exists = False
+            for return_item in return_content:
+                if return_item['id'] == item['id']:
+                    for key in item.keys():
+                        return_item[key] = item[key]
+                        already_exists = True
+            if not already_exists:
+                return_content.append(item)
+    Logger.Info('%s - _apply_actions_to_content - finished' % __name__)
+    return return_content
 
 def _parse_content_item(content_item):
     Logger.Info('%s - _parse_content_item - stated' % __name__)

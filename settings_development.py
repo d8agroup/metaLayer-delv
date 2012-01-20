@@ -56,6 +56,12 @@ DATA_POINTS_CONFIG = {
     ]
 }
 
+ACTIONS_CONFIG = {
+    'enabled_actions':[
+        'datalayersentimentanalysis'
+    ]
+}
+
 CHARGIFY_SETTINGS = {
     'api_key':'eWdDw0im7NE0lfXeiXhS',
     'subdomain':'metalayer-dashboard'

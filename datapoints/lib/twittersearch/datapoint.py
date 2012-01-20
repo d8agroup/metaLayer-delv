@@ -1,13 +1,13 @@
 from hashlib import md5
 from urllib2 import urlopen
 from urllib import quote
-from aggregator.controllers import AggregationController
+from datapoints.classes import BaseDataPoint
 from logger import Logger
 from django.utils import simplejson as json
 from dateutil import parser as dateutil_parser
 import time
 
-class DataPoint(object):
+class DataPoint(BaseDataPoint):
     def get_unconfigured_config(self):
         return {
             'type':'twittersearch',
@@ -43,7 +43,6 @@ class DataPoint(object):
                     "<a href='${link}'><p style='padding-left:60px;' class='tool_tip' title='click to see original post on Twitter+'>${title}</p></a>"\
                 "</li>"
 
-
     def generate_configured_guid(self, config):
         base_string = 'twitter_search %s' % [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
         return md5(base_string).hexdigest()
@@ -57,14 +56,6 @@ class DataPoint(object):
         if not keywords or not keywords.strip():
             return False, { 'keywords':['You must search for something'] }
         return True, {}
-
-    def data_point_added(self, config):
-        #todo this is a hack
-        AggregationController.AggregateSingleDataPoint(config)
-        pass
-
-    def data_point_removed(self, config):
-        pass
 
     def tick(self, config):
         Logger.Info('%s - tick - started - with config: %s' % (__name__, config))

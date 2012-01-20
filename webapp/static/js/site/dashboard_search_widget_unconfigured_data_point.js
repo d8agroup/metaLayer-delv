@@ -20,7 +20,16 @@
                     remove_waiting(container);
                     data_point['configured'] = true;
                     data_point['configured_display_name'] = data.configured_display_name;
-                    $.post('/dashboard/data_points/add_data_point', { data_point:JSON.stringify(data_point), csrfmiddlewaretoken:$('#csrf_form input').val() });
+                    var actions = container.parents('.collection_container').data('configuration').actions;
+                    $.post
+                        (
+                            '/dashboard/data_points/add_data_point_with_actions',
+                            {
+                                data_point:JSON.stringify(data_point),
+                                actions:JSON.stringify(actions),
+                                csrfmiddlewaretoken:$('#csrf_form input').val()
+                            }
+                        );
                     container.parents('.collection_container').dashboard_collection('render');
                 }
                 else

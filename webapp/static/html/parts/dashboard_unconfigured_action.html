@@ -1,0 +1,20 @@
+<div class='action_config'>
+    <div class='image_and_title'>
+        <img src='${image_large}' />
+        <h3>${display_name_long}</h3>
+    </div>
+    <p class='instructions'>${instructions}</p>
+    <form>
+        {{each(index, element) elements}}
+        <div class='form_row'>
+            <label>${element.display_name}</label>
+            <input type="${element.type}" name="${element.name}" class="${element.name}" value="${element.value}"/>
+            <p class="help">${element.help}</p>
+        </div>'
+        {{/each}}
+        <div class="form_actions">
+            <input type="submit" name="cancel" class="cancel" value="remove"/>
+            <input type="submit" name="save"  class="save" value="save"/>
+        </div>
+    </form>
+</div>

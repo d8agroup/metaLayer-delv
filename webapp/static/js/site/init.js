@@ -85,12 +85,14 @@ $(document).ready
         $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
         $.get('/static/html/parts/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
         $.get('/static/html/parts/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
+        $.get('/static/html/parts/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
         $.get('/static/html/parts/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
+        $.get('/static/html/parts/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
         $.get('/static/html/parts/user_account_management.html', function(t) { $.template('user_account_management', t)});
         $.get('/static/html/parts/user_dashboard_management.html', function(t) { $.template('user_dashboard_management', t)});
         $.get('/static/html/parts/user_dashboard_management_saved_dashboards.html', function(t) { $.template('user_dashboard_management_saved_dashboards', t)});
         $.get('/static/html/parts/user_dashboard_management_dashboard_templates.html', function(t) { $.template('user_dashboard_management_dashboard_templates', t)});
 
-        setTimeout(function(){ $('#page').site(); }, 1000);
+        setTimeout(function(){ $('#page').site(); }, 2000);
     }
 );

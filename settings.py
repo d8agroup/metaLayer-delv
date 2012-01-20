@@ -102,6 +102,7 @@ INSTALLED_APPS = (
     'django_mongodb_engine',
     'djangotoolbox',
 
+    'dashboard.actions',
     'dashboard.customtags',
     'dashboard.datapoints',
     'dashboard.webapp',

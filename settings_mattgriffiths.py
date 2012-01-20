@@ -7,7 +7,7 @@ SITE_ID=u'4f1408ebc845b317df00000d'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(
-    level = logging.INFO,
+    level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 
@@ -61,6 +61,12 @@ DATA_POINTS_CONFIG = {
         'googleplusactivitysearch',
         'twittersearch',
         'googlenewssearch',
+    ]
+}
+
+ACTIONS_CONFIG = {
+    'enabled_actions':[
+        'datalayersentimentanalysis'
     ]
 }
 

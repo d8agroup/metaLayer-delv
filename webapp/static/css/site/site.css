@@ -73,9 +73,10 @@ USER HOME PAGE
 DASHBOARD
 ***********************************************************************************************************************/
 #dashboard { display:none; }
-#widget_panel { height:95px; background-color:#DDD; padding:5px; }
+#widget_panel { height:105px; background-color:#DDD; padding:5px; }
+#widget_panel h3 { text-align:center; font-size:80%}
 
-.data_point_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
+.data_point_widget, .action_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
 
 .collection_container { float:left; color:#DDD; }
 .collections_2 { width:50%;}
@@ -98,6 +99,17 @@ DASHBOARD
 .data_point_config .form_actions { text-align:center; margin-top:20px;}
 .data_point_config .form_actions input { width:48%; padding:5px; }
 
+.action_config { padding:20px; }
+.action_config .image_and_title { height:100px; overflow:hidden; }
+.action_config .image_and_title img { width:30%; float:left;}
+.action_config .image_and_title h3 { display:inline; font-size:250%; float:right; width:60%;}
+.action_config .instructions { color:#BBB; padding:10px; font-style:italic; }
+.action_config .form_row label { display:inline-block; width:45%; }
+.action_config .form_row input { display:inline-block; width:50%; }
+.action_config .form_row .help { color:#BBB; font-size:80%; padding:5px 0 0 0;}
+.action_config .form_actions { text-align:center; margin-top:20px;}
+.action_config .form_actions input { width:48%; padding:5px; }
+
 .search_widget { margin:2px; background-color:#333; }
 .search_widget .jScrollPaneTrack { margin-right:5px; background-color:#222;}
 .search_widget .jScrollPaneDrag { background-color:#DDD; }
@@ -108,13 +120,10 @@ DASHBOARD
 .search_widget .options_container .explore_data img { position:relative; left:5px; width:17px; }
 .search_widget .options_container .close_collection img { position:relative; top:2px }
 
-.search_widget .data_points_container { min-height:23px; }
-.search_widget .data_points_container { background-color:#222; padding:2px; font-size:80%;}
-.search_widget .data_points_container img { width:18px; margin:2px 2px 0;}
-.search_widget .data_points_container .data_points_summary li { display:inline-block }
-.search_widget .data_points_container .data_points_details { padding-top:25px; }
-.search_widget .data_points_container .data_points_details .display_name { position:relative; bottom:2px; left:5px; display:inline-block; width:80%; height:15px; overflow:hidden; }
-.search_widget .data_points_container .data_points_details .actions { float:right;}
+.search_widget .data_points_and_actions_container { min-height:23px; }
+.search_widget .data_points_and_actions_container { background-color:#222; padding:2px; font-size:80%;}
+.search_widget .data_points_and_actions_container img { width:18px; margin:2px 2px 0;}
+.search_widget .data_points_and_actions_container .data_points_and_actions_summary li { display:inline-block }
 
 .search_widget .search_filters { background-color:#222; font-size:80%; display:none; padding:15px 0;}
 .search_widget .pagination { padding:0 0 15px; text-align:center; font-size:90%; color:#AAA; width:90%; margin:0 auto;}

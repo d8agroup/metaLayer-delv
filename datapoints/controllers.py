@@ -3,6 +3,7 @@ from urllib2 import Request, urlopen
 from urllib import urlencode
 from django.utils import simplejson as json
 from logger import Logger
+from utils import my_import
 
 class DataPointController(object):
     def __init__(self, data_point):
@@ -10,7 +11,6 @@ class DataPointController(object):
         Logger.Debug('%s - DataPointController.__init__ - started with data_point:%s' % (__name__, data_point))
         self.data_point = data_point
         Logger.Info('%s - DataPointController.__init__ - finished' % __name__)
-
 
     @classmethod
     def GetAllForTemplateOptions(cls, options):
@@ -79,13 +79,7 @@ class DataPointController(object):
     def LoadDataPoint(cls, data_point_name):
         Logger.Info('%s - DataPointController.LoadDataPoint - started' % __name__)
         Logger.Debug('%s - DataPointController.LoadDataPoint - started with data_point_name:%s' % (__name__, data_point_name))
-        def custom_import(name):
-            mod = __import__(name)
-            components = name.split('.')
-            for comp in components[1:]:
-                mod = getattr(mod, comp)
-            return mod
-        data_point = custom_import('dashboard.datapoints.lib.%s.datapoint' % data_point_name)
+        data_point = my_import('dashboard.datapoints.lib.%s.datapoint' % data_point_name)
         data_point = getattr(data_point, 'DataPoint')()
         Logger.Info('%s - DataPointController.LoadDataPoint - finished' % __name__)
         return data_point

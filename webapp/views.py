@@ -4,6 +4,8 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
 from django.conf import settings
+from actions.controllers import ActionController
+from aggregator.controllers import AggregationController
 from datapoints.controllers import DataPointController
 from logger import Logger
 from search.controllers import SearchController
@@ -54,12 +56,13 @@ def dashboard(request, id):
     return JSONResponse({'dashboard':db})
 
 @login_required(login_url='/')
-def dashboard_get_all_data_points(request):
+def dashboard_get_all_widgets(request):
     Logger.Info('%s - dashboard_get_all_data_points - started' % __name__)
     #TODO: Need to get the options from the request.user and pass them to the controller
     data_points = DataPointController.GetAllForTemplateOptions(None)
+    actions = ActionController.GetAllForTemplateOptions(None)
     Logger.Info('%s - dashboard_get_all_data_points - finished' % __name__)
-    return JSONResponse({'data_points':data_points})
+    return JSONResponse({'data_points':data_points, 'actions':actions})
 
 @login_required(login_url='/')
 def dashboard_validate_data_point(request):
@@ -85,13 +88,52 @@ def dashboard_remove_data_point(request):
     return JSONResponse()
 
 @login_required(login_url='/')
-def dashboard_add_data_point(request):
+def dashboard_add_data_point_with_actions(request):
     Logger.Info('%s - dashboard_add_data_point - started' % __name__)
     data_point = request.POST['data_point']
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
     dpc.data_point_added()
+    actions = request.POST['actions']
+    actions = json.loads(actions)
+    AggregationController.AggregateSingleDataPoint(data_point, actions)
     Logger.Info('%s - dashboard_add_data_point - finished' % __name__)
+    return JSONResponse()
+
+@login_required(login_url='/')
+def dashboard_validate_action(request):
+    Logger.Info('%s - dashboard_validate_action - started' % __name__)
+    action = request.POST['action']
+    action = json.loads(action)
+    ac = ActionController(action)
+    passed, errors = ac.is_valid()
+    if not passed:
+        Logger.Info('%s - dashboard_validate_action - finished' % __name__)
+        return JSONResponse({'passed':passed, 'errors':errors})
+    configured_display_name = ac.get_configured_display_name()
+    return JSONResponse({'passed':passed, 'errors':errors, 'configured_display_name':configured_display_name})
+
+@login_required(login_url='/')
+def dashboard_remove_action(request):
+    Logger.Info('%s - dashboard_remove_action - started' % __name__)
+    action = request.POST['action']
+    action = json.loads(action)
+    ac = ActionController(action)
+    ac.action_removed()
+    Logger.Info('%s - dashboard_remove_action - finished' % __name__)
+    return JSONResponse()
+
+@login_required(login_url='/')
+def dashboard_add_action_to_data_points(request):
+    Logger.Info('%s - dashboard_add_action_to_data_points - started' % __name__)
+    action = request.POST['action']
+    action = json.loads(action)
+    data_points = request.POST['data_points']
+    data_points = json.loads(data_points)
+    ac = ActionController(action)
+    ac.action_added()
+    AggregationController.AggregateMultipleDataPointHistoryWithAction(action, data_points, 50)
+    Logger.Info('%s - dashboard_add_action_to_data_points - finished' % __name__)
     return JSONResponse()
 
 @login_required(login_url='/')

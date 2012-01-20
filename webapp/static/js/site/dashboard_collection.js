@@ -17,6 +17,8 @@
                 collection.search_results = {};
             if (collection.data_points == null)
                 collection.data_points = [];
+            if (collection.actions == null)
+                collection.actions = [];
             dashboard_collection.data('configuration', collection);
             dashboard_collection.dashboard_collection('render');
             return dashboard_collection;
@@ -32,13 +34,14 @@
             }
             else
             {
-                var search_widget_html = $("<div class='search_widget data_point_droppable'></div>");
+                var search_widget_html = $("<div class='search_widget data_point_droppable action_droppable'></div>");
                 dashboard_collection.html(search_widget_html);
                 search_widget_html.dashboard_search_widget(configuration);
                 dashboard_collection.draggable( { revert:true, stack:'.collection_container' } );
             }
             dashboard_collection.dashboard_collection('apply_dashboard_collection_droppable');
             dashboard_collection.dashboard_collection('apply_data_point_droppable');
+            dashboard_collection.dashboard_collection('apply_action_droppable');
             $('#dashboard').dashboard('save');
             return dashboard_collection;
         },
@@ -50,6 +53,7 @@
             configuration.search_filters = {};
             configuration.search_results = {};
             configuration.data_points = [];
+            configuration.actions = [];
             dashboard_collection.dashboard_collection('render');
             return dashboard_collection;
         },
@@ -94,12 +98,37 @@
             var collection = this;
             var configuration = collection.data('configuration');
             collection.find('.data_point_droppable').droppable
-            (
-                {
-                    accept:'.data_point_widget',
-                    drop:function(event, ui) { data_point_dropped_function(event, ui, configuration, collection); }
-                }
-            );
+                (
+                    {
+                        accept:'.data_point_widget',
+                        drop:function(event, ui) { data_point_dropped_function(event, ui, configuration, collection); }
+                    }
+                );
+            return this;
+        },
+        apply_action_droppable:function()
+        {
+            var action_dropped_function = function(event, ui, configuration, collection)
+            {
+                var draggable = ui.draggable;
+                var action = clone(draggable.data('action'));
+                action['id'] = guid();
+                if (configuration.actions == null)
+                    configuration.actions = [];
+                configuration.actions[configuration.actions.length] = action;
+                collection.data('configuration', configuration);
+                collection.dashboard_collection('render');
+            };
+
+            var collection = this;
+            var configuration = collection.data('configuration');
+            collection.find('.action_droppable').droppable
+                (
+                    {
+                        accept:'.action_widget',
+                        drop:function(event, ui) { action_dropped_function(event, ui, configuration, collection); }
+                    }
+                );
             return this;
         }
     };

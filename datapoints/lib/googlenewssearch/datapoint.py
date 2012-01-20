@@ -1,13 +1,13 @@
 from hashlib import md5
 from urllib import quote
 import urlparse
-from aggregator.controllers import AggregationController
+from datapoints.classes import BaseDataPoint
 from logger import Logger
 from dateutil import parser as dateutil_parser
 import feedparser
 import time
 
-class DataPoint(object):
+class DataPoint(BaseDataPoint):
     def get_unconfigured_config(self):
         return {
             'type':'googlenewssearch',
@@ -34,9 +34,8 @@ class DataPoint(object):
                "<li style='width:100%;'>"\
                    "<img src='http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png' style='width:20px; padding-right:10px;' align='left'/>"\
                    "<p style='margin-bottom:2px;'>${source_display_name}</p>"\
-                   "<a href='${link}' class='tool_tip' title='click to view the original article'><p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p></a>"\
+                   "<a href='${link}' class='tool_tip' title='click to view the original article'><p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p></a>" \
                "</li>"
-
 
     def generate_configured_guid(self, config):
         base_string = 'google_news_search %s' % [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
@@ -51,14 +50,6 @@ class DataPoint(object):
         if not keywords or not keywords.strip():
             return False, { 'keywords':['You must search for something'] }
         return True, {}
-
-    def data_point_added(self, config):
-        #todo this is a hack
-        AggregationController.AggregateSingleDataPoint(config)
-        pass
-
-    def data_point_removed(self, config):
-        pass
 
     def tick(self, config):
         Logger.Info('%s - tick - started - with config: %s' % (__name__, config))
