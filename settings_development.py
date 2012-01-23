@@ -66,6 +66,7 @@ ACTIONS_CONFIG = {
 OUTPUTS_CONFIG = {
     'enabled_outputs':[
         'atomoutput'
+        'jsonoutput'
     ]
 }
 
