@@ -1,10 +1,13 @@
+from django.conf import settings
 from minimongo import Model, Index
 import time
 from logger import Logger
 
 class UserStatistics(Model):
     class Meta:
-        database = 'ml_dashboard'
+        host = settings.DATABASES['default']['HOST']
+        port = settings.DATABASES['default']['PORT']
+        database = settings.DATABASES['default']['NAME']
         collection = 'userprofiles_userstatistics'
         indices = ( Index('username'), )
 
@@ -38,7 +41,9 @@ class UserStatistics(Model):
 
 class UserSubscriptions(Model):
     class Meta:
-        database = 'ml_dashboard'
+        host = settings.DATABASES['default']['HOST']
+        port = settings.DATABASES['default']['PORT']
+        database = settings.DATABASES['default']['NAME']
         collection = 'userprofiles_usersubscriptions'
         indices = ( Index('username'), )
 

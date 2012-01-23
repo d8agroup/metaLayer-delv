@@ -1,11 +1,14 @@
 import random
 import string
+from django.conf import settings
 from minimongo import Model, Index
 from logger import Logger
 
 class ShortUrl(Model):
     class Meta:
-        database = 'ml_dashboard'
+        host = settings.DATABASES['default']['HOST']
+        port = settings.DATABASES['default']['PORT']
+        database = settings.DATABASES['default']['NAME']
         collection = 'outputs_shorturl'
         indices = ( Index('url_identifier'), )
 

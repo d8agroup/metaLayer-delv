@@ -1,12 +1,15 @@
 from bson.objectid import ObjectId
 from datetime import datetime
+from django.conf import settings
 from minimongo import Model, Index
 import time
 from logger import Logger
 
 class Dashboard(Model):
     class Meta:
-        database = 'ml_dashboard'
+        host = settings.DATABASES['default']['HOST']
+        port = settings.DATABASES['default']['PORT']
+        database = settings.DATABASES['default']['NAME']
         collection = 'dashboards_dashboards'
         indices = ( Index('username'), )
 
@@ -108,7 +111,9 @@ class Dashboard(Model):
 
 class DashboardTemplate(Model):
     class Meta:
-        database = 'ml_dashboard'
+        host = settings.DATABASES['default']['HOST']
+        port = settings.DATABASES['default']['PORT']
+        database = settings.DATABASES['default']['NAME']
         collection = 'dashboard_templates'
         #indices = ( Index(''), )
 
