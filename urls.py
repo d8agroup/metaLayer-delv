@@ -11,6 +11,8 @@ urlpatterns = patterns('',
 
     url(r'^system/aggregator/', include('dashboard.aggregator.urls')),
 
+    url(r'^o/', include('dashboard.outputs.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),

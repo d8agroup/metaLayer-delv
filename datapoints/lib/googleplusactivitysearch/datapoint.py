@@ -12,7 +12,7 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'googleplusactivitysearch',
             'sub_type':'googleplusactivitysearch',
-            'short_display_name':'Google+ Search',
+            'display_name_short':'Google+ Search',
             'full_display_name':'Google+ Activity Stream Search',
             'instructions':'Use this data point to search the public Google+ activity stream.',
             'image_large':'http://www.pcsaudavel.com/images/Google-Plus.png',
@@ -56,7 +56,7 @@ class DataPoint(BaseDataPoint):
 
     def generate_configured_display_name(self, config):
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
-        return '%s: %s' % (config['short_display_name'], keywords)
+        return '%s: %s' % (config['display_name_short'], keywords)
 
     def validate_config(self, config):
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']

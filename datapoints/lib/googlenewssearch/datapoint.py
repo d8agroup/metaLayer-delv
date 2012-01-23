@@ -12,7 +12,7 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'googlenewssearch',
             'sub_type':'googlenewssearch',
-            'short_display_name':'Google News Search',
+            'display_name_short':'Google News Search',
             'full_display_name':'Google News Search',
             'instructions':'Use this data point to search Google news.',
             'image_large':'http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png',
@@ -43,7 +43,7 @@ class DataPoint(BaseDataPoint):
 
     def generate_configured_display_name(self, config):
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
-        return '%s: %s' % (config['short_display_name'], keywords)
+        return '%s: %s' % (config['display_name_short'], keywords)
 
     def validate_config(self, config):
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']

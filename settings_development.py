@@ -2,6 +2,7 @@ DEBUG = True
 
 SITE_ID=u'4f13fca68451d31efe00001d'
 
+SITE_HOST='dev.metalayer.com'
 
 DATABASES = {
     'default': {
@@ -59,6 +60,12 @@ DATA_POINTS_CONFIG = {
 ACTIONS_CONFIG = {
     'enabled_actions':[
         'datalayersentimentanalysis'
+    ]
+}
+
+OUTPUTS_CONFIG = {
+    'enabled_outputs':[
+        'atomoutput'
     ]
 }
 

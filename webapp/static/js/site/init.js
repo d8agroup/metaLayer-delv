@@ -92,6 +92,7 @@ $(document).ready
         $.get('/static/html/parts/user_dashboard_management.html', function(t) { $.template('user_dashboard_management', t)});
         $.get('/static/html/parts/user_dashboard_management_saved_dashboards.html', function(t) { $.template('user_dashboard_management_saved_dashboards', t)});
         $.get('/static/html/parts/user_dashboard_management_dashboard_templates.html', function(t) { $.template('user_dashboard_management_dashboard_templates', t)});
+        $.get('/static/html/parts/outputs/output_url.html', function(t) { $.template('output_url', t)});
 
         setTimeout(function(){ $('#page').site(); }, 2000);
     }

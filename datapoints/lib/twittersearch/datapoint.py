@@ -12,7 +12,7 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'twittersearch',
             'sub_type':'twittersearch',
-            'short_display_name':'Twitter Search',
+            'display_name_short':'Twitter Search',
             'full_display_name':'Twitter Search',
             'instructions':'Use this data point to search the public tweet stream.',
             'image_large':'http://www.fieldofignorance.com/wp-content/uploads/2011/11/twitter_logo-transparent-back.gif',
@@ -49,7 +49,7 @@ class DataPoint(BaseDataPoint):
 
     def generate_configured_display_name(self, config):
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
-        return '%s: %s' % (config['short_display_name'], keywords)
+        return '%s: %s' % (config['display_name_short'], keywords)
 
     def validate_config(self, config):
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']

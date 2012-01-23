@@ -23,6 +23,8 @@ class Dashboard(Model):
             'widgets':template['widgets'] if template else {},
             'active':True
         })
+        for collection in dashboard['collections']:
+            collection['id'] = '%s' % ObjectId()
         dashboard.save()
         dashboard['id'] = '%s' % dashboard._id
         dashboard.save()

@@ -9,7 +9,7 @@ class DataPoint(object):
         return {
             'type':'feed',
             'sub_type':'feed',
-            'short_display_name':'Web Feed',
+            'display_name_short':'Web Feed',
             'full_display_name':'Web Feed (rss/atom)',
             'instructions':'Use this data point to subscribe to any web feed published using either rss or atom syndication.',
             'image_large':'http://app.moogo.com/files/moogowebsite_copy.moogo.com/images/Blog/2010-06-15/rss-feed.png',

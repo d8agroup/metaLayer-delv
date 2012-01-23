@@ -8,6 +8,7 @@ from actions.controllers import ActionController
 from aggregator.controllers import AggregationController
 from datapoints.controllers import DataPointController
 from logger import Logger
+from outputs.controllers import OutputController
 from search.controllers import SearchController
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
@@ -61,8 +62,9 @@ def dashboard_get_all_widgets(request):
     #TODO: Need to get the options from the request.user and pass them to the controller
     data_points = DataPointController.GetAllForTemplateOptions(None)
     actions = ActionController.GetAllForTemplateOptions(None)
+    outputs = OutputController.GetAllForTemplateOptions(None)
     Logger.Info('%s - dashboard_get_all_data_points - finished' % __name__)
-    return JSONResponse({'data_points':data_points, 'actions':actions})
+    return JSONResponse({'data_points':data_points, 'actions':actions, 'outputs':outputs})
 
 @login_required(login_url='/')
 def dashboard_validate_data_point(request):
@@ -134,6 +136,27 @@ def dashboard_add_action_to_data_points(request):
     ac.action_added()
     AggregationController.AggregateMultipleDataPointHistoryWithAction(action, data_points, 50)
     Logger.Info('%s - dashboard_add_action_to_data_points - finished' % __name__)
+    return JSONResponse()
+
+@login_required(login_url='/')
+def dashboard_get_output_url(request):
+    Logger.Info('%s - dashboard_get_output_url - started' % __name__)
+    output = request.POST['output']
+    output = json.loads(output)
+    oc = OutputController(output)
+    url = oc.generate_url()
+    output['url'] = url
+    Logger.Info('%s - dashboard_get_output_url - finished' % __name__)
+    return JSONResponse({'output':output})
+
+@login_required(login_url='/')
+def dashboard_output_removed(request):
+    Logger.Info('%s - dashboard_output_removed - started' % __name__)
+    output = request.POST['output']
+    output = json.loads(output)
+    oc = OutputController(output)
+    oc.output_removed()
+    Logger.Info('%s - dashboard_output_removed - finished' % __name__)
     return JSONResponse()
 
 @login_required(login_url='/')

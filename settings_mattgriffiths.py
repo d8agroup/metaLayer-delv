@@ -4,6 +4,8 @@ DEBUG = True
 
 SITE_ID=u'4f1408ebc845b317df00000d'
 
+SITE_HOST='localhost:8000'
+
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(
@@ -67,6 +69,12 @@ DATA_POINTS_CONFIG = {
 ACTIONS_CONFIG = {
     'enabled_actions':[
         'datalayersentimentanalysis'
+    ]
+}
+
+OUTPUTS_CONFIG = {
+    'enabled_outputs':[
+        'atomoutput'
     ]
 }
 

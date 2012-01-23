@@ -24,7 +24,7 @@
                 for (var x=0; x<data_points.length; x++)
                 {
                     var data_point = data_points[x];
-                    var data_point_html = $('<div class="data_point_widget">' + data_point.short_display_name + '</div>');
+                    var data_point_html = $('<div class="data_point_widget">' + data_point.display_name_short + '</div>');
                     data_point_html.data('data_point', data_point);
                     data_point_widgets_container_html.append(data_point_html);
                     data_point_html.corner();
@@ -36,17 +36,30 @@
                 empty_widget_panel_html.find('tr').append(data_point_widgets_container_html);
 
                 var action_widgets_container_html = $('<td id="action_widgets_container"></td>');
-                action_widgets_container_html.append('<h3>actions</h3>')
+                action_widgets_container_html.append('<h3>actions</h3>');
                 var actions = data.actions;
-                for (var x=0; x<actions.length; x++)
+                for (var y=0; y<actions.length; y++)
                 {
-                    var action = actions[x];
+                    var action = actions[y];
                     var action_html = $("<div class='action_widget'>" + action.display_name_short + "</div>");
                     action_html.data('action', action);
                     action_widgets_container_html.append(action_html);
                     action_html.corner();
                 }
                 empty_widget_panel_html.find('tr').append(action_widgets_container_html);
+
+                var output_widgets_container_html = $("<td id='output_widgets_container'></td>");
+                output_widgets_container_html.append("<h3>outputs</h3>");
+                var outputs = data.outputs;
+                for (var z=0; z<outputs.length; z++)
+                {
+                    var output = outputs[z];
+                    var output_html = $("<div class='output_widget'>" + output.display_name_short + "</div>");
+                    output_html.data('output', output);
+                    output_widgets_container_html.append(output_html);
+                    output_html.corner();
+                }
+                empty_widget_panel_html.find('tr').append(output_widgets_container_html);
 
                 widget_panel.html(empty_widget_panel_html);
                 widget_panel.dashboard_widget_panel('apply_widget_draggable');
@@ -62,6 +75,7 @@
             var widget_panel = this;
             widget_panel.find('.data_point_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
             widget_panel.find('.action_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
+            widget_panel.find('.output_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
             return widget_panel;
         }
     };

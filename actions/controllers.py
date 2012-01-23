@@ -35,11 +35,11 @@ class ActionController(object):
         Logger.Info('%s - ActionController.is_valid - finished' % __name__)
         return passed, errors
 
-    def run_action(self, raw_results):
+    def run_action(self, content):
         Logger.Info('%s - ActionController.run_action - started' % __name__)
         action_name = self.action['name']
         action = ActionController.LoadAction(action_name)
-        raw_results = action.run(self.action, raw_results)
+        raw_results = action.run(self.action, content)
         clean_results = []
         for raw_result in raw_results:
             clean_result = {'id':raw_result['id']}

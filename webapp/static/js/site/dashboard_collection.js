@@ -19,6 +19,8 @@
                 collection.data_points = [];
             if (collection.actions == null)
                 collection.actions = [];
+            if (collection.outputs == null)
+                collection.outputs = [];
             dashboard_collection.data('configuration', collection);
             dashboard_collection.dashboard_collection('render');
             return dashboard_collection;
@@ -34,14 +36,23 @@
             }
             else
             {
-                var search_widget_html = $("<div class='search_widget data_point_droppable action_droppable'></div>");
+                var search_widget_html = $("<div class='search_widget data_point_droppable action_droppable output_droppable'></div>");
                 dashboard_collection.html(search_widget_html);
                 search_widget_html.dashboard_search_widget(configuration);
-                dashboard_collection.draggable( { revert:true, stack:'.collection_container' } );
+
+                if (configuration.outputs.length > 0)
+                {
+                    var outputs_container_html = $("<div class='outputs_container output_droppable'></div>");
+                    outputs_container_html.dashboard_outputs(configuration);
+                    dashboard_collection.append(outputs_container_html);
+                }
+
+                dashboard_collection.draggable( { revert:true, stack:'.collection_container', handle:'.search_widget' } );
             }
             dashboard_collection.dashboard_collection('apply_dashboard_collection_droppable');
             dashboard_collection.dashboard_collection('apply_data_point_droppable');
             dashboard_collection.dashboard_collection('apply_action_droppable');
+            dashboard_collection.dashboard_collection('apply_output_droppable');
             $('#dashboard').dashboard('save');
             return dashboard_collection;
         },
@@ -54,6 +65,9 @@
             configuration.search_results = {};
             configuration.data_points = [];
             configuration.actions = [];
+            for (var o=0; o<configuration.output.length; o++)
+                $.post( '/dashboard/outputs/remove_output', { output:JSON.stringify(configuration.outputs[o]), csrfmiddlewaretoken:$('#csrf_form input').val() } );
+            configuration.outputs = [];
             dashboard_collection.dashboard_collection('render');
             return dashboard_collection;
         },
@@ -130,6 +144,63 @@
                     }
                 );
             return this;
+        },
+        apply_output_droppable:function()
+        {
+            var output_dropped_function = function(event, ui, configuration, collection)
+            {
+                var process_get_url_function = function(data, configuration, collection)
+                {
+                    var output = data.output;
+                    if (configuration.outputs == null)
+                        configuration.outputs = [];
+                    configuration.outputs[configuration.outputs.length] = output;
+                    collection.data('configuration', configuration);
+                    collection.dashboard_collection('render');
+                };
+
+                var draggable = ui.draggable;
+                var output = clone(draggable.data('output'));
+                output['id'] = guid();
+                output['collection_id'] = configuration.id;
+                output['dashboard_id'] = $('#dashboard').data('dashboard').id;
+                $.post
+                    (
+                        '/dashboard/outputs/get_url',
+                        { output:JSON.stringify(output), csrfmiddlewaretoken:$('#csrf_form input').val()},
+                        function(data) { process_get_url_function(data, configuration, collection); }
+                    );
+            };
+
+            var collection = this;
+            var configuration = collection.data('configuration');
+            collection.find('.output_droppable').droppable
+                (
+                    {
+                        accept:'.output_widget',
+                        drop:function(event, ui) { output_dropped_function(event, ui, configuration, collection); }
+                    }
+                );
+            return this;
+        },
+        remove_output:function(output_id)
+        {
+            var collection = this;
+            var configuration = collection.data('configuration');
+            var new_outputs = [];
+            for (var x=0; x<configuration.outputs.length; x++)
+                if (configuration.outputs[x].id != output_id)
+                    new_outputs[new_outputs.length] = configuration.outputs[x];
+                else
+                    $.post
+                        (
+                            '/dashboard/outputs/remove_output',
+                            { output:JSON.stringify(configuration.outputs[x]), csrfmiddlewaretoken:$('#csrf_form input').val() }
+                        );
+            collection.data('configuration').outputs = new_outputs;
+            collection.dashboard_collection('render');
+
+            return collection;
         }
     };
 

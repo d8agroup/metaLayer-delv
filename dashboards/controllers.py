@@ -8,6 +8,14 @@ class DashboardsController(object):
         self.user = user
         Logger.Info('%s - DashboardsController - finished' % __name__)
 
+    @classmethod
+    def GetDashboardById(cls, id):
+        Logger.Info('%s - DashboardsController.GetDashboardById - started' % __name__)
+        Logger.Debug('%s - DashboardsController.GetDashboardById - started with id:%s' % (__name__, id))
+        dashboard = Dashboard.Load(id, True)
+        Logger.Info('%s - DashboardsController.GetDashboardById - finished' % __name__)
+        return dashboard
+
     def get_saved_dashboards(self):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)
@@ -17,7 +25,7 @@ class DashboardsController(object):
     def get_dashboard_by_id(self, id):
         Logger.Info('%s - get_dashboard_by_id - started' % __name__)
         Logger.Debug('%s - get_dashboard_by_id - started with id:%s' % (__name__, id))
-        dashboard = Dashboard.Load(id, True)
+        dashboard = DashboardsController.GetDashboardById(id)
         Logger.Info('%s - get_dashboard_by_id - finished' % __name__)
         return dashboard
 
