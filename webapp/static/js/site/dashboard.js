@@ -16,7 +16,9 @@ DASHBOARD - CHECKED 18/01/2010
         },
         save:function()
         {
-            var dashboard = this.data('dashboard');
+            var dashboard = clone(this.data('dashboard'));
+            for (var x=0; x<dashboard.collections.length; x++)
+                dashboard.collections[x].search_results = [];
             var post_data = { dashboard:JSON.stringify(dashboard), csrfmiddlewaretoken:$('#csrf_form input').val() };
             $.post ( '/dashboard/save', post_data );
         }
