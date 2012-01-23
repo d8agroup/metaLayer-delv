@@ -10,7 +10,7 @@ class Output(BaseOutput):
             'display_name_short':'ATOM',
             'display_name_long':'ATOM',
             'type':'url',
-            'instructions':'Subscribe to the link below <br/>(note that ATOM output does not support action values)'
+            'instructions':'note that action values like sentiment are not supported - use JSON for that!'
         }
 
     def generate_output(self, config, search_results):
