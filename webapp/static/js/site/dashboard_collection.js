@@ -65,7 +65,7 @@
             configuration.search_results = {};
             configuration.data_points = [];
             configuration.actions = [];
-            for (var o=0; o<configuration.output.length; o++)
+            for (var o=0; o<configuration.outputs.length; o++)
                 $.post( '/dashboard/outputs/remove_output', { output:JSON.stringify(configuration.outputs[o]), csrfmiddlewaretoken:$('#csrf_form input').val() } );
             configuration.outputs = [];
             dashboard_collection.dashboard_collection('render');
