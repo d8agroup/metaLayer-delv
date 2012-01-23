@@ -1,3 +1,4 @@
+from django.conf import settings
 from minimongo import Model, Index
 from hashlib import md5
 import time
@@ -5,7 +6,9 @@ from logger import Logger
 
 class RunRecord(Model):
     class Meta:
-        database = 'ml_dashboard'
+        host = settings.DATABASES['default']['HOST']
+        port = settings.DATABASES['default']['PORT']
+        database = settings.DATABASES['default']['NAME']
         collection = 'aggregator_runrecord'
         indices = ( Index('key'), )
 
