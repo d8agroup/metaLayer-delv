@@ -3,6 +3,7 @@ import threading
 import urllib2
 from django.conf import settings
 from actions.controllers import ActionController
+from models import RunRecord
 from dashboards.controllers import DashboardsController
 from datapoints.controllers import DataPointController
 from logger import Logger
@@ -92,7 +93,6 @@ class _DataPointThread(threading.Thread):
         run_aggregator_for_data_point(self.data_point_with_actions['data_point'], self.data_point_with_actions['actions'])
         Logger.Info('%s - AggregationController._DataPointThread.run - finished' % __name__)
 
-
 def run_aggregator_for_data_point(data_point, actions=None):
     Logger.Info('%s - run_aggregator_for_data_point - started' % __name__)
     Logger.Debug('%s - run_aggregator_for_data_point - started with data_point:%s and actions:%s' % (__name__, data_point, actions))
@@ -100,6 +100,7 @@ def run_aggregator_for_data_point(data_point, actions=None):
         actions = []
     dpc = DataPointController(data_point)
     content = dpc.run_data_point()
+    content = _filter_content_by_last_successful_run(actions, content, data_point)
     content = [_parse_content_item(item) for item in content]
     if len(actions):
         content = apply_actions_to_content(content, actions)
@@ -156,6 +157,13 @@ def apply_actions_to_content(content, actions):
                 return_content.append(item)
     Logger.Info('%s - _apply_actions_to_content - finished' % __name__)
     return return_content
+
+def _filter_content_by_last_successful_run(actions, content, data_point):
+    last_successful_run = RunRecord.LastSuccess(data_point, actions)
+    if last_successful_run:
+        content = [item for item in content if 'time' in item and item['time'] > last_successful_run]
+    RunRecord.RecordRun(data_point, actions)
+    return content
 
 def _parse_content_item(content_item):
     Logger.Info('%s - _parse_content_item - stated' % __name__)

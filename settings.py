@@ -103,11 +103,15 @@ INSTALLED_APPS = (
     'djangotoolbox',
 
     'dashboard.actions',
+    'dashboard.aggregator',
+    'dashboard.chargifyapi',
     'dashboard.customtags',
-    'dashboard.datapoints',
-    'dashboard.webapp',
     'dashboard.dashboards',
+    'dashboard.datapoints',
+    'dashboard.outputs',
+    'dashboard.search',
     'dashboard.userprofiles',
+    'dashboard.webapp',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

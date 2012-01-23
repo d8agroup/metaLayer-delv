@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
 from django.conf import settings
+import time
 from actions.controllers import ActionController
 from aggregator.controllers import AggregationController
 from datapoints.controllers import DataPointController
@@ -92,6 +93,7 @@ def dashboard_remove_data_point(request):
 @login_required(login_url='/')
 def dashboard_add_data_point_with_actions(request):
     Logger.Info('%s - dashboard_add_data_point - started' % __name__)
+    start_time = time.time()
     data_point = request.POST['data_point']
     data_point = json.loads(data_point)
     dpc = DataPointController(data_point)
@@ -99,6 +101,7 @@ def dashboard_add_data_point_with_actions(request):
     actions = request.POST['actions']
     actions = json.loads(actions)
     AggregationController.AggregateSingleDataPoint(data_point, actions)
+    Logger.Debug('%s - dashboard_add_data_point - finished in %i seconds' % (__name__, int(time.time() - start_time)))
     Logger.Info('%s - dashboard_add_data_point - finished' % __name__)
     return JSONResponse()
 
@@ -162,12 +165,14 @@ def dashboard_output_removed(request):
 @login_required(login_url='/')
 def dashboard_run_search(request):
     Logger.Info('%s - dashboard_run_search - started' % __name__)
+    start_time = time.time()
     configuration = {
         'data_points':json.loads(request.POST['data_points']),
         'search_filters':json.loads(request.POST['search_filters'])
     }
     sc = SearchController(configuration)
     search_results = sc.run_search_and_return_results()
+    Logger.Debug('%s - dashboard_run_search - finished in %i seconds' % (__name__, int(time.time() - start_time)))
     Logger.Info('%s - dashboard_run_search - finished' % __name__)
     return JSONResponse({'search_results':search_results})
 
