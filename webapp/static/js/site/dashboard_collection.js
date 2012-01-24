@@ -42,7 +42,7 @@
 
                 if (configuration.outputs.length > 0)
                 {
-                    var outputs_container_html = $("<div class='outputs_container output_droppable'></div>");
+                    var outputs_container_html = $("<div class='outputs_container'></div>");
                     outputs_container_html.dashboard_outputs(configuration);
                     dashboard_collection.append(outputs_container_html);
                 }
@@ -50,9 +50,7 @@
                 dashboard_collection.draggable( { revert:true, stack:'.collection_container', handle:'.search_widget' } );
             }
             dashboard_collection.dashboard_collection('apply_dashboard_collection_droppable');
-            dashboard_collection.dashboard_collection('apply_data_point_droppable');
-            dashboard_collection.dashboard_collection('apply_action_droppable');
-            dashboard_collection.dashboard_collection('apply_output_droppable');
+            dashboard_collection.dashboard_collection('apply_widget_droppable');
             $('#dashboard').dashboard('save');
             return dashboard_collection;
         },
@@ -70,6 +68,78 @@
             configuration.outputs = [];
             dashboard_collection.dashboard_collection('render');
             return dashboard_collection;
+        },
+        apply_widget_droppable:function()
+        {
+            var dropped_function = function(event, ui, configuration, collection)
+            {
+                var data_point_dropped_function = function(event, ui, configuration, collection)
+                {
+                    var draggable = ui.draggable;
+                    var data_point = clone(draggable.data('data_point'));
+                    data_point['id'] = guid();
+                    if (configuration.data_points == null)
+                        configuration['data_points'] = [];
+                    configuration.data_points[configuration.data_points.length] = data_point;
+                    collection.data('configuration', configuration);
+                    collection.dashboard_collection('render');
+                };
+
+                var action_dropped_function = function(event, ui, configuration, collection)
+                {
+                    var draggable = ui.draggable;
+                    var action = clone(draggable.data('action'));
+                    action['id'] = guid();
+                    if (configuration.actions == null)
+                        configuration.actions = [];
+                    configuration.actions[configuration.actions.length] = action;
+                    collection.data('configuration', configuration);
+                    collection.dashboard_collection('render');
+                };
+
+                var output_dropped_function = function(event, ui, configuration, collection)
+                {
+                    var process_get_url_function = function(data, configuration, collection)
+                    {
+                        var output = data.output;
+                        if (configuration.outputs == null)
+                            configuration.outputs = [];
+                        configuration.outputs[configuration.outputs.length] = output;
+                        collection.data('configuration', configuration);
+                        collection.dashboard_collection('render');
+                    };
+
+                    var draggable = ui.draggable;
+                    var output = clone(draggable.data('output'));
+                    output['id'] = guid();
+                    output['collection_id'] = configuration.id;
+                    output['dashboard_id'] = $('#dashboard').data('dashboard').id;
+                    $.post
+                        (
+                            '/dashboard/outputs/get_url',
+                            { output:JSON.stringify(output), csrfmiddlewaretoken:$('#csrf_form input').val()},
+                            function(data) { process_get_url_function(data, configuration, collection); }
+                        );
+                };
+
+                if (ui.draggable.is('.data_point_widget'))
+                    data_point_dropped_function(event, ui, configuration, collection);
+                else if (ui.draggable.is('.action_widget'))
+                    action_dropped_function(event, ui, configuration, collection);
+                else if (ui.draggable.is('.output_widget'))
+                    output_dropped_function(event, ui, configuration, collection);
+            };
+
+            var collection = this;
+            var configuration = collection.data('configuration');
+            collection.find('.search_widget').droppable
+                (
+                    {
+                        accept:'.output_widget, .action_widget, .data_point_widget',
+                        drop:function(event, ui) { dropped_function(event, ui, configuration, collection); }
+                    }
+                );
+            return this;
         },
         apply_dashboard_collection_droppable:function()
         {
@@ -94,94 +164,6 @@
                         drop:function(event, ui) { collection_dropped_function(event, ui, collection, configuration); }
                     }
                 );
-        },
-        apply_data_point_droppable:function()
-        {
-            var data_point_dropped_function = function(event, ui, configuration, collection)
-            {
-                var draggable = ui.draggable;
-                var data_point = clone(draggable.data('data_point'));
-                data_point['id'] = guid();
-                if (configuration.data_points == null)
-                    configuration['data_points'] = [];
-                configuration.data_points[configuration.data_points.length] = data_point;
-                collection.data('configuration', configuration);
-                collection.dashboard_collection('render');
-            };
-
-            var collection = this;
-            var configuration = collection.data('configuration');
-            collection.find('.data_point_droppable').droppable
-                (
-                    {
-                        accept:'.data_point_widget',
-                        drop:function(event, ui) { data_point_dropped_function(event, ui, configuration, collection); }
-                    }
-                );
-            return this;
-        },
-        apply_action_droppable:function()
-        {
-            var action_dropped_function = function(event, ui, configuration, collection)
-            {
-                var draggable = ui.draggable;
-                var action = clone(draggable.data('action'));
-                action['id'] = guid();
-                if (configuration.actions == null)
-                    configuration.actions = [];
-                configuration.actions[configuration.actions.length] = action;
-                collection.data('configuration', configuration);
-                collection.dashboard_collection('render');
-            };
-
-            var collection = this;
-            var configuration = collection.data('configuration');
-            collection.find('.action_droppable').droppable
-                (
-                    {
-                        accept:'.action_widget',
-                        drop:function(event, ui) { action_dropped_function(event, ui, configuration, collection); }
-                    }
-                );
-            return this;
-        },
-        apply_output_droppable:function()
-        {
-            var output_dropped_function = function(event, ui, configuration, collection)
-            {
-                var process_get_url_function = function(data, configuration, collection)
-                {
-                    var output = data.output;
-                    if (configuration.outputs == null)
-                        configuration.outputs = [];
-                    configuration.outputs[configuration.outputs.length] = output;
-                    collection.data('configuration', configuration);
-                    collection.dashboard_collection('render');
-                };
-
-                var draggable = ui.draggable;
-                var output = clone(draggable.data('output'));
-                output['id'] = guid();
-                output['collection_id'] = configuration.id;
-                output['dashboard_id'] = $('#dashboard').data('dashboard').id;
-                $.post
-                    (
-                        '/dashboard/outputs/get_url',
-                        { output:JSON.stringify(output), csrfmiddlewaretoken:$('#csrf_form input').val()},
-                        function(data) { process_get_url_function(data, configuration, collection); }
-                    );
-            };
-
-            var collection = this;
-            var configuration = collection.data('configuration');
-            collection.find('.output_droppable').droppable
-                (
-                    {
-                        accept:'.output_widget',
-                        drop:function(event, ui) { output_dropped_function(event, ui, configuration, collection); }
-                    }
-                );
-            return this;
         },
         remove_output:function(output_id)
         {
