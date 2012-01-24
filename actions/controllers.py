@@ -24,7 +24,7 @@ class ActionController(object):
         Logger.Info('%s - ActionController.GetAllForTemplateOptions - started' % __name__)
         Logger.Debug('%s - ActionController.GetAllForTemplateOptions - started with options:%s' % (__name__, options))
         actions = [ActionController.LoadAction(action).get_unconfigured_config() for action in settings.ACTIONS_CONFIG['enabled_actions']]
-        Logger.Info('%s - ActionController.GetAllForTemplateOptions - started' % __name__)
+        Logger.Info('%s - ActionController.GetAllForTemplateOptions - finished' % __name__)
         return actions
 
     def is_valid(self):
@@ -88,6 +88,7 @@ class ActionController(object):
     def _search_encode_property(self, prop):
         def get_postfix(type):
             if type == 'string': return 's'
+            if type == 'location_string': return 's'
             return '_s'
         return 'action_%s_%s_%s' % (self.action['name'], prop['name'], get_postfix(prop['type']))
 

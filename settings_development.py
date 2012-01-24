@@ -76,6 +76,12 @@ OUTPUTS_CONFIG = {
     ]
 }
 
+VISUALIZATIONS_CONFIG = {
+    'enabled_visualizations':[
+        'googlegeochart'
+    ]
+}
+
 CHARGIFY_SETTINGS = {
     'api_key':'eWdDw0im7NE0lfXeiXhS',
     'subdomain':'metalayer-dashboard'

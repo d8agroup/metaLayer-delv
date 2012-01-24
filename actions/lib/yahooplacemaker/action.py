@@ -41,7 +41,7 @@ class Action(BaseAction):
                 'added':[
                     {
                         'name':'location',
-                        'type':'string',
+                        'type':'location_string',
                     }
                 ]
             }

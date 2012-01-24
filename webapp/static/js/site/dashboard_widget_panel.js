@@ -61,6 +61,19 @@
                 }
                 empty_widget_panel_html.find('tr').append(output_widgets_container_html);
 
+                var visualization_widgets_container_html = $("<td id='visualization_widgets_container'></td>");
+                visualization_widgets_container_html.append("<h3>visualizations</h3>");
+                var visualizations = data.visualizations;
+                for (var v=0; v<visualizations.length; v++)
+                {
+                    var visualization = visualizations[v];
+                    var visualization_html = $("<div class='visualization_widget'>" + visualization.display_name_short + "</div>");
+                    visualization_html.data('visualization', visualization);
+                    visualization_widgets_container_html.append(visualization_html);
+                    visualization_html.corner();
+                }
+                empty_widget_panel_html.find('tr').append(visualization_widgets_container_html);
+
                 widget_panel.html(empty_widget_panel_html);
                 widget_panel.dashboard_widget_panel('apply_widget_draggable');
             };

@@ -1,0 +1,2 @@
+class BaseVisualization(object):
+    pass

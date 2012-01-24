@@ -78,7 +78,8 @@ DASHBOARD
 
 .data_point_widget,
 .action_widget,
-.output_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
+.output_widget,
+.visualization_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
 
 .collection_container { float:left; color:#DDD; }
 .collections_2 { width:50%;}

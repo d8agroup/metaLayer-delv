@@ -15,6 +15,7 @@ from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
 from utils import JSONResponse
 from urllib2 import urlopen
+from visualizations.controllers import VisualizationController
 
 def index(request):
     Logger.Info('%s - index - started' % __name__)
@@ -64,8 +65,9 @@ def dashboard_get_all_widgets(request):
     data_points = DataPointController.GetAllForTemplateOptions(None)
     actions = ActionController.GetAllForTemplateOptions(None)
     outputs = OutputController.GetAllForTemplateOptions(None)
+    visualizations = VisualizationController.GetAllForTemplateOptions(None)
     Logger.Info('%s - dashboard_get_all_data_points - finished' % __name__)
-    return JSONResponse({'data_points':data_points, 'actions':actions, 'outputs':outputs})
+    return JSONResponse({'data_points':data_points, 'actions':actions, 'outputs':outputs, 'visualizations':visualizations})
 
 @login_required(login_url='/')
 def dashboard_validate_data_point(request):
