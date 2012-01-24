@@ -2,3 +2,4 @@
 *.db*
 .idea
 fabfile.py
+CACHE

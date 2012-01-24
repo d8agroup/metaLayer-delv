@@ -1,14 +1,14 @@
 import logging
 
-DEBUG = True
+DEBUG = False
+
+COMPRESS_ENABLED = True
 
 SITE_ID=u'4f1408ebc845b317df00000d'
 
-SITE_HOST='localhost:8000'
+SITE_HOST='50.57.164.87'
 
-ADMIN_MEDIA_PREFIX = 'http://50.57.164.97/static/admin/'
-
-STATIC_URL = 'http://50.57.164.97/static/'
+STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/webapp/static/'
 
 logging.basicConfig(
     level = logging.ERROR,

@@ -1,8 +1,12 @@
 DEBUG = True
 
+COMPRESS_ENABLED = False
+
 SITE_ID=u'4f13fca68451d31efe00001d'
 
 SITE_HOST='dev.metalayer.com'
+
+STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/webapp/static/'
 
 DATABASES = {
     'default': {

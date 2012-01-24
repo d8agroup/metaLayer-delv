@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load compress %}
 
 {% block css %}
-    <link rel="stylesheet" href="/static/css/site/site.css" />
-    <link rel="stylesheet" href="/static/css/lib/jscrollpane.css" />
+    {% compress css %}
+        <link rel="stylesheet" href="/static/css/site/site.css" />
+        <link rel="stylesheet" href="/static/css/lib/jscrollpane.css" />
+    {% endcompress %}
 {% endblock %}
 
 {% block js %}
@@ -13,31 +16,33 @@
     <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
-    <script type="text/javascript" src="/static/js/site/header.js"></script>
-    <script type="text/javascript" src="/static/js/site/site.js"></script>
-    <script type="text/javascript" src="/static/js/site/users.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_account_management.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_account_management_change_subscription.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_account_management_current_subscription.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_dashboard_management.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_dashboard_management_saved_dashboards.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_dashboard_management_saved_dashboards_not_allowed.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_dashboard_management_clickable_dashboard_templates.js"></script>
-    <script type="text/javascript" src="/static/js/site/user_dashboard_management_draggable_dashboard_templates.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_data_points_and_actions.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_control_panel.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_filters.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results_content_items.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_data_point.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_action.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_collections_panel.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_widget_panel.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_outputs.js"></script>
-    <script type="text/javascript" src="/static/js/site/init.js"></script>
+    {% compress js %}
+        <script type="text/javascript" src="/static/js/site/header.js"></script>
+        <script type="text/javascript" src="/static/js/site/site.js"></script>
+        <script type="text/javascript" src="/static/js/site/users.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_account_management.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_account_management_change_subscription.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_account_management_current_subscription.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_dashboard_management.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_dashboard_management_saved_dashboards.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_dashboard_management_saved_dashboards_not_allowed.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_dashboard_management_clickable_dashboard_templates.js"></script>
+        <script type="text/javascript" src="/static/js/site/user_dashboard_management_draggable_dashboard_templates.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_data_points_and_actions.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_control_panel.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_filters.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results_content_items.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_data_point.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_action.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_collections_panel.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_widget_panel.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_outputs.js"></script>
+        <script type="text/javascript" src="/static/js/site/init.js"></script>
+    {% endcompress %}
 {% endblock %}
 
 {% block body %}
