@@ -6,7 +6,9 @@ SITE_ID=u'4f1408ebc845b317df00000d'
 
 SITE_HOST='localhost:8000'
 
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = 'http://50.57.164.97/static/admin/'
+
+STATIC_URL = 'http://50.57.164.97/static/'
 
 logging.basicConfig(
     level = logging.ERROR,
