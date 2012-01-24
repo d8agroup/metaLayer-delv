@@ -89,7 +89,7 @@ class ActionController(object):
         def get_postfix(type):
             if type == 'string': return 's'
             return '_s'
-        return '%s_%s_%s' % (self.action['name'], prop['name'], get_postfix(prop['type']))
+        return 'action_%s_%s_%s' % (self.action['name'], prop['name'], get_postfix(prop['type']))
 
 
 

@@ -72,7 +72,8 @@ DATA_POINTS_CONFIG = {
 
 ACTIONS_CONFIG = {
     'enabled_actions':[
-        'datalayersentimentanalysis'
+        'datalayersentimentanalysis',
+        'yahooplacemaker'
     ]
 }
 
