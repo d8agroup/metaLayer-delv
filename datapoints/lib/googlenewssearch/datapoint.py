@@ -1,6 +1,7 @@
 from hashlib import md5
 from urllib import quote
 import urlparse
+import re
 from datapoints.classes import BaseDataPoint
 from logger import Logger
 from dateutil import parser as dateutil_parser
@@ -68,7 +69,7 @@ class DataPoint(BaseDataPoint):
                     {
                     'title': item['title'],
                     'text':[
-                        item['summary']
+                        re.sub(r'<.*?>', '', item['summary'])
                     ],
                     'tags':[t['term'] for t in item['tags']] if 'tags' in item else []
                 }

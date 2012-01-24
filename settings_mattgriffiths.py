@@ -13,7 +13,7 @@ STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/webapp/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(
-    level = logging.DEBUG,
+    level = logging.ERROR,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 
@@ -73,7 +73,8 @@ DATA_POINTS_CONFIG = {
 ACTIONS_CONFIG = {
     'enabled_actions':[
         'datalayersentimentanalysis',
-        'yahooplacemaker'
+        'yahooplacemaker',
+        'languagedetection'
     ]
 }
 

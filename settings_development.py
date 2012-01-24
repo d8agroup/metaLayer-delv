@@ -64,7 +64,8 @@ DATA_POINTS_CONFIG = {
 ACTIONS_CONFIG = {
     'enabled_actions':[
         'datalayersentimentanalysis',
-        'yahooplacemaker'
+        'yahooplacemaker',
+        'languagedetection'
     ]
 }
 

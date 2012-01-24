@@ -1,7 +1,4 @@
 from django.conf import settings
-from urllib2 import Request, urlopen
-from urllib import urlencode
-from django.utils import simplejson as json
 from logger import Logger
 from utils import my_import
 
@@ -83,45 +80,3 @@ class DataPointController(object):
         data_point = getattr(data_point, 'DataPoint')()
         Logger.Info('%s - DataPointController.LoadDataPoint - finished' % __name__)
         return data_point
-
-    
-class MetaLayerAggregatorController(object):
-    @classmethod
-    def _call_aggregator(cls, add_source_endpoint_url, config, sub_type, type):
-        Logger.Info('%s - MetaLayerAggregatorController._call_aggregator - started' % __name__)
-        Logger.Debug('%s - MetaLayerAggregatorController._call_aggregator - started with add_source_endpoint_url:%s and config:%s and sub_type:%s and type:%s' % (__name__, add_source_endpoint_url, config, sub_type, type))
-        source = {'type': type, 'config': config}
-        if sub_type:
-            source['sub_type'] = sub_type
-        data = urlencode({'source': json.dumps(source)})
-        request = Request(add_source_endpoint_url, data)
-        try:
-            response = urlopen(request).read()
-            response = json.loads(response)
-            status = response['status']
-        except Exception, e:
-            Logger.Error('%s - MetaLayerAggregatorController._call_aggregator - Error:%s while contacting url:%s' % (__name__, e, add_source_endpoint_url))
-            status = 'failure'
-        Logger.Info('%s - MetaLayerAggregatorController._call_aggregator - finished' % __name__)
-        return status
-
-    @classmethod
-    def AddSourceToAggregator(cls, type, sub_type, config):
-        Logger.Info('%s - MetaLayerAggregatorController.AddSourceToAggregator - started' % __name__)
-        Logger.Debug('%s - MetaLayerAggregatorController.AddSourceToAggregator - started with config:%s and sub_type:%s and type:%s' % (__name__, config, sub_type, type))
-        add_source_endpoint_url = settings.ENDPOINTS['datapoints']['metalayer_aggregator']['add_source']
-        status = cls._call_aggregator(add_source_endpoint_url, config, sub_type, type)
-        if status == 'failure':
-            Logger.Error('%s MetaLayerAggregatorController.AddSourceToAggregator - Error type = %s, config = %s, sub_type = %s' % (__name__, type, json.dumps(config), sub_type))
-        Logger.Info('%s - MetaLayerAggregatorController.AddSourceToAggregator - finished' % __name__)
-
-    @classmethod
-    def RemoveSourceFromAggregator(cls, type, sub_type, config):
-        Logger.Info('%s - MetaLayerAggregatorController.RemoveSourceFromAggregator - started' % __name__)
-        Logger.Debug('%s - MetaLayerAggregatorController.RemoveSourceFromAggregator - started with config:%s and sub_type:%s and type:%s' % (__name__, config, sub_type, type))
-        remove_source_endpoint_url = settings.ENDPOINTS['datapoints']['metalayer_aggregator']['remove_source']
-        status = cls._call_aggregator(remove_source_endpoint_url, config, sub_type, type)
-        if status == 'failure':
-            Logger.Error('%s MetaLayerAggregatorController.AddSourceToAggregator - Error type = %s, config = %s, sub_type = %s' % (__name__, type, json.dumps(config), sub_type))
-        Logger.Info('%s - MetaLayerAggregatorController.RemoveSourceFromAggregator - finished' % __name__)
-

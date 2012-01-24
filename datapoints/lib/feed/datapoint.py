@@ -1,10 +1,13 @@
-from datapoints.controllers import MetaLayerAggregatorController
+import re
+import time
+from datapoints.classes import BaseDataPoint
+from dateutil import parser as dateutil_parser
 from urlparse import urlparse
 from hashlib import md5
 import feedparser
 from logger import Logger
 
-class DataPoint(object):
+class DataPoint(BaseDataPoint):
     def get_unconfigured_config(self):
         return {
             'type':'feed',
@@ -55,20 +58,42 @@ class DataPoint(object):
             return False, { 'url':['This url does not seem to point to a feed?'] }
         return True, {}
 
-    def data_point_added(self, config):
-        type = config['type']
-        sub_type = config['sub_type']
-        config = { 'url':[e for e in config['elements'] if e['name'] == 'url'][0]['value'] }
-        MetaLayerAggregatorController.AddSourceToAggregator(type, sub_type, config)
-
-    def data_point_removed(self, config):
-        type = config['type']
-        sub_type = config['sub_type']
-        config = { 'url':[e for e in config['elements'] if e['name'] == 'url'][0]['value'] }
-        MetaLayerAggregatorController.RemoveSourceFromAggregator(type, sub_type, config)
-
     def tick(self, config):
-        Logger.Debug('%s - tick - started - with config: %s' % (__name__, config))
-        Logger.Debug('%s - tick - finished' % __name__)
-        #Tick is controlled by the aggregator
-        return []
+        Logger.Info('%s - tick - started - with config: %s' % (__name__, config))
+        feed_url = [e for e in config['elements'] if e['name'] == 'url'][0]['value']
+        feed = feedparser.parse(feed_url)
+        content = [self._map_feed_item_to_content_item(config, item) for item in feed['items']]
+        Logger.Info('%s - tick - finished' % __name__)
+        return content
+
+    def _map_feed_item_to_content_item(self, config, item):
+        return {
+            'id':md5(item['link']).hexdigest(),
+            'text':[
+                    {
+                    'title': item['title'],
+                    'text':[
+                        re.sub(r'<.*?>', '', item['summary'])
+                    ],
+                    'tags':[t['term'] for t in item['tags']] if 'tags' in item else []
+                }
+            ],
+            'time': time.mktime(dateutil_parser.parse(item['updated']).timetuple()),
+            'link':item['link'],
+            'author':{
+                'display_name':item['author'] if 'author' in item else 'none',
+                },
+            'channel':{
+                'id':md5(config['type'] + config['sub_type'] if 'sub_type' in config else '').hexdigest(),
+                'type':config['type'],
+                'sub_type':config['sub_type'] if 'sub_type' in config else None
+            },
+            'source':{
+                'id':self.generate_configured_guid(config),
+                'display_name':self.generate_configured_display_name(config),
+                }
+        }
+
+    def _clean_url_for_display_name(self, url):
+        parsed_url = urlparse.urlparse(url)
+        return parsed_url.netloc + '-'.join(parsed_url.path.split('/'))

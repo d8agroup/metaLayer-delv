@@ -10,7 +10,7 @@ class Action(BaseAction):
     def get_unconfigured_config(self):
         return {
             'name':'yahooplacemaker',
-            'display_name_short':'Location Detection',
+            'display_name_short':'Location',
             'display_name_long':'Yahoo Placemaker Location Detection',
             'image_large':'http://webmail.mozdev.org/images/misc/Yahoo-SmallIcon.png',
             'image_small':'http://webmail.mozdev.org/images/misc/Yahoo-SmallIcon.png',

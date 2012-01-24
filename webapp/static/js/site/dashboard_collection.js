@@ -71,20 +71,20 @@
         },
         apply_widget_droppable:function()
         {
+            var data_point_dropped_function = function(event, ui, configuration, collection)
+            {
+                var draggable = ui.draggable;
+                var data_point = clone(draggable.data('data_point'));
+                data_point['id'] = guid();
+                if (configuration.data_points == null)
+                    configuration['data_points'] = [];
+                configuration.data_points[configuration.data_points.length] = data_point;
+                collection.data('configuration', configuration);
+                collection.dashboard_collection('render');
+            };
+
             var dropped_function = function(event, ui, configuration, collection)
             {
-                var data_point_dropped_function = function(event, ui, configuration, collection)
-                {
-                    var draggable = ui.draggable;
-                    var data_point = clone(draggable.data('data_point'));
-                    data_point['id'] = guid();
-                    if (configuration.data_points == null)
-                        configuration['data_points'] = [];
-                    configuration.data_points[configuration.data_points.length] = data_point;
-                    collection.data('configuration', configuration);
-                    collection.dashboard_collection('render');
-                };
-
                 var action_dropped_function = function(event, ui, configuration, collection)
                 {
                     var draggable = ui.draggable;
@@ -93,6 +93,18 @@
                     if (configuration.actions == null)
                         configuration.actions = [];
                     configuration.actions[configuration.actions.length] = action;
+                    if (action.configured)
+                    {
+                        $.post
+                            (
+                                '/dashboard/actions/add_action_to_data_points',
+                                {
+                                    action:JSON.stringify(action),
+                                    data_points:JSON.stringify(configuration.data_points),
+                                    csrfmiddlewaretoken:$('#csrf_form input').val()
+                                }
+                            );
+                    }
                     collection.data('configuration', configuration);
                     collection.dashboard_collection('render');
                 };
@@ -137,6 +149,13 @@
                     {
                         accept:'.output_widget, .action_widget, .data_point_widget',
                         drop:function(event, ui) { dropped_function(event, ui, configuration, collection); }
+                    }
+                );
+            collection.find('.empty_collection').droppable
+                (
+                    {
+                        accept:'.data_point_widget',
+                        drop:function(event, ui) { data_point_dropped_function(event, ui, configuration, collection); }
                     }
                 );
             return this;
