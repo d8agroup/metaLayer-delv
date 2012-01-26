@@ -11,21 +11,6 @@
                         alert('TODO: this needs to open a help modal');
                     }
                 );
-                this.find('#user_home_link').click
-                (
-                    function()
-                    {
-                        $('#page').site('show_user_home');
-                    }
-                );
-            },
-            show_user_home_link:function()
-            {
-                this.find('#user_home_link').show();
-            },
-            hide_user_home_link:function()
-            {
-                this.find('#user_home_link').hide();
             }
         }
 

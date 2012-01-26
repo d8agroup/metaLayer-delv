@@ -95,6 +95,8 @@ class SearchResultsParser(object):
             facet_groups = [{'name':f, 'display_name':f, 'facets':[]} for f in solr_response['facet_counts']['facet_fields'].keys()]
             for fg in facet_groups:
                 for x in range(0, len(solr_response['facet_counts']['facet_fields'][fg['name']]), 2):
+                    if solr_response['facet_counts']['facet_fields'][fg['name']][x] in ['_none']:
+                        continue
                     fg['facets'].append({
                         'name':solr_response['facet_counts']['facet_fields'][fg['name']][x],
                         'count':solr_response['facet_counts']['facet_fields'][fg['name']][x+1],
@@ -195,5 +197,17 @@ class SearchResultsParser(object):
             return str(day_diff/30) + " months ago"
         return str(day_diff/365) + " years ago"
 
+class SearchQueryAdditionsParser(object):
+    def __init__(self, query_additions):
+        Logger.Info('%s - SearchQueryAdditionsParser.__init__ - started' % __name__)
+        Logger.Info('%s - SearchQueryAdditionsParser.__init__ - started with query_additions:%s' % (__name__, query_additions))
+        self.query_additions = query_additions
+        Logger.Info('%s - SearchQueryAdditionsParser.__init__ - finished' % __name__)
+
+    def get_formatted_query_additions(self):
+        Logger.Info('%s - SearchQueryAdditionsParser.get_formatted_query_additions - started' % __name__)
+        additions = '&'.join(['facet.field=%s' % a['name'] for a in self.query_additions if not 'range' in a])
+        Logger.Info('%s - SearchQueryAdditionsParser.get_formatted_query_additions - started' % __name__)
+        return additions
 
 

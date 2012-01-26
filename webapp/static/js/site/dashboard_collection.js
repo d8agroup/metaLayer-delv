@@ -21,6 +21,8 @@
                 collection.actions = [];
             if (collection.outputs == null)
                 collection.outputs = [];
+            if (collection.visualizations == null)
+                collection.visualizations = [];
             dashboard_collection.data('configuration', collection);
             dashboard_collection.dashboard_collection('render');
             return dashboard_collection;
@@ -40,12 +42,13 @@
                 dashboard_collection.html(search_widget_html);
                 search_widget_html.dashboard_search_widget(configuration);
 
-                if (configuration.outputs.length > 0)
-                {
-                    var outputs_container_html = $("<div class='outputs_container'></div>");
-                    outputs_container_html.dashboard_outputs(configuration);
-                    dashboard_collection.append(outputs_container_html);
-                }
+                var visualizations_container_html = $('<div class="visualizations_container"></div>');
+                dashboard_collection.append(visualizations_container_html);
+                visualizations_container_html.dashboard_visualizations(configuration);
+
+                var outputs_container_html = $("<div class='outputs_container'></div>");
+                outputs_container_html.dashboard_outputs(configuration);
+                dashboard_collection.append(outputs_container_html);
 
                 dashboard_collection.draggable( { revert:true, stack:'.collection_container', handle:'.search_widget' } );
             }
@@ -63,6 +66,7 @@
             configuration.search_results = {};
             configuration.data_points = [];
             configuration.actions = [];
+            configuration.visualizations = [];
             for (var o=0; o<configuration.outputs.length; o++)
                 $.post( '/dashboard/outputs/remove_output', { output:JSON.stringify(configuration.outputs[o]), csrfmiddlewaretoken:$('#csrf_form input').val() } );
             configuration.outputs = [];
@@ -134,12 +138,27 @@
                         );
                 };
 
+                var visualization_dropped_function = function(event, ui, configuration, collection)
+                {
+                    var draggable = ui.draggable;
+                    var visualization = clone(draggable.data('visualization'));
+                    visualization['id'] = guid();
+                    if (configuration.visualizations == null)
+                        configuration.visualizations = [];
+                    configuration.visualizations[configuration.visualizations.length] = visualization;
+                    collection.data('configuration', configuration);
+                    collection.find('.visualizations_container').dashboard_visualizations(configuration);
+                    $('#dashboard').dashboard('save');
+                };
+
                 if (ui.draggable.is('.data_point_widget'))
                     data_point_dropped_function(event, ui, configuration, collection);
                 else if (ui.draggable.is('.action_widget'))
                     action_dropped_function(event, ui, configuration, collection);
                 else if (ui.draggable.is('.output_widget'))
                     output_dropped_function(event, ui, configuration, collection);
+                else if (ui.draggable.is('.visualization_widget'))
+                    visualization_dropped_function(event, ui, configuration, collection);
             };
 
             var collection = this;
@@ -147,7 +166,7 @@
             collection.find('.search_widget').droppable
                 (
                     {
-                        accept:'.output_widget, .action_widget, .data_point_widget',
+                        accept:'.output_widget, .action_widget, .data_point_widget, .visualization_widget',
                         drop:function(event, ui) { dropped_function(event, ui, configuration, collection); }
                     }
                 );
@@ -202,6 +221,32 @@
             collection.dashboard_collection('render');
 
             return collection;
+        },
+        remove_visualization:function(visualization_id)
+        {
+            var collection = this;
+            var configuration = collection.data('configuration');
+            var new_visualizations = [];
+            for (var x=0; x<configuration.visualizations.length; x++)
+                if (configuration.visualizations[x].id != visualization_id)
+                    new_visualizations[new_visualizations.length] = configuration.visualizations[x];
+                else
+                    $.post
+                        (
+                            '/dashboard/visualizations/remove_visualization',
+                            { visualization:JSON.stringify(configuration.visualizations[x]), csrfmiddlewaretoken:$('#csrf_form input').val() }
+                        );
+            collection.data('configuration').visualizations = new_visualizations;
+            collection.find('.visualizations_container').dashboard_visualizations(configuration);
+            $('#dashboard').dashboard('save');
+            return collection;
+        },
+        search_results_updated:function()
+        {
+            var collection = this;
+            var configuration = collection.data('configuration');
+            collection.find('.visualizations_container').dashboard_visualizations('render');
+            collection.find('.ouputs_container').dashboard_outputs(configuration);
         }
     };
 

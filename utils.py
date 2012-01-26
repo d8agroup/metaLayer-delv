@@ -4,24 +4,14 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from django.template.loader import get_template
 from django.template import Context
+from django.utils.encoding import force_unicode
 import datetime
 
-################################################################################
-# ASYNC REQUESTS                                                               #
-################################################################################
-def async(gen):
-    def func(*args, **kwargs):
-        it = gen(*args, **kwargs)
-        result = it.next()
-        Thread(target=lambda: list(it)).start()
-        return result
-    return func
+
 
 ################################################################################
 # DYNAMIC MODULE LOADED FUNCTIONS                                              #
 ################################################################################
-from django.utils.encoding import force_unicode
-
 def my_import(name):
     mod = __import__(name)
     components = name.split('.')

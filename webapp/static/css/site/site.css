@@ -10,7 +10,7 @@ HEADER
 #header { width:100%; background-color:#222; color:#DDD; text-align:right; }
 #header_links { padding:5px; }
 #header_links a { display:inline-block; padding:0 5px;}
-#header_links #user_home_link { display:none; }
+#header_links #user_home_link {  }
 
 /***********************************************************************************************************************
 USER HOME PAGE
@@ -72,8 +72,8 @@ USER HOME PAGE
 /***********************************************************************************************************************
 DASHBOARD
 ***********************************************************************************************************************/
-#dashboard { display:none; }
-#widget_panel { height:105px; background-color:#DDD; padding:5px; }
+#dashboard {  }
+#widgets { height:105px; background-color:#DDD; padding:5px; }
 #widget_panel h3 { text-align:center; font-size:80%}
 
 .data_point_widget,
@@ -105,13 +105,36 @@ DASHBOARD
 .action_config { padding:20px; }
 .action_config .image_and_title { height:100px; overflow:hidden; }
 .action_config .image_and_title img { width:30%; float:left;}
-.action_config .image_and_title h3 { display:inline; font-size:250%; float:right; width:60%;}
+.action_config .image_and_title h3 { display:inline; font-size:150%; float:right; width:60%;}
 .action_config .instructions { color:#BBB; padding:10px; font-style:italic; }
 .action_config .form_row label { display:inline-block; width:45%; }
 .action_config .form_row input { display:inline-block; width:50%; }
 .action_config .form_row .help { color:#BBB; font-size:80%; padding:5px 0 0 0;}
 .action_config .form_actions { text-align:center; margin-top:20px;}
 .action_config .form_actions input { width:48%; padding:5px; }
+
+.visualization_container { margin:2px; background-color:#333;}
+.visualization_container .image_and_title { height:26px; overflow:hidden; background-color:#222;}
+.visualization_container .image_and_title img { height:20px; padding:3px}
+.visualization_container .image_and_title h3 { display:inline-block; font-size:100%; width:50%; height:16px; overflow:hidden; position:relative; bottom:5px; }
+.visualization_container .image_and_title .actions { float:right; width:30%; overflow:hidden; text-align:right;}
+.visualization_container .image_and_title .actions .publish img { height:18px; position:relative; bottom:1px; left:7px; }
+.visualization_container .image_and_title .actions .loading { height:17px; position:relative; bottom:1px; left:9px; display:none;}
+
+.visualization_container .visualization_object_outer_container { padding:5px;}
+.visualization_container .visualization_object_container { height:220px; }
+
+.visualization_config .unconfigurable { padding:10px;}
+.visualization_config .instructions { color:#BBB; padding:10px 20px; font-style:italic; }
+.visualization_config .data_dimensions h4 { padding:10px;}
+.visualization_config .data_dimensions { border-bottom:1px dashed #222;}
+.visualization_config .form_row { padding:10px; }
+.visualization_config .form_row label { display:inline-block; width:45%; }
+.visualization_config .form_row input { display:inline-block; width:50%; }
+.visualization_config .form_row select { display:inline-block; width:50%; }
+.visualization_config .form_row .help { color:#BBB; font-size:80%; padding:5px 0 0 0;}
+.visualization_config .form_actions { text-align:center; margin-top:20px;}
+.visualization_config .form_actions input { width:48%; padding:5px; }
 
 .search_widget { margin:2px; background-color:#333; }
 .search_widget .jScrollPaneTrack { margin-right:5px; background-color:#222;}

@@ -20,13 +20,6 @@
             $('#user_dashboard_management_container').user_dashboard_management();
             setTimeout(function() { ui.draggable.remove(); }, 1);
         };
-        var dashboard_template_loaded = function(event, element)
-        {
-            var saved_dashboard_container = element.parents('.saved_dashboard');
-            var dashboard_id = saved_dashboard_container.data('dashboard_id');
-            $('#page').site('show_dashboard');
-            $('#page').site('load_dashboard', { dashboard_id:dashboard_id })
-        };
         /*** END Embedded functions ***/
 
         var user_dashboard_management_saved_dashboards_container = this;
@@ -50,10 +43,6 @@
         user_dashboard_management_saved_dashboards_container.find('.close_button_container a').click
             (
                 function(event) { delete_dashboard_link_click(event, $(this)); }
-            );
-        user_dashboard_management_saved_dashboards_container.find('a.load_dashboard').click
-            (
-                function(event) { dashboard_template_loaded(event, $(this)); }
             );
     }
 })( jQuery );

@@ -1,7 +1,7 @@
 from urllib2 import urlopen
 from django.conf import settings
 from logger import Logger
-from search.parsers import SearchDataPointParser, SearchQueryParser, SearchResultsParser
+from search.parsers import SearchDataPointParser, SearchQueryParser, SearchResultsParser, SearchQueryAdditionsParser
 from django.utils import simplejson as json
 
 class SearchController(object):
@@ -11,7 +11,7 @@ class SearchController(object):
         self.configuration = configuration
         Logger.Info('%s - SearchController.__init__ - finished' % __name__)
 
-    def run_search_and_return_results(self):
+    def run_search_and_return_results(self, search_query_additions=None):
         Logger.Info('%s - SearchController.run_search_and_return_results - started' % __name__)
         data_points = self.configuration['data_points']
         sdpp = SearchDataPointParser(data_points)
@@ -23,7 +23,12 @@ class SearchController(object):
             sdpp.parse_data_points(),
             sqp.parse_query()
         ]
+        if search_query_additions:
+            sqap = SearchQueryAdditionsParser(search_query_additions)
+            query_additions = sqap.get_formatted_query_additions()
+            search_components.append(query_additions)
         search_url = '%s/select/?%s' % (settings.SOLR_CONFIG['solr_url'], '&'.join(search_components))
+        Logger.Debug('%s - SearchController.run_search_and_return_results - contacting solr with url:%s' % (__name__, search_url))
         response = urlopen(search_url).read()
         response = json.loads(response)
         srp = SearchResultsParser(response, '/search', search_filters)

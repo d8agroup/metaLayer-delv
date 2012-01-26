@@ -44,8 +44,8 @@ class ActionController(object):
         for raw_result in raw_results:
             clean_result = {'id':raw_result['id']}
             for prop in self.action['content_properties']['added']:
-                if prop['name'] in raw_result and raw_result[prop['name']]:
-                    clean_result[self._search_encode_property(prop)] = raw_result[prop['name']]
+                if prop['name'] in raw_result:
+                    clean_result[self._search_encode_property(prop)] = self._map_property_default_if_required(raw_result[prop['name']], prop['type'])
             clean_results.append(clean_result)
         Logger.Info('%s - ActionController.run_action - finished' % __name__)
         return clean_results
@@ -92,5 +92,11 @@ class ActionController(object):
             return '_s'
         return 'action_%s_%s_%s' % (self.action['name'], prop['name'], get_postfix(prop['type']))
 
+    def _map_property_default_if_required(self, value, type):
+        if value:
+            return value
+        if type == 'string': return '_none'
+        if type == 'location_string': return '_none'
+        return '_s'
 
 

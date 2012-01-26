@@ -10,24 +10,15 @@
 
 {% block js %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
     {% compress js %}
+        <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
         <script type="text/javascript" src="/static/js/site/header.js"></script>
         <script type="text/javascript" src="/static/js/site/site.js"></script>
-        <script type="text/javascript" src="/static/js/site/users.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_account_management.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_account_management_change_subscription.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_account_management_current_subscription.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_dashboard_management.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_dashboard_management_saved_dashboards.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_dashboard_management_saved_dashboards_not_allowed.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_dashboard_management_clickable_dashboard_templates.js"></script>
-        <script type="text/javascript" src="/static/js/site/user_dashboard_management_draggable_dashboard_templates.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_search_widget_data_points_and_actions.js"></script>
@@ -41,7 +32,35 @@
         <script type="text/javascript" src="/static/js/site/dashboard_collections_panel.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_widget_panel.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_outputs.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_visualizations.js"></script>
+        <script type="text/javascript" src="/static/js/site/dashboard_visualization.js"></script>
         <script type="text/javascript" src="/static/js/site/init.js"></script>
+        <script type="text/javascript">
+            $(document).ready
+            (
+                function()
+                {
+                    $('#header').header();
+                    setTimeout
+                    (
+                        function()
+                        {
+                            var dashboard_id = '{{ dashboard_id }}';
+                            $.get
+                            (
+                                '/dashboard/load/' + dashboard_id,
+                                function(data)
+                                {
+                                    $('#dashboard').dashboard({'dashboard':data.dashboard});
+                                },
+                                'JSON'
+                            );
+                        },
+                        1000
+                    );
+                }
+            )
+        </script>
     {% endcompress %}
 {% endblock %}
 
@@ -49,23 +68,24 @@
     <div id='page'>
         <div id='header'>
             <div id='header_links' class="clearfix">
-                <a id='user_home_link'>home</a>
+                <a id='user_home_link' href="/">home</a>
                 <a id='link_help'>help</a>
                 <a id='link_logout' href="/user/logout">logout</a>
             </div>
         </div>
         <div id='content'>
-            <div id='user_home_container'>
-                <div id='user_home' class="clearfix">
-                    <h3>Home</h3>
-                    <div id='user_dashboard_management_container'></div>
-                    <div id='user_account_management_container'></div>
-                </div>
-            </div>
             <div id="dashboard">
                 <div id='widgets'></div>
                 <div id='collections'></div>
             </div>
+        </div>
+        <div class="hidden">
+            <img src="/static/images/site/icon_clock.png" width='1px' height="1px" />
+            <img src="/static/images/site/icon_clock_loading.gif" width='1px' height="1px" />
+            <img src="/static/images/site/icon_config.png" width='1px' height="1px" />
+            <img src="/static/images/site/icon_cross.png" width='1px' height="1px" />
+            <img src="/static/images/site/icon_publish.png" width='1px' height="1px" />
+            <img src="/static/images/site/icon_search.png" width='1px' height="1px" />
         </div>
     </div>
 {% endblock %}

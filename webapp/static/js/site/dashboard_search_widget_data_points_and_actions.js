@@ -11,7 +11,7 @@
             data_point.configured = false;
             var post_data = { data_point:JSON.stringify(data_point), csrfmiddlewaretoken:$('#csrf_form input').val() };
             $.post('/dashboard/data_points/remove_data_point', post_data);
-            link.parents('.collection_container').dashboard_collection('render');
+            link.parents('.search_widget').dashboard_search_widget('render');
         };
 
         var action_clicked_function = function(link)
@@ -20,7 +20,7 @@
             action.configured = false;
             var post_data = { action:JSON.stringify(action), csrfmiddlewaretoken:$('#csrf_form input').val() };
             $.post('/dashboard/actions/remove_action', post_data);
-            link.parents('.collection_container').dashboard_collection('render');
+            link.parents('.search_widget').dashboard_search_widget('render');
         };
 
         var search_widgets_data_points = this;

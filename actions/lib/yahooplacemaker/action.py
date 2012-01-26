@@ -5,6 +5,7 @@ from urllib import urlencode
 from urllib2 import Request, urlopen
 import re
 from actions.classes import BaseAction
+from logger import Logger
 
 class Action(BaseAction):
     def get_unconfigured_config(self):
@@ -40,6 +41,7 @@ class Action(BaseAction):
             'content_properties':{
                 'added':[
                     {
+                        'display_name':'Yahoo Placemaker Location',
                         'name':'location',
                         'type':'location_string',
                     }
@@ -95,15 +97,20 @@ class LocationGetter(threading.Thread):
     def run(self):
         try:
             text = self.extract_content()
+            text = text.encode('ascii', 'ignore')
             api_key = [e for e in self.config['elements'] if e['name'] == 'api_key'][0]['value']
             url = 'http://wherein.yahooapis.com/v1/document'
             post_data = urlencode({ 'documentContent':text, 'documentType':'text/plain', 'outputType':'json', 'appid':api_key })
             request = Request(url, post_data)
             response = urlopen(request)
             response = json.loads(response.read())
+            Logger.Debug('%s - LocationGetter.run - sent to Yahoo:%s' % (__name__, text))
+            Logger.Debug('%s - LocationGetter.run - return from Yahoo:%s' % (__name__, response))
             result = self._map_location(self.config, response)
+            Logger.Debug('%s - LocationGetter.run - mapped location from Yahoo:%s' % (__name__, result))
             self.result = result
         except Exception, e:
+            Logger.Error('%s - LocationGetter.run - error:%s' % (__name__, e))
             self.result = None
 
     def extract_content(self):
@@ -116,14 +123,41 @@ class LocationGetter(threading.Thread):
         return text
 
     def _map_location(self, config, response):
+        def countries(a,v):
+            if isinstance(a, dict):
+                if 'type' in a and a['type'] == 'Country':
+                    if 'name' in a and a['name'] not in v:
+                        v.append(a['name'])
+                for key in a.keys():
+                    countries(a[key], v)
+            elif isinstance(a, list):
+                for b in a:
+                    countries(b, v)
+            else:
+                return
+        def places(a,v):
+            if isinstance(a, dict):
+                if 'type' in a and a['type'] != 'Country':
+                    if 'name' in a and a['name'] not in v:
+                        v.append(a['name'])
+                for key in a.keys():
+                    places(a[key], v)
+            elif isinstance(a, list):
+                for b in a:
+                    places(b, v)
+            else:
+                return
+
+        if not isinstance(response['document'], dict):
+            return False
         collection_type = [e for e in config['elements'] if e['name'] == 'collection_type'][0]['value']
         if collection_type == 'Countries':
-            potential_countries = [c for c in response['document']['localScopes']['localScope']['ancestors'] if c['ancestor']['type'] == 'Country']
-            if potential_countries:
-                return potential_countries[0]['ancestor']['name']
-            return False
-        location = response['document']['localScopes']['localScope']['name']
-        location = re.sub(r'\(\w+\)', '', location).strip()
-        return location
+            locations = []
+            countries(response, locations)
+            return sorted(locations)[0] if locations else False
+        else:
+            locations = []
+            places(response, locations)
+            return sorted(locations)[0] if locations else False
 
 

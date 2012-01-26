@@ -69,6 +69,18 @@ function clean_user_generated_html(element)
     )
 }
 
+function search_encode_property(action_name, property_name, property_type)
+{
+    var encoded_property = 'action_' + action_name + '_' + property_name;
+    if (property_type == "string")
+        encoded_property += '_s';
+    else if (property_type == 'location_string')
+        encoded_property += '_s';
+    else
+        encoded_property += '_s';
+    return encoded_property
+}
+
 $(document).ready
 (
     function()
@@ -93,7 +105,9 @@ $(document).ready
         $.get('/static/html/parts/user_dashboard_management_saved_dashboards.html', function(t) { $.template('user_dashboard_management_saved_dashboards', t)});
         $.get('/static/html/parts/user_dashboard_management_dashboard_templates.html', function(t) { $.template('user_dashboard_management_dashboard_templates', t)});
         $.get('/static/html/parts/outputs/output_url.html', function(t) { $.template('output_url', t)});
-
-        setTimeout(function(){ $('#page').site(); }, 2000);
+        $.get('/static/html/parts/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
+        $.get('/static/html/parts/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
+        $.get('/static/html/parts/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
+        $.get('/static/html/parts/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
     }
 );

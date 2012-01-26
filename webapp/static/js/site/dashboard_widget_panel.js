@@ -89,6 +89,7 @@
             widget_panel.find('.data_point_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
             widget_panel.find('.action_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
             widget_panel.find('.output_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
+            widget_panel.find('.visualization_widget').draggable( { revert:true, helper:"clone", stack:'.collection_container' });
             return widget_panel;
         }
     };

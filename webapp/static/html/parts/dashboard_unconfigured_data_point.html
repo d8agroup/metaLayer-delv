@@ -9,7 +9,7 @@
             <div class='form_row'>
                 <label>${element.display_name}</label>
                 <input type="${element.type}" name="${element.name}" class="${element.name}" value="${element.value}"/>
-                <p class="help">${element.help}</p>
+                <p class="help">{{html element.help}}</p>
             </div>'
         {{/each}}
         <div class="form_actions">

@@ -50,8 +50,8 @@
             var search_results_html = $("<div class='search_results_container'></div>");
             dashboard_search_widget.append(search_results_html);
 
-            dashboard_search_widget.dashboard_search_widget('run_search', { first_run:true });
-
+            dashboard_search_widget.dashboard_search_widget('run_search');
+            $('#dashboard').dashboard('save');
             return dashboard_search_widget;
         },
         run_search:function(data)
@@ -62,7 +62,7 @@
                 {
                     var run_search_at_interval_function = function(search_widget)
                     {
-                        search_widget.dashboard_search_widget('run_search', { first_run:false });
+                        search_widget.dashboard_search_widget('run_search');
                     };
 
                     var search_results = data.search_results;
@@ -72,7 +72,8 @@
                     search_widget.find('.search_filters').dashboard_search_widget_search_filters({search_results:search_results, search_filters:search_filters});
                     search_widget.find('.search_results_container').jScrollPane( { topCapHeight:40, bottomCapHeight:40 } );
                     search_widget.find('.options_container .refresh_data img').attr('src', '/static/images/site/icon_clock.png' ) .removeClass('loading');
-                    setTimeout(function() { run_search_at_interval_function(search_widget) }, 20000);
+                    search_widget.parents('.collection_container').dashboard_collection('search_results_updated');
+                    setTimeout(function() { run_search_at_interval_function(search_widget) }, 30000);
                 };
 
                 var configuration = search_widget.data('configuration');
@@ -90,31 +91,14 @@
             };
 
             var dashboard_search_widget = this;
-            var search_widget = dashboard_search_widget;
-            var search_results_html = dashboard_search_widget.find('.search_results_container');
+            dashboard_search_widget.find('.options_container .refresh_data img').attr
+                (
+                    'src',
+                    '/static/images/site/icon_clock_loading.gif'
+                )
+                .addClass('loading');
 
-            if (data.first_run)
-            {
-                var search_results_loading_html = $
-                    (
-                        "<div class='waiting waiting_large'>" +
-                            "<p>Reloading Results<img src='/static/images/site/loading_circle.gif' /></p>" +
-                        "</div>"
-                    );
-                search_results_html.append(search_results_loading_html);
-                search_results_loading_html.fadeIn();
-            }
-            else
-            {
-                search_widget.find('.options_container .refresh_data img').attr
-                    (
-                        'src',
-                        '/static/images/site/icon_clock_loading.gif'
-                    )
-                    .addClass('loading');
-            }
-
-            setTimeout(function() { really_run_search_function(search_widget); }, 2000);
+            setTimeout(function() {really_run_search_function(dashboard_search_widget)}, 1000);
             return dashboard_search_widget;
         },
         remove_data_point:function(data_point_id)
@@ -126,7 +110,11 @@
                 if (configuration.data_points[x].id != data_point_id)
                     new_data_points[new_data_points.length] = configuration.data_points[x];
             dashboard_search_widget.data('configuration').data_points = new_data_points;
-            dashboard_search_widget.parents('.collection_container').dashboard_collection('render');
+            if(new_data_points.length == 0)
+                dashboard_search_widget.parents('.collection_container').dashboard_collection('render');
+            else
+                dashboard_search_widget.dashboard_search_widget('render');
+            $('#dashboard').dashboard('save');
             return dashboard_search_widget;
         },
         remove_action:function(action_id)

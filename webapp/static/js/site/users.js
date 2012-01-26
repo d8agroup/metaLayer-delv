@@ -1,92 +1,4 @@
 /***********************************************************************************************************************
-Dashboard Templates
-***********************************************************************************************************************/
-(function( $ )
-{
-    $.fn.dashboard_template = function()
-    {
-        var id = this.attr('id');
-        this.find('a.load_template').click
-        (
-            function()
-            {
-                $('#page').site('show_dashboard');
-                setTimeout
-                (
-                    function()
-                    {
-                        $.get
-                        (
-                            '/user/new_dashboard_from_template/' + id,
-                            function(data)
-                            {
-                                $('#page').site('load_dashboard', { dashboard_id:data.dashboard_id })
-                            },
-                            'JSON'
-                        );
-                    },
-                    500
-                );
-            }
-        )
-    }
-})( jQuery );
-
-(function( $ )
-{
-    $.fn.dashboard_template_list = function()
-    {
-        var container = this;
-        container.html('loading...');
-        $.get
-        (
-            '/user/dashboard_templates',
-            function(template)
-            {
-                container.html(template);
-                container.find('.dashboard_template').dashboard_template();
-            }
-        );
-    }
-})( jQuery );
-
-/***********************************************************************************************************************
- saved_dashboard
-***********************************************************************************************************************/
-(function( $ )
-{
-    $.fn.saved_dashboard = function()
-    {
-        this.find('a.load_dashboard').click
-        (
-            function()
-            {
-                $('#page').site('show_dashboard');
-                $('#page').site('load_dashboard', { dashboard_id:$(this).attr('id')})
-            }
-        )
-    }
-})( jQuery );
-
-(function( $ )
-{
-    $.fn.saved_dashbaord_list = function()
-    {
-        var container = this;
-        container.html('loading ...');
-        $.get
-        (
-            '/user/saved_dashbaords',
-            function(template)
-            {
-                container.html(template);
-                container.find('.dashboard_summary').saved_dashboard();
-            }
-        );
-    }
-})( jQuery );
-
-/***********************************************************************************************************************
 user_home
 ***********************************************************************************************************************/
 (function ( $ )
@@ -99,8 +11,6 @@ user_home
         },
         refresh:function()
         {
-            //this.find('#saved_dashboards .list-container').saved_dashbaord_list();
-            //this.find('#dashboard_templates .list-container').dashboard_template_list();
             this.find('#user_dashboard_management_container').user_dashboard_management();
             this.find('#user_account_management_container').user_account_management();
         }

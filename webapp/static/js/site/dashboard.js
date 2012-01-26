@@ -11,7 +11,14 @@ DASHBOARD - CHECKED 18/01/2010
             var dashboard = data.dashboard;
             dashboard_container.data('dashboard', dashboard);
             dashboard_container.find('#widgets').dashboard_widget_panel({widgets:dashboard.widgets});
-            dashboard_container.find('#collections').dashboard_collections_panel({'collections':dashboard.collections});
+            setTimeout
+                (
+                    function()
+                    {
+                        dashboard_container.find('#collections').dashboard_collections_panel({'collections':dashboard.collections});
+                    },
+                    2000
+                );
             return dashboard_container;
         },
         save:function()

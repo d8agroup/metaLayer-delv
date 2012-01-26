@@ -26,3 +26,25 @@ class VisualizationController(object):
         vizs = [VisualizationController.LoadVisualization(v).get_unconfigured_config() for v in settings.VISUALIZATIONS_CONFIG['enabled_visualizations']]
         Logger.Info('%s - VisualizationController.GetAllForTemplateOptions - finished' % __name__)
         return vizs
+
+    def visualization_removed(self):
+        Logger.Info('%s - VisualizationController.visualization_removed - started' % __name__)
+        viz = VisualizationController.LoadVisualization(self.viz['name'])
+        viz.visualization_removed()
+        Logger.Info('%s - VisualizationController.visualization_removed - finished' % __name__)
+
+    def get_search_query_additions(self):
+        Logger.Info('%s - VisualizationController.get_search_query_additions - started' % __name__)
+        viz = VisualizationController.LoadVisualization(self.viz['name'])
+        search_query_data = viz.generate_search_query_data(self.viz)
+        Logger.Info('%s - VisualizationController.get_search_query_additions - finished' % __name__)
+        return search_query_data
+
+    def render_javascript_visualization_for_search_results(self, search_results):
+        Logger.Info('%s - VisualizationController.render_javascript_visualization_for_search_results - started' % __name__)
+        viz = VisualizationController.LoadVisualization(self.viz['name'])
+        data_dimension_names = [dd['value'] for dd in self.viz['data_dimensions']]
+        facets_subscribed_to = [facet for facet in search_results['facet_groups'] if facet['name'] in data_dimension_names]
+        javascript = viz.render_javascript_based_visualization(self.viz, facets_subscribed_to)
+        Logger.Info('%s - VisualizationController.render_javascript_visualization_for_search_results - finished' % __name__)
+        return javascript

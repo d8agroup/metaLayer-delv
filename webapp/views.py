@@ -1,5 +1,7 @@
+from threading import Thread
 from django.shortcuts import render_to_response, redirect
-from django.http import HttpResponse, HttpResponseServerError
+from django.views.decorators.cache import never_cache
+from django.http import HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
@@ -14,8 +16,18 @@ from search.controllers import SearchController
 from userprofiles.controllers import UserController
 from dashboards.controllers import DashboardsController
 from utils import JSONResponse
-from urllib2 import urlopen
 from visualizations.controllers import VisualizationController
+
+################################################################################
+# ASYNC REQUESTS                                                               #
+################################################################################
+def async(gen):
+    def func(*args, **kwargs):
+        it = gen(*args, **kwargs)
+        result = it.next()
+        Thread(target=lambda: list(it)).start()
+        return result
+    return func
 
 def index(request):
     Logger.Info('%s - index - started' % __name__)
@@ -48,7 +60,16 @@ def index(request):
                         context_instance=RequestContext(request)
                     )
     Logger.Info('%s - index - finished' % __name__)
-    return render_to_response('site.html',context_instance=RequestContext(request))
+    return render_to_response('my_account.html',context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def dashboard_load(request, id):
+    Logger.Info('%s - dashboard - started' % __name__)
+    Logger.Debug('%s - dashboard - started with id:%s' % (__name__, id))
+    dc = DashboardsController(request.user)
+    db = dc.get_dashboard_by_id(id)
+    Logger.Info('%s - dashboard - finished' % __name__)
+    return render_to_response('dashboard.html',{ 'dashboard_id':db['id'] }, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def dashboard(request, id):
@@ -165,6 +186,35 @@ def dashboard_output_removed(request):
     return JSONResponse()
 
 @login_required(login_url='/')
+def dashboard_remove_visualization(request):
+    Logger.Info('%s - dashboard_visualization_removed - started' % __name__)
+    visualization = request.POST['visualization']
+    visualization = json.loads(visualization)
+    vc = VisualizationController(visualization)
+    vc.visualization_removed()
+    Logger.Info('%s - dashboard_visualization_removed - finished' % __name__)
+    return JSONResponse()
+
+@never_cache
+@login_required(login_url='/')
+def dashboard_run_visualization(request):
+    Logger.Info('%s - dashboard_run_visualization - started' % __name__)
+    visualization = request.POST['visualization']
+    visualization = json.loads(visualization)
+    configuration = {
+        'data_points':json.loads(request.POST['data_points']),
+        'search_filters':json.loads(request.POST['search_filters'])
+    }
+    vc = VisualizationController(visualization)
+    search_query_additions = vc.get_search_query_additions()
+    sc = SearchController(configuration)
+    search_results = sc.run_search_and_return_results(search_query_additions)
+    content = vc.render_javascript_visualization_for_search_results(search_results)
+    content_type = 'text/javascript; charset=UTF-8'
+    Logger.Info('%s - dashboard_run_visualization - finished' % __name__)
+    return HttpResponse(content=content, content_type=content_type)
+
+@login_required(login_url='/')
 def dashboard_run_search(request):
     Logger.Info('%s - dashboard_run_search - started' % __name__)
     start_time = time.time()
@@ -188,14 +238,15 @@ def dashboard_get_content_item_template(request, type, sub_type):
     return JSONResponse({'template':template, 'type':type, 'sub_type':sub_type})
 
 @login_required(login_url='/')
+@async
 def dashboard_save(request):
+    yield JSONResponse()
     Logger.Info('%s - dashboard_save - started' % __name__)
     dashboard = json.loads(request.POST['dashboard'])
     user = request.user
     dbc = DashboardsController(user)
     dbc.update_dashboard(dashboard)
     Logger.Info('%s - dashboard_save - finished' % __name__)
-    return JSONResponse()
 
 ########################################################################################################################
 # USER ACCOUNT FUNCTIONS

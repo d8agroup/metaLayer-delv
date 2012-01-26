@@ -13,7 +13,7 @@ STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/webapp/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(
-    level = logging.ERROR,
+    level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 
@@ -44,7 +44,7 @@ TEMPLATE_DIRS = (
 SOLR_CONFIG = {
     'default_page_size':100,
     'solr_url':'http://md.dev.01:8080/solr',
-    'solr_params':'wt=json&facet=on&sort=time+desc&rows=100',
+    'solr_params':'wt=json&facet=on&sort=time+desc&rows=100&facet.mincount=1',
     'solr_facets':{
         'source_display_name':{
             'display_name':'Source',

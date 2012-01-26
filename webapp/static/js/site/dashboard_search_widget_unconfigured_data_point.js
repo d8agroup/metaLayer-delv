@@ -30,7 +30,8 @@
                                 csrfmiddlewaretoken:$('#csrf_form input').val()
                             }
                         );
-                    container.parents('.collection_container').dashboard_collection('render');
+                    container.parents('.search_widget').dashboard_search_widget('render');
+
                 }
                 else
                 {

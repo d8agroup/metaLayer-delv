@@ -61,7 +61,7 @@ class DataPoint(BaseDataPoint):
         Logger.Info('%s - tick - started - with config: %s' % (__name__, config))
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
         keywords = quote(keywords)
-        url = 'http://search.twitter.com/search.json?q=%s&rpp=100' % keywords
+        url = 'http://search.twitter.com/search.json?q=%s&rpp=25' % keywords
         response = urlopen(url).read()
         Logger.Debug('%s - tick - raw response: %s' % (__name__, response))
         response = json.loads(response)
