@@ -206,10 +206,10 @@ def dashboard_run_visualization(request):
         'search_filters':json.loads(request.POST['search_filters'])
     }
     vc = VisualizationController(visualization)
-    search_query_additions = vc.get_search_query_additions()
+    search_query_additions_collection = vc.get_search_query_additions_collection(configuration)
     sc = SearchController(configuration)
-    search_results = sc.run_search_and_return_results(search_query_additions)
-    content = vc.render_javascript_visualization_for_search_results(search_results)
+    search_results_collection = [sc.run_search_and_return_results(sqa) for sqa in search_query_additions_collection]
+    content = vc.render_javascript_visualization_for_search_results_collection(search_results_collection)
     content_type = 'text/javascript; charset=UTF-8'
     Logger.Info('%s - dashboard_run_visualization - finished' % __name__)
     return HttpResponse(content=content, content_type=content_type)

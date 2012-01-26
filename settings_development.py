@@ -52,36 +52,6 @@ SOLR_CONFIG = {
     }
 }
 
-DATA_POINTS_CONFIG = {
-    'enabled_data_points':[
-        'feed',
-        'googleplusactivitysearch',
-        'twittersearch',
-        'googlenewssearch',
-    ]
-}
-
-ACTIONS_CONFIG = {
-    'enabled_actions':[
-        'datalayersentimentanalysis',
-        'yahooplacemaker',
-        'languagedetection'
-    ]
-}
-
-OUTPUTS_CONFIG = {
-    'enabled_outputs':[
-        'atomoutput',
-        'jsonoutput'
-    ]
-}
-
-VISUALIZATIONS_CONFIG = {
-    'enabled_visualizations':[
-        'googlegeochart'
-    ]
-}
-
 CHARGIFY_SETTINGS = {
     'api_key':'eWdDw0im7NE0lfXeiXhS',
     'subdomain':'metalayer-dashboard'

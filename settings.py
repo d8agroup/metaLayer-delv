@@ -210,6 +210,36 @@ SUBSCRIPTIONS_SETTINGS = {
     }
 }
 
+DATA_POINTS_CONFIG = {
+    'enabled_data_points':[
+        'feed',
+        'googleplusactivitysearch',
+        'twittersearch',
+        'googlenewssearch',
+        ]
+}
+
+ACTIONS_CONFIG = {
+    'enabled_actions':[
+        'datalayersentimentanalysis',
+        'yahooplacemaker',
+        'languagedetection'
+    ]
+}
+
+OUTPUTS_CONFIG = {
+    'enabled_outputs':[
+        'atomoutput',
+        'jsonoutput'
+    ]
+}
+
+VISUALIZATIONS_CONFIG = {
+    'enabled_visualizations':[
+        'googlegeochart',
+        'googlelinechart'
+    ]
+}
 
 import socket
 if socket.gethostname() in ['mattgriffiths']:

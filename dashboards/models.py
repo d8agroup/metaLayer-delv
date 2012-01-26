@@ -4,6 +4,7 @@ from django.conf import settings
 from minimongo import Model, Index
 import time
 from logger import Logger
+from utils import get_pretty_date
 
 class Dashboard(Model):
     class Meta:
@@ -61,53 +62,7 @@ class Dashboard(Model):
         return super(Dashboard, self).save(*args, **kwargs)
 
     def _pretty_date(self, time=False):
-        """
-        Get a datetime object or a int() Epoch timestamp and return a
-        pretty string like 'an hour ago', 'Yesterday', '3 months ago',
-        'just now', etc
-        """
-        Logger.Info('%s - Dashboard._pretty_date - started' % __name__)
-        Logger.Debug('%s - Dashboard._pretty_date - started with time:%s' % (__name__, time))
-        now = datetime.now()
-        if type(time) is int:
-            diff = now - datetime.fromtimestamp(time)
-        elif type(time) is float:
-            diff = now - datetime.fromtimestamp(int(time))
-        elif isinstance(time,datetime):
-            diff = now - time
-        else:
-            diff = now - now
-        second_diff = diff.seconds
-        day_diff = diff.days
-
-        if day_diff < 0:
-            return ''
-
-        if not day_diff:
-            if second_diff < 10:
-                return "just now"
-            if second_diff < 60:
-                return str(second_diff) + " seconds ago"
-            if second_diff < 120:
-                return  "a minute ago"
-            if second_diff < 3600:
-                return str( second_diff / 60 ) + "%f minutes ago"
-            if second_diff < 7200:
-                return "an hour ago"
-            if second_diff < 86400:
-                return str( second_diff / 3600 ) + " hours ago"
-        if day_diff == 1:
-            return "Yesterday"
-        if day_diff < 7:
-            return str(day_diff) + " days ago"
-        if day_diff < 31:
-            return str(day_diff/7) + " weeks ago"
-        if day_diff < 365:
-            return str(day_diff/30) + " months ago"
-        return_string = str(day_diff / 365) + " years ago"
-        Logger.Info('%s - Dashboard._pretty_date - finished' % __name__)
-        return return_string
-
+        return get_pretty_date(time)
 
 class DashboardTemplate(Model):
     class Meta:

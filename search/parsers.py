@@ -3,6 +3,7 @@ from urllib import quote
 from datapoints.controllers import DataPointController
 from datetime import datetime
 from logger import Logger
+from utils import get_pretty_date
 
 class SearchDataPointParser(object):
     def __init__(self, data_points):
@@ -75,6 +76,7 @@ class SearchResultsParser(object):
         result = {
             'content_items': self._extract_content_items(self.solr_response),
             'facet_groups': self._extract_facets(self.solr_response),
+            'facet_range_groups': self._extract_facet_ranges(self.solr_response),
             'breadcrumbs': self._extract_breadcrumbs(self.current_request_args),
             'pagination': self._extract_pagination(self.solr_response),
             'keywords': self._extract_keywords(self.solr_response),
@@ -103,6 +105,23 @@ class SearchResultsParser(object):
                         'link':self._construct_facet_link(self.request_base, self.current_request_args, fg['name'], solr_response['facet_counts']['facet_fields'][fg['name']][x])
                     })
         Logger.Info('%s - SearchResultsParser._extract_facets - finished' % __name__)
+        return facet_groups
+
+    def _extract_facet_ranges(self, solr_response):
+        Logger.Info('%s - SearchResultsParser._extract_facet_ranges - started' % __name__)
+        facet_groups = []
+        if solr_response:
+            facet_groups = [{'name':f, 'display_name':f, 'facets':[]} for f in solr_response['facet_counts']['facet_ranges'].keys()]
+            for fg in facet_groups:
+                for x in range(0, len(solr_response['facet_counts']['facet_ranges'][fg['name']]['counts']), 2):
+                    if solr_response['facet_counts']['facet_ranges'][fg['name']]['counts'][x] in ['_none']:
+                        continue
+                    fg['facets'].append({
+                        'name':solr_response['facet_counts']['facet_ranges'][fg['name']]['counts'][x],
+                        'count':solr_response['facet_counts']['facet_ranges'][fg['name']]['counts'][x+1],
+                        'link':self._construct_facet_link(self.request_base, self.current_request_args, fg['name'], solr_response['facet_counts']['facet_ranges'][fg['name']]['counts'][x])
+                    })
+        Logger.Info('%s - SearchResultsParser._extract_facet_ranges - finished' % __name__)
         return facet_groups
 
     def _extract_breadcrumbs(self, args):
@@ -154,48 +173,9 @@ class SearchResultsParser(object):
         return item
 
     def _pretty_date(self, time=False):
-        """
-        Get a datetime object or a int() Epoch timestamp and return a
-        pretty string like 'an hour ago', 'Yesterday', '3 months ago',
-        'just now', etc
-        """
-        now = datetime.now()
-        if type(time) is int:
-            diff = now - datetime.fromtimestamp(time)
-        elif type(time) is float:
-            diff = now - datetime.fromtimestamp(int(time))
-        elif isinstance(time,datetime):
-            diff = now - time
-        elif not time:
-            diff = now - now
-        second_diff = diff.seconds
-        day_diff = diff.days
+        return get_pretty_date(time)
 
-        if day_diff < 0:
-            return ''
 
-        if day_diff == 0:
-            if second_diff < 10:
-                return "just now"
-            if second_diff < 60:
-                return str(second_diff) + " seconds ago"
-            if second_diff < 120:
-                return  "a minute ago"
-            if second_diff < 3600:
-                return str( second_diff / 60 ) + " minutes ago"
-            if second_diff < 7200:
-                return "an hour ago"
-            if second_diff < 86400:
-                return str( second_diff / 3600 ) + " hours ago"
-        if day_diff == 1:
-            return "Yesterday"
-        if day_diff < 7:
-            return str(day_diff) + " days ago"
-        if day_diff < 31:
-            return str(day_diff/7) + " weeks ago"
-        if day_diff < 365:
-            return str(day_diff/30) + " months ago"
-        return str(day_diff/365) + " years ago"
 
 class SearchQueryAdditionsParser(object):
     def __init__(self, query_additions):
@@ -206,8 +186,27 @@ class SearchQueryAdditionsParser(object):
 
     def get_formatted_query_additions(self):
         Logger.Info('%s - SearchQueryAdditionsParser.get_formatted_query_additions - started' % __name__)
-        additions = '&'.join(['facet.field=%s' % a['name'] for a in self.query_additions if not 'range' in a])
+        additions = []
+
+        basic_facet_fields = [a for a in self.query_additions if len(a.keys()) == 1]
+        if basic_facet_fields:
+            additions.append('&'.join(['facet.field=%s' % a['name'] for a in basic_facet_fields]))
+
+        range_facet_fields = [a for a in self.query_additions if 'gap' in a]
+        if range_facet_fields:
+            additions.append('&'.join(['facet.range=%s&f.%s.facet.range.gap=%i&f.%s.facet.range.start=%i&f.%s.facet.range.end=%i&f.%s.facet.mincount=0' % (a['name'], a['name'], a['gap'], a['name'], a['start'], a['name'], a['end'], a['name']) for a in range_facet_fields]))
+
+        basic_facet_queries = [a for a in self.query_additions if 'value' in a]
+        if basic_facet_queries:
+            additions.append('&'.join(['fq=%s:%s' % (a['name'], a['value']) for a in basic_facet_queries]))
+
+        range_facet_queries = [a for a in self.query_additions if 'range' in a]
+        if range_facet_queries:
+            additions.append('&'.join(['fq=%s:[%s TO %s]' % (a['name'], a['range']['start'], a['range']['end']) for a in range_facet_queries]))
+
+
+
         Logger.Info('%s - SearchQueryAdditionsParser.get_formatted_query_additions - started' % __name__)
-        return additions
+        return '&'.join(additions)
 
 

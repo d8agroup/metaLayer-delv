@@ -18,10 +18,10 @@
             {
                 var unconfigurable = 0;
                 var configuration = container.parents('.collection_container').data('configuration');
-                if (configuration.actions.length == 0)
-                    return true;
-                for (var d=0; d<visualization.data_dimensions; d++)
+                for (var d=0; d<visualization.data_dimensions.length; d++)
                 {
+                    if (visualization.data_dimensions[d].type == 'int')
+                        return false;
                     var supported_dimension_values = 0;
                     for (var a=0; a<configuration.actions.length; a++)
                         if (configuration.actions[a].configured && configuration.actions[a].content_properties.added != null)
@@ -31,6 +31,8 @@
                     if (supported_dimension_values == 0)
                         unconfigurable++;
                 }
+                if (configuration.actions.length == 0)
+                    return true;
                 return unconfigurable > 0;
             };
 
@@ -87,6 +89,8 @@
                     var dimension = visualization.data_dimensions[d];
                     dimension.values = [];
                     var dimension_type = dimension.type;
+                    if (dimension_type == 'int')
+                        dimension.values[dimension.values.length] = { name:'Total Count', value:'total_count' };
                     for (var a=0; a<configuration.actions.length; a++)
                         if (configuration.actions[a].content_properties.added != null)
                             for (var cp=0; cp<configuration.actions[a].content_properties.added.length; cp++)
