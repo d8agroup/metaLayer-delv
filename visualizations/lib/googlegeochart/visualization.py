@@ -52,7 +52,7 @@ class Visualization(VisualizationBase):
 
     def render_javascript_based_visualization(self, config, search_results_collection):
         search_results = search_results_collection[0]
-        facets = [f['facets'] for f in search_results['facet_groups'] if f['name'] == config['data_dimensions'][0]['value']][0]
+        facets = [f['facets'] for f in search_results['facet_groups'] if f['name'] == config['data_dimensions'][0]['value']['value']][0]
         js = "" \
             "$.getScript\n" \
             "(\n" \

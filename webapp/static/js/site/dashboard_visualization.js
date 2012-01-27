@@ -51,7 +51,12 @@
                         visualization.elements[x]['value'] = container.find('.' + visualization.elements[x].name).val()
                 if (visualization.data_dimensions != null)
                     for (var x=0; x<visualization.data_dimensions.length; x++)
-                        visualization.data_dimensions[x]['value'] = container.find('.' + visualization.data_dimensions[x].name).val()
+                    {
+                        var value = container.find('.' + visualization.data_dimensions[x].name).val();
+                        var name = container.find('option[value="' + value + '"]').data('title');
+                        debugger
+                        visualization.data_dimensions[x]['value'] = { value:value, name:name }
+                    }
                 visualization.configured = true;
                 var collection = container.parents('.collection_container');
                 var configuration = collection.data('configuration');

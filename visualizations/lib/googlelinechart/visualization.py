@@ -4,6 +4,9 @@ from visualizations.classes import VisualizationBase
 from django.utils import simplejson as json
 
 class Visualization(VisualizationBase):
+
+    steps_backwards = 10
+
     def get_unconfigured_config(self):
         return {
             'name':'googlelinechart',
@@ -47,10 +50,10 @@ class Visualization(VisualizationBase):
                 'start': start,
                 'end': end
             }]
-            if dimension['value'] != 'total_count':
+            if dimension['value']['value'] != 'total_count':
                 query_data.append({
-                    'name':dimension['value']['name'],
-                    'value':dimension['value']['name']
+                    'name':dimension['value']['type'],
+                    'value':dimension['value']['value']
                 })
             return_data.append(query_data)
         return return_data
@@ -84,13 +87,13 @@ class Visualization(VisualizationBase):
         collections_of_values = [[get_pretty_date(x)] for x in range(start, end, time_increment)]
 
         for x in range(len(config['data_dimensions'])):
-            series_titles.append({'name':config['data_dimensions'][x]['value'], 'type':'number'})
+            series_titles.append({'name':config['data_dimensions'][x]['value']['value'], 'type':'number'})
             candidate_facet_groups = [fg for fg in search_results_collection[x]['facet_range_groups'] if fg['name'] == 'time']
             if len(candidate_facet_groups) != 1:
-                values = range(5)
+                values = range(self.steps_backwards)
             else:
                 values = [f['count'] for f in candidate_facet_groups[0]['facets']]
-            for y in range(5):
+            for y in range(self.steps_backwards):
                 collections_of_values[y].append(values[y])
 
 
@@ -113,13 +116,10 @@ class Visualization(VisualizationBase):
                 'gridlines.color':'#AAAAAA',
             },
             'legend':{
-                'position':'right',
-                'textStyle':{
-                    'color':'#DDDDDD'
-                }
+                'position':'none',
             },
             'vAxis':{
-                'title':'Content items produced',
+                'title':'Content items collected',
                 'titleTextStyle':{
                     'color':'#DDDDDD'
                 },
@@ -146,6 +146,6 @@ class Visualization(VisualizationBase):
         elif time_increment == 'Time - days':
             time_increment = 60 * 60 * 24 #one day
         end = int(time.time())
-        start = end - (5 * time_increment) #5 steps
+        start = end - (self.steps_backwards * time_increment)
         return end, start, time_increment
 

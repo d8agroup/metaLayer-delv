@@ -19,6 +19,9 @@
             var visualizations = dashboard_visualizations_container.data('visualizations');
             dashboard_visualizations_container.children().remove();
 
+            if (visualizations == null)
+                return;
+
             for (var x=0; x<visualizations.length; x++)
             {
                 var visualization_container_html = $('<div class="visualization"></div>');

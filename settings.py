@@ -237,7 +237,8 @@ OUTPUTS_CONFIG = {
 VISUALIZATIONS_CONFIG = {
     'enabled_visualizations':[
         'googlegeochart',
-        'googlelinechart'
+        'googlelinechart',
+        'googlebarchart'
     ]
 }
 

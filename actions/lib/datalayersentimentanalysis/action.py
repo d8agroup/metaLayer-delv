@@ -18,6 +18,7 @@ class Action(BaseAction):
             'content_properties':{
                 'added':[
                     {
+                        'display_name':'Sentiment',
                         'name':'sentiment',
                         'type':'string'
                     }
