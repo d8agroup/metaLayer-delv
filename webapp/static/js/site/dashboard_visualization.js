@@ -54,7 +54,6 @@
                     {
                         var value = container.find('.' + visualization.data_dimensions[x].name).val();
                         var name = container.find('option[value="' + value + '"]').data('title');
-                        debugger
                         visualization.data_dimensions[x]['value'] = { value:value, name:name }
                     }
                 visualization.configured = true;
