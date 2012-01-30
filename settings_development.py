@@ -6,7 +6,7 @@ SITE_ID=u'4f13fca68451d31efe00001d'
 
 SITE_HOST='dev.metalayer.com'
 
-STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/webapp/static/'
+STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DATABASES = {
     'default': {
@@ -29,7 +29,7 @@ ENDPOINTS = {
 }
 
 TEMPLATE_DIRS = (
-    '/usr/local/metaLayer-dashboard/dashboard/webapp/static/html/'
+    '/usr/local/metaLayer-dashboard/dashboard/static/html/'
 )
 
 SOLR_CONFIG = {

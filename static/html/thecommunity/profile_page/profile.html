@@ -1,0 +1,184 @@
+{% extends 'thecommunity/base.html' %}
+
+{%  block title %}metaLayer - {{ user.username }}{% endblock %}
+
+{% block css %}
+    {{  block.super }}
+    <link type="text/css" href="/static/css/site/site.css" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+    {{  block.super }}
+    <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
+    <script type="text/javascript" src="/static/js/site/header.js"></script>
+    <script type="text/javascript" src="/static/js/site/site.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_data_points_and_actions.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_control_panel.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_filters.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results_content_items.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_data_point.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_action.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_collections_panel.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_widget_panel.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_outputs.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_visualizations.js"></script>
+    <script type="text/javascript" src="/static/js/site/dashboard_visualization.js"></script>
+    <script type="text/javascript" src="/static/js/thecommunity/profile_page.js"></script>
+    <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline.js"></script>
+    <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline_insight_container.js"></script>
+    <script type="text/javascript">
+        EMBEDDED_MODE = true;
+        function clone(object)
+        {
+            var newObj = (object instanceof Array) ? [] : {};
+            for (i in object)
+            {
+                if (i == 'clone')
+                    continue;
+                if (object[i] && typeof object[i] == "object")
+                    newObj[i] = clone(object[i]);
+                else
+                    newObj[i] = object[i];
+            }
+            return newObj;
+        };
+        function apply_helper_class_functions(element)
+        {
+            element.find('.helper_corner').corner();
+        }
+        function clean_user_generated_html(element)
+        {
+            element.find('a').each
+                (
+                    function()
+                    {
+                        $(this).attr('target', '_blank');
+                    }
+                )
+        }
+        function guid()
+        {
+            return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace
+                (
+                    /[xy]/g,
+                    function(c)
+                    {
+                        var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);
+                    }
+                );
+        }
+        function apply_waiting(element, text)
+        {
+            var waiting_template = $.tmpl('waiting_large', {text:text});
+            element.append(waiting_template);
+            waiting_template.css({ opacity:0.7,top:0, width:element.outerWidth(), height:element.outerHeight() });
+            waiting_template.find('p').css({ top:(element.height() / 2) });
+        }
+        function remove_waiting(element)
+        {
+            element.find('.waiting').remove();
+        }
+        $(document).ready
+            (
+                function()
+                {
+                    $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
+                    $.get('/static/html/parts/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
+                    $.get('/static/html/parts/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
+                    $.get('/static/html/parts/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
+                    $.get('/static/html/parts/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
+                    $.get('/static/html/parts/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
+                    $.get('/static/html/parts/outputs/output_url.html', function(t) { $.template('output_url', t)});
+                    $.get('/static/html/parts/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
+                    $.get('/static/html/parts/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
+                    $.get('/static/html/parts/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
+                    $.get('/static/html/parts/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
+                    $('#profile_page').profile_page();
+                }
+            );
+    </script>
+{% endblock %}
+
+{% block page_body %}
+<div id='page'>
+    <div id='profile_page' class="clearfix">
+        <div id='profile_page_left_column'>
+            <div id='profile_page_account' class="page_block">
+                <div class="page_block_inner">
+                    <div id='account_basics' class="clearfix">
+                        <img src="/static/images/thecommunity/no_profile_image.gif" alt='Your profile image' />
+                        <div id='username_container'>
+                            <h3 {% if user.username|length > 20 %}class='long_user_name'{% endif %}>{{ user.username }}</h3>
+                            <a id="view_my_collection_link">
+                                View my collections
+                            </a>
+                        </div>
+                    </div>
+                    <table id='account_statistics'>
+                        <tr>
+                            <td id='insights'>
+                                <p class="number">XX</p>
+                                <p class="label">Insights</p>
+                            </td>
+                            <td id='following'>
+                                <p class="number">XX</p>
+                                <p class="label">Following</p>
+                            </td>
+                            <td id='followers'>
+                                <p class="number">XX</p>
+                                <p class="label">Followers</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" id='status'>
+                                <div id='status_container'>
+                                    <input type='text' />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id='my_creations' class="page_block">
+                <div class="page_block_inner">
+                    <h3>My Creations</h3>
+                    <ul class="clearfix">
+                        <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
+                    </ul>
+                    <a id="more_link">more ...</a>
+                </div>
+            </div>
+            <div id='trending_insights' class="page_block">
+                <div class="page_block_inner">
+                    <h3>Trending Insights</h3>
+                    <ul class="clearfix">
+                        <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id='profile_page_right_column'>
+            <div id='insights_timeline' class="page_block">
+                <div class="page_block_inner">
+                    <div id='insights_timeline_header'>
+                        <a id='start_new_insight'>Start a new insight</a>
+                        <h3>Your insight timeline</h3>
+                    </div>
+                    <ul id='timeline'>
+                        <li class="waiting">Loading your timeline <img src="/static/images/thecommunity/loading_circle.gif" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

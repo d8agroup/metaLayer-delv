@@ -1,0 +1,16 @@
+<div id='change_subscription'>
+    <h4>Other Subscriptions - click a subscription to activate</h4>
+    {% for subscription in subscriptions %}
+        <div class="subscription clearfix">
+            <a data-subscription_id='{{ subscription.id }}'>
+                <img class="subscription_image" src='{{ subscription.display_data.image }}' />
+                <div class="subscription_details">
+                    <h5>{{ subscription.display_data.display_name }}</h5>
+                    {% for message in subscription.display_data.messages %}
+                        <p>{{ message }}</p>
+                    {%  endfor %}
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>

@@ -8,7 +8,7 @@ SITE_ID=u'4f1408ebc845b317df00000d'
 
 SITE_HOST='localhost:8000'
 
-STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/webapp/static/'
+STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
@@ -38,7 +38,7 @@ ENDPOINTS = {
 }
 
 TEMPLATE_DIRS = (
-    '/home/matt/code/metaLayer/dashboard/webapp/static/html/'
+    '/home/matt/code/metaLayer/dashboard/static/html/'
 )
 
 SOLR_CONFIG = {

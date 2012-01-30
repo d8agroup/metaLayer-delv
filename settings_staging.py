@@ -10,7 +10,7 @@ SITE_ID=u'4f1d5db8c845b30a5600001d'
 
 SITE_HOST='50.57.164.87'
 
-STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/webapp/static/'
+STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 logging.basicConfig(
     level = logging.ERROR,
@@ -38,7 +38,7 @@ ENDPOINTS = {
 }
 
 TEMPLATE_DIRS = (
-    '/usr/local/metaLayer-dashboard/dashboard/webapp/static/html/'
+    '/usr/local/metaLayer-dashboard/dashboard/static/html/'
 )
 
 SOLR_CONFIG = {

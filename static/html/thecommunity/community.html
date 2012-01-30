@@ -1,0 +1,98 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" language="javascript">
+        $(document).ready
+        (
+            function()
+            {
+                $('.page_block').corner();
+            }
+        )
+    </script>
+{% endblock %}
+
+{% block page_body %}
+<div id='page'>
+    <div id='top_insights' class="page_block">
+        <div class="page_block_inner">
+            <h3>Top Insights of The Day</h3>
+            <div class="clearfix">
+                <div class='left_column clearfix'>
+                    <div class="left_column">
+                        <ul>
+                            <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                            <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                            <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        </ul>
+                    </div>
+                    <div class="right_column">
+                        <p><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></p>
+                    </div>
+                </div>
+                <div class="right_column clearfix">
+                    <p>metaLayer is the best way to create, discover and share insight about the worlds information! <span>Search is so 20th century</span></p>
+                    <div id='video_container'>
+                        <img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='main_body' class="clearfix">
+        <div class="left_column clearfix">
+            <div id='promo_slot_1' class="main_body_section">
+                <div id='sign_up_promo'>
+                    <h5>We make the worlds information easier to understand, visualize and share!</h5>
+                    <a>
+                        <img src="/static/images/thecommunity/no_profile_image.gif" alt="sign up today" />
+                    </a>
+                    <a class="go_pro">Are you a data professional or an organization? Go Pro!</a>
+                </div>
+            </div>
+            <div id='brows_by_category' class="page_block main_body_section">
+                <div class="page_block_inner">
+                    <h3>Brows By Category</h3>
+                    <ul>
+                        <li>Business</li>
+                        <li>Politics</li>
+                        <li>Science</li>
+                        <li>Current Events</li>
+                        <li>News / Journalism</li>
+                        <li>Investigative</li>
+                        <li>Number / Math</li>
+                        <li>Education</li>
+                        <li>Finance</li>
+                        <li>Travel</li>
+                        <li>Humor</li>
+                        <li>Technology</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right_column clearfix">
+            <div id='trending_insights' class="page_block main_body_section">
+                <div class="page_block_inner">
+                    <h3>Whats Trending?</h3>
+                    <ul class="clearfix">
+                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                    </ul>
+                </div>
+            </div>
+            <div id='recent_activity' class="page_block main_body_section">
+                <div class="page_block_inner">
+                    <h3>Recent Changes</h3>
+                    <ul>
+                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

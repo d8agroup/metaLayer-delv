@@ -1,0 +1,15 @@
+<div class="subscription_downgrade_upgrade">
+    <h4>Upgrading is a great idea!</h4>
+    <p>Your new plan will offer you:</p>
+    <ul>
+        {% for message in subscription.display_data.messages %}
+            <li>{{  message }}</li>
+        {% endfor %}
+    </ul>
+    {% if show_credit_card_form %}
+        {% include 'parts/change_subscriptions/_purchase_form.html' %}
+    {% else %}
+        <button class="cancel">I'll stick where I am thanks</button>
+        <button class="submit">Sounds great! upgrade me now</button>
+    {% endif %}
+</div>

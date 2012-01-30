@@ -20,9 +20,11 @@ class UserController(object):
         user = authenticate(username=username, password=password)
         return_values = True, []
         if user is None:
-            return_values = False, ['Sorry, we didn\'t recognize that email and password']
+            Logger.Info('%s - UserController.LoginUser - finished' % __name__)
+            return False, ['Sorry, we didn\'t recognize that email and password']
         elif not user.is_active:
-            return_values = False, ['Sorry, your account is not currently active']
+            Logger.Info('%s - UserController.LoginUser - finished' % __name__)
+            return False, ['Sorry, your account is not currently active']
         login(request, user)
         Logger.Info('%s - UserController.LoginUser - finished' % __name__)
         return return_values

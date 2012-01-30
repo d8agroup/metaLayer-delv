@@ -1,0 +1,81 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready
+            (
+                function()
+                {
+                    $('#login, #register, .alert').corner();
+                }
+            );
+    </script>
+{% endblock %}
+
+{% block page_body %}
+
+    <div id='page' class="login_or_register_page">
+        <table id='login_or_register'>
+            <tr>
+                <td width="50%">
+                    <div id='login'>
+                        <h3>Sign In</h3>
+                        {% if login_errors %}
+                            <div class="alert errors">
+                                {% for error in login_errors %}
+                                    <p>{{ error }}</p>
+                                {%  endfor %}
+                            </div>
+                        {% endif %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-row clearfix">
+                                <label for='login_username'>Your Email</label>
+                                <input type="text" name="login_username" id='login_username' />
+                            </div>
+                            <div class="form-row clearfix">
+                                <label for='login_password'>Your Password</label>
+                                <input type="password" name='login_password' id='login_password' />
+                            </div>
+                            <div class="action-row clearfix">
+                                <input type="submit" class="submit" value="login" name='login'/>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+                <td width="50%">
+                    <div id='register'>
+                        <h3>Sign Up</h3>
+                        {% if register_errors %}
+                            <div class="alert errors">
+                                {% for error in register_errors %}
+                                    <p>{{ error }}</p>
+                                {%  endfor %}
+                            </div>
+                        {% endif %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-row clearfix">
+                                <label for='register_username'>Your Email</label>
+                                <input type="text" name="register_username" id='register_username' />
+                            </div>
+                            <div class="form-row clearfix">
+                                <label for='register_password1'>Your Password</label>
+                                <input type="password" name='register_password1' id='register_password1' />
+                            </div>
+                            <div class="form-row clearfix">
+                                <label for='register_password2'>Your Password Again</label>
+                                <input type="password" name='register_password2' id='register_password2' />
+                            </div>
+                            <div class="action-row clearfix">
+                                <input type="submit" class="submit" value="sign up" name='register' />
+                            </div>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/site/reset.css" />
+    <link rel="stylesheet" href="/static/css/site/hacks.css" />
+    <link rel="stylesheet" href="/static/css/site/base.css" />
+    {% block css %}{% endblock %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    {% block js %}{% endblock %}
+</head>
+<body>
+    <form id='csrf_form'>
+        {% csrf_token %}
+    </form>
+    {% block header %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block footer %}{% endblock %}
+</body>
+</html>

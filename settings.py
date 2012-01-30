@@ -86,6 +86,8 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'dashboard.urls'
 
+AUTH_PROFILE_MODULE = "userprofiles.UserProfile"
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,8 +108,10 @@ INSTALLED_APPS = (
     'dashboard.datapoints',
     'dashboard.outputs',
     'dashboard.search',
+    'dashboard.thecommunity',
     'dashboard.userprofiles',
-    'dashboard.webapp',
+    'dashboard.thedashboard',
+    'dashboard.visualizations',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -146,7 +150,7 @@ SUBSCRIPTIONS_SETTINGS = {
                 'image':'/static/images/site/no_image_medium.gif',
                 'messages':[
                     'No monthly fee!',
-                    'One trial dashboard',
+                    'Unlimited insights',
                     'Five minute data refresh rate'
                 ],
             },
@@ -156,7 +160,8 @@ SUBSCRIPTIONS_SETTINGS = {
             },
             'config':{
                 'number_of_saved_dashboards':1,
-                'number_of_always_on_dashboards':0
+                'number_of_always_on_dashboards':0,
+                'allow_private_insights':False
             }
         },
         'subscription_type_2':{
@@ -170,41 +175,18 @@ SUBSCRIPTIONS_SETTINGS = {
                 'image':'/static/images/site/no_image_medium.gif',
                 'messages':[
                     'Only $19 per month!',
-                    '2 always on dashboards',
+                    'Private Insights!',
                     'Five minute data refresh rate'
                 ],
             },
             'templates':{
                 'upgrade':'subscription_type_2_upgrade_to.html',
-                'downgrade':'subscription_type_2_downgrade_to.html'
+                'downgrade':None
             },
             'config':{
                 'number_of_saved_dashboards':2,
-                'number_of_always_on_dashboards':2
-            }
-        },
-        'subscription_type_3':{
-            'id':'subscription_type_3',
-            'chargify_config':{
-                'product_handle':'advanced-plan',
-                'product_id':85291
-            },
-            'display_data':{
-                'display_name':'Advanced Plan',
-                'image':'/static/images/site/no_image_medium.gif',
-                'messages':[
-                    '5 always on dashboards',
-                    'Near real time data refresh rate!',
-                    'Only $2,500 per month'
-                ],
-            },
-            'templates':{
-                'upgrade':'subscription_type_3_upgrade_to.html',
-                'downgrade':None #cant downgrade to here
-            },
-            'config':{
-                'number_of_saved_dashboards':5,
-                'number_of_always_on_dashboards':5
+                'number_of_always_on_dashboards':2,
+                'allow_private_insights':True
             }
         }
     }

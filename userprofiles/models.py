@@ -2,6 +2,16 @@ from django.conf import settings
 from minimongo import Model, Index
 import time
 from logger import Logger
+from django.db import models
+from django.contrib.auth.models import User
+from djangotoolbox.fields import DictField
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    linked_accounts = DictField()
+
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
 
 class UserStatistics(Model):
     class Meta:
