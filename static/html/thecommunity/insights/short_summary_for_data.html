@@ -1,0 +1,11 @@
+<div class="insight">
+    {{tmpl 'insight_actions'}}
+    <div class="data_insight">
+        <ul class="data">
+            {{each(index, image) insight_images}}
+                <li><img src='${image}' /></li>
+            {{/each}}
+        </ul>
+    </div>
+    {{tmpl 'insight_footer'}}
+</div>

@@ -2,106 +2,23 @@
 
 {%  block title %}metaLayer - {{ user.username }}{% endblock %}
 
-{% block css %}
-    {{  block.super }}
-    <link type="text/css" href="/static/css/site/site.css" rel="stylesheet" />
-{% endblock %}
-
 {% block js %}
     {{  block.super }}
     <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
-    <script type="text/javascript" src="/static/js/site/header.js"></script>
-    <script type="text/javascript" src="/static/js/site/site.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_data_points_and_actions.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_control_panel.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_filters.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_search_results_content_items.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_data_point.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_search_widget_unconfigured_action.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_collections_panel.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_widget_panel.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_outputs.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_visualizations.js"></script>
-    <script type="text/javascript" src="/static/js/site/dashboard_visualization.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline_insight_container.js"></script>
     <script type="text/javascript">
-        EMBEDDED_MODE = true;
-        function clone(object)
-        {
-            var newObj = (object instanceof Array) ? [] : {};
-            for (i in object)
-            {
-                if (i == 'clone')
-                    continue;
-                if (object[i] && typeof object[i] == "object")
-                    newObj[i] = clone(object[i]);
-                else
-                    newObj[i] = object[i];
-            }
-            return newObj;
-        };
-        function apply_helper_class_functions(element)
-        {
-            element.find('.helper_corner').corner();
-        }
-        function clean_user_generated_html(element)
-        {
-            element.find('a').each
-                (
-                    function()
-                    {
-                        $(this).attr('target', '_blank');
-                    }
-                )
-        }
-        function guid()
-        {
-            return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace
-                (
-                    /[xy]/g,
-                    function(c)
-                    {
-                        var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);
-                    }
-                );
-        }
-        function apply_waiting(element, text)
-        {
-            var waiting_template = $.tmpl('waiting_large', {text:text});
-            element.append(waiting_template);
-            waiting_template.css({ opacity:0.7,top:0, width:element.outerWidth(), height:element.outerHeight() });
-            waiting_template.find('p').css({ top:(element.height() / 2) });
-        }
-        function remove_waiting(element)
-        {
-            element.find('.waiting').remove();
-        }
         $(document).ready
             (
                 function()
                 {
-                    $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
-                    $.get('/static/html/parts/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
-                    $.get('/static/html/parts/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
-                    $.get('/static/html/parts/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
-                    $.get('/static/html/parts/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
-                    $.get('/static/html/parts/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
-                    $.get('/static/html/parts/outputs/output_url.html', function(t) { $.template('output_url', t)});
-                    $.get('/static/html/parts/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
-                    $.get('/static/html/parts/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
-                    $.get('/static/html/parts/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
-                    $.get('/static/html/parts/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
+                    $.get('/static/html/thecommunity/insights/short_summary_for_data.html', function(t) { $.template('short_summary_for_data', t)});
+                    $.get('/static/html/thecommunity/insights/short_summary_for_visualization.html', function(t) { $.template('short_summary_for_visualization', t)});
+                    $.get('/static/html/thecommunity/insights/insight_footer.html', function(t) { $.template('insight_footer', t)});
+                    $.get('/static/html/thecommunity/insights/insight_actions.html', function(t) { $.template('insight_actions', t)});
                     $('#profile_page').profile_page();
                 }
             );
