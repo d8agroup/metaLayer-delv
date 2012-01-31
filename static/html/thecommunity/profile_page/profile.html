@@ -7,9 +7,12 @@
     <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
+    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline_insight_container.js"></script>
+    <script type="text/javascript" src="/static/js/thecommunity/profile_page_my_creations.js"></script>
     <script type="text/javascript">
         $(document).ready
             (
@@ -18,7 +21,7 @@
                     $.get('/static/html/thecommunity/insights/short_summary_for_data.html', function(t) { $.template('short_summary_for_data', t)});
                     $.get('/static/html/thecommunity/insights/short_summary_for_visualization.html', function(t) { $.template('short_summary_for_visualization', t)});
                     $.get('/static/html/thecommunity/insights/insight_footer.html', function(t) { $.template('insight_footer', t)});
-                    $.get('/static/html/thecommunity/insights/insight_actions.html', function(t) { $.template('insight_actions', t)});
+                    $.get('/static/html/thecommunity/insights/insight_header.html', function(t) { $.template('insight_header', t)});
                     $('#profile_page').profile_page();
                 }
             );
@@ -87,7 +90,7 @@
             <div id='insights_timeline' class="page_block">
                 <div class="page_block_inner">
                     <div id='insights_timeline_header'>
-                        <a id='start_new_insight'>Start a new insight</a>
+                        <a id='start_new_insight' href="/dashboard/new/1">Start a new insight</a>
                         <h3>Your insight timeline</h3>
                     </div>
                     <ul id='timeline'>

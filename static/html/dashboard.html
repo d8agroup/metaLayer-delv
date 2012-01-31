@@ -41,7 +41,7 @@
             (
                 function()
                 {
-                    $('#header').header();
+                    $('#page_header').header();
                     setTimeout
                     (
                         function()
@@ -66,18 +66,12 @@
 {% endblock %}
 
 {% block body %}
+<div id="page_container">
     <div id='page'>
-        <div id='header'>
-            <div id='header_links' class="clearfix">
-                <a id='user_home_link' href="/">home</a>
-                <a id='link_help'>help</a>
-                <a id='link_logout' href="/user/logout">logout</a>
-            </div>
-        </div>
         <div id='content'>
             <div class="dashboard">
                 <div class='widgets'></div>
-                <div class='collections'></div>
+                <div class='collections clearfix'></div>
             </div>
         </div>
         <div class="hidden">
@@ -89,4 +83,5 @@
             <img src="/static/images/site/icon_search.png" width='1px' height="1px" />
         </div>
     </div>
+</div>
 {% endblock %}

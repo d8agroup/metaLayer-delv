@@ -72,6 +72,15 @@ def dashboard_load(request, id):
     return render_to_response('dashboard.html',{ 'dashboard_id':db['id'] }, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
+def dashboard_new(request, template_id):
+    Logger.Info('%s - dashboard - started' % __name__)
+    Logger.Debug('%s - dashboard - started with id:%s' % (__name__, id))
+    dc = DashboardsController(request.user)
+    db = dc.create_new_dashboard_from_template(template_id)
+    Logger.Info('%s - dashboard - finished' % __name__)
+    return redirect(dashboard_load, '%s' % db.id)
+
+@login_required(login_url='/')
 def dashboard(request, id):
     Logger.Info('%s - dashboard - started' % __name__)
     dc = DashboardsController(request.user)

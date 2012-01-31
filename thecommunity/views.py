@@ -155,11 +155,13 @@ def change_subscription(request):
         return JSONResponse()
 
 @login_required(login_url='/')
-def load_dashboards(request):
+def load_dashboards(request, count=None):
     Logger.Info('%s - load_dashboards - started' % __name__)
     user = request.user
     dc = DashboardsController(user)
     saved_dashboards = dc.get_saved_dashboards()
+    if count:
+        saved_dashboards = saved_dashboards[:int(count)]
     Logger.Info('%s - load_dashboards - finished' % __name__)
     return JSONResponse({ 'dashboards':saved_dashboards })
 

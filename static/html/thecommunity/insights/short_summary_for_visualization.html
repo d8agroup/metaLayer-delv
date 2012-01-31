@@ -1,9 +1,8 @@
 <div class="insight">
+    {{tmpl 'insight_header'}}
     <div class="visualization_insight">
         <div class="visualization">
-            <div class="waiting">
-                <p>Loading Insight<img src="/static/images/thecommunity/loading_circle.gif" /></p>
-            </div>
+            <canvas id="canvas_${insight.id}"></canvas>
         </div>
     </div>
     {{tmpl 'insight_footer'}}

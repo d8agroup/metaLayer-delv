@@ -237,13 +237,14 @@
                         );
             collection.data('configuration').visualizations = new_visualizations;
             collection.find('.visualizations_container').dashboard_visualizations(configuration);
-            collection.parents.('.dashboard').dashboard('save');
+            collection.parents('.dashboard').dashboard('save');
             return collection;
         },
         search_results_updated:function()
         {
             var collection = this;
             var configuration = collection.data('configuration');
+            collection.find('.visualizations_container').dashboard_visualizations('capture_snapshots');
             collection.find('.visualizations_container').dashboard_visualizations('render');
             collection.find('.ouputs_container').dashboard_outputs(configuration);
         }

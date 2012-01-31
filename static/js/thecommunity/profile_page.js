@@ -4,6 +4,7 @@
         var profile_page = this;
         profile_page.find('.page_block').corner();
         profile_page.find('#start_new_insight').button();
+        profile_page.find('#my_creations').profile_page_my_creations();
         profile_page.find('#insights_timeline #timeline').profile_page_insights_timeline();
     };
 })( jQuery );

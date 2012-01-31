@@ -30,6 +30,21 @@
             }
 
             return dashboard_visualizations_container;
+        },
+        capture_snapshots:function()
+        {
+            var dashboard_visualizations_container = this;
+            var visualizations = dashboard_visualizations_container.data('visualizations');
+            for (var x=0; x<visualizations.length; x++)
+            {
+                var visualization_container = $('#' + visualizations[x].id);
+                var visualization_snapshot = visualization_container.find('iframe').contents().find('svg').parent().html();
+                if (visualization_snapshot != null)
+                    visualizations[x]['snapshot'] = visualization_snapshot;
+                else
+                    visualizations[x]['snapshot'] = '<img src="/static/images/thecommunity/no_profile_image.gif" />';
+            }
+            dashboard_visualizations_container.parents('.dashboard').dashboard('save');
         }
     }
 

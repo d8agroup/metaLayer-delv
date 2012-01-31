@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 
     #dashboard urls
     url(r'load/(\w+)$', dashboard),
+    url(r'new/(\w+)$', dashboard_new),
     url(r'widgets/get_all$', dashboard_get_all_widgets),
     url(r'data_points/validate$', dashboard_validate_data_point),
     url(r'data_points/remove_data_point$', dashboard_remove_data_point),

@@ -7,7 +7,7 @@ SITE
     {
         init:function()
         {
-            $('#header').header();
+            $('#page_header').header();
             $('#user_home').user_home();
         },
         show_dashboard:function()

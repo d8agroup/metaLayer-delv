@@ -1,6 +1,3 @@
-body { background-color:#69F; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:80%; height:100%; padding-top:35px;}
-html { height:100%; overflow:hidden; }
-
 .errors { width:90%; margin:0 auto 20px auto; background-color:#FC3; border:2px solid #C60; color:#000;}
 .errors p { padding:10px; font-size:80%;}
 .form-row { padding:5px 60px; }
@@ -8,31 +5,6 @@ html { height:100%; overflow:hidden; }
 .form-row input { width:200px;}
 .action-row { text-align:center; width:100%; margin:20px 0;}
 .action-row input { width:300px;}
-
-
-/**********************************************************************************************************************/
-/* HEADER                                                                                                             */
-/**********************************************************************************************************************/
-#page_header { background-color:#333; height:35px; position:absolute; top:0; left:0; width:100%; }
-#page_header #logo_container { width:33%; float:left; }
-#page_header #logo_container img { height:20px; position:relative; top:5px; left:5px;}
-#page_header #search_container { width:30%; text-align:center; padding: 5px 0 0 33%;}
-#page_header #search_container input[type=text] { width:250px;}
-#page_header #header_links_container { width:33%; float:right; text-align:right; padding:9px; color:#fff; }
-#page_header #header_links_container a { display:inline-block; padding-left:10px;}
-
-/**********************************************************************************************************************/
-/* PAGE                                                                                                               */
-/**********************************************************************************************************************/
-#page_container { height:100%; overflow:auto; padding-bottom:20px;}
-#page { width:1000px; margin:0 auto; background-color:#DDD; padding:10px; }
-#page .page_block { background-color:#FFF;}
-#page .page_block .page_block_inner { padding:10px;}
-#page .page_block h3 { font-size:200%; margin-bottom:10px;}
-#footer { width:1000px; margin:0 auto; background-color:#DDD; padding:10px; }
-#footer dl { float:left; width:30%;}
-#footer dl dt { font-size:180%; margin-bottom:10px; }
-#footer dl dd { padding:5px;}
 
 /**********************************************************************************************************************/
 /* COMMUNITY                                                                                                          */
@@ -103,8 +75,12 @@ html { height:100%; overflow:hidden; }
 #profile_page_account #account_statistics td .number { font-weight:bold; font-size:150%; margin-bottom:5px;}
 
 #profile_page #my_creations { overflow:hidden; height:155px; position:relative;}
-#profile_page #my_creations ul li { float:left; padding:4px;}
+#profile_page #my_creations ul li { float:left; margin:4px; height:75px; width:100px; overflow:hidden; background-color:#333; }
 #profile_page #my_creations ul li img { width:100px; height:75px;}
+#profile_page #my_creations ul li .my_creation_container { }
+#profile_page #my_creations ul li .one_image_row img { width:65px; height:65px; padding:4px 17px;}
+#profile_page #my_creations ul li .two_image_row img { width:30px; height:30px; padding:4px;}
+#profile_page #my_creations ul li .three_image_row img { width:18px; height:18px; padding:2px;}
 #profile_page #my_creations ul li.waiting { padding:20px 0 0 100px}
 #profile_page #my_creations ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
 #profile_page #my_creations #more_link { display:block; text-align:right; color:#AAA; padding-right:15px; display:none;}
@@ -118,15 +94,18 @@ html { height:100%; overflow:hidden; }
 #profile_page #insights_timeline { height:697px;}
 #profile_page #insights_timeline_header { padding-bottom:10px; border-bottom:1px solid #DDD;}
 #profile_page #insights_timeline_header #start_new_insight { float:right;}
-#profile_page #insights_timeline ul#timeline { overflow:auto; }
+#profile_page #insights_timeline ul#timeline { overflow:auto; height:620px;}
 #profile_page #insights_timeline ul#timeline li.waiting { padding:150px 0 0 200px; }
 #profile_page #insights_timeline ul#timeline li.waiting img { position:relative; top:9px; left:5px;}
 
-#profile_page #insights_timeline .insight { border:1px solid #DDD; margin-top:5px;}
+#profile_page #insights_timeline .insight { border:1px solid #222; margin:20px; background-color:#333; }
+#profile_page #insights_timeline .insight .visualization { text-align:center;}
 #profile_page #insights_timeline .insight .waiting { padding:30px 0 40px 0; text-align:center;}
 #profile_page #insights_timeline .insight .waiting img { position:relative; top:9px; left:5px;}
 #profile_page #insights_timeline .insight ul.data li img { width:100px; margin:10px; box-shadow: 3px 3px 6px #DDD; }
-#profile_page #insights_timeline .insight .insight_actions { text-align:right; float:right; z-index:3000; padding-right:5px;}
+#profile_page #insights_timeline .insight .insight_header { color:#FFF; background-color:#222;}
+#profile_page #insights_timeline .insight .insight_header h4 { font-size:160%; line-height:180%; padding:5px;}
+#profile_page #insights_timeline .insight .insight_header .insight_actions { text-align:right; padding:5px; float:right;}
 #profile_page #insights_timeline .insight .insight_footer table { width:100%; background-color:#DDD; }
 #profile_page #insights_timeline .insight .insight_footer table td { padding:15px; color:#333;}
 

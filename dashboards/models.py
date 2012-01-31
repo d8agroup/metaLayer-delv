@@ -40,8 +40,18 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.AllForUser - started' % __name__)
         Logger.Debug('%s - Dashboard.AllForUser - started with user:%s' % (__name__, user))
         dashboards = Dashboard.collection.find({'username': user.username})
+        for dashboard in dashboards:
+            should_remove = True
+            for collection in dashboard['collections']:
+                if collection['data_points']:
+                    should_remove = False
+            if should_remove:
+                dashboard.remove()
+        dashboards = Dashboard.collection.find({'username': user.username})
         dashboards = [d for d in dashboards if d['active']]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
+        for dashboard in dashboards:
+            dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
         Logger.Info('%s - Dashboard.AllForUser - finished' % __name__)
         return dashboards
 

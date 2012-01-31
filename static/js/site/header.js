@@ -4,11 +4,13 @@
         {
             init:function()
             {
-                this.find('#link_help').click
+                this.find('a').click
                 (
-                    function()
+                    function(e)
                     {
-                        alert('TODO: this needs to open a help modal');
+                        $('.visualizations_container').dashboard_visualizations('capture_snapshots');
+                        $('.dashboard').dashboard('save');
+                        return true;
                     }
                 );
             }
