@@ -9,7 +9,7 @@
 /**********************************************************************************************************************/
 /* PAGE                                                                                                               */
 /**********************************************************************************************************************/
-#page .page_block { background-color:#FFF; color:#000;}
+#page .page_block { background-color:#333; color:#DDD;}
 #page .page_block .page_block_inner { padding:10px;}
 #page .page_block h3 { font-size:160%; padding:10px;}
 #footer { width:1000px; margin:0 auto; background-color:#DDD; padding:10px; }
@@ -20,7 +20,7 @@
 /**********************************************************************************************************************/
 /* INSIGHTS                                                                                                            */
 /**********************************************************************************************************************/
-.insight { margin:10px; background-color:#333; }
+.insight { margin:10px; background-color:#333; border:1px solid #DDD;}
 .insight .visualization { text-align:center;}
 .insight .visualization .no_image { width:486px; height:220px; margin-top:5px;}
 .insight .waiting { padding:30px 0 40px 0; text-align:center;}
@@ -35,10 +35,22 @@
 .insight .insight_footer table { width:100%; background-color:#DDD; margin-top:5px;}
 .insight .insight_footer table td { padding:15px; color:#333;}
 
-.insight_thumbnail { background-color:#333; height:75px; width:100px; overflow:hidden; display:block;}
+.insight_thumbnail { background-color:#333; height:75px; width:100px; overflow:hidden; display:block; border:1px solid #DDD;}
 .insight_thumbnail.images_1 img { width:65px; height:65px; padding:4px 17px;}
 .insight_thumbnail.images_2 img { width:40px; height:40px; padding:16px 5px}
 .insight_thumbnail.images_3 img { width:18px; height:18px; padding:2px;}
+
+.insight_medium { background-color:#333; height:260px; width:350px; overflow:hidden; display:block; border:1px solid #DDD;}
+.insight_medium canvas { margin:20px;}
+.insight_medium.images_1 img { width:250px; height:250px; padding:4px 50px;}
+.insight_medium.images_2 img { width:40px; height:40px; padding:16px 5px}
+.insight_medium.images_3 img { width:18px; height:18px; padding:2px;}
+
+
+#trending_insights { overflow:hidden; }
+#trending_insights ul li { float:left; padding:4px;}
+#trending_insights ul li.waiting { padding:5% 0 0 35%}
+#trending_insights ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
 
 
 /**********************************************************************************************************************/
@@ -47,14 +59,11 @@
 #top_insights { margin-top:0;}
 #top_insights .left_column { float:left; width:49%; }
 #top_insights .left_column .left_column { width:115px; }
-#top_insights .left_column .left_column ul li { padding:0 2px 10px;}
-#top_insights .left_column .left_column ul li img { height:82px; width:110px;}
+#top_insights .left_column .left_column ul li { padding:0 2px 15px;}
 #top_insights .left_column .right_column { width:362px; }
-#top_insights .left_column .right_column img { width:360px; height:270px; }
 #top_insights .right_column { float:right; width:49%; }
 #top_insights .right_column p { font-size:120%; font-style:italic; margin-bottom:10px;}
-#top_insights .right_column #video_container { }
-#top_insights .right_column #video_container img { width:478px; height:230px;}
+#top_insights .right_column #video_container { text-align:center; }
 
 #main_body .left_column { float:left; width:49%; }
 #main_body .right_column { float:right; width:49%; }
@@ -65,13 +74,6 @@
 #sign_up_promo a img { display:block; width:300px; height:100px; margin:10px auto;}
 
 #brows_by_category ul li { float:left; width:45%; font-size:120%; padding:6px;}
-
-#trending_insights ul { margin-top:20px;}
-#trending_insights ul li { float:left; padding:5px; }
-
-#recent_activity ul { margin-top:20px;}
-#recent_activity ul li { float:left; padding:5px; }
-
 
 /**********************************************************************************************************************/
 /* LOGIN AND REGISTER                                                                                                 */
@@ -113,10 +115,7 @@
 #profile_page #my_creations ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
 #profile_page #my_creations #more_link { display:block; text-align:right; color:#AAA; padding-right:15px; display:none;}
 
-#profile_page #trending_insights { overflow:hidden; height:320px; position:relative;}
-#profile_page #trending_insights ul li { float:left; padding:4px;}
-#profile_page #trending_insights ul li.waiting { padding:80px 0 0 100px}
-#profile_page #trending_insights ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
+#profile_page #trending_insights { height:320px; position:relative; }
 
 #profile_page #insights_timeline { height:663px;}
 #profile_page #insights_timeline_header { padding-bottom:10px; text-align:right;}

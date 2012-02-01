@@ -25,7 +25,8 @@ class Dashboard(Model):
             'last_saved_pretty':'Not yet used',
             'collections':template['collections'] if template else {},
             'widgets':template['widgets'] if template else {},
-            'active':True
+            'active':True,
+            'name':template['name']
         })
         for collection in dashboard['collections']:
             collection['id'] = '%s' % ObjectId()
@@ -80,6 +81,19 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.Trending - finished' % __name__)
         return dashboards
 
+    @classmethod
+    def Top(cls, count):
+        Logger.Info('%s - Dashboard.Top - started' % __name__)
+        Logger.Debug('%s - Dashboard.Top - started with count:%s' % (__name__, count))
+        dashboards = Dashboard.collection.find()
+        dashboards = [d for d in dashboards if d['active']]
+        dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
+        dashboards = dashboards[:int(count)]
+        for dashboard in dashboards:
+            dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
+        Logger.Info('%s - Dashboard.Top - finished' % __name__)
+        return dashboards
+
 
     def save(self, *args, **kwargs):
         self['last_saved'] = time.time()
@@ -110,6 +124,7 @@ class DashboardTemplate(Model):
                 'image':'dashboard_template_images/empty_dashboard.gif',
                 'collections':[{}, {}],
                 'widgets':{'something':{}},
+                'name':'Untitled Insight'
             }
         ]
 

@@ -8,8 +8,8 @@
         {
             var insight_container = $('<li class="dashboard"></li>');
             container.append(insight_container);
-            insight_container.profile_page_insight(dashboards[x]);
-            insight_container.profile_page_insight('render_short_summary');
+            insight_container.insight(dashboards[x]);
+            insight_container.insight('render_short_summary');
         }
         container.find('.insight').corner();
         container.find('.insight_footer table').corner('bottom');

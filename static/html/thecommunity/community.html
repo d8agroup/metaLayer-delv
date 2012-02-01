@@ -2,12 +2,14 @@
 
 {% block js %}
     {{ block.super }}
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/community_page.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/community_page_top_insights.js"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready
         (
             function()
             {
-
+                $('#page').community_page();
             }
         )
     </script>
@@ -19,22 +21,18 @@
         <h3>Top Insights of The Day</h3>
         <div class="page_block_inner">
             <div class="clearfix">
-                <div class='left_column clearfix'>
+                <div id="top_insights_inner" class='left_column clearfix'>
                     <div class="left_column">
                         <ul>
-                            <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
-                            <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
-                            <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
                         </ul>
                     </div>
-                    <div class="right_column">
-                        <p><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></p>
+                    <div class="right_column" id="top_insight_container">
                     </div>
                 </div>
                 <div class="right_column clearfix">
                     <p>metaLayer is the best way to create, discover and share insight about the worlds information! <span>Search is so 20th century</span></p>
                     <div id='video_container'>
-                        <img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" />
+                        <iframe src="http://player.vimeo.com/video/31801964?portrait=0" width="409" height="230" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                     </div>
                 </div>
             </div>
@@ -76,9 +74,7 @@
                 <h3>Whats Trending?</h3>
                 <div class="page_block_inner">
                     <ul class="clearfix">
-                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
-                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
-                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
                     </ul>
                 </div>
             </div>

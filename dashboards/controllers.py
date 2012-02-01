@@ -24,6 +24,14 @@ class DashboardsController(object):
         Logger.Info('%s - DashboardsController.GetTendingDashboards - finished' % __name__)
         return dashboards
 
+    @classmethod
+    def GetTopDashboards(cls, count):
+        Logger.Info('%s - DashboardsController.GetTopDashboards - started' % __name__)
+        Logger.Debug('%s - DashboardsController.GetTopDashboards - started with id:%s' % (__name__, id))
+        dashboards = Dashboard.Top(count)
+        Logger.Info('%s - DashboardsController.GetTopDashboards - finished' % __name__)
+        return dashboards
+
     def get_saved_dashboards(self):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)

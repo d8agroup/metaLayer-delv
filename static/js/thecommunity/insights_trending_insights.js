@@ -8,14 +8,14 @@
         {
             var insight_container = $('<li></li>');
             container.find('ul').append(insight_container);
-            insight_container.profile_page_insight(dashboards[d]);
-            insight_container.profile_page_insight('render_thumbnail');
+            insight_container.insight(dashboards[d]);
+            insight_container.insight('render_thumbnail');
         }
     };
 
-    $.fn.profile_page_trending_insights = function()
+    $.fn.insights_trending_insights = function(count)
     {
         var trensing_insights = this;
-        $.get('/community/trending_insights/9', function(data) { render(data, trensing_insights); }, 'JSON');
+        $.get('/community/trending_insights/' + count, function(data) { render(data, trensing_insights); }, 'JSON');
     }
 })(jQuery);

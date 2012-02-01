@@ -8,8 +8,8 @@
         {
             var insight_container = $("<li></li>");
             container.find('ul').append(insight_container);
-            insight_container.profile_page_insight(dashboards[d]);
-            insight_container.profile_page_insight('render_thumbnail');
+            insight_container.insight(dashboards[d]);
+            insight_container.insight('render_thumbnail');
         }
     };
 

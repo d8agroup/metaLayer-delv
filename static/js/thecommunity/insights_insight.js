@@ -17,13 +17,24 @@
                 if (dashboard.collections[x].visualizations != null && dashboard.collections[x].visualizations.length > 0)
                     for (var y=0; y<dashboard.collections[x].visualizations.length; y++)
                         if (dashboard.collections[x].visualizations[y].configured)
-                            return insight_container.profile_page_insight('_render_short_summary_for_visualization');
-            insight_container.profile_page_insight('_render_short_summary_for_data');
+                            return insight_container.insight('_render_short_summary_for_visualization');
+            insight_container.insight('_render_short_summary_for_data');
             return insight_container;
         },
         render_thumbnail:function()
         {
+            return this.insight('_render', { width:100, height:75, class_name:'thumbnail' });
+        },
+        render_medium:function()
+        {
+            return this.insight('_render', { width:300, height:225, class_name:'medium' });
+        },
+        _render:function(data)
+        {
             var insight_container = this;
+            var width = data.width;
+            var height = data.height;
+            var class_name = data.class_name;
             var dashboard = insight_container.data('dashboard');
             var visualization = null;
             for (var x=0; x<dashboard.collections.length; x++)
@@ -31,12 +42,12 @@
                     for (var y=0; y<dashboard.collections[x].visualizations.length; y++)
                         if (dashboard.collections[x].visualizations[y].configured)
                             visualization = dashboard.collections[x].visualizations[y].snapshot;
-            var insight_inner_container = $('<a href="/community/' + dashboard.username + '?insight=' + dashboard.id + '" class="insight_thumbnail" title="' + dashboard.username + " - " + dashboard.name + " - last accessed " + dashboard.last_saved_pretty + '"></div>');
+            var insight_inner_container = $('<a href="/community/' + dashboard.username + '?insight=' + dashboard.id + '" class="insight_' + class_name + '" title="' + dashboard.username + " - " + dashboard.name + " - last accessed " + dashboard.last_saved_pretty + '"></div>');
             if (visualization != null)
             {
-                insight_inner_container.append('<canvas width="100px" height="75px"></canvas>');
+                insight_inner_container.append('<canvas width="'+ width + 'px" height="' + height + 'px"></canvas>');
                 insight_container.append(insight_inner_container);
-                canvg(insight_container.find('canvas')[0], visualization, { scaleWidth:100, scaleHeight:75, ignoreMouse:true});
+                canvg(insight_container.find('canvas')[0], visualization, { scaleWidth:width, scaleHeight:height, ignoreMouse:true});
                 insight_inner_container.corner();
                 Tipped.create(insight_inner_container);
             }
@@ -46,7 +57,9 @@
                 for (var x=0; x<dashboard.collections.length; x++)
                     for (var y=0; y<dashboard.collections[x].data_points.length; y++)
                         if (data_logos.length < 9)
-                            data_logos[data_logos.length] = dashboard.collections[x].data_points[y].image_medium;
+                            data_logos[data_logos.length] = (width > 150)
+                                ? dashboard.collections[x].data_points[y].image_large
+                                : dashboard.collections[x].data_points[y].image_medium;
                 insight_container.append(insight_inner_container);
                 for (var y=0; y<data_logos.length; y++)
                     insight_inner_container.append("<img src='" + data_logos[y] + "' />");
@@ -54,7 +67,7 @@
                 insight_inner_container.corner();
                 Tipped.create(insight_inner_container);
             }
-
+            return insight_container;
         },
         _render_short_summary_for_visualization:function()
         {
@@ -81,7 +94,7 @@
                 parent.children().remove();
                 parent.append('<img class="no_image" src="/static/images/thecommunity/no_profile_image.gif" />');
             }
-            return insight_container.profile_page_insight('_apply_insight_actions');
+            return insight_container.insight('_apply_insight_actions');
         },
         _render_short_summary_for_data:function()
         {
@@ -98,7 +111,7 @@
             };
             var insight_html = $.tmpl('short_summary_for_data', template_data);
             insight_container.html(insight_html);
-            return insight_container.profile_page_insight('_apply_insight_actions');
+            return insight_container.insight('_apply_insight_actions');
         },
         _apply_insight_actions:function()
         {
@@ -118,7 +131,7 @@
         }
     };
 
-    $.fn.profile_page_insight = function(method)
+    $.fn.insight = function(method)
     {
         if ( methods[method] ) return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         else if ( typeof method === 'object' || ! method ) return methods.init.apply( this, arguments );
