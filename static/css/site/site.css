@@ -7,30 +7,31 @@
 /***********************************************************************************************************************
 HEADER
 ***********************************************************************************************************************/
-#header { width:100%; background-color:#222; color:#DDD; text-align:right; }
-#header_links { padding:5px; }
-#header_links a { display:inline-block; padding:0 5px;}
-#header_links #user_home_link {  }
+#page_header .editing, #page_header .focus { backgound-color:#000 !important; color:#FFF !important; font-weight:bold;}
+#page_header #dashboard_name { display:inline-block; margin-left:20px; color:#DDD; border:none; background-color:#333; font-size:100%; position:relative; top:1px;}
+#page_header .saving { font-weight:bold; color:#FFF;}
 
 /***********************************************************************************************************************
 DASHBOARD
 ***********************************************************************************************************************/
-body { background-color:#69F; }
 .dashboard { width:1000px; margin:0 auto; }
-.widgets { height:105px; background-color:#DDD; padding:5px; }
-.widget_panel h3 { text-align:center; font-size:80%}
+.dashboard h3.title { color:#FFF; padding:10px; display:none;}
+.widgets { height:105px; background-color:#FFF; padding:5px; }
+.widget_panel table { width:100%; }
+.widget_panel table td { width:25%; text-align:center;}
+.widget_panel h3 { text-align:center; font-size:100%; margin-bottom:5px;}
 
 .data_point_widget,
 .action_widget,
 .output_widget,
-.visualization_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:5px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; }
+.visualization_widget { width:180px; background-color:#222; text-align:center; color:#DDD; margin:2px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; display:inline-block;}
 
 .data_point_widget img,
 .action_widget img,
 .output_widget img,
 .visualization_widget img { display:none;}
 
-.collections { background-color:#FFF; }
+.collections { padding:5px; }
 .collection_container { float:left; color:#DDD; }
 .collections_1 { width:100%;}
 .collections_2 { width:50%;}

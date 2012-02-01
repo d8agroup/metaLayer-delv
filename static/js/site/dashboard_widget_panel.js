@@ -24,7 +24,7 @@
                 for (var x=0; x<data_points.length; x++)
                 {
                     var data_point = data_points[x];
-                    var data_point_html = $('<div class="data_point_widget"><img src="'+ data_point.image_small +'" /><span>' + data_point.display_name_short + '</span></div>');
+                    var data_point_html = $('<div class="data_point_widget"><span>' + data_point.display_name_short + '</span></div>');
                     data_point_html.data('data_point', data_point);
                     data_point_widgets_container_html.append(data_point_html);
                     data_point_html.corner();
@@ -41,7 +41,7 @@
                 for (var y=0; y<actions.length; y++)
                 {
                     var action = actions[y];
-                    var action_html = $("<div class='action_widget'><img src='"+ action.image_small +"' /><span>" + action.display_name_short + "</span></div>");
+                    var action_html = $("<div class='action_widget'><span>" + action.display_name_short + "</span></div>");
                     action_html.data('action', action);
                     action_widgets_container_html.append(action_html);
                     action_html.corner();
@@ -54,7 +54,7 @@
                 for (var z=0; z<outputs.length; z++)
                 {
                     var output = outputs[z];
-                    var output_html = $("<div class='output_widget'><img src='"+ output.image_small +"' /><span>" + output.display_name_short + "</span></div>");
+                    var output_html = $("<div class='output_widget'><span>" + output.display_name_short + "</span></div>");
                     output_html.data('output', output);
                     output_widgets_container_html.append(output_html);
                     output_html.corner();
@@ -67,7 +67,7 @@
                 for (var v=0; v<visualizations.length; v++)
                 {
                     var visualization = visualizations[v];
-                    var visualization_html = $("<div class='visualization_widget'><img src='"+ visualization.image_small +"' /><span>" + visualization.display_name_short + "</span></div>");
+                    var visualization_html = $("<div class='visualization_widget'><span>" + visualization.display_name_short + "</span></div>");
                     visualization_html.data('visualization', visualization);
                     visualization_widgets_container_html.append(visualization_html);
                     visualization_html.corner();
@@ -81,6 +81,7 @@
             var widget_panel = this;
             widget_panel.children().remove();
             $.get ( '/dashboard/widgets/get_all', function(data) { render_widgets_function(data, widget_panel) }, 'JSON' );
+            widget_panel.corner();
             return widget_panel;
         },
         apply_widget_draggable:function()

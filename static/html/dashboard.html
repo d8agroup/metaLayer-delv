@@ -17,6 +17,7 @@
         <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
         <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
         <script type="text/javascript" src="/static/js/site/header.js"></script>
+        <script type="text/javascript" src="/static/js/site/header_dashboard_name.js"></script>
         <script type="text/javascript" src="/static/js/site/site.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_collection.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_search_widget.js"></script>
@@ -41,7 +42,6 @@
             (
                 function()
                 {
-                    $('#page_header').header();
                     setTimeout
                     (
                         function()
@@ -53,6 +53,7 @@
                                 function(data)
                                 {
                                     $('.dashboard').dashboard({'dashboard':data.dashboard});
+                                    $('#page_header').header({'dashboard':data.dashboard});
                                 },
                                 'JSON'
                             );
@@ -70,6 +71,7 @@
     <div id='page'>
         <div id='content'>
             <div class="dashboard">
+                <h3 class="title">Gain new insight</h3>
                 <div class='widgets'></div>
                 <div class='collections clearfix'></div>
             </div>

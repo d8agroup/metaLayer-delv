@@ -1,6 +1,6 @@
 {% extends 'thecommunity/base.html' %}
 
-{%  block title %}metaLayer - {{ user.username }}{% endblock %}
+{%  block title %}metaLayer - {{ profile_user.username }}{% endblock %}
 
 {% block js %}
     {{  block.super }}
@@ -11,8 +11,9 @@
     <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline.js"></script>
-    <script type="text/javascript" src="/static/js/thecommunity/profile_page_insights_timeline_insight_container.js"></script>
+    <script type="text/javascript" src="/static/js/thecommunity/profile_page_insight.js"></script>
     <script type="text/javascript" src="/static/js/thecommunity/profile_page_my_creations.js"></script>
+    <script type="text/javascript" src="/static/js/thecommunity/profile_page_trending_insights.js"></script>
     <script type="text/javascript">
         $(document).ready
             (
@@ -29,7 +30,7 @@
 {% endblock %}
 
 {% block page_body %}
-<div id='page'>
+<div id='page' data-username='{{ profile_user.username }}'>
     <div id='profile_page' class="clearfix">
         <div id='profile_page_left_column'>
             <div id='profile_page_account' class="page_block">
@@ -37,9 +38,13 @@
                     <div id='account_basics' class="clearfix">
                         <img src="/static/images/thecommunity/no_profile_image.gif" alt='Your profile image' />
                         <div id='username_container'>
-                            <h3 {% if user.username|length > 20 %}class='long_user_name'{% endif %}>{{ user.username }}</h3>
+                            <h4 {% if profile_user.username|length > 20 %}class='long_user_name'{% endif %}>{{ profile_user.username }}</h4>
                             <a id="view_my_collection_link">
-                                View my collections
+                                {% if user.username == profile_user.username %}
+                                    View my collections
+                                {% else %}
+                                    View their collections
+                                {% endif %}
                             </a>
                         </div>
                     </div>
@@ -69,8 +74,14 @@
                 </div>
             </div>
             <div id='my_creations' class="page_block">
+                <h3>
+                    {% if user.username == profile_user.username %}
+                        My creations
+                    {% else %}
+                        Their creations
+                    {% endif %}
+                </h3>
                 <div class="page_block_inner">
-                    <h3>My Creations</h3>
                     <ul class="clearfix">
                         <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
                     </ul>
@@ -78,8 +89,8 @@
                 </div>
             </div>
             <div id='trending_insights' class="page_block">
+                <h3>Trending Insights</h3>
                 <div class="page_block_inner">
-                    <h3>Trending Insights</h3>
                     <ul class="clearfix">
                         <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
                     </ul>
@@ -88,10 +99,18 @@
         </div>
         <div id='profile_page_right_column'>
             <div id='insights_timeline' class="page_block">
+                <h3>
+                    {% if user.username == profile_user.username %}
+                        Your insight timeline
+                    {% else %}
+                        Their insight timeline
+                    {% endif %}
+                </h3>
                 <div class="page_block_inner">
                     <div id='insights_timeline_header'>
-                        <a id='start_new_insight' href="/dashboard/new/1">Start a new insight</a>
-                        <h3>Your insight timeline</h3>
+                        {% if user.username == profile_user.username %}
+                            <a id='start_new_insight' href="/dashboard/new/1">Start a new insight</a>
+                        {% endif %}
                     </div>
                     <ul id='timeline'>
                         <li class="waiting">Loading your timeline <img src="/static/images/thecommunity/loading_circle.gif" /></li>

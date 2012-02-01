@@ -1,6 +1,8 @@
+<a id="${insight.id}"></a>
 <div class="insight_header">
     <div class="insight_actions">
-        <a class="edit" href="/dashboard/${insight.id}">Edit</a>
+        <a class="delete">delete</a> |
+        <a class="edit" href="/dashboard/${insight.id}">edit</a>
     </div>
-    <h4>${insight.last_saved_pretty}</h4>
+    <h4><span class='insight_name'>${insight.name}</span><span class='last_accessed'>last used: ${insight.last_saved_pretty}</span></h4>
 </div>

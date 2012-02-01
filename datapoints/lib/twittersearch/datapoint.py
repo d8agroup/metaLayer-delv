@@ -15,8 +15,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Twitter Search',
             'full_display_name':'Twitter Search',
             'instructions':'Use this data point to search the public tweet stream.',
-            'image_large':'http://www.fieldofignorance.com/wp-content/uploads/2011/11/twitter_logo-transparent-back.gif',
-            'image_small':'http://www.studentnews.ie/wp-content/uploads/2011/11/Twitter-Blue-Transparent-t-3D-Button-Logo60.png',
+            'image_large':'/static/images/lib/yoo/twitter_6464.png',
+            'image_medium':'/static/images/lib/yoo/twitter_4848.png',
+            'image_small':'/static/images/lib/yoo/twitter_2424.png',
             'configured':False,
             'elements':[
                 {
@@ -38,7 +39,7 @@ class DataPoint(BaseDataPoint):
                     "<p style='float:left; padding:2px 0 0 8px;font-weight:bold;width:40%;overflow:hidden;height:12px;'>${author_display_name}</p>"\
                     "<p style='margin-bottom:2px;text-align:right'>"\
                     "<span style='position:relative;bottom:4px;right:10px;'>${pretty_date}</span>"\
-                    "<img src='http://www.studentnews.ie/wp-content/uploads/2011/11/Twitter-Blue-Transparent-t-3D-Button-Logo60.png' style='width:15px; box-shadow: 2px 2px 3px #111;'/>"\
+                    "<img src='/static/images/lib/yoo/twitter_2424.png' style='width:15px; box-shadow: 2px 2px 3px #111;'/>"\
                     "</p>"\
                     "<a href='${link}'><p style='padding-left:60px;' class='tool_tip' title='click to see original post on Twitter+'>${title}</p></a>"\
                 "</li>"

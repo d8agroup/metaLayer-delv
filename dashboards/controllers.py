@@ -16,6 +16,14 @@ class DashboardsController(object):
         Logger.Info('%s - DashboardsController.GetDashboardById - finished' % __name__)
         return dashboard
 
+    @classmethod
+    def GetTendingDashboards(cls, count):
+        Logger.Info('%s - DashboardsController.GetTendingDashboards - started' % __name__)
+        Logger.Debug('%s - DashboardsController.GetTendingDashboards - started with id:%s' % (__name__, id))
+        dashboards = Dashboard.Trending(count)
+        Logger.Info('%s - DashboardsController.GetTendingDashboards - finished' % __name__)
+        return dashboards
+
     def get_saved_dashboards(self):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)
@@ -56,6 +64,7 @@ class DashboardsController(object):
         Logger.Debug('%s - update_dashboard - started with dashboard:%s' % (__name__, dashboard))
         db = Dashboard.Load(dashboard['id'])
         db['collections'] = dashboard['collections']
+        db['name'] = dashboard['name']
         db.save()
         Logger.Info('%s - update_dashboard - finished' % __name__)
 

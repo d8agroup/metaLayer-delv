@@ -71,6 +71,10 @@ class UserController(object):
         Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
         return user
 
+    @classmethod
+    def GetUserByUserName(cls, user_name):
+        return User.objects.get(username=user_name)
+
     def logout_user(self, request):
         Logger.Info('%s - UserController.logout_user - started' % __name__)
         logout(request)

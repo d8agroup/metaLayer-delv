@@ -12,7 +12,7 @@
                 function()
                 {
                     $.get('/static/html/thecommunity/account_page/account_page_user_account_management.html', function(t) { $.template('account_page_user_account_management', t)});
-                    setTimeout( function() {$('#page').account_page();}, 2000 );
+                    setTimeout( function() {$('#page').account_page();}, 500 );
                 }
             );
     </script>
@@ -21,8 +21,8 @@
 {% block page_body %}
 <div id='page'>
     <div id='account_page' class="page_block">
+        <h3>{{ user.username }}</h3>
         <div class="page_block_inner">
-            <h3>{{ user.username }}</h3>
             <div class="clearfix">
                 <div class="left_column">
                     left

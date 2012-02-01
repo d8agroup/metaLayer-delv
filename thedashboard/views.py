@@ -80,6 +80,17 @@ def dashboard_new(request, template_id):
     Logger.Info('%s - dashboard - finished' % __name__)
     return redirect(dashboard_load, '%s' % db.id)
 
+@async
+@login_required(login_url='/')
+def dashboard_delete(request, id):
+    Logger.Info('%s - dashboard_delete - started' % __name__)
+    Logger.Debug('%s - dashboard_delete - started with id:%s' % (__name__, id))
+    yield JSONResponse()
+    dc = DashboardsController(request.user)
+    dc.delete_dashboard_by_id(id)
+    Logger.Info('%s - dashboard_delete - finished' % __name__)
+
+
 @login_required(login_url='/')
 def dashboard(request, id):
     Logger.Info('%s - dashboard - started' % __name__)

@@ -1,5 +1,5 @@
-body { background-color:#69F; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:80%; height:100%; padding-top:35px;}
-html { height:100%; overflow:hidden; }
+body { background-color:#DDD; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:80%; }
+html {}
 a { cursor:pointer; text-decoration:none; color:inherit; font-weight:bold;}
 a:hover { text-decoration:underline; }
 .container { padding:10px;}
@@ -10,23 +10,16 @@ a:hover { text-decoration:underline; }
 /**********************************************************************************************************************/
 /* HEADER                                                                                                             */
 /**********************************************************************************************************************/
-#page_header { background-color:#333; height:35px; position:absolute; top:0; left:0; width:100%; }
-#page_header #logo_container { width:33%; float:left; }
+#page_header { background-color:#333; height:35px; }
+#page_header #logo_container { width:55%; float:left; overflow:hidden; }
 #page_header #logo_container img { height:20px; position:relative; top:5px; left:5px;}
-#page_header #search_container { width:30%; text-align:center; padding: 5px 0 0 33%;}
-#page_header #search_container input[type=text] { width:250px;}
-#page_header #header_links_container { width:33%; float:right; text-align:right; padding:9px; color:#fff; }
+#page_header #header_links_container { width:40%; float:right; text-align:right; padding:9px; color:#fff; }
 #page_header #header_links_container a { display:inline-block; padding-left:10px;}
+#page_header #personal_menu { background-color:#333; width:130px; position:absolute; right:30px; top:32px; display:none;}
+#page_header #personal_menu a { display:block; text-align:left; padding:5px;}
 
 /**********************************************************************************************************************/
 /* PAGE                                                                                                               */
 /**********************************************************************************************************************/
-#page_container { height:100%; overflow:auto; padding-bottom:20px;}
+#page_container { }
 #page { width:1000px; margin:0 auto; background-color:#DDD; padding:10px; }
-#page .page_block { background-color:#FFF;}
-#page .page_block .page_block_inner { padding:10px;}
-#page .page_block h3 { font-size:200%; margin-bottom:10px;}
-#footer { width:1000px; margin:0 auto; background-color:#DDD; padding:10px; }
-#footer dl { float:left; width:30%;}
-#footer dl dt { font-size:180%; margin-bottom:10px; }
-#footer dl dd { padding:5px;}

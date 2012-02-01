@@ -15,8 +15,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Web Feed',
             'full_display_name':'Web Feed (rss/atom)',
             'instructions':'Use this data point to subscribe to any web feed published using either rss or atom syndication.',
-            'image_large':'http://app.moogo.com/files/moogowebsite_copy.moogo.com/images/Blog/2010-06-15/rss-feed.png',
-            'image_small':'http://imgur.com/images/blog_rss.png',
+            'image_large':'/static/images/lib/yoo/feed_6464.png',
+            'image_medium':'/static/images/lib/yoo/feed_4848.png',
+            'image_small':'/static/images/lib/yoo/feed_2424.png',
             'configured':False,
             'elements':[
                 {
@@ -32,7 +33,7 @@ class DataPoint(BaseDataPoint):
     def get_content_item_template(self):
         return "" \
             "<li style='width:100%;'>" \
-                "<img src='http://imgur.com/images/blog_rss.png' style='width:20px; padding-right:10px;' align='left'/>" \
+                "<img src='/static/images/lib/yoo/feed_2424.png' style='width:20px; padding-right:10px;' align='left'/>" \
                 "<p style='margin-bottom:2px;'>${source_display_name}</p>" \
                 "<p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p>" \
             "</li>"

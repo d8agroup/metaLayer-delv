@@ -28,6 +28,7 @@ DASHBOARD - CHECKED 18/01/2010
                 dashboard.collections[x].search_results = [];
             var post_data = { dashboard:JSON.stringify(dashboard), csrfmiddlewaretoken:$('#csrf_form input').val() };
             $.post ( '/dashboard/save', post_data );
+            $('#page_header').header('dashboard_saved');
         }
     };
 

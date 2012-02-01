@@ -43,7 +43,7 @@ class Dashboard(Model):
         for dashboard in dashboards:
             should_remove = True
             for collection in dashboard['collections']:
-                if collection['data_points']:
+                if 'data_points' in collection:
                     should_remove = False
             if should_remove:
                 dashboard.remove()
@@ -66,6 +66,20 @@ class Dashboard(Model):
             dashboard.save()
         Logger.Info('%s - Dashboard.Load - finished' % __name__)
         return dashboard
+
+    @classmethod
+    def Trending(cls, count):
+        Logger.Info('%s - Dashboard.Trending - started' % __name__)
+        Logger.Debug('%s - Dashboard.Trending - started with count:%s' % (__name__, count))
+        dashboards = Dashboard.collection.find()
+        dashboards = [d for d in dashboards if d['active']]
+        dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
+        dashboards = dashboards[:int(count)]
+        for dashboard in dashboards:
+            dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
+        Logger.Info('%s - Dashboard.Trending - finished' % __name__)
+        return dashboards
+
 
     def save(self, *args, **kwargs):
         self['last_saved'] = time.time()

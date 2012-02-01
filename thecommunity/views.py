@@ -12,10 +12,12 @@ def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
 
 @login_required(login_url='/')
-def user_home(request):
+def user_home(request, user_name):
+    uc = UserController
+    user = uc.GetUserByUserName(user_name)
     return render_to_response(
         'thecommunity/profile_page/profile.html',
-        {},
+        {'profile_user':user},
         context_instance=RequestContext(request)
     )
 
@@ -155,9 +157,9 @@ def change_subscription(request):
         return JSONResponse()
 
 @login_required(login_url='/')
-def load_dashboards(request, count=None):
+def load_dashboards(request, username, count=None):
     Logger.Info('%s - load_dashboards - started' % __name__)
-    user = request.user
+    user = UserController.GetUserByUserName(username)
     dc = DashboardsController(user)
     saved_dashboards = dc.get_saved_dashboards()
     if count:
@@ -165,3 +167,7 @@ def load_dashboards(request, count=None):
     Logger.Info('%s - load_dashboards - finished' % __name__)
     return JSONResponse({ 'dashboards':saved_dashboards })
 
+@login_required(login_url='/')
+def load_tending_insights(request, count):
+    trending_dashboards = DashboardsController.GetTendingDashboards(count)
+    return JSONResponse({'trending_insights':trending_dashboards})

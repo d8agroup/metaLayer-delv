@@ -16,8 +16,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Google News Search',
             'full_display_name':'Google News Search',
             'instructions':'Use this data point to search Google news.',
-            'image_large':'http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png',
-            'image_small':'http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png',
+            'image_large':'/static/images/lib/yoo/google_6464.png',
+            'image_medium':'/static/images/lib/yoo/google_4848.png',
+            'image_small':'/static/images/lib/yoo/google_2424.png',
             'configured':False,
             'elements':[
                 {
@@ -33,7 +34,7 @@ class DataPoint(BaseDataPoint):
     def get_content_item_template(self):
         return ""\
                "<li style='width:100%;'>"\
-                   "<img src='http://3.bp.blogspot.com/-0mDXk_VAwS4/TbRzMRxYTSI/AAAAAAAABLk/5J2IYq9aUGU/s1600/128.png' style='width:20px; padding-right:10px;' align='left'/>"\
+                   "<img src='/static/images/lib/yoo/google_2424.png' style='width:20px; padding-right:10px;' align='left'/>"\
                    "<p style='margin-bottom:2px;'>${source_display_name}</p>"\
                    "<a href='${link}' class='tool_tip' title='click to view the original article'><p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p></a>" \
                "</li>"

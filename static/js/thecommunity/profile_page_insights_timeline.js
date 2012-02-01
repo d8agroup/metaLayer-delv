@@ -8,16 +8,24 @@
         {
             var insight_container = $('<li class="dashboard"></li>');
             container.append(insight_container);
-            insight_container.profile_page_insights_timeline_insight_container(dashboards[x]);
+            insight_container.profile_page_insight(dashboards[x]);
+            insight_container.profile_page_insight('render_short_summary');
         }
-    }
+        container.find('.insight').corner();
+        container.find('.insight_footer table').corner('bottom');
+        container.jScrollPane( { topCapHeight:40, bottomCapHeight:40 } );
+        var target_insight = getURLParameter('insight');
+        if (target_insight != 'null')
+            $('#timeline')[0].scrollTo('#' + target_insight);
+    };
     
     var methods =
     {
         init:function()
         {
             var insights_timeline = this;
-            $.get('/community/insights/load', function(data) { render_insight_timeline(data, insights_timeline); }, 'JSON');
+            var username = $('#page').data('username');
+            $.get('/community/insights/load/' + username, function(data) { render_insight_timeline(data, insights_timeline); }, 'JSON');
         }
     };
 
