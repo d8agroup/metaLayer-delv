@@ -69,23 +69,19 @@
                     </table>
                 </div>
             </div>
+            {% if user.username == profile_user.username %}
             <div id='my_creations' class="page_block">
-                <h3>
-                    {% if user.username == profile_user.username %}
-                        My creations
-                    {% else %}
-                        Their creations
-                    {% endif %}
-                </h3>
-                <div class="page_block_inner">
-                    <ul class="clearfix">
-                        <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
-                    </ul>
-                    <a id="more_link">more ...</a>
+                <h3><span>My creations</span></h3>
+                    <div class="page_block_inner">
+                        <ul class="clearfix">
+                            <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
+                        </ul>
+                        <a id="more_link">more ...</a>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div id='trending_insights' class="page_block">
-                <h3>Trending Insights</h3>
+                <h3><span>Trending Insights</span></h3>
                 <div class="page_block_inner">
                     <ul class="clearfix">
                         <li><li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
@@ -95,13 +91,7 @@
         </div>
         <div id='profile_page_right_column'>
             <div id='insights_timeline' class="page_block">
-                <h3>
-                    {% if user.username == profile_user.username %}
-                        Your insight timeline
-                    {% else %}
-                        Their insight timeline
-                    {% endif %}
-                </h3>
+                <h3><span>Insight timeline</span></h3>
                 <div class="page_block_inner">
                     <div id='insights_timeline_header'>
                         {% if user.username == profile_user.username %}

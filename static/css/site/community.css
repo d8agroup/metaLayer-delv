@@ -9,18 +9,19 @@
 /**********************************************************************************************************************/
 /* PAGE                                                                                                               */
 /**********************************************************************************************************************/
-#page .page_block { background-color:#333; color:#DDD;}
+#page .page_block { color:#DDD; background-color:#1a1a1a; }
 #page .page_block .page_block_inner { padding:10px;}
-#page .page_block h3 { font-size:160%; padding:10px;}
-#footer { width:1000px; margin:0 auto; background-color:#DDD; padding:10px; }
-#footer dl { float:left; width:30%;}
+#page .page_block h3 { height:40px; padding:0; margin-left:20px;}
+#page .page_block h3 span { display:none; }
+#footer { width:1000px; margin:0 auto; padding:10px; color:#AAA;}
+#footer dl { float:left; width:20%; margin-left:10%;}
 #footer dl dt { font-size:180%; margin-bottom:10px; }
 #footer dl dd { padding:5px;}
 
 /**********************************************************************************************************************/
 /* INSIGHTS                                                                                                            */
 /**********************************************************************************************************************/
-.insight { margin:10px; background-color:#333; border:1px solid #DDD;}
+.insight { margin:10px; background-color:#333; }
 .insight .visualization { text-align:center;}
 .insight .visualization .no_image { width:486px; height:220px; margin-top:5px;}
 .insight .waiting { padding:30px 0 40px 0; text-align:center;}
@@ -32,21 +33,23 @@
 .insight .insight_header h4 .insight_name { display:inline-block; margin-right:10px; max-width:300px; line-height:120%;}
 .insight .insight_header h4 .last_accessed { display:inline-block; font-weight:normal; font-style:italic;}
 .insight .insight_header .insight_actions { text-align:right; padding:5px; float:right;}
-.insight .insight_footer table { width:100%; background-color:#DDD; margin-top:5px;}
-.insight .insight_footer table td { padding:15px; color:#333;}
+.insight .insight_footer table { width:100%; margin-top:5px;}
+.insight .insight_footer table td { padding:15px; color:#DDD;}
 
-.insight_thumbnail { background-color:#333; height:75px; width:100px; overflow:hidden; display:block; border:1px solid #DDD;}
+.insight_thumbnail { background-color:#333; height:75px; width:100px; overflow:hidden; display:block; }
 .insight_thumbnail.images_1 img { width:65px; height:65px; padding:4px 17px;}
 .insight_thumbnail.images_2 img { width:40px; height:40px; padding:16px 5px}
 .insight_thumbnail.images_3 img { width:18px; height:18px; padding:2px;}
+.insight_thumbnail.images_4 img { width:33px; height:33px; padding:3px 8px 0;}
 
-.insight_medium { background-color:#333; height:260px; width:350px; overflow:hidden; display:block; border:1px solid #DDD;}
+.insight_medium { background-color:#333; height:260px; width:350px; overflow:hidden; display:block; }
 .insight_medium canvas { margin:20px;}
 .insight_medium.images_1 img { width:250px; height:250px; padding:4px 50px;}
 .insight_medium.images_2 img { width:40px; height:40px; padding:16px 5px}
 .insight_medium.images_3 img { width:18px; height:18px; padding:2px;}
+.insight_medium.images_4 img { width:120px; height:120px; padding:5px 21px;}
 
-
+#trending_insights h3 { background:url('/static/images/thecommunity/text_page_block_h3_whats_trending.png') no-repeat; }
 #trending_insights { overflow:hidden; }
 #trending_insights ul li { float:left; padding:4px;}
 #trending_insights ul li.waiting { padding:5% 0 0 35%}
@@ -57,6 +60,8 @@
 /* COMMUNITY                                                                                                          */
 /**********************************************************************************************************************/
 #top_insights { margin-top:0;}
+#top_insights h3 span { display:none;}
+#top_insights h3 { background:url('/static/images/thecommunity/text_page_block_h3_top_insight_of_the_day.png') no-repeat; }
 #top_insights .left_column { float:left; width:49%; }
 #top_insights .left_column .left_column { width:115px; }
 #top_insights .left_column .left_column ul li { padding:0 2px 15px;}
@@ -69,11 +74,17 @@
 #main_body .right_column { float:right; width:49%; }
 #main_body .main_body_section { height:220px; overflow:hidden; margin:15px 0;}
 
+#sign_up_promo { color:#FFF;}
 #sign_up_promo h5 { font-size:150%; text-align:center; margin-top:20px; }
 #sign_up_promo a { text-align:center; display:block;}
 #sign_up_promo a img { display:block; width:300px; height:100px; margin:10px auto;}
 
+#brows_by_category h3 { background:url('/static/images/thecommunity/text_page_block_h3_browse_by_category.png') no-repeat; }
 #brows_by_category ul li { float:left; width:45%; font-size:120%; padding:6px;}
+
+#trending_insights.main_body_section li { padding:2px 8px;}
+
+#recent_activity h3 { background:url('/static/images/thecommunity/text_page_block_h3_recent_changes.png') no-repeat; }
 
 /**********************************************************************************************************************/
 /* LOGIN AND REGISTER                                                                                                 */
@@ -98,18 +109,19 @@
 #profile_page_account #account_basics #username_container h4 { width:220px; overflow:hidden; margin-bottom:5px; height:27px; font-size:130%;}
 #profile_page_account #account_basics #username_container h4.long_user_name { font-size:80%; }
 #profile_page_account #account_basics #username_container a#view_my_collection_link { color:#999; }
-#profile_page_account #account_statistics { width:100%; background-color:#EEE; margin-top:20px; color:#000;}
+#profile_page_account #account_statistics { width:100%; margin-top:20px; color:#DDD;}
 #profile_page_account #account_statistics td { padding:5px; }
 #profile_page_account #account_statistics td#insights,
 #profile_page_account #account_statistics td#following,
-#profile_page_account #account_statistics td#followers { border-top:1px solid #DDD; border-bottom:1px solid #DDD;}
-#profile_page_account #account_statistics td#following { border-left:1px solid #DDD; border-right:1px solid #DDD;}
-#profile_page_account #account_statistics td#status { padding:5px; border-bottom:1px solid #DDD;}
-#profile_page_account #account_statistics td#status #status_container { background-color:#AAA; padding:10px; }
+#profile_page_account #account_statistics td#followers { border-top:1px solid #333; border-bottom:1px solid #333;}
+#profile_page_account #account_statistics td#following { border-left:1px solid #333; border-right:1px solid #333;}
+#profile_page_account #account_statistics td#status { padding:5px; border-bottom:1px solid #33;}
+#profile_page_account #account_statistics td#status #status_container { background-color:#333; padding:10px; }
 #profile_page_account #account_statistics td#status #status_container input[type=text] { width:290px; }
 #profile_page_account #account_statistics td .number { font-weight:bold; font-size:150%; margin-bottom:5px;}
 
-#profile_page #my_creations { overflow:hidden; height:140px; position:relative;}
+#profile_page #my_creations { overflow:hidden; height:150px; position:relative;}
+#profile_page #my_creations h3 { background:url('/static/images/thecommunity/text_page_block_h3_my_creations.png') no-repeat;}
 #profile_page #my_creations ul li { float:left; margin:4px; }
 #profile_page #my_creations ul li.waiting { padding:20px 0 0 100px}
 #profile_page #my_creations ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
@@ -118,6 +130,7 @@
 #profile_page #trending_insights { height:320px; position:relative; }
 
 #profile_page #insights_timeline { height:663px;}
+#profile_page #insights_timeline h3 { background:url('/static/images/thecommunity/text_page_block_h3_insight_timeline.png') no-repeat; }
 #profile_page #insights_timeline_header { padding-bottom:10px; text-align:right;}
 #profile_page #insights_timeline_header #start_new_insight { }
 #profile_page #insights_timeline ul#timeline { overflow:auto; height:566px; }
