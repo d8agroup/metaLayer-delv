@@ -39,10 +39,8 @@
             {
                 var visualization_container = $('#' + visualizations[x].id);
                 var visualization_snapshot = visualization_container.find('iframe').contents().find('svg').parent().html();
-                if (visualization_snapshot != null)
+                if (visualization_snapshot != null && visualization_snapshot > ' ')
                     visualizations[x]['snapshot'] = visualization_snapshot;
-                else
-                    visualizations[x]['snapshot'] = '<img src="/static/images/thecommunity/no_profile_image.gif" />';
             }
             dashboard_visualizations_container.parents('.dashboard').dashboard('save');
         }

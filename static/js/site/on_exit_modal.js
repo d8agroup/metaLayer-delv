@@ -21,8 +21,8 @@
                         for (var x=0; x<dashboard.collections.length; x++)
                             dashboard.collections[x].search_results = [];
                         var post_data = { dashboard:JSON.stringify(dashboard), csrfmiddlewaretoken:$('#csrf_form input').val() };
-                        $('.waiting_modal').jqm({modal:true, overlay:80});
-                        $('.waiting_modal').jqmShow();
+                        $('#waiting_modal').jqm({modal:true, overlay:80});
+                        $('#waiting_modal').jqmShow();
                         $.ajax
                             (
                                 {

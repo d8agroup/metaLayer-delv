@@ -144,3 +144,7 @@ ON EXIT MODAL
 #on_exit_modal .form_row input[type=text] { width:320px;}
 #on_exit_modal .form_row textarea { width:320px}
 #on_exit_modal .form_row .radio { display:inline-block; }
+
+#waiting_modal { background-color:#1a1a1a; color:#FFF; padding:0; border:none; height:273px;}
+#waiting_modal p { padding-top:100px; text-align:center; }
+#waiting_modal p img { position:relative; top:5px; }
