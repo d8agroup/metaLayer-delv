@@ -13,7 +13,7 @@
         }
         container.find('.insight').corner();
         container.find('.insight_footer table').corner('bottom');
-        container.jScrollPane( { topCapHeight:40, bottomCapHeight:40 } );
+        container.jScrollPane();
         var target_insight = getURLParameter('insight');
         if (target_insight != 'null')
             $('#timeline')[0].scrollTo('#' + target_insight);

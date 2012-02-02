@@ -12,13 +12,14 @@ class Action(BaseAction):
             'name':'languagedetection',
             'display_name_short':'Language',
             'display_name_long':'Language Detection',
-            'image_large':'http://detectlanguage.com/images/world_globe.png',
-            'image_small':'http://detectlanguage.com/favicon.ico',
+            'image_large':'/static/images/lib/aluminum/speach.png',
+            'image_small':'/static/images/lib/aluminum/speach.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,
             'content_properties':{
                 'added':[
                     {
+                        'display_name':'Language',
                         'name':'language',
                         'type':'string'
                     }

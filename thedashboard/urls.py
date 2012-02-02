@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     #dashboard urls
     url(r'load/(\w+)$', dashboard),
     url(r'new/(\w+)$', dashboard_new),
+    url(r'remix/(\w+)$', dashboard_remix),
     url(r'delete/(\w+)$', dashboard_delete),
     url(r'widgets/get_all$', dashboard_get_all_widgets),
     url(r'data_points/validate$', dashboard_validate_data_point),

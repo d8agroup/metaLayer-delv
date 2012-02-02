@@ -75,6 +75,7 @@
                 function(event) { save_button_click_function(event, dashboard_unconfigured_action, action); }
             );
         dashboard_unconfigured_action.html(unconfigured_action_html);
+        dashboard_unconfigured_action.find('.cancel, .save').button();
         return dashboard_unconfigured_action
     }
 })( jQuery );

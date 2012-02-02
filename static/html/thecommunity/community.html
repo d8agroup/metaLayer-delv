@@ -4,6 +4,7 @@
     {{ block.super }}
     <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/community_page.js"></script>
     <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/community_page_top_insights.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/community_page_recent_insights.js"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready
         (
@@ -82,9 +83,7 @@
                 <h3><span>Recent Changes</span></h3>
                 <div class="page_block_inner">
                     <ul>
-                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
-                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
-                        <li><img src="/static/images/thecommunity/no_profile_image.gif" alt="insight" /></li>
+                        <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
                     </ul>
                 </div>
             </div>

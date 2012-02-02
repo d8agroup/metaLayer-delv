@@ -176,3 +176,8 @@ def load_tending_insights(request, count):
 def load_top_insights(request, count):
     top_insights = DashboardsController.GetTopDashboards(count)
     return JSONResponse({'top_insights':top_insights})
+
+@login_required(login_url='/')
+def load_recent_insights(request, count):
+    recent_insights = DashboardsController.GetRecentDashboards(count)
+    return JSONResponse({'recent_insights':recent_insights})

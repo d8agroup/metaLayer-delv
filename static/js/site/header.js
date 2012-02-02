@@ -14,9 +14,16 @@
                 (
                     function(e)
                     {
-                        $('.visualizations_container').dashboard_visualizations('capture_snapshots');
+                        if($('.visualizations_container').length > 0)
+                            $('.visualizations_container').dashboard_visualizations('capture_snapshots');
+                        if($('.search_widget').length == 0)
+                        {
+                            $.get('/dashboard/delete/' + dashboard.id);
+                            return true;
+                        }
                         $('.dashboard').dashboard('save');
-                        return true;
+                        $('#on_exit_modal').on_exit_modal('open', { dashboard:dashboard });
+                        return false;
                     }
                 );
             },

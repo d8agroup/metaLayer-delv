@@ -8,7 +8,7 @@
 HEADER
 ***********************************************************************************************************************/
 #page_header .editing, #page_header .focus { backgound-color:#000 !important; color:#FFF !important; font-weight:bold;}
-#page_header #dashboard_name { display:inline-block; margin-left:20px; color:#DDD; border:none; background-color:#333; font-size:100%; position:relative; top:1px;}
+#page_header #dashboard_name { display:inline-block; margin:0 20px; color:#DDD; border:none; background-color:#333; font-size:100%; position:relative; top:1px; padding:2px 5px; width:300px; }
 #page_header .saving { font-weight:bold; color:#FFF;}
 
 /***********************************************************************************************************************
@@ -24,7 +24,7 @@ DASHBOARD
 .data_point_widget,
 .action_widget,
 .output_widget,
-.visualization_widget { width:180px; background-color:#1a1a1a; text-align:center; color:#DDD; margin:2px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:3px; font-size:80%; height:12px; overflow:hidden; display:inline-block;}
+.visualization_widget { width:110px; background-color:#1a1a1a; text-align:center; color:#DDD; margin:2px; cursor:move; z-index:300; font-size:90%; font-weight:bold; padding:5px 2px 3px; font-size:80%; height:12px; overflow:hidden; display:inline-block;}
 
 .data_point_widget img,
 .action_widget img,
@@ -36,48 +36,58 @@ DASHBOARD
 .collections_1 { width:100%;}
 .collections_2 { width:50%;}
 .collections_4 { width:25%; }
-.empty_collection { margin:2px; background-color:#1a1a1a; height:300px; overflow:auto}
+.empty_collection { margin:2px; background-color:#1a1a1a; height:301px; overflow:auto}
 
 
 .empty_collection p { text-align:center; font-size:180%; color:#DDD; padding-top:130px;}
 
 .data_point_droppable_active { border:1px solid #F33; }
 
-.data_point_config { padding:20px; }
-.data_point_config .image_and_title { height:100px; overflow:hidden; }
-.data_point_config .image_and_title img { width:30%; float:left;}
-.data_point_config .image_and_title h3 { display:inline; font-size:250%; float:right; width:60%;}
-.data_point_config .instructions { color:#BBB; padding:10px; font-style:italic; }
+.data_point_config { height:301px;}
+.data_point_config .image_and_title { height:27px; overflow:hidden; background-color:#1a1a1a; }
+.data_point_config .image_and_title img { width:20px; display:inline-block; padding:2px;}
+.data_point_config .image_and_title h3 { display:inline; font-size:100%; position:relative; bottom:5px}
+.data_point_config .instructions { color:#BBB; height:80px; overflow:auto; font-style:italic; }
+.data_point_config .instructions p { padding:10px; }
+.data_point_config .configuration { height:130px; overflow:auto; padding:0 20px; border-top:1px solid #222; border-bottom:1px solid #222; margin:0 10px; }
+.data_point_config .form_row { margin:10px;}
 .data_point_config .form_row label { display:inline-block; width:45%; }
 .data_point_config .form_row input { display:inline-block; width:50%; }
 .data_point_config .form_row .help { color:#BBB; font-size:80%; padding:5px 0 0 0;}
 .data_point_config .form_actions { text-align:center; margin-top:20px;}
 .data_point_config .form_actions input { width:48%; padding:5px; }
 
-.action_config { padding:20px; }
-.action_config .image_and_title { height:100px; overflow:hidden; }
-.action_config .image_and_title img { width:30%; float:left;}
-.action_config .image_and_title h3 { display:inline; font-size:150%; float:right; width:60%;}
-.action_config .instructions { color:#BBB; padding:10px; font-style:italic; }
+.action_config { height:301px; }
+.action_config .image_and_title { height:27px; overflow:hidden; background-color:#1a1a1a; }
+.action_config .image_and_title img { width:20px; display:inline-block; padding:2px;}
+.action_config .image_and_title h3 { display:inline; font-size:100%; position:relative; bottom:5px}
+.action_config .instructions { color:#BBB; height:80px; overflow:auto; font-style:italic; }
+.action_config .instructions p { padding:10px; }
+.action_config .configuration { height:130px; overflow:auto; padding:0 20px; border-top:1px solid #222; border-bottom:1px solid #222; margin:0 10px; }
+.action_config .form_row { margin:10px;}
 .action_config .form_row label { display:inline-block; width:45%; }
 .action_config .form_row input { display:inline-block; width:50%; }
+.action_config .form_row select { display:inline-block; width:50%; }
 .action_config .form_row .help { color:#BBB; font-size:80%; padding:5px 0 0 0;}
 .action_config .form_actions { text-align:center; margin-top:20px;}
 .action_config .form_actions input { width:48%; padding:5px; }
 
-.visualization_container { margin:2px; background-color:#333;}
-.visualization_container .image_and_title { height:26px; overflow:hidden; background-color:#222;}
+.visualization_container { margin:5px 2px; background-color:#333; height:301px;}
+.visualization_container .image_and_title { height:27px; overflow:hidden; background-color:#1a1a1a;}
 .visualization_container .image_and_title img { height:20px; padding:3px}
 .visualization_container .image_and_title h3 { display:inline-block; font-size:100%; width:50%; height:16px; overflow:hidden; position:relative; bottom:5px; }
 .visualization_container .image_and_title .actions { float:right; width:30%; overflow:hidden; text-align:right;}
 .visualization_container .image_and_title .actions .publish img { height:18px; position:relative; bottom:1px; left:7px; }
 .visualization_container .image_and_title .actions .loading { height:17px; position:relative; bottom:1px; left:9px; display:none;}
 
-.visualization_container .visualization_object_outer_container { padding:5px;}
-.visualization_container .visualization_object_container { height:220px; }
+.visualization_container .visualization_object_outer_container { padding:5px 10px;}
+.visualization_container .visualization_object_container { height:250px; }
 
-.visualization_config .unconfigurable { padding:10px;}
-.visualization_config .instructions { color:#BBB; padding:10px 20px; font-style:italic; }
+.visualization_config .unconfigurable { height:210px;}
+.visualization_config .unconfigurable p { padding:10px; }
+.visualization_config .instructions { color:#BBB; height:80px; overflow:auto; font-style:italic; }
+.visualization_config .instructions p { padding:10px; }
+.visualization_config .configuration { height:130px; overflow:auto; padding:0 20px; border-top:1px solid #222; border-bottom:1px solid #222; margin:0 10px; }
 .visualization_config .data_dimensions h4 { padding:10px;}
 .visualization_config .data_dimensions { border-bottom:1px dashed #222;}
 .visualization_config .form_row { padding:10px; }
@@ -99,7 +109,7 @@ DASHBOARD
 .search_widget .options_container .close_collection img { position:relative; top:2px }
 
 .search_widget .data_points_and_actions_container { min-height:23px; }
-.search_widget .data_points_and_actions_container { background-color:#222; padding:2px; font-size:80%;}
+.search_widget .data_points_and_actions_container { background-color:#1a1a1a; padding:2px; font-size:80%;}
 .search_widget .data_points_and_actions_container img { width:18px; margin:2px 2px 0;}
 .search_widget .data_points_and_actions_container .data_points_and_actions_summary li { display:inline-block }
 
@@ -124,57 +134,13 @@ DASHBOARD
 
 
 /***********************************************************************************************************************
-USER HOME PAGE
+ON EXIT MODAL
 ***********************************************************************************************************************/
-#user_home_container { width:80%; margin:20px auto 0 auto; background-color:#333; color:#FFF; padding-top:10px;}
-#user_home { width:100%;}
-#user_home .waiting { margin-top:44px;}
-#user_home h3 { text-align:center; font-size:200%; margin:0 0 20px 0;}
-#user_home .inner_container { padding:10px; }
-
-#user_home #dashboard_management { float:left; width:49%; }
-#user_home #dashboard_management h4 { margin-top:20px; padding:5px; font-weight:normal; font-size:100%; text-align:center; background-color:#FFF; color:#000;}
-
-#user_home #dashboard_management #saved_dashboards { background-color:#DDD; color:#000; }
-#user_home #dashboard_management #saved_dashboards ul { width:100%; padding:5px 0; }
-#user_home #dashboard_management #saved_dashboards li { text-align:center;  overflow:hidden; float:left; position:relative; font-size:80%; }
-#user_home #dashboard_management #saved_dashboards img { max-height:140px;}
-#user_home #dashboard_management #saved_dashboards li .close_button_container { position:absolute; right:5%; background-color:#FFF; padding:4px; border:1px solid; }
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li { width:20%; }
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li img { width:90%; margin:9px 0 10px;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li .empty_saved_dashboard { background-color:#444; border:1px solid #222; height:140px; width:95%; margin:0 auto;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_5 li .empty_saved_dashboard p { color:#DDD; padding-top:65px;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li { width:49%; }
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li img { width:90%; margin-top:2px;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li .empty_saved_dashboard { background-color:#444; border:1px solid #222; height:140px; width:90%; margin:0 auto;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_2 li .empty_saved_dashboard p { color:#DDD; padding-top:65px;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li { width:49%; }
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li img { width:90%; margin-top:2px;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li .empty_saved_dashboard { background-color:#444; border:1px solid #222; height:140px; width:160px; margin:0 auto;}
-#user_home #dashboard_management #saved_dashboards ul.saved_dashboards_1 li .empty_saved_dashboard p { color:#DDD; padding-top:65px;}
-#user_home #dashboard_management #saved_dashboards_not_allowed { background-color:#DDD; color:#000;}
-#user_home #dashboard_management #saved_dashboards_not_allowed p { padding:10px; }
-
-#user_home #dashboard_management #dashboard_templates { background-color:#DDD; color:#000; }
-#user_home #dashboard_management #dashboard_templates ul { width:100%; padding:5px 0; }
-#user_home #dashboard_management #dashboard_templates li { text-align:center;  overflow:hidden; float:left; }
-#user_home #dashboard_management #dashboard_templates li { width:49%; }
-#user_home #dashboard_management #dashboard_templates img { width:160px; height:120px; margin-top:2px;}
-#user_home #dashboard_management #dashboard_templates .display_name { font-weight:bold; font-size:90%; padding-bottom:5px; }
-#user_home #dashboard_management #dashboard_templates .description { font-size:70%; padding-bottom:5px; }
-#user_home #dashboard_management #dashboard_templates ul.draggable .dashboard_template { cursor:move; }
-#user_home #dashboard_management #dashboard_templates ul.clickable .dashboard_template { cursor:pointer; }
-
-#user_home #account_management { float:right; width:49%; }
-#user_home #account_management h4 { background-color:#FFF; padding:4px; color:#000; margin:10px 0;}
-#user_home #account_management .subscription_image { float:left; width:20%; margin-bottom:10px;}
-#user_home #account_management .subscription_details { float:right; width:79%; }
-#user_home #account_management .subscription_details h5 { font-size:150% }
-#user_home #account_management .subscription_details p { padding:5px 0 0 0; font-weight:bold;}
-
-#user_home .subscription_downgrade_upgrade .errors { margin-bottom:10px;}
-#user_home .subscription_downgrade_upgrade p { font-weight:bold; padding-bottom:5px; }
-#user_home .subscription_downgrade_upgrade li { padding:0 0 10px 10px; }
-#user_home .subscription_downgrade_upgrade .form-row label { display:inline-block; width:30%}
-#user_home .subscription_downgrade_upgrade .action-row input { width:45%;}
-#user_home .subscription_downgrade_upgrade button { width:45%;}
+#on_exit_modal { background-color:#333; color:#FFF; padding:0; border:none; }
+#on_exit_modal h3 { background-color:#1a1a1a; padding:10px; }
+#on_exit_modal .container { padding:20px;}
+#on_exit_modal .form_row {  margin-bottom:20px;}
+#on_exit_modal .form_row .form_row_label { display:inline-block; width:200px; }
+#on_exit_modal .form_row input[type=text] { width:320px;}
+#on_exit_modal .form_row textarea { width:320px}
+#on_exit_modal .form_row .radio { display:inline-block; }

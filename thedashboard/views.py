@@ -73,11 +73,20 @@ def dashboard_load(request, id):
 
 @login_required(login_url='/')
 def dashboard_new(request, template_id):
-    Logger.Info('%s - dashboard - started' % __name__)
-    Logger.Debug('%s - dashboard - started with id:%s' % (__name__, id))
+    Logger.Info('%s - dashboard_new - started' % __name__)
+    Logger.Debug('%s - dashboard_new - started with id:%s' % (__name__, id))
     dc = DashboardsController(request.user)
     db = dc.create_new_dashboard_from_template(template_id)
-    Logger.Info('%s - dashboard - finished' % __name__)
+    Logger.Info('%s - dashboard_new - finished' % __name__)
+    return redirect(dashboard_load, '%s' % db.id)
+
+@login_required(login_url='/')
+def dashboard_remix(request, id):
+    Logger.Info('%s - dashboard_remix - started' % __name__)
+    Logger.Debug('%s - dashboard_remix - started with id:%s' % (__name__, id))
+    dc = DashboardsController(request.user)
+    db = dc.create_new_dashboard_from_dashboard(id)
+    Logger.Info('%s - dashboard_remix - finished' % __name__)
     return redirect(dashboard_load, '%s' % db.id)
 
 @async

@@ -127,6 +127,10 @@
                         setTimeout( function() {$('#profile_page').profile_page('render');}, 500);
                     }
                 );
+            if ($('body').data('username') == dashboard.username)
+                insight_container.find('.remix').remove();
+            else
+                insight_container.find('.edit').remove();
             return insight_container;
         }
     };

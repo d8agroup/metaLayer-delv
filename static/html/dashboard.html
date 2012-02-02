@@ -5,6 +5,7 @@
     {% compress css %}
         <link rel="stylesheet" href="/static/css/site/site.css" />
         <link rel="stylesheet" href="/static/css/lib/jscrollpane.css" />
+        <link rel="stylesheet" href="/static/css/lib/jqmodal.css" />
     {% endcompress %}
 {% endblock %}
 
@@ -16,6 +17,7 @@
         <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
         <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
         <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.jqmodal.js"></script>
         <script type="text/javascript" src="/static/js/site/header.js"></script>
         <script type="text/javascript" src="/static/js/site/header_dashboard_name.js"></script>
         <script type="text/javascript" src="/static/js/site/site.js"></script>
@@ -34,6 +36,7 @@
         <script type="text/javascript" src="/static/js/site/dashboard_outputs.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_visualizations.js"></script>
         <script type="text/javascript" src="/static/js/site/dashboard_visualization.js"></script>
+        <script type="text/javascript" src="/static/js/site/on_exit_modal.js"></script>
         <script type="text/javascript" src="/static/js/site/init.js"></script>
         <script type="text/javascript">
             EMBEDDED_MODE = false;
@@ -54,6 +57,7 @@
                                 {
                                     $('.dashboard').dashboard({'dashboard':data.dashboard});
                                     $('#page_header').header({'dashboard':data.dashboard});
+                                    $('#on_exit_modal').on_exit_modal();
                                 },
                                 'JSON'
                             );
@@ -68,7 +72,7 @@
 
 {% block body %}
 <div id="page_container">
-    <div id='page'>
+    <div id='page' data-username='{{ user.username }}'>
         <div id='content'>
             <div class="dashboard">
                 <h3 class="title">Gain new insight</h3>
@@ -83,6 +87,34 @@
             <img src="/static/images/site/icon_cross.png" width='1px' height="1px" />
             <img src="/static/images/site/icon_publish.png" width='1px' height="1px" />
             <img src="/static/images/site/icon_search.png" width='1px' height="1px" />
+        </div>
+        <div id='on_exit_modal' class='jqmWindow'>
+            <h3>Before you leave this insight</h3>
+            <div class='container'>
+                <p class="instructions"></p>
+                <div class="form_row name">
+                    <label class="form_row_label">The name of this insight</label>
+                    <input type="text" />
+                </div>
+                <div class="form_row description">
+                    <label class="form_row_label">Can you describe you're insight</label>
+                    <textarea></textarea>
+                </div>
+                <div class="form_row live">
+                    <label class="form_row_label">Keep this insight running?</label>
+                    <div class="radio">
+                        <input type="radio" name='live' id='keep_running_yes'><label for="keep_running_yes">yes</label>
+                        <input type="radio" name='live' id='keep_running_no' checked="checked"><label for="keep_running_no">no</label>
+                    </div>
+                </div>
+                <div class="form_actions">
+                    <a class="back">Go back to insight</a>
+                    <a class="save" href="/community/{{ user.username }}">Save and continue</a>
+                </div>
+            </div>
+            <div id='waiting_modal' class="jqmWindow">
+                <p>Saving <img src='/static/images/thecommunity/loading_circle.gif'/></p>
+            </div>
         </div>
     </div>
 </div>

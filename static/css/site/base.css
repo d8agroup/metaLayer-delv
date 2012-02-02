@@ -11,7 +11,7 @@ a:hover { text-decoration:underline; }
 /* HEADER                                                                                                             */
 /**********************************************************************************************************************/
 #page_header { background-color:#1a1a1a; height:35px; }
-#page_header #logo_container { width:55%; float:left; overflow:hidden; }
+#page_header #logo_container { width:55%; float:left; }
 #page_header #logo_container img { height:20px; position:relative; top:5px; left:5px;}
 #page_header #header_links_container { width:40%; float:right; text-align:right; padding:9px; color:#fff; }
 #page_header #header_links_container a { display:inline-block; padding-left:10px;}

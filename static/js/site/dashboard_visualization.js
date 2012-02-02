@@ -83,6 +83,7 @@
                 var visualization_html = $.tmpl('unconfigurable_visualization_container', visualization);
                 visualization_html.find('.remove').click(function(e) { remove_click_function(e, visualization_container, visualization.id); });
                 visualization_container.append(visualization_html);
+                visualization_container.find('.remove, .save').button();
                 return visualization_container;
             }
             else if (!visualization.configured)
@@ -114,6 +115,7 @@
                 visualization_html.find('.remove').click(function(e) { remove_click_function(e, visualization_container, visualization.id); });
                 visualization_html.find('.save').click(function(e) { save_button_clicked(e, visualization_container, visualization); });
                 visualization_container.append(visualization_html);
+                visualization_container.find('.remove, .save').button();
                 return visualization_container;
             }
             else

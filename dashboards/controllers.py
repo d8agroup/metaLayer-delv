@@ -19,7 +19,7 @@ class DashboardsController(object):
     @classmethod
     def GetTendingDashboards(cls, count):
         Logger.Info('%s - DashboardsController.GetTendingDashboards - started' % __name__)
-        Logger.Debug('%s - DashboardsController.GetTendingDashboards - started with id:%s' % (__name__, id))
+        Logger.Debug('%s - DashboardsController.GetTendingDashboards - started with count:%s' % (__name__, count))
         dashboards = Dashboard.Trending(count)
         Logger.Info('%s - DashboardsController.GetTendingDashboards - finished' % __name__)
         return dashboards
@@ -27,9 +27,17 @@ class DashboardsController(object):
     @classmethod
     def GetTopDashboards(cls, count):
         Logger.Info('%s - DashboardsController.GetTopDashboards - started' % __name__)
-        Logger.Debug('%s - DashboardsController.GetTopDashboards - started with id:%s' % (__name__, id))
+        Logger.Debug('%s - DashboardsController.GetTopDashboards - started with count:%s' % (__name__, count))
         dashboards = Dashboard.Top(count)
         Logger.Info('%s - DashboardsController.GetTopDashboards - finished' % __name__)
+        return dashboards
+
+    @classmethod
+    def GetRecentDashboards(cls, count):
+        Logger.Info('%s - DashboardsController.GetRecentDashboards - started' % __name__)
+        Logger.Debug('%s - DashboardsController.GetRecentDashboards - started with count:%s' % (__name__, count))
+        dashboards = Dashboard.Recent(count)
+        Logger.Info('%s - DashboardsController.GetRecentDashboards - finished' % __name__)
         return dashboards
 
     def get_saved_dashboards(self):
@@ -49,8 +57,15 @@ class DashboardsController(object):
         Logger.Info('%s - delete_dashboard_by_id - started' % __name__)
         Logger.Debug('%s - delete_dashboard_by_id - started with id:%s' % (__name__, id))
         dashboard = Dashboard.Load(id)
-        dashboard['active'] = False
-        dashboard.save()
+        should_be_saved = False
+        for c in dashboard['collections']:
+            if 'data_points' in c and c['data_points']:
+                should_be_saved = True
+        if should_be_saved:
+            dashboard['active'] = False
+            dashboard.save()
+        else:
+            dashboard.remove()
         Logger.Info('%s - delete_dashboard_by_id - finished' % __name__)
 
     def get_dashboard_templates(self):
@@ -67,12 +82,22 @@ class DashboardsController(object):
         Logger.Info('%s - get_dashboard_templates - finished' % __name__)
         return dashboard
 
+    def create_new_dashboard_from_dashboard(self, dashboard_id):
+        Logger.Info('%s - create_new_dashboard_from_dashboard - started' % __name__)
+        Logger.Debug('%s - create_new_dashboard_from_dashboard - started with template_id:%s' % (__name__, dashboard_id))
+        template = Dashboard.Load(dashboard_id)
+        dashboard = Dashboard.Create(self.user, template)
+        Logger.Info('%s - create_new_dashboard_from_dashboard - finished' % __name__)
+        return dashboard
+
     def update_dashboard(self, dashboard):
         Logger.Info('%s - update_dashboard - started' % __name__)
         Logger.Debug('%s - update_dashboard - started with dashboard:%s' % (__name__, dashboard))
         db = Dashboard.Load(dashboard['id'])
         db['collections'] = dashboard['collections']
         db['name'] = dashboard['name']
+        if 'config' in dashboard:
+            db['config'] = dashboard['config']
         db.save()
         Logger.Info('%s - update_dashboard - finished' % __name__)
 

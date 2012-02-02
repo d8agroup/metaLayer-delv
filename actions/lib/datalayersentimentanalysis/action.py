@@ -11,10 +11,10 @@ class Action(BaseAction):
             'name':'datalayersentimentanalysis',
             'display_name_short':'Sentiment',
             'display_name_long':'Sentiment Analysis',
-            'image_large':'http://farm6.static.flickr.com/5229/5663480146_1dff320271.jpg',
-            'image_small':'http://metalayer.com/favicon.ico',
+            'image_large':'/static/images/lib/aluminum/positive.png',
+            'image_small':'/static/images/lib/aluminum/positive.png',
             'instructions':'This actions does not need configuring.',
-            'configured':False,
+            'configured':True,
             'content_properties':{
                 'added':[
                     {

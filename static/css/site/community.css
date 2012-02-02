@@ -34,7 +34,7 @@
 .insight .insight_header h4 .last_accessed { display:inline-block; font-weight:normal; font-style:italic;}
 .insight .insight_header .insight_actions { text-align:right; padding:5px; float:right;}
 .insight .insight_footer table { width:100%; margin-top:5px;}
-.insight .insight_footer table td { padding:15px; color:#DDD;}
+.insight .insight_footer table td { padding:15px; color:#DDD; text-align:center;}
 
 .insight_thumbnail { background-color:#333; height:75px; width:100px; overflow:hidden; display:block; }
 .insight_thumbnail.images_1 img { width:65px; height:65px; padding:4px 17px;}
@@ -85,6 +85,11 @@
 #trending_insights.main_body_section li { padding:2px 8px;}
 
 #recent_activity h3 { background:url('/static/images/thecommunity/text_page_block_h3_recent_changes.png') no-repeat; }
+#recent_activity { overflow:hidden; }
+#recent_activity ul li { float:left; padding:2px 8px;}
+#recent_activity ul li.waiting { padding:5% 0 0 35%}
+#recent_activity ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
+
 
 /**********************************************************************************************************************/
 /* LOGIN AND REGISTER                                                                                                 */
@@ -133,7 +138,7 @@
 #profile_page #insights_timeline h3 { background:url('/static/images/thecommunity/text_page_block_h3_insight_timeline.png') no-repeat; }
 #profile_page #insights_timeline_header { padding-bottom:10px; text-align:right;}
 #profile_page #insights_timeline_header #start_new_insight { }
-#profile_page #insights_timeline ul#timeline { overflow:auto; height:566px; }
+#profile_page #insights_timeline ul#timeline { overflow:auto; height:555px; }
 #profile_page #insights_timeline ul#timeline li.waiting { padding:150px 0 0 200px; }
 #profile_page #insights_timeline ul#timeline li.waiting img { position:relative; top:9px; left:5px;}
 

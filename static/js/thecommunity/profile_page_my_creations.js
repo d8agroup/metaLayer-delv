@@ -17,6 +17,6 @@
     {
         var my_creations = this;
         var username = $('#page').data('username');
-        $.get('/community/insights/load/' + username, function(data) { render_my_creations(data, my_creations); }, 'JSON');
+        $.get('/community/insights/load/' + username + '/3', function(data) { render_my_creations(data, my_creations); }, 'JSON');
     }
 })(jQuery);

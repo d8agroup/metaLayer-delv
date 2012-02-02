@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/static/css/site/reset.css" />
     <link rel="stylesheet" href="/static/css/site/hacks.css" />
     <link rel="stylesheet" href="/static/css/site/base.css" />
+    <link rel="stylesheet" href="/static/css/lib/Aristo.css"/>
     {% block css %}{% endblock %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     {% block js %}
@@ -21,13 +22,13 @@
         </script>
     {% endblock %}
 </head>
-<body>
+<body data-username='{{ user.username }}'>
     <form id='csrf_form'>
         {% csrf_token %}
     </form>
     <div id="page_header" class="clearfix">
         <div id="logo_container">
-            <img src='/static/images/thecommunity/logo_metalayer_medium.gif' alt="metaLayer logo" />
+            <img src='/static/images/thecommunity/logo_metalayer_medium.jpg' alt="metaLayer logo" />
         </div>
         <div id='header_links_container'>
             <a href="/community">The Community</a>
