@@ -229,6 +229,8 @@ if socket.gethostname() in ['mattgriffiths']:
     from settings_mattgriffiths import *
 elif socket.gethostbyname(socket.gethostname()) in ['50.57.164.87']:
     from settings_staging import *
+elif socket.gethostbyname(socket.gethostname()) in ['50.57.227.192']:
+    from settings_development import *
 else:
     #TODO this needs to be changed to support multiple envs
-    from settings_development import *
+    from settings_production import *
