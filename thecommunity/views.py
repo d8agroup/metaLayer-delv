@@ -11,7 +11,6 @@ from utils import JSONResponse
 def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
 
-@login_required(login_url='/')
 def user_home(request, user_name):
     uc = UserController
     user = uc.GetUserByUserName(user_name)
@@ -156,7 +155,6 @@ def change_subscription(request):
         Logger.Info('%s - change_subscription - finished' % __name__)
         return JSONResponse()
 
-@login_required(login_url='/')
 def load_dashboards(request, username, count=None):
     Logger.Info('%s - load_dashboards - started' % __name__)
     user = UserController.GetUserByUserName(username)
@@ -167,17 +165,14 @@ def load_dashboards(request, username, count=None):
     Logger.Info('%s - load_dashboards - finished' % __name__)
     return JSONResponse({ 'dashboards':saved_dashboards })
 
-@login_required(login_url='/')
 def load_tending_insights(request, count):
     trending_dashboards = DashboardsController.GetTendingDashboards(count)
     return JSONResponse({'trending_insights':trending_dashboards})
 
-@login_required(login_url='/')
 def load_top_insights(request, count):
     top_insights = DashboardsController.GetTopDashboards(count)
     return JSONResponse({'top_insights':top_insights})
 
-@login_required(login_url='/')
 def load_recent_insights(request, count):
     recent_insights = DashboardsController.GetRecentDashboards(count)
     return JSONResponse({'recent_insights':recent_insights})
