@@ -28,15 +28,6 @@ DATABASES = {
     }
 }
 
-ENDPOINTS = {
-    'datapoints':{
-        'metalayer_aggregator':{
-            'add_source':'http://md.dev.01/aggregator/sources/add',
-            'remove_source':'http://md.dev.01/aggregator/sources/remove'
-        }
-    }
-}
-
 TEMPLATE_DIRS = (
     '/usr/local/metaLayer-dashboard/dashboard/static/html/'
 )
