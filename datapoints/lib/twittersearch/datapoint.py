@@ -12,7 +12,7 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'twittersearch',
             'sub_type':'twittersearch',
-            'display_name_short':'Twitter Search',
+            'display_name_short':'Twitter',
             'full_display_name':'Twitter Search',
             'instructions':'Use this data point to search the public tweet stream.',
             'image_large':'/static/images/lib/yoo/twitter_256256.png',

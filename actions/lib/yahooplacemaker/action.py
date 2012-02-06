@@ -3,7 +3,6 @@ import json
 import threading
 from urllib import urlencode
 from urllib2 import Request, urlopen
-import re
 from actions.classes import BaseAction
 from logger import Logger
 
@@ -12,7 +11,7 @@ class Action(BaseAction):
         return {
             'name':'yahooplacemaker',
             'display_name_short':'Location',
-            'display_name_long':'Yahoo Placemaker Location Detection',
+            'display_name_long':'Location Detection',
             'image_large':'/static/images/lib/aluminum/compass.png',
             'image_small':'/static/images/lib/aluminum/compass.png',
             'instructions':'Yahoo Placemaker will extract location based information from content allowing you to visualize content on a map',

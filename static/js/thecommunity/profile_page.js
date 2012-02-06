@@ -3,7 +3,8 @@
     {
         init:function()
         {
-            this.profile_page('render');
+            var profile_page = this;
+            profile_page.profile_page('render');
         },
         render:function()
         {

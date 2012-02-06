@@ -6,7 +6,7 @@ from django.template.context import RequestContext
 from dashboards.controllers import DashboardsController
 from logger import Logger
 from userprofiles.controllers import UserController
-from utils import JSONResponse
+from utils import JSONResponse, serialize_to_json
 
 def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
@@ -16,7 +16,17 @@ def user_home(request, user_name):
     user = uc.GetUserByUserName(user_name)
     return render_to_response(
         'thecommunity/profile_page/profile.html',
-        {'profile_user':user},
+        {'profile_user':user },
+        context_instance=RequestContext(request)
+    )
+
+def insight(request, user_name, insight_id):
+    user = UserController.GetUserByUserName(user_name)
+    dashboard = DashboardsController.GetDashboardById(insight_id)
+    dashboard_json = serialize_to_json(dashboard)
+    return render_to_response(
+        'thecommunity/insight_page/insight_page.html',
+        { 'profile_user':user, 'insight':dashboard, 'insight_json':dashboard_json },
         context_instance=RequestContext(request)
     )
 
@@ -30,7 +40,7 @@ def user_account(request):
 
 def community_page(request):
     return render_to_response(
-        'thecommunity/community.html',
+        'thecommunity/community_page/community.html',
         {},
         context_instance=RequestContext(request)
     )

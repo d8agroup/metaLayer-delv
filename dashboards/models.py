@@ -62,6 +62,7 @@ class Dashboard(Model):
         Logger.Debug('%s - Dashboard.Load - started with is:%s and increment_load_count:%s' % (__name__, id, increment_load_count))
         dashboard = Dashboard.collection.find_one({'_id':ObjectId(id)})
         dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
+        dashboard['created_pretty'] = dashboard._pretty_date(dashboard['created'])
         if dashboard and increment_load_count:
             dashboard['accessed'] += 1
             dashboard.save()

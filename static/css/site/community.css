@@ -1,3 +1,30 @@
+/**********************************************************************************************************************/
+/* INSIGHT PAGE                                                                                                          */
+/**********************************************************************************************************************/
+.insight_page #user_details h3 { font-size:250%;}
+.insight_page #user_details { padding:10px;}
+.insight_page #user_details .description { width:48%; float:left;}
+.insight_page #user_details .description h4 { font-size:180%; margin-bottom:10px;}
+.insight_page #user_details table { width:48%; float:right;}
+.insight_page #user_details table th { width:25%; padding:10px; background-color:#333;}
+.insight_page #user_details table td { padding:10px;}
+.insight_page #collections_container { margin:10px auto; width:900px; }
+.collection_1 { width:98%; margin:0 auto; }
+.collection_2 { float:left; width:48%; margin:0 2px; }
+.collection h4 { font-size:150%; color:#FFF; margin:10px 0;}
+.collection .visualization { background-color:#222; margin-bottom:20px; border:1px solid #1a1a1a; overflow:hidden;}
+.collection .search_widget_header { background-color:#1a1a1a; padding:1px; height:26px; }
+.collection .search_widget_header img { width:24px; }
+.collection .search_results_container { background-color:#222; height:250px;}
+.collection .search_results_container { color:#DDD;}
+.collection .search_results_container .waiting { padding-top:100px; text-align:center;}
+.collection .search_results_container .waiting img { position:relative; top:11px; left:5px; }
+.collection .search_results_container .jScrollPaneTrack { margin-right:5px; background-color:#1a1a1a;}
+.collection .search_results_container .jScrollPaneDrag { background-color:#DDD; }
+.collection .search_results { height:244px; overflow:auto; padding:0 5px;}
+.collection .search_results li { padding:5px 0 35px 0;; font-size:80%; }
+.insight_page #trending_insights { margin:50px 0;}
+
 .errors { width:90%; margin:0 auto 20px auto; background-color:#FC3; border:2px solid #C60; color:#000;}
 .errors p { padding:10px; font-size:80%;}
 .form-row { padding:5px 60px; }
@@ -55,6 +82,12 @@
 #trending_insights ul li.waiting { padding:5% 0 0 35%}
 #trending_insights ul li.waiting img { width:31px; height:31px; position:relative; top:9px; left:4px;}
 
+#live_insight_container { height:650px; }
+#live_insight_container h3 { font-size:150%; padding:10px 0 !important;}
+#live_insight_container #metadata_table { width:90%; margin:0 auto; border:1px solid #333;}
+#live_insight_container #metadata_table th { text-align:right; padding:10px; width:25%; background-color:#333; }
+#live_insight_container #metadata_table td { width:25%; padding:10px; }
+#live_insight_container .live_insight { width:600px; margin:10px auto; display:block; height:500px; background-color:#333; }
 
 /**********************************************************************************************************************/
 /* COMMUNITY                                                                                                          */
@@ -120,7 +153,7 @@
 #profile_page_account #account_statistics td#following,
 #profile_page_account #account_statistics td#followers { border-top:1px solid #333; border-bottom:1px solid #333;}
 #profile_page_account #account_statistics td#following { border-left:1px solid #333; border-right:1px solid #333;}
-#profile_page_account #account_statistics td#status { padding:5px; border-bottom:1px solid #33;}
+#profile_page_account #account_statistics td#status { padding:5px; border-bottom:1px solid #333;}
 #profile_page_account #account_statistics td#status #status_container { background-color:#333; padding:10px; }
 #profile_page_account #account_statistics td#status #status_container input[type=text] { width:290px; }
 #profile_page_account #account_statistics td .number { font-weight:bold; font-size:150%; margin-bottom:5px;}

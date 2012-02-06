@@ -12,7 +12,7 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'feed',
             'sub_type':'feed',
-            'display_name_short':'Web Feed',
+            'display_name_short':'Feed',
             'full_display_name':'Web Feed (rss/atom)',
             'instructions':'Use this data point to subscribe to any web feed published using either rss or atom syndication.',
             'image_large':'/static/images/lib/yoo/feed_256256.png',

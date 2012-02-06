@@ -10,15 +10,15 @@ class Visualization(VisualizationBase):
 
     def get_unconfigured_config(self):
         return {
-            'name':'googlebarchart',
-            'display_name_short':'Bar Chart',
-            'display_name_long':'Google Bar Chart',
-            'image_small':'/static/images/site/bar_chart.png',
+            'name':'jitpiechart',
+            'display_name_short':'Pie Chart',
+            'display_name_long':'Pie Chart',
+            'image_small':'/static/images/lib/Impressions/pie_chart.png',
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
             'configured':False,
             'elements':[
-                {
+                    {
                     'name':'time',
                     'display_name':'Visualize over time?',
                     'help':'',
@@ -33,9 +33,9 @@ class Visualization(VisualizationBase):
                 }
             ],
             'data_dimensions':[
-                {
+                    {
                     'name':'category1',
-                    'display_name':'Bars',
+                    'display_name':'Category',
                     'type':'string',
                     'help':''
                 }
@@ -49,8 +49,7 @@ class Visualization(VisualizationBase):
             for dimension in config['data_dimensions']:
                 return_data.append([{
                     'name':dimension['value']['value'],
-                    'type':'basic_facet',
-                    'limit':10
+                    'type':'basic_facet'
                 }])
         else:
             end, start, time_increment = self._parse_time_parameters(time_variable)
@@ -59,8 +58,7 @@ class Visualization(VisualizationBase):
                 for dimension in config['data_dimensions']:
                     this_search.append({
                         'name':dimension['value']['value'],
-                        'type':'basic_facet',
-                        'limit':3
+                        'type':'basic_facet'
                     })
                 this_search.append({
                     'name':'time',
@@ -72,27 +70,34 @@ class Visualization(VisualizationBase):
 
     def render_javascript_based_visualization(self, config, search_results_collection):
         js = ""\
-             "$.getScript\n"\
-             "(\n"\
-             "   'https://www.google.com/jsapi',\n"\
-             "   function()"\
-             "   {\n"\
-             "       google.load('visualization', '1', {'packages': ['corechart'], 'callback':drawchart_" + config['id'] + "});\n"\
-             "       function drawchart_" + config['id'] + "()\n"\
-             "       {\n"\
-             "           if(!document.getElementById('" + config['id'] + "'))\n"\
-             "               return;\n"\
-             "           var data = new google.visualization.DataTable();\n"\
-             "           {data_columns}\n"\
-             "           data.addRows(\n"\
-             "               {data_rows}\n"\
-             "           );\n"\
-             "           var options = {options};\n"\
-             "           var chart = new google.visualization.BarChart(document.getElementById('" + config['id'] + "'));\n"\
-             "           chart.draw(data, options);\n"\
-             "       }\n"\
-             "   }\n"\
-             ");\n"
+            "if($('." + config['id'] + "_css').length == 0)\n" \
+            "{\n" \
+            "   var link = $('<link class=\"" + config['id'] + "_css\">');\n" \
+            "   link.attr({type:'text/css', rel:'stylesheet', href:'/static/css/lib/jit_pie_chart.css'});\n" \
+            "   $('head').append(link);\n" \
+            "   $.getScript('/static/js/lib/jit.js');\n" \
+            "}\n" \
+            "function LoadChart_" + config['id'] + "()\n" \
+            "{\n" \
+            "   var data = {data};\n" \
+            "   var pieChart = new $jit.PieChart({\n" \
+            "       injectInto: '" + config['id'] + "',\n" \
+            "       type:'stacked',\n" \
+            "       showLabels:true,\n" \
+            "       resizeLabels: 7,\n" \
+            "       Label: { type: 'Native', size: 20, family: 'Arial', color: 'white' }\n" \
+            "   });\n" \
+            "   pieChart.loadJSON(data);\n" \
+            "   var list = $jit.id('id-list');\n" \
+            "   var legend = pieChart.getLegend(), listItems = [];\n" \
+            "   for(var name in legend) {\n" \
+            "       listItems.push('<div class=\"query-color\" style=\"background-color:' + legend[name] +';\">&nbsp;</div>' + name);\n" \
+            "   }\n" \
+            "   list.innerHTML = '<li>' + listItems.join('</li><li>') + '</li>';" \
+            "}" \
+            "setTimeout(function() {LoadChart_" + config['id'] + "(); }, 2000);" \
+            ""
+
 
         #TODO this only support one data dimension at the moment
         time_variable = [e for e in config['elements'] if e['name'] == 'time'][0]['value']
@@ -100,11 +105,14 @@ class Visualization(VisualizationBase):
             search_result = search_results_collection[0]
             data_dimensions_value = config['data_dimensions'][0]['value']
             facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
-            data_columns = [{'type':'string', 'name':data_dimensions_value['name']}, {'type':'number', 'name':'count'}]
-            data_rows = [[f['name'], f['count']] for f in facets]
+            data = { 'labels':[], 'values':[] }
+            for facet in facets:
+                data['labels'].append(facet['name'])
+                data['values'].append({
+                    'label':facet['name'],
+                    'values':[facet['count']]
+                })
         else:
-            data_columns = [{'type':'string', 'name':'Time'}]
-            data_rows = []
             data_dimensions_value = config['data_dimensions'][0]['value']
             end, start, time_increment = self._parse_time_parameters(time_variable)
             array_of_start_times = range(start, end, time_increment)
@@ -114,64 +122,24 @@ class Visualization(VisualizationBase):
                 for f in facets:
                     if f['name'] not in results_data_columns:
                         results_data_columns.append(f['name'])
-            data_columns += [{'type':'number', 'name':'%s' % c } for c in results_data_columns]
-            number_of_empty_ranges = 0
+            data = { 'labels':[], 'values':[] }
             for x in range(len(array_of_start_times)):
                 search_result = search_results_collection[x]
-                start_time_pretty = get_pretty_date(array_of_start_times[x] + time_increment)
-                data_row = [start_time_pretty]
+                start_time_pretty = get_pretty_date(array_of_start_times[x])
+                data_values = {'label': start_time_pretty, 'values': []}
                 facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
-                dynamic_data_rows = []
                 for c in results_data_columns:
                     candidate_facet = [f for f in facets if f['name'] == c]
                     if candidate_facet:
-                        dynamic_data_rows.append(candidate_facet[0]['count'])
+                        data_values['values'].append(candidate_facet[0]['count'])
                     else:
-                        dynamic_data_rows.append(0)
-                if not sum(dynamic_data_rows):
-                    number_of_empty_ranges += 1
-                data_row += dynamic_data_rows
-                data_rows.append(data_row)
-            if number_of_empty_ranges == len(array_of_start_times):
-                return "$('#" + config['id'] + "').html(\"<div class='empty_dataset'>Sorry, there is no data to visualize</div>\");"
+                        data_values['values'].append(0)
+                if sum(data_values['values']) > 0:
+                    data['labels'].append(start_time_pretty)
+                    data['values'].append(data_values)
 
-
-        data_columns = '\n'.join(["data.addColumn('%s', '%s');" % (t['type'], t['name']) for t in data_columns])
-        data_rows = json.dumps(data_rows)
-
-        options = json.dumps({
-            'backgroundColor':'#333333',
-            'colors':['#FF0000', '#FFFF00', '#FF00FF', '#0000FF', '#00FFFF', '#00FF00'],
-            'title':config['data_dimensions'][0]['value']['name'],
-            'titleTextStyle':{
-                'color':'#FFFFFF'
-            },
-            'hAxis':{
-                'baselineColor':'#DDDDDD',
-                'textStyle':{
-                    'color':'#DDDDDD'
-                },
-                'slantedText':True,
-                'gridlines.color':'#AAAAAA',
-                },
-            'legend':{
-                'position':'right',
-                'textStyle':{
-                    'color':'#DDDDDD'
-                }
-            },
-            'vAxis':{
-                'baselineColor':'#DDDDDD',
-                'textStyle':{
-                    'color':'#DDDDDD'
-                },
-                'minValue':0
-            }
-        })
-
-        js = js.replace('{data_columns}', data_columns)
-        js = js.replace('{data_rows}', data_rows)
-        js = js.replace('{options}', options)
+        data = json.dumps(data)
+        js = js.replace('{data}', data)
         return js
 
     def _parse_time_parameters(self, time_increment):

@@ -132,7 +132,7 @@ def apply_actions_to_content(content, actions):
         response = urllib2.urlopen(request)
         response = json.loads(response.read())
     except Exception, e:
-        Logger.Error('%s - _apply_actions_to_content - error:s' % (__name__, e))
+        Logger.Error('%s - _apply_actions_to_content - error:%s' % (__name__, e))
         Logger.Info('%s - _apply_actions_to_content - finished' % __name__)
         return content
     content_from_solr = response['response']['docs']

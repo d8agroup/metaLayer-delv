@@ -48,12 +48,14 @@ class Visualization(VisualizationBase):
                 'name': 'time',
                 'gap': time_increment,
                 'start': start,
-                'end': end
+                'end': end,
+                'type':'facet_range'
             }]
             if dimension['value']['value'] != 'total_count':
                 query_data.append({
                     'name':dimension['value']['type'],
-                    'value':dimension['value']['value']
+                    'value':dimension['value']['value'],
+                    'type':'basic_query'
                 })
             return_data.append(query_data)
         return return_data
@@ -84,7 +86,7 @@ class Visualization(VisualizationBase):
 
         end, start, time_increment = self._parse_time_parameters(config)
         series_titles = [{'name':'Time', 'type':'string'}]
-        collections_of_values = [[get_pretty_date(x)] for x in range(start, end, time_increment)]
+        collections_of_values = [[get_pretty_date((x + time_increment))] for x in range(start, end, time_increment)]
 
         for x in range(len(config['data_dimensions'])):
             series_titles.append({'name':config['data_dimensions'][x]['value']['value'], 'type':'number'})
@@ -96,6 +98,8 @@ class Visualization(VisualizationBase):
             for y in range(self.steps_backwards):
                 collections_of_values[y].append(values[y])
 
+        if not sum([c[1] for c in collections_of_values]):
+            return "$('#" + config['id'] + "').html(\"<div class='empty_dataset'>Sorry, there is no data to visualize</div>\");"
 
         data_columns = '\n'.join(["data.addColumn('%s', '%s');" % (t['type'], t['name']) for t in series_titles])
         data_rows = json.dumps(collections_of_values)

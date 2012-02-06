@@ -12,8 +12,8 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'googleplusactivitysearch',
             'sub_type':'googleplusactivitysearch',
-            'display_name_short':'Google+ Search',
-            'full_display_name':'Google+ Activity Stream Search',
+            'display_name_short':'Google+',
+            'full_display_name':'Google+ Search',
             'instructions':'Use this data point to search the public Google+ activity stream.',
             'image_large':'/static/images/lib/yoo/google_plus_128128.png',
             'image_medium':'/static/images/lib/yoo/google_plus_3232.png',

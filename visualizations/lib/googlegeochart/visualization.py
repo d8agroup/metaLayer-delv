@@ -5,9 +5,9 @@ class Visualization(VisualizationBase):
     def get_unconfigured_config(self):
         return {
             'name':'googlegeochart',
-            'display_name_short':'GeoChart',
-            'display_name_long':'Google GeoChart',
-            'image_small':'http://cdn.androlib.com/appicon/app-xn.cs.png',
+            'display_name_short':'Map',
+            'display_name_long':'Map',
+            'image_small':'/static/images/site/map.png',
             'unconfigurable_message':'There is no location data available, try adding a location detections action.',
             'type':'javascript',
             'configured':False,
@@ -38,6 +38,19 @@ class Visualization(VisualizationBase):
                         'Oceania'
                     ],
                     'value':'World'
+                },
+                {
+                    'name':'color',
+                    'display_name':'Color Scheme',
+                    'help':'',
+                    'type':'select',
+                    'values':[
+                        'Red',
+                        'Blue',
+                        'Green',
+                        'Black and White'
+                    ],
+                    'value':'Red'
                 }
             ],
             'data_dimensions':[
@@ -84,10 +97,7 @@ class Visualization(VisualizationBase):
             'datalessRegionColor':'#444444',
             'colorAxis':{
                 'minValue':0,
-                'colors':[
-                    '#00FFFF',
-                    '#0000FF'
-                ]
+                'colors':self._map_map_colors([e for e in config['elements'] if e['name'] == 'color'][0]['value'])
             },
             'region':self._map_map_focus([e for e in config['elements']][1]['value'])
         }
@@ -105,4 +115,10 @@ class Visualization(VisualizationBase):
         if focus == 'Asia': return '142'
         if focus == 'Oceania': return '009'
         return 'world'
+
+    def _map_map_colors(self, color):
+        if color == 'Blue': return ['#CCCCFF', '#0000FF']
+        if color == 'Green': return ['#33CC66', '#006600']
+        if color == 'Black and White': return ['#FFFFFF', '#000000']
+        return ['#FFCC66', '#FF6600']
 

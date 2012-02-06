@@ -62,7 +62,6 @@ def index(request):
     Logger.Info('%s - index - finished' % __name__)
     return render_to_response('my_account.html',context_instance=RequestContext(request))
 
-@login_required(login_url='/')
 def dashboard_load(request, id):
     Logger.Info('%s - dashboard - started' % __name__)
     Logger.Debug('%s - dashboard - started with id:%s' % (__name__, id))
@@ -70,6 +69,14 @@ def dashboard_load(request, id):
     db = dc.get_dashboard_by_id(id)
     Logger.Info('%s - dashboard - finished' % __name__)
     return render_to_response('dashboard.html',{ 'dashboard_id':db['id'] }, context_instance=RequestContext(request))
+
+def dashboard_embedded(request, id):
+    Logger.Info('%s - dashboard_embedded - started' % __name__)
+    Logger.Debug('%s - dashboard_embedded - started with id:%s' % (__name__, id))
+    dc = DashboardsController(request.user)
+    db = dc.get_dashboard_by_id(id)
+    Logger.Info('%s - dashboard_embedded - finished' % __name__)
+    return render_to_response('thecommunity/embedded_dashboard.html',{ 'dashboard_id':db['id'] }, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def dashboard_new(request, template_id):
@@ -96,11 +103,11 @@ def dashboard_delete(request, id):
     Logger.Debug('%s - dashboard_delete - started with id:%s' % (__name__, id))
     yield JSONResponse()
     dc = DashboardsController(request.user)
-    dc.delete_dashboard_by_id(id)
+    db = dc.get_dashboard_by_id(id)
+    if db and db['username'] == request.user.username:
+        dc.delete_dashboard_by_id(id)
     Logger.Info('%s - dashboard_delete - finished' % __name__)
 
-
-@login_required(login_url='/')
 def dashboard(request, id):
     Logger.Info('%s - dashboard - started' % __name__)
     dc = DashboardsController(request.user)
@@ -108,7 +115,6 @@ def dashboard(request, id):
     Logger.Info('%s - dashboard - finished' % __name__)
     return JSONResponse({'dashboard':db})
 
-@login_required(login_url='/')
 def dashboard_get_all_widgets(request):
     Logger.Info('%s - dashboard_get_all_data_points - started' % __name__)
     #TODO: Need to get the options from the request.user and pass them to the controller
@@ -225,7 +231,6 @@ def dashboard_remove_visualization(request):
     return JSONResponse()
 
 @never_cache
-@login_required(login_url='/')
 def dashboard_run_visualization(request):
     Logger.Info('%s - dashboard_run_visualization - started' % __name__)
     visualization = request.POST['visualization']
@@ -243,7 +248,6 @@ def dashboard_run_visualization(request):
     Logger.Info('%s - dashboard_run_visualization - finished' % __name__)
     return HttpResponse(content=content, content_type=content_type)
 
-@login_required(login_url='/')
 def dashboard_run_search(request):
     Logger.Info('%s - dashboard_run_search - started' % __name__)
     start_time = time.time()
@@ -257,7 +261,6 @@ def dashboard_run_search(request):
     Logger.Info('%s - dashboard_run_search - finished' % __name__)
     return JSONResponse({'search_results':search_results})
 
-@login_required(login_url='/')
 def dashboard_get_content_item_template(request, type, sub_type):
     Logger.Info('%s - dashboard_get_content_item_template - started' % __name__)
     data_point = { 'type':type, 'sub_type':sub_type }

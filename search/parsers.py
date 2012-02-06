@@ -188,21 +188,22 @@ class SearchQueryAdditionsParser(object):
         Logger.Info('%s - SearchQueryAdditionsParser.get_formatted_query_additions - started' % __name__)
         additions = []
 
-        basic_facet_fields = [a for a in self.query_additions if len(a.keys()) == 1]
+        basic_facet_fields = [a for a in self.query_additions if a['type'] == 'basic_facet']
         if basic_facet_fields:
-            additions.append('&'.join(['facet.field=%s' % a['name'] for a in basic_facet_fields]))
+            additions.append('&'.join(['facet.field=%s&f.%s.facet.limit=%i' % (a['name'], a['name'], (a['limit'] if 'limit' in a else 100)) for a in basic_facet_fields]))
 
-        range_facet_fields = [a for a in self.query_additions if 'gap' in a]
+
+        range_facet_fields = [a for a in self.query_additions if a['type'] == 'range_facet']
         if range_facet_fields:
             additions.append('&'.join(['facet.range=%s&f.%s.facet.range.gap=%i&f.%s.facet.range.start=%i&f.%s.facet.range.end=%i&f.%s.facet.mincount=0' % (a['name'], a['name'], a['gap'], a['name'], a['start'], a['name'], a['end'], a['name']) for a in range_facet_fields]))
 
-        basic_facet_queries = [a for a in self.query_additions if 'value' in a]
+        basic_facet_queries = [a for a in self.query_additions if a['type'] == 'basic_query']
         if basic_facet_queries:
             additions.append('&'.join(['fq=%s:%s' % (a['name'], a['value']) for a in basic_facet_queries]))
 
-        range_facet_queries = [a for a in self.query_additions if 'range' in a]
+        range_facet_queries = [a for a in self.query_additions if a['type'] == 'range_query']
         if range_facet_queries:
-            additions.append('&'.join(['fq=%s:[%s TO %s]' % (a['name'], a['range']['start'], a['range']['end']) for a in range_facet_queries]))
+            additions.append('&'.join(['fq=%s:[%s TO %s]' % (a['name'], a['range']['start'], a['range']['end']) for a in range_facet_queries]).replace(' ', '%20'))
 
 
 

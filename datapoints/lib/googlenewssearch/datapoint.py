@@ -13,8 +13,8 @@ class DataPoint(BaseDataPoint):
         return {
             'type':'googlenewssearch',
             'sub_type':'googlenewssearch',
-            'display_name_short':'Google News Search',
-            'full_display_name':'Google News Search',
+            'display_name_short':'Google News',
+            'full_display_name':'Google News',
             'instructions':'Use this data point to search Google news.',
             'image_large':'/static/images/lib/yoo/google_6464.png',
             'image_medium':'/static/images/lib/yoo/google_4848.png',

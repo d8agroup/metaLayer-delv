@@ -127,10 +127,14 @@
                         setTimeout( function() {$('#profile_page').profile_page('render');}, 500);
                     }
                 );
-            if ($('body').data('username') == dashboard.username)
+            var current_user = $('body').data('username');
+            if (current_user == '')
+                insight_container.find('.insight_actions .logged_in_actions').remove();
+            else if (current_user == dashboard.username)
                 insight_container.find('.remix').remove();
             else
                 insight_container.find('.edit').remove();
+            Tipped.create(insight_container.find('.insight_header a'));
             return insight_container;
         }
     };

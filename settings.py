@@ -205,7 +205,8 @@ ACTIONS_CONFIG = {
     'enabled_actions':[
         'datalayersentimentanalysis',
         'yahooplacemaker',
-        'languagedetection'
+        'languagedetection',
+        'datalayertagging'
     ]
 }
 
@@ -220,7 +221,9 @@ VISUALIZATIONS_CONFIG = {
     'enabled_visualizations':[
         'googlegeochart',
         'googlelinechart',
-        'googlebarchart'
+        'googlebarchart',
+        'googlepiechart',
+        'googleareachart'
     ]
 }
 

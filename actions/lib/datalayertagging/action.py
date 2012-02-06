@@ -4,22 +4,23 @@ import threading
 from urllib import urlencode
 from urllib2 import Request, urlopen
 from actions.classes import BaseAction
+from logger import Logger
 
 class Action(BaseAction):
     def get_unconfigured_config(self):
         return {
-            'name':'datalayersentimentanalysis',
-            'display_name_short':'Sentiment',
-            'display_name_long':'Sentiment Analysis',
-            'image_large':'/static/images/lib/aluminum/positive.png',
-            'image_small':'/static/images/lib/aluminum/positive.png',
+            'name':'datalayertagging',
+            'display_name_short':'Tagging',
+            'display_name_long':'Tagging',
+            'image_large':'/static/images/site/tagging.png',
+            'image_small':'/static/images/site/tagging.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,
             'content_properties':{
                 'added':[
                     {
-                        'display_name':'Sentiment',
-                        'name':'sentiment',
+                        'display_name':'Tags',
+                        'name':'tags',
                         'type':'string'
                     }
                 ]
@@ -29,7 +30,7 @@ class Action(BaseAction):
     def run(self, config, content):
         def producer(q, content):
             for item in content:
-                thread = SentimentGetter(item)
+                thread = TagsGetter(item)
                 thread.start()
                 q.put(thread, True)
         finished = []
@@ -38,7 +39,7 @@ class Action(BaseAction):
                 thread = q.get(True)
                 thread.join()
                 content_id, sentiment = thread.get_result()
-                finished.append({'id':content_id, 'sentiment':sentiment})
+                finished.append({'id':content_id, 'tags':sentiment})
         q = Queue(3)
         producer_thread = threading.Thread(target=producer, args=(q, content))
         consumer_thread = threading.Thread(target=consumer, args=(q, len(content)))
@@ -48,7 +49,7 @@ class Action(BaseAction):
         consumer_thread.join()
         return finished
 
-class SentimentGetter(threading.Thread):
+class TagsGetter(threading.Thread):
     def __init__(self, content):
         self.content = content
         self.result = None
@@ -60,13 +61,15 @@ class SentimentGetter(threading.Thread):
     def run(self):
         try:
             text = self.extract_content()
-            url = 'http://api.metalayer.com/s/dashboard/1/sentiment'
+            text = text.encode('ascii', 'ignore')
+            url = 'http://api.metalayer.com/s/dashboard/1/tagging'
             post_data = urlencode({ 'text':text })
             request = Request(url, post_data)
             response = urlopen(request)
             response = json.loads(response.read())
-            self.result = self._map_sentiment(response['response']['datalayer']['sentiment']) if response['status'] == 'success' else False
+            self.result = response['response']['datalayer']['tags'] if response['status'] == 'success' else False
         except Exception, e:
+            Logger.Error('%s - run - error %s' % (__name__, e))
             self.result = None
 
     def extract_content(self):
@@ -77,11 +80,4 @@ class SentimentGetter(threading.Thread):
             for t in self.content['text']:
                 text += ' ' + t
         return text
-
-    def _map_sentiment(self, sentiment):
-        if sentiment >= 0.5:
-            return 'positive'
-        elif sentiment <= 0.5:
-            return 'negative'
-        return 'neutral'
 
