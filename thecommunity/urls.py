@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}/account$', user_account),
     url(r'([a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6})$', user_home),
     url(r'([a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6})/(\w{24})$', insight),
+    url(r'([\w ]+)', category_page),
     url(r'^$', community_page),
 )

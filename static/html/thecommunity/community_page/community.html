@@ -54,18 +54,13 @@
                 <h3><span>Brows By Category</span></h3>
                 <div class="page_block_inner">
                     <ul>
-                        <li>Business</li>
-                        <li>Politics</li>
-                        <li>Science</li>
-                        <li>Current Events</li>
-                        <li>News / Journalism</li>
-                        <li>Investigative</li>
-                        <li>Number / Math</li>
-                        <li>Education</li>
-                        <li>Finance</li>
-                        <li>Travel</li>
-                        <li>Humor</li>
-                        <li>Technology</li>
+                        {% for category in categories %}
+                            {%  if category.count > 0 %}
+                                <li><a href="/community/{{ category.name }}" title='View insights tagged as "{{ category.name }}"'>{{ category.name }} ({{ category.count }})</a></li>
+                            {% else %}
+                                <li>{{ category.name }}</li>
+                            {%  endif %}
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

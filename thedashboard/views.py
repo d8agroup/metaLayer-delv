@@ -68,7 +68,7 @@ def dashboard_load(request, id):
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
     Logger.Info('%s - dashboard - finished' % __name__)
-    return render_to_response('dashboard.html',{ 'dashboard_id':db['id'] }, context_instance=RequestContext(request))
+    return render_to_response('dashboard.html',{ 'dashboard_id':db['id'], 'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES }, context_instance=RequestContext(request))
 
 def dashboard_embedded(request, id):
     Logger.Info('%s - dashboard_embedded - started' % __name__)

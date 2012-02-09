@@ -40,6 +40,14 @@ class DashboardsController(object):
         Logger.Info('%s - DashboardsController.GetRecentDashboards - finished' % __name__)
         return dashboards
 
+    @classmethod
+    def GetCategoryCount(cls, c):
+        return Dashboard.collection.find({'config.categories':c}).count()
+
+    @classmethod
+    def GetDashboardsInCategory(cls, category):
+        return Dashboard.collection.find({'config.categories':category})
+
     def get_saved_dashboards(self):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)

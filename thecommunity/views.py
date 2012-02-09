@@ -39,11 +39,27 @@ def user_account(request):
     )
 
 def community_page(request):
+    categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
     return render_to_response(
         'thecommunity/community_page/community.html',
-        {},
+        {'categories': categories},
         context_instance=RequestContext(request)
     )
+
+def category_page(request, category):
+    if category not in settings.INSIGHT_CATEGORIES:
+        return redirect(community_page)
+    dashboards = DashboardsController.GetDashboardsInCategory(category)
+    dashboards = serialize_to_json([d for d in dashboards])
+    return render_to_response(
+        'thecommunity/category_page/category_page.html',
+        {
+            'category':category,
+            'insights_json':dashboards
+        },
+        context_instance=RequestContext(request)
+    )
+
 
 def login_or_register(request):
     if not request.method == 'POST':

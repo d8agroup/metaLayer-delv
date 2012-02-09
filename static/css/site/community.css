@@ -38,7 +38,7 @@
 /**********************************************************************************************************************/
 #page .page_block { color:#DDD; background-color:#1a1a1a; }
 #page .page_block .page_block_inner { padding:10px;}
-#page .page_block h3 { height:40px; padding:0; margin-left:20px;}
+#page .page_block h3 { height:40px; padding:0; margin-left:20px; font-size:150%; }
 #page .page_block h3 span { display:none; }
 #footer { width:1000px; margin:0 auto; padding:10px; color:#AAA;}
 #footer dl { float:left; width:20%; margin-left:10%;}

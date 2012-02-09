@@ -1,0 +1,28 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="/static/js/thecommunity/category_page.js"></script>
+    <script type="text/javascript">
+        $(document).ready
+        (
+            function()
+            {
+                $('#page').category_page({insights:{{ insights_json|safe }}});
+            }
+        );
+    </script>
+{% endblock %}
+
+{% block page_body %}
+    <div class="category_page" id="page">
+        <div class="page_block">
+            <h3>Insights in the {{ category }} category</h3>
+            <div class="page_block_inner">
+                <ul id="insight_list">
+                    <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" />
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

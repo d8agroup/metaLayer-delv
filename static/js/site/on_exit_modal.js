@@ -18,6 +18,17 @@
                             dashboard.config = {};
                         dashboard.config.live = ($('.live input[type=radio]:checked').attr('id') == 'keep_running_yes');
                         dashboard.config.description = on_exit_modal.find('.description textarea').val();
+                        if (dashboard.config.categories == null)
+                            dashboard.config.categories = []
+                        on_exit_modal.find('.categories input:checked').each
+                            (
+                                function()
+                                {
+                                    dashboard.config.categories[dashboard.config.categories.length] = $(this).parent('li').find('label').html()
+                                }
+                            );
+
+
                         for (var x=0; x<dashboard.collections.length; x++)
                             dashboard.collections[x].search_results = [];
                         var post_data = { dashboard:JSON.stringify(dashboard), csrfmiddlewaretoken:$('#csrf_form input').val() };
@@ -58,7 +69,23 @@
                 on_exit_modal.find('#keep_running_yes').attr('checked', true);
                 on_exit_modal.find('#keep_running_no').attr('checked', false);
             }
+            if (dashboard.config.categories != null)
+            {
+                for (var x=0; x<dashboard.config.categories.length; x++)
+                {
+                    var category_name = dashboard.config.categories[x];
+                    on_exit_modal.find('.categories label').each
+                        (
+                            function()
+                            {
+                                if ($(this).html() == category_name)
+                                    $(this).parent('li').find('input').attr('checked', true);
+                            }
+                        );
+                }
+            }
             on_exit_modal.find('.radio').buttonset();
+            //on_exit_modal.find('.categories input').button();
             on_exit_modal.jqmShow();
         }
 };

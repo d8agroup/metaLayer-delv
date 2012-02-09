@@ -227,6 +227,21 @@ VISUALIZATIONS_CONFIG = {
     ]
 }
 
+INSIGHT_CATEGORIES = [
+    'Business',
+    'Politics',
+    'Science',
+    'Current Events',
+    'News and Journalism',
+    'Investigative',
+    'Number and Math',
+    'Education',
+    'Finance',
+    'Travel',
+    'Humor',
+    'Technology'
+]
+
 import socket
 if socket.gethostname() in ['mattgriffiths']:
     from settings_mattgriffiths import *
