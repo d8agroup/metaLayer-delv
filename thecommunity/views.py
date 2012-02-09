@@ -60,7 +60,6 @@ def category_page(request, category):
         context_instance=RequestContext(request)
     )
 
-
 def login_or_register(request):
     if not request.method == 'POST':
         return render_to_response(

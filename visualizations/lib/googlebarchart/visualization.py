@@ -13,7 +13,7 @@ class Visualization(VisualizationBase):
             'name':'googlebarchart',
             'display_name_short':'Bar Chart',
             'display_name_long':'Google Bar Chart',
-            'image_small':'/static/images/site/bar_chart.png',
+            'image_small':'/static/images/thedashboard/bar_chart.png',
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
             'configured':False,

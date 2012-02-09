@@ -7,7 +7,7 @@ class Visualization(VisualizationBase):
             'name':'googlegeochart',
             'display_name_short':'Map',
             'display_name_long':'Map',
-            'image_small':'/static/images/site/map.png',
+            'image_small':'/static/images/thedashboard/map.png',
             'unconfigurable_message':'There is no location data available, try adding a location detections action.',
             'type':'javascript',
             'configured':False,

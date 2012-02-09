@@ -147,7 +147,7 @@ SUBSCRIPTIONS_SETTINGS = {
             'chargify_config':None,
             'display_data':{
                 'display_name':'Free Plan',
-                'image':'/static/images/site/no_image_medium.gif',
+                'image':'/static/images/thedashboard/no_image_medium.gif',
                 'messages':[
                     'No monthly fee!',
                     'Unlimited insights',
@@ -172,7 +172,7 @@ SUBSCRIPTIONS_SETTINGS = {
             },
             'display_data':{
                 'display_name':'Basic Plan',
-                'image':'/static/images/site/no_image_medium.gif',
+                'image':'/static/images/thedashboard/no_image_medium.gif',
                 'messages':[
                     'Only $19 per month!',
                     'Private Insights!',

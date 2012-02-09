@@ -13,7 +13,7 @@ class Visualization(VisualizationBase):
             'name':'googleareachart',
             'display_name_short':'Area Chart',
             'display_name_long':'Area Chart',
-            'image_small':'/static/images/site/area_chart.png',
+            'image_small':'/static/images/thedashboard/area_chart.png',
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
             'configured':False,

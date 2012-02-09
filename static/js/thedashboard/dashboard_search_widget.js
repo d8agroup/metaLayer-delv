@@ -73,7 +73,7 @@
 
                     if(!EMBEDDED_MODE)
                         search_widget.find('.search_results_container').jScrollPane( { topCapHeight:40, bottomCapHeight:40 } );
-                    search_widget.find('.options_container .refresh_data img').attr('src', '/static/images/site/icon_clock.png' ) .removeClass('loading');
+                    search_widget.find('.options_container .refresh_data img').attr('src', '/static/images/thedashboard/icon_clock.png' ) .removeClass('loading');
                     search_widget.parents('.collection_container').dashboard_collection('search_results_updated');
                     setTimeout(function() { run_search_at_interval_function(search_widget) }, 30000);
                 };
@@ -96,7 +96,7 @@
             dashboard_search_widget.find('.options_container .refresh_data img').attr
                 (
                     'src',
-                    '/static/images/site/icon_clock_loading.gif'
+                    '/static/images/thedashboard/icon_clock_loading.gif'
                 )
                 .addClass('loading');
 

@@ -90,7 +90,7 @@ $(document).ready
         (
             'waiting_large',
             "<div class='waiting waiting_large'>" +
-                "<p>{{html text}}<img src='/static/images/site/loading_circle.gif' /></p>" +
+                "<p>{{html text}}<img src='/static/images/thedashboard/loading_circle.gif' /></p>" +
             "</div>"
         );
 

@@ -12,8 +12,8 @@ class Action(BaseAction):
             'name':'datalayertagging',
             'display_name_short':'Tagging',
             'display_name_long':'Tagging',
-            'image_large':'/static/images/site/tagging.png',
-            'image_small':'/static/images/site/tagging.png',
+            'image_large':'/static/images/thedashboard/tagging.png',
+            'image_small':'/static/images/thedashboard/tagging.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,
             'content_properties':{
