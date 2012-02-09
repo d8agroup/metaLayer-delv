@@ -127,7 +127,7 @@ def change_subscription(request):
             subscription = [sub for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].values() if sub['id'] == subscription_id][0]
             uc = UserController(user)
             subscription_migration_direction = uc.subscription_migration_direction(subscription['id'])
-            template_name = 'parts/change_subscriptions/%s' % subscription['templates'][subscription_migration_direction]
+            template_name = 'thedashboard/change_subscriptions/%s' % subscription['templates'][subscription_migration_direction]
             Logger.Info('%s - change_subscription - finished' % __name__)
             return render_to_response(
                 template_name,

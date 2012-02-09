@@ -3,7 +3,6 @@ from dashboard.thedashboard.views import *
 
 urlpatterns = patterns('',
     url(r'load/(\w+)$', dashboard),
-    url(r'embedded/(\w+)$', dashboard_embedded),
     url(r'new/(\w+)$', dashboard_new),
     url(r'remix/(\w+)$', dashboard_remix),
     url(r'delete/(\w+)$', dashboard_delete),

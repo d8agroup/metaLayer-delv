@@ -94,20 +94,16 @@ $(document).ready
             "</div>"
         );
 
-        $.get('/static/html/parts/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
-        $.get('/static/html/parts/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
-        $.get('/static/html/parts/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
-        $.get('/static/html/parts/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
-        $.get('/static/html/parts/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
-        $.get('/static/html/parts/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
-        $.get('/static/html/parts/user_account_management.html', function(t) { $.template('user_account_management', t)});
-        $.get('/static/html/parts/user_dashboard_management.html', function(t) { $.template('user_dashboard_management', t)});
-        $.get('/static/html/parts/user_dashboard_management_saved_dashboards.html', function(t) { $.template('user_dashboard_management_saved_dashboards', t)});
-        $.get('/static/html/parts/user_dashboard_management_dashboard_templates.html', function(t) { $.template('user_dashboard_management_dashboard_templates', t)});
-        $.get('/static/html/parts/outputs/output_url.html', function(t) { $.template('output_url', t)});
-        $.get('/static/html/parts/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
-        $.get('/static/html/parts/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
-        $.get('/static/html/parts/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
-        $.get('/static/html/parts/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
+        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
+        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
+        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
+        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
+        $.get('/static/html/thedashboard/data_points/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
+        $.get('/static/html/thedashboard/actions/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
+        $.get('/static/html/thedashboard/outputs/output_url.html', function(t) { $.template('output_url', t)});
+        $.get('/static/html/thedashboard/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
+        $.get('/static/html/thedashboard/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
+        $.get('/static/html/thedashboard/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
+        $.get('/static/html/thedashboard/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
     }
 );

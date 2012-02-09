@@ -29,54 +29,13 @@ def async(gen):
         return result
     return func
 
-def index(request):
-    Logger.Info('%s - index - started' % __name__)
-    if not request.user.is_authenticated():
-        if not request.method == 'POST':
-            Logger.Info('%s - index - finished' % __name__)
-            return render_to_response('login_or_register.html', context_instance=RequestContext(request))
-        else:
-            if 'login' in request.POST:
-                username = request.POST.get('login_username')
-                password = request.POST.get('login_password')
-                passed, errors = UserController.LoginUser(request, username, password)
-                if not passed:
-                    Logger.Info('%s - index - finished' % __name__)
-                    return render_to_response(
-                        'login_or_register.html',
-                        { 'login_errors':errors },
-                        context_instance=RequestContext(request)
-                    )
-            elif 'register' in request.POST:
-                username = request.POST.get('register_username')
-                password1 = request.POST.get('register_password1')
-                password2 = request.POST.get('register_password2')
-                passed, errors = UserController.RegisterUser(request, username, password1, password2)
-                if not passed:
-                    Logger.Info('%s - index - finished' % __name__)
-                    return render_to_response(
-                        'login_or_register.html',
-                        { 'register_errors':errors },
-                        context_instance=RequestContext(request)
-                    )
-    Logger.Info('%s - index - finished' % __name__)
-    return render_to_response('my_account.html',context_instance=RequestContext(request))
-
 def dashboard_load(request, id):
     Logger.Info('%s - dashboard - started' % __name__)
     Logger.Debug('%s - dashboard - started with id:%s' % (__name__, id))
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
     Logger.Info('%s - dashboard - finished' % __name__)
-    return render_to_response('dashboard.html',{ 'dashboard_id':db['id'], 'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES }, context_instance=RequestContext(request))
-
-def dashboard_embedded(request, id):
-    Logger.Info('%s - dashboard_embedded - started' % __name__)
-    Logger.Debug('%s - dashboard_embedded - started with id:%s' % (__name__, id))
-    dc = DashboardsController(request.user)
-    db = dc.get_dashboard_by_id(id)
-    Logger.Info('%s - dashboard_embedded - finished' % __name__)
-    return render_to_response('thecommunity/embedded_dashboard.html',{ 'dashboard_id':db['id'] }, context_instance=RequestContext(request))
+    return render_to_response('thedashboard/dashboard.html',{ 'dashboard_id':db['id'], 'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES }, context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def dashboard_new(request, template_id):
