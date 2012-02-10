@@ -17,6 +17,20 @@
                         if (dashboard.config == null)
                             dashboard.config = {};
                         dashboard.config.live = ($('.live input[type=radio]:checked').attr('id') == 'keep_running_yes');
+                        for (var x=0; x<dashboard.collections.length; x++)
+                            if (dashboard.collections[x].data_points.length > 0)
+                                if(!dashboard.config.live && dashboard.collections[x].search_filters.time.indexOf('*]') > -1)
+                                {
+                                    var date = new Date();
+                                    var time = ((date.valueOf() * 0.001)|0);
+                                    time += (date.getTimezoneOffset() * 60)
+                                    dashboard.collections[x].search_filters.time = dashboard.collections[x].search_filters.time.replace('*]', time + ']');
+                                }
+                                else if (dashboard.config.live)
+                                {
+                                    var time_parts = dashboard.collections[x].search_filters.time.split('T');
+                                    dashboard.collections[x].search_filters.time = time_parts[0] + 'TO%20*]';
+                                }
                         dashboard.config.description = on_exit_modal.find('.description textarea').val();
                         if (dashboard.config.categories == null)
                             dashboard.config.categories = []

@@ -8,6 +8,13 @@
         init:function(configuration)
         {
             this.data('configuration', configuration);
+            if (configuration.search_filters.time == null)
+            {
+                var date = new Date();
+                var one_hour_ago = ((date.valueOf() * 0.001)|0) - 3600;
+                one_hour_ago += (date.getTimezoneOffset() * 60)
+                configuration.search_filters.time = '[' + one_hour_ago + '%20TO%20*]';
+            }
             this.dashboard_search_widget('render');
             return this;
         },
