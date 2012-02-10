@@ -41,7 +41,9 @@ class Visualization(VisualizationBase):
         }
 
     def generate_search_query_data(self, config, search_configuration):
-        end, start, time_increment = self._parse_time_parameters(config)
+        time_variable = [e for e in config['elements'] if e['name'] == 'xaxis'][0]['value']
+        time_variable = time_variable.replace('Time - ', '')
+        end, start, time_increment = self._parse_time_parameters(time_variable, self.steps_backwards, search_configuration['search_filters']['time'])
         return_data = []
         for dimension in config['data_dimensions']:
             query_data = [{
@@ -60,7 +62,7 @@ class Visualization(VisualizationBase):
             return_data.append(query_data)
         return return_data
 
-    def render_javascript_based_visualization(self, config, search_results_collection):
+    def render_javascript_based_visualization(self, config, search_results_collection, search_configuration):
         js = ""\
             "$.getScript\n"\
             "(\n"\
@@ -84,7 +86,9 @@ class Visualization(VisualizationBase):
             "   }\n"\
             ");\n"
 
-        end, start, time_increment = self._parse_time_parameters(config)
+        time_variable = [e for e in config['elements'] if e['name'] == 'xaxis'][0]['value']
+        time_variable = time_variable.replace('Time - ', '')
+        end, start, time_increment = self._parse_time_parameters(time_variable, self.steps_backwards, search_configuration['search_filters']['time'])
         series_titles = [{'name':'Time', 'type':'string'}]
         collections_of_values = [[get_pretty_date((x + time_increment))] for x in range(start, end, time_increment)]
 
@@ -95,7 +99,7 @@ class Visualization(VisualizationBase):
                 values = range(self.steps_backwards)
             else:
                 values = [f['count'] for f in candidate_facet_groups[0]['facets']]
-            for y in range(self.steps_backwards):
+            for y in range(len(collections_of_values)):
                 collections_of_values[y].append(values[y])
 
         if not sum([c[1] for c in collections_of_values]):
@@ -140,16 +144,3 @@ class Visualization(VisualizationBase):
         js = js.replace('{data_rows}', data_rows)
         js = js.replace('{options}', options)
         return js
-
-    def _parse_time_parameters(self, config):
-        time_increment = [e for e in config['elements'] if e['name'] == 'xaxis'][0]['value']
-        if time_increment == 'Time - minutes':
-            time_increment = 60 * 10 #ten minutes
-        elif time_increment == 'Time - hours':
-            time_increment = 60 * 60 * 2 #two hours
-        elif time_increment == 'Time - days':
-            time_increment = 60 * 60 * 24 #one day
-        end = int(time.time())
-        start = end - (self.steps_backwards * time_increment)
-        return end, start, time_increment
-

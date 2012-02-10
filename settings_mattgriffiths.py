@@ -13,7 +13,7 @@ STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(
-    level = logging.DEBUG,
+    level = logging.ERROR,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
 

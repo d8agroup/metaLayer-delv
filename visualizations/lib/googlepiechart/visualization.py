@@ -33,7 +33,7 @@ class Visualization(VisualizationBase):
             }])
         return return_data
 
-    def render_javascript_based_visualization(self, config, search_results_collection):
+    def render_javascript_based_visualization(self, config, search_results_collection, search_configuration):
         js = ""\
              "$.getScript\n"\
              "(\n"\

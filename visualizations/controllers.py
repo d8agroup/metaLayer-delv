@@ -40,9 +40,9 @@ class VisualizationController(object):
         Logger.Info('%s - VisualizationController.get_search_query_additions - finished' % __name__)
         return search_query_data
 
-    def render_javascript_visualization_for_search_results_collection(self, search_results_collection):
+    def render_javascript_visualization_for_search_results_collection(self, search_results_collection, search_configuration):
         Logger.Info('%s - VisualizationController.render_javascript_visualization_for_search_results - started' % __name__)
         viz = VisualizationController.LoadVisualization(self.viz['name'])
-        javascript = viz.render_javascript_based_visualization(self.viz, search_results_collection)
+        javascript = viz.render_javascript_based_visualization(self.viz, search_results_collection, search_configuration)
         Logger.Info('%s - VisualizationController.render_javascript_visualization_for_search_results - finished' % __name__)
         return javascript

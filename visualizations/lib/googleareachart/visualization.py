@@ -43,8 +43,9 @@ class Visualization(VisualizationBase):
 
     def generate_search_query_data(self, config, search_configuration):
         time_variable = [e for e in config['elements'] if e['name'] == 'time'][0]['value']
+        time_variable = time_variable.replace('Breakdown by ', '')
         return_data = []
-        end, start, time_increment = self._parse_time_parameters(time_variable)
+        end, start, time_increment = self._parse_time_parameters(time_variable, self.steps_backwards, search_configuration['search_filters']['time'])
         for s in range(start, end, time_increment):
             this_search = []
             for dimension in config['data_dimensions']:
@@ -64,7 +65,7 @@ class Visualization(VisualizationBase):
             return_data.append(this_search)
         return return_data
 
-    def render_javascript_based_visualization(self, config, search_results_collection):
+    def render_javascript_based_visualization(self, config, search_results_collection, search_configuration):
         js = ""\
              "$.getScript\n"\
              "(\n"\
@@ -90,10 +91,11 @@ class Visualization(VisualizationBase):
 
         #TODO this only support one data dimension at the moment
         time_variable = [e for e in config['elements'] if e['name'] == 'time'][0]['value']
+        time_variable = time_variable.replace('Breakdown by ', '')
         data_columns = [{'type':'string', 'name':'Time'}]
         data_rows = []
         data_dimensions_value = config['data_dimensions'][0]['value']
-        end, start, time_increment = self._parse_time_parameters(time_variable)
+        end, start, time_increment = self._parse_time_parameters(time_variable, self.steps_backwards, search_configuration['search_filters']['time'])
         array_of_start_times = range(start, end, time_increment)
         results_data_columns = []
         for search_result in search_results_collection:
@@ -158,14 +160,3 @@ class Visualization(VisualizationBase):
         js = js.replace('{data_rows}', data_rows)
         js = js.replace('{options}', options)
         return js
-
-    def _parse_time_parameters(self, time_increment):
-        if time_increment == 'Breakdown by minutes':
-            time_increment = 60 * 10 #ten minutes
-        elif time_increment == 'Breakdown by hours':
-            time_increment = 60 * 60 * 2 #two hours
-        elif time_increment == 'Breakdown by days':
-            time_increment = 60 * 60 * 24 #one day
-        end = int(time.time())
-        start = end - (self.steps_backwards * time_increment)
-        return end, start, time_increment

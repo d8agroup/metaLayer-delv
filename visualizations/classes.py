@@ -1,3 +1,5 @@
+import time
+
 class VisualizationBase(object):
     def visualization_removed(self):
         pass
@@ -8,5 +10,18 @@ class VisualizationBase(object):
         ]
         return [data_queries]
 
-    def render_javascript_based_visualization(self, config, search_results_collection):
-        pass
+    def _parse_time_parameters(self, time_increment, steps_backwards, search_time_parameter):
+        if time_increment == 'minutes':
+            time_increment = 60 * 10 #ten minutes
+        elif time_increment == 'hours':
+            time_increment = 60 * 60 * 2 #two hours
+        elif time_increment == 'days':
+            time_increment = 60 * 60 * 24 #one day
+
+        search_end_time = search_time_parameter.split('%20TO%20')[1].strip(']')
+        end = int(time.time()) if search_end_time == '*' else int(search_end_time)
+        start = end - (steps_backwards * time_increment)
+        search_start_time = search_time_parameter.split('%20TO%20')[0].strip('[')
+        if search_start_time != '*' and int(search_start_time) > start:
+            start = int(search_start_time)
+        return end, start, time_increment
