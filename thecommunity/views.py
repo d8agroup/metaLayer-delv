@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template.context import RequestContext
 from dashboards.controllers import DashboardsController
@@ -12,15 +11,25 @@ def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
 
 def user_home(request, user_name):
+    if 'insight' in request.GET:
+        DashboardsController.RecordDashboardView(request.GET['insight'])
     uc = UserController
     user = uc.GetUserByUserName(user_name)
+    dc = DashboardsController(user)
+    user_community_values = {
+        'number_of_insights':len(dc.get_saved_dashboards())
+    }
     return render_to_response(
         'thecommunity/profile_page/profile.html',
-        {'profile_user':user },
+        {
+            'profile_user':user,
+            'profile_user_community_values':user_community_values
+        },
         context_instance=RequestContext(request)
     )
 
 def insight(request, user_name, insight_id):
+    DashboardsController.RecordDashboardView(insight_id)
     user = UserController.GetUserByUserName(user_name)
     dashboard = DashboardsController.GetDashboardById(insight_id)
     dashboard_json = serialize_to_json(dashboard)
@@ -201,3 +210,7 @@ def load_top_insights(request, count):
 def load_recent_insights(request, count):
     recent_insights = DashboardsController.GetRecentDashboards(count)
     return JSONResponse({'recent_insights':recent_insights})
+
+def load_remixes(request, insight_id, count):
+    insights = DashboardsController.GetRemixes(insight_id, int(count))
+    return JSONResponse({'insights':insights})

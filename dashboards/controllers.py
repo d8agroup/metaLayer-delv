@@ -48,6 +48,17 @@ class DashboardsController(object):
     def GetDashboardsInCategory(cls, category):
         return Dashboard.collection.find({'config.categories':category})
 
+    @classmethod
+    def RecordDashboardView(cls, dashboard_id):
+        dashboard = DashboardsController.GetDashboardById(dashboard_id)
+        dashboard.change_community_value('views', 1)
+
+    @classmethod
+    def GetRemixes(cls, insight_id, count):
+        dashboards = Dashboard.collection.find({'community.parent':insight_id})
+        dashboards = sorted(dashboards, key=lambda x: x['last_saved'], reverse=True)
+        return dashboards[:count]
+
     def get_saved_dashboards(self):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)
@@ -94,7 +105,8 @@ class DashboardsController(object):
         Logger.Info('%s - create_new_dashboard_from_dashboard - started' % __name__)
         Logger.Debug('%s - create_new_dashboard_from_dashboard - started with template_id:%s' % (__name__, dashboard_id))
         template = Dashboard.Load(dashboard_id)
-        dashboard = Dashboard.Create(self.user, template)
+        template.change_community_value('remixes', 1)
+        dashboard = Dashboard.Create(self.user, template, True)
         Logger.Info('%s - create_new_dashboard_from_dashboard - finished' % __name__)
         return dashboard
 

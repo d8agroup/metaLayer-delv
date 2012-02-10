@@ -135,6 +135,45 @@
             else
                 insight_container.find('.edit').remove();
             Tipped.create(insight_container.find('.insight_header a'));
+
+            if(dashboard.community.remixes > 0)
+            {
+                insight_container.find('.remixes_link')
+                    .addClass('active')
+                    .click
+                    (
+                        function()
+                        {
+                            var link = $(this);
+                            if (link.is('.clicked'))
+                            {
+                                link.removeClass('clicked');
+                                link.parents('.insight_footer').find('.remixes').slideUp();
+                                return
+                            }
+                            link.addClass('clicked');
+                            var insight_id = link.data('insight_id');
+                            link.parents('.insight_footer').find('.remixes').slideDown();
+                            $.get
+                                (
+                                    '/community/remixes/' + insight_id + '/8',
+                                    function(data)
+                                    {
+                                        var remixes_container = link.parents('.insight_footer').find('.remixes ul');
+                                        remixes_container.children().remove();
+                                        for (var x=0; x<data.insights.length; x++)
+                                        {
+                                            var insight_container = $('<li></li>');
+                                            remixes_container.append(insight_container);
+                                            insight_container.insight(data.insights[x]);
+                                            insight_container.insight('render_thumbnail');
+                                        }
+                                    }
+                                )
+                        }
+                    )
+            }
+
             return insight_container;
         }
     };

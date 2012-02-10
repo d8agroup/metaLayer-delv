@@ -15,7 +15,7 @@ class Dashboard(Model):
         indices = ( Index('username'), )
 
     @classmethod
-    def Create(cls, user, template=None):
+    def Create(cls, user, template=None, template_is_dashboard=False):
         Logger.Info('%s - Dashboard.Create - started' % __name__)
         Logger.Debug('%s - Dashboard.Create - started with user:%s and template:%s' % (__name__, user, template))
         dashboard = Dashboard({
@@ -26,10 +26,14 @@ class Dashboard(Model):
             'collections':template['collections'] if template else {},
             'widgets':template['widgets'] if template else {},
             'active':True,
-            'name':template['name']
+            'name':template['name'],
+            'config':{}
         })
+        dashboard._ensure_community_defaults()
         for collection in dashboard['collections']:
             collection['id'] = '%s' % ObjectId()
+        if template_is_dashboard:
+            dashboard['community']['parent'] = template['id']
         dashboard.save()
         dashboard['id'] = '%s' % dashboard._id
         dashboard.save()
@@ -108,13 +112,26 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.Recent - finished' % __name__)
         return dashboards
 
-
     def save(self, *args, **kwargs):
         self['last_saved'] = time.time()
         return super(Dashboard, self).save(*args, **kwargs)
 
+    def change_community_value(self, value_type, value_change):
+        self['community'][value_type] += value_change
+        self.save()
+
     def _pretty_date(self, time=False):
         return get_pretty_date(time)
+
+    def _ensure_community_defaults(self):
+        if not 'community' in self:
+            self['community'] = {
+                'views':0,
+                'remixes':0,
+                'challenges':0,
+                'comments':0
+            }
+
 
 class DashboardTemplate(Model):
     class Meta:
