@@ -1,5 +1,7 @@
 {% extends 'thecommunity/base.html' %}
 
+{% block body_class %}community_page{% endblock %}
+
 {% block js %}
     {{ block.super }}
     <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/community_page.js"></script>
@@ -18,9 +20,9 @@
 
 {% block page_body %}
 <div id='page'>
-    <div id='top_insights' class="page_block">
-        <h3><span>Top Insights of The Day</span></h3>
-        <div class="page_block_inner">
+    <div id='top_insights' class="shadow_section">
+        <div class="shadow_section_inner">
+            <h2>A fast, intuitive way to <span class="blue">discover</span> and <span class="red">share</span> insights from data</h2>
             <div class="clearfix">
                 <div id="top_insights_inner" class='left_column clearfix'>
                     <div class="left_column">
@@ -31,7 +33,6 @@
                     </div>
                 </div>
                 <div class="right_column clearfix">
-                    <p>metaLayer is the best way to create, discover and share insight about the worlds information! <span>Search is so 20th century</span></p>
                     <div id='video_container'>
                         <iframe src="http://player.vimeo.com/video/31801964?portrait=0" width="409" height="230" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
                     </div>
@@ -41,47 +42,65 @@
     </div>
     <div id='main_body' class="clearfix">
         <div class="left_column clearfix">
-            <div id='promo_slot_1' class="main_body_section">
+            <div id='promo_slot_1'>
                 <div id='sign_up_promo'>
-                    <h5>We make the worlds information easier to understand, visualize and share!</h5>
+                    <h5>We're making the world's information easier to understand, visualize and share!</h5>
                     <a>
                         <img src="/static/images/thecommunity/button_signup_promotion.png" alt="sign up today" />
                     </a>
                     <a class="go_pro">Are you a data professional or an organization? Go Pro!</a>
                 </div>
             </div>
-            <div id='brows_by_category' class="page_block main_body_section">
-                <h3><span>Brows By Category</span></h3>
-                <div class="page_block_inner">
-                    <ul>
-                        {% for category in categories %}
-                            {%  if category.count > 0 %}
-                                <li><a href="/community/{{ category.name }}" title='View insights tagged as "{{ category.name }}"'>{{ category.name }} ({{ category.count }})</a></li>
-                            {% else %}
-                                <li>{{ category.name }}</li>
-                            {%  endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="right_column clearfix">
-            <div id='trending_insights' class="page_block main_body_section">
-                <h3><span>Whats Trending?</span></h3>
-                <div class="page_block_inner">
+            <div id='trending_insights' class="shadow_section three_insights">
+                <div class="shadow_section_inner">
+                    <h3>Whats Trending?</h3>
                     <ul class="clearfix">
                         <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
                     </ul>
                 </div>
             </div>
-            <div id='recent_activity' class="page_block main_body_section">
-                <h3><span>Recent Changes</span></h3>
-                <div class="page_block_inner">
-                    <ul>
+            <div id='recent_activity' class="shadow_section three_insights">
+                <div class="shadow_section_inner">
+                    <h3>Recent Challenges</h3>
+                    <ul class="clearfix">
                         <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
                     </ul>
                 </div>
             </div>
+            <div id='brows_by_category'>
+                <h3>Discover Insights By Category</h3>
+                <ul class="clearfix">
+                    {% for category in categories %}
+                        {%  if category.count > 0 %}
+                            <li><a href="/community/{{ category.name }}" title='View insights tagged as "{{ category.name }}"'>{{ category.name }}</a></li>
+                        {% else %}
+                            <li>{{ category.name }}</li>
+                        {%  endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="right_column clearfix">
+            <div id="introduction_text">
+                <p>The world is swimming in ever-expanding amounts of data. But data alone is useless without the ability to interpret it. Why rely upon experts to spoon-feed knowledge to you?</p>
+                <p>metaLayer is like the calculator for the 21st century. We believe asking simple questions about the worlds information shouldn't require years of special training.</p>
+                <p>Input the things you care about and get back the insights you crave!</p>
+                <table>
+                    <tr>
+                        <td colspan="3" align='center'>
+                            <img src="/static/images/thecommunity/introduction_text_image_collection.png" alt="Images for remix, challenge and create" />
+                        </td>
+                    </tr>
+                    <tr class="text">
+                        <td><b>Remix</b> insights created by other.</td>
+                        <td><b>Challenge</b> questionable finding.</td>
+                        <td><b>Create</b> compelling infographics!</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="promo_slot"></div>
+            <div class="promo_slot"></div>
+            <div class="promo_slot"></div>
         </div>
     </div>
 </div>

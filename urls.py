@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^system/aggregator/', include('dashboard.aggregator.urls')),
 
     url(r'^o/', include('dashboard.outputs.urls')),
+    url(r'^i/', include('dashboard.imaging.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 

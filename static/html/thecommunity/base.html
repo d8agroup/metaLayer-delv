@@ -42,28 +42,19 @@
     <div id="page_container">
         {%  block page_body %}{% endblock %}
         <div id='footer' class="clearfix">
-            <dl>
-                <dt>Navigation</dt>
-                <dd>About Us</dd>
-                <dd>Team</dd>
-                <dd>Careers</dd>
-                <dd>Press</dd>
-                <dd>FAQ</dd>
-                <dd>Developers</dd>
-            </dl>
-            <dl>
-                <dt>Recent Blog Post</dt>
-                <dd>One</dd>
-                <dd>Two</dd>
-                <dd>Three</dd>
-            </dl>
-            <dl>
-                <dt>Products</dt>
-                <dd>One</dd>
-                <dd>Two</dd>
-                <dd>Three</dd>
-            </dl>
+            <div id="main_links">
+                <a>About</a><span class="divider">.</span>
+                <a>Product</a><span class="divider">.</span>
+                <a>Blog</a><span class="divider">.</span>
+                <a>Careers</a><span class="divider">.</span>
+                <a>Privacy</a><span class="divider">.</span>
+                <a>Press</a><span class="divider">.</span>
+                <a>F.A.Q</a><span class="divider">.</span>
+                <a>Developers</a>
+            </div>
+            <div id='copyright'>
+                Copyright &copy; 2012 <b>metaLayer Inc.</b>
+            </div>
         </div>
     </div>
-    <br/>
 {% endblock %}

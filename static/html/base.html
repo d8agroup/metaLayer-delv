@@ -22,28 +22,30 @@
             </script>
         {% endblock %}
     </head>
-    <body data-username='{{ user.username }}'>
+    <body data-username='{{ user.username }}' class="{% block body_class %}{% endblock %}">
         <form id='csrf_form'>
             {% csrf_token %}
         </form>
         <div id="page_header" class="clearfix">
-            <div id="logo_container">
-                <img src='/static/images/thecommunity/logo_metalayer_medium.jpg' alt="metaLayer logo" />
-            </div>
-            <div id='header_links_container'>
-                <a href="/community">The Community</a>
-                {% if user.is_authenticated %}
-                    <a href="/community/{{ user.username }}" id='personal_menu_link'>{{ user.username }}</a>
-                    <a class="help">(?)</a>
-                    <div id='personal_menu'>
-                        <a href="/community/{{ user.username }}">Your Profile</a>
-                        <a href="/community/{{ user.username }}/account">Your Account</a>
-                        <a href="/community/logout">Log Out</a>
-                    </div>
-                {% else %}
-                    <a href="/community/welcome">login / register</a>
-                    <a class="help">(?)</a>
-                {% endif %}
+            <div id='page_header_inner'>
+                <div id="logo_container">
+                    <img src='/static/images/thecommunity/logo_metalayer_medium.png' alt="metaLayer logo" />
+                </div>
+                <div id='header_links_container'>
+                    <a href="/community">The Community</a>
+                    {% if user.is_authenticated %}
+                        <a href="/community/{{ user.username }}" id='personal_menu_link'>{{ user.username }}</a>
+                        <a class="help">(?)</a>
+                        <div id='personal_menu'>
+                            <a href="/community/{{ user.username }}">Your Profile</a>
+                            <a href="/community/{{ user.username }}/account">Your Account</a>
+                            <a href="/community/logout">Log Out</a>
+                        </div>
+                    {% else %}
+                        <a href="/community/welcome">login / register</a>
+                        <a class="help">(?)</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {% block body %}{% endblock %}

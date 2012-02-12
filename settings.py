@@ -106,6 +106,7 @@ INSTALLED_APPS = (
     'dashboard.customtags',
     'dashboard.dashboards',
     'dashboard.datapoints',
+    'dashboard.imaging',
     'dashboard.outputs',
     'dashboard.search',
     'dashboard.thecommunity',
@@ -219,6 +220,13 @@ OUTPUTS_CONFIG = {
 
 VISUALIZATIONS_CONFIG = {
     'enabled_visualizations':[
+        'googlegeochart',
+        'googlelinechart',
+        'googlebarchart',
+        'googlepiechart',
+        'googleareachart'
+    ],
+    'visualization_display_hierarchy':[
         'googlegeochart',
         'googlelinechart',
         'googlebarchart',

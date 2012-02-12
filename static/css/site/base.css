@@ -1,4 +1,4 @@
-body { background: #131313 url('/static/images/thecommunity/background_page.jpg') no-repeat center 30px; background-size:100%; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:80%; }
+body { background: #131313 url('/static/images/thecommunity/background_page.png'); font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:80%; }
 html {}
 a { cursor:pointer; text-decoration:none; color:inherit; font-weight:bold;}
 a:hover { text-decoration:underline; }
@@ -10,10 +10,11 @@ a:hover { text-decoration:underline; }
 /**********************************************************************************************************************/
 /* HEADER                                                                                                             */
 /**********************************************************************************************************************/
-#page_header { background-color:#1a1a1a; height:35px; }
+#page_header { background-color:#1a1a1a; height:50px; color:#FFF; }
+#page_header_inner { width:1000px; margin:0 auto;}
 #page_header #logo_container { width:55%; float:left; }
-#page_header #logo_container img { height:20px; position:relative; top:5px; left:5px;}
-#page_header #header_links_container { width:40%; float:right; text-align:right; padding:9px; color:#fff; }
+#page_header #logo_container img { height:35px; }
+#page_header #header_links_container { width:40%; float:right; text-align:right; padding:9px; }
 #page_header #header_links_container a { display:inline-block; padding-left:10px;}
 #page_header #personal_menu { background-color:#222; width:130px; position:absolute; right:30px; top:32px; display:none;}
 #page_header #personal_menu a { display:block; text-align:left; padding:5px;}
@@ -22,7 +23,7 @@ a:hover { text-decoration:underline; }
 /* PAGE                                                                                                               */
 /**********************************************************************************************************************/
 #page_container { }
-#page { width:1000px; margin:0 auto; padding:10px; }
+#page { width:1000px; margin:0 auto; }
 
 /**********************************************************************************************************************/
 /* TIP - Javascript Info Viz                                                                                          */
