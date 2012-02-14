@@ -59,9 +59,11 @@ class DashboardsController(object):
         dashboards = sorted(dashboards, key=lambda x: x['last_saved'], reverse=True)
         return dashboards[:count]
 
-    def get_saved_dashboards(self):
+    def get_saved_dashboards(self, count=0):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)
+        if count:
+            saved_dashboards = saved_dashboards[:count]
         Logger.Info('%s - get_saved_dashboards - finished' % __name__)
         return saved_dashboards
 

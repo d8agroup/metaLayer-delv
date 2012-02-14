@@ -1,0 +1,82 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block page_body %}
+    <div class="banner">
+        <h1>A fast, intuitive way to <span>discover</span> and <strong>share</strong> insights from data. </h1>
+        <article class="banner_left">
+            <div class="slider">
+                <ul>
+                    {% for insight in top_insights_list %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image.html' with width=120 height=76 fill_color=333333 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="slideshow">
+                <div class="slideshow_pic">
+                    {% if top_insights_main %}
+                        {% include 'thecommunity/shared/insight_image.html' with width=307 height=234 fill_color=333333 insight=top_insights_main %}
+                    {% endif %}
+                </div>
+                Top Insights of the Day
+            </div>
+            <div class="clrflt"></div>
+        </article>
+
+        <div class="videoarea">
+            <div class="video">
+                <iframe src="http://player.vimeo.com/video/31801964?title=0&amp;byline=0&amp;portrait=0" width="350" height="198"></iframe>
+                <iframe src="http://player.vimeo.com/video/31676970?title=0&amp;byline=0&amp;portrait=0" width="350" height="198"></iframe>
+                <iframe src="http://player.vimeo.com/video/31676791?title=0&amp;byline=0&amp;portrait=0" width="350" height="198"></iframe>
+            </div>
+            <div class="pager"></div>
+        </div>
+        <div class="clrflt"></div>
+    </div>
+    <section class="content"><!--content-->
+        <div class="content_left">
+            {% if not user.is_authenticated %}
+                <h2>We're making the world's information easier to understand, visualize and share!</h2>
+                <div class="signup_button"><a href="#"><img src="/static/images/thecommunity/sign_up_button.jpg" alt=""></a></div>
+                <p>Are you a data professional or organization? <a href="#">Go Pro!</a></p>
+            {% endif %}
+            <div class="trading_box">
+                <h3>What's Trending?</h3>
+                <ul>
+                    {% for insight in trending_insights %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image.html' with width=120 height=76 fill_color=333333 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="trading_box">
+                <h3>Recent Challenges</h3>
+                <ul>
+                    {% for insight in recent_challenges %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image.html' with width=120 height=76 fill_color=333333 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="discover_area">
+                <h3>Discover Insights By Category</h3>
+                <div class="discover_box fltleft">
+                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_1 %}
+                </div>
+                <div class="discover_box2 fltright">
+                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_2 %}
+                </div>
+                <div class="clrflt"></div>
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+            {% include 'thecommunity/community_page/sidebar_logged_in.html' %}
+        {% else %}
+            {% include 'thecommunity/community_page/sidebar_logged_out.html' %}
+        {% endif %}
+        <div class="clrflt"></div>
+    </section>
+{% endblock %}

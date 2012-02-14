@@ -12,7 +12,7 @@
             var template_name = 'dashboard_search_results_content_items_' + content_items[x]['channel_type'] + "_" + content_items[x]['channel_sub_type'];
             $.tmpl(template_name, content_items[x]).appendTo(search_results_list);
         }
-        search_results_list.jScrollPane( { topCapHeight:40, bottomCapHeight:40 } );
+        search_results_list.jScrollPane( { verticalGutter:40 } );
         clean_user_generated_html(search_results_list);
         apply_helper_class_functions(search_results_list);
     };
@@ -41,8 +41,9 @@
     $.fn.insight_page = function(insight)
     {
         var insight_page = this;
-        insight_page.find('#trending_insights').insights_trending_insights(9);
-        var collections_container = insight_page.find('#collections_container');
+        insight_page.find('#user_and_insight_details, #insight').corner('5px');
+        //insight_page.find('#trending_insights').insights_trending_insights(9);
+        var collections_container = insight_page.find('.collections');
         for (var c=0; c<insight.collections.length; c++)
         {
             var collection = insight.collections[c];
@@ -90,7 +91,7 @@
                     );
             }
             var search_results_html = $("<div class='search_results_container'></div>");
-            search_results_html.append("<div class='waiting'>Loading <img src='/static/images/thecommunity/loading_circle.gif'></div>")
+            search_results_html.append("<div class='waiting'>Loading <img src='/static/images/_thecommunity/loading_circle.gif'></div>")
             collection_html.append(search_results_html);
 
             var run_search_function = function(collection)

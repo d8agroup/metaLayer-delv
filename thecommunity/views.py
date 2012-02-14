@@ -7,35 +7,47 @@ from logger import Logger
 from userprofiles.controllers import UserController
 from utils import JSONResponse, serialize_to_json
 
+def _base_template_data():
+    return {
+        'site_url':settings.SITE_HOST
+    }
+
 def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
 
 def user_home(request, user_name):
     if 'insight' in request.GET:
         DashboardsController.RecordDashboardView(request.GET['insight'])
+
+    template_data = _base_template_data()
+
     uc = UserController
     user = uc.GetUserByUserName(user_name)
-    dc = DashboardsController(user)
-    user_community_values = {
-        'number_of_insights':len(dc.get_saved_dashboards())
-    }
+    template_data['profile_user'] = user
+    template_data['my_creations'] = DashboardsController(user).get_saved_dashboards(3)
+    trending_insights = DashboardsController.GetTendingDashboards(9)
+    template_data['trending_insights_1'] = trending_insights[0:3]
+    template_data['trending_insights_2'] = trending_insights[3:6]
+    template_data['trending_insights_3'] = trending_insights[6:9]
+    template_data['my_activity'] = DashboardsController(user).get_saved_dashboards(20)
     return render_to_response(
-        'thecommunity/profile_page/profile.html',
-        {
-            'profile_user':user,
-            'profile_user_community_values':user_community_values
-        },
+        'thecommunity/profile_page/profile_page.html',
+        template_data,
         context_instance=RequestContext(request)
     )
 
 def insight(request, user_name, insight_id):
+    template_data = _base_template_data()
     DashboardsController.RecordDashboardView(insight_id)
     user = UserController.GetUserByUserName(user_name)
     dashboard = DashboardsController.GetDashboardById(insight_id)
     dashboard_json = serialize_to_json(dashboard)
+    template_data['profile_user'] = user
+    template_data['insight'] = dashboard
+    template_data['insight_json'] = dashboard_json
     return render_to_response(
         'thecommunity/insight_page/insight_page.html',
-        { 'profile_user':user, 'insight':dashboard, 'insight_json':dashboard_json },
+        template_data,
         context_instance=RequestContext(request)
     )
 
@@ -48,10 +60,27 @@ def user_account(request):
     )
 
 def community_page(request):
+    template_data = _base_template_data()
+
     categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
+    template_data['category_list_1'] = categories[:int(len(categories)/2)]
+    template_data['category_list_2'] = categories[int(len(categories)/2):]
+
+    top_insights = DashboardsController.GetTopDashboards(4)
+    if top_insights:
+        template_data['top_insights_main'] = top_insights[0]
+    if len(top_insights) > 1:
+        template_data['top_insights_list'] = top_insights[1:]
+
+    template_data['trending_insights'] = DashboardsController.GetTendingDashboards(3)
+    template_data['recent_challenges'] = DashboardsController.GetRecentDashboards(3)
+
+    if request.user.is_authenticated():
+        template_data['your_creations'] = DashboardsController(request.user).get_saved_dashboards(4)
+
     return render_to_response(
-        'thecommunity/community_page/community.html',
-        {'categories': categories},
+        'thecommunity/community_page/community_page.html',
+        template_data,
         context_instance=RequestContext(request)
     )
 
@@ -212,5 +241,14 @@ def load_recent_insights(request, count):
     return JSONResponse({'recent_insights':recent_insights})
 
 def load_remixes(request, insight_id, count):
-    insights = DashboardsController.GetRemixes(insight_id, int(count))
-    return JSONResponse({'insights':insights})
+    template_data = _base_template_data()
+    template_data['insights']  = DashboardsController.GetRemixes(insight_id, int(count))
+    return render_to_response( 'thecommunity/profile_page/insight_remixes.html', template_data )
+
+def like_insight(request, insight_id):
+    template_data = _base_template_data()
+    template_data['insight'] = DashboardsController.GetDashboardById(insight_id)
+    return render_to_response(
+        'thecommunity/shared/like_modal.html',
+        template_data
+    )

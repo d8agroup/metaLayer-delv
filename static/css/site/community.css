@@ -1,7 +1,7 @@
 /**********************************************************************************************************************/
 /* COMMUNITY                                                                                                          */
 /**********************************************************************************************************************/
-.community_page #page_header { background:url('/static/images/thecommunity/header_shadow.png'); color:#333;}
+.community_page #page_header { background:url('/static/images/_thecommunity/header_shadow.png'); color:#333;}
 .community_page h3 { font-size:130%; margin-bottom:10px; color:#333;}
 .community_page #main_body .left_column { float:left; width:46%; }
 .community_page #main_body .right_column { float:right; width:46%; }

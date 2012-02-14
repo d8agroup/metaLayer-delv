@@ -1,6 +1,8 @@
+
+
 class SVGToPNGConverter(object):
     @classmethod
-    def Convert(cls, svg_data, max_width=0, max_height=0):
+    def Convert(cls, svg_data, max_width=0, max_height=0, fill_color=None):
         import cairo
         import rsvg
         import StringIO
@@ -16,9 +18,21 @@ class SVGToPNGConverter(object):
                 x = float(max_height)/float(height) * width
             x_scale = float(x)/svg.props.width
             y_scale = float(y)/svg.props.height
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, x, y)
-        context = cairo.Context(surface)
-        context.scale(x_scale, y_scale)
+
+        if fill_color:
+            from imaging.controllers import ImagingController
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, max_width, max_height)
+            context = cairo.Context(surface)
+            rgb = ImagingController._html_color_to_rgb(fill_color)
+            context.set_source_rgb(rgb[0]/255, rgb[1]/255, rgb[2]/255)
+            context.rectangle(0, 0, width, height)
+            context.fill()
+            context.translate((max_width - x)/2, (max_height - y)/2)
+            context.scale(x_scale, y_scale)
+        else:
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, x, y)
+            context = cairo.Context(surface)
+            context.scale(x_scale, y_scale)
         svg.render_cairo(context)
         output = StringIO.StringIO()
         surface.write_to_png(output)

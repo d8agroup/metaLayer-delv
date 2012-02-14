@@ -92,7 +92,7 @@
             {
                 var parent = insight_container.find('canvas').parent();
                 parent.children().remove();
-                parent.append('<img class="no_image" src="/static/images/thecommunity/no_profile_image.gif" />');
+                parent.append('<img class="no_image" src="/static/images/_thecommunity/no_profile_image.gif" />');
             }
             return insight_container.insight('_apply_insight_actions');
         },

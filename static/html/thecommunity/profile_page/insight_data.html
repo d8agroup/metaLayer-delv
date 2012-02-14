@@ -1,0 +1,9 @@
+<li class="insight data_insight">
+    {% include 'thecommunity/profile_page/insight_action_buttons.html' %}
+    <a id="{{ insight.id }}" class="image_container">
+        {% for image_url in insight.four_data_points_for_image %}
+            <img src="{{ image_url }}" class='tool_tip'  title='<strong>{{ insight.name }}</strong><br/><i>{{ insight.username }}</i><br/>{{ insight.last_saved_pretty }}'/>
+        {% endfor %}
+    </a>
+    {% include 'thecommunity/profile_page/insight_community_values.html' %}
+</li>

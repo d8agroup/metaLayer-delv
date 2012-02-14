@@ -1,0 +1,22 @@
+<header class="headerwrap1">
+    <div class="header">
+        <div class="logo1"><a href="#"><img src="/static/images/thecommunity/inner_logo.jpg" alt=""></a></div>
+        <div class="header_right">
+            <div class="header_logout">
+                <ul>
+                    {% ifequal request.path '/community/' %}
+                        <li><a href="/community/{{ user.username }}">Home</a></li>
+                    {% else %}
+                        {% ifnotequal user profile_user %}
+                            <li><a href="/community/{{ user.username }}">Home</a></li>
+                        {% endifnotequal %}
+                        <li><a href="/community">Community</a></li>
+                    {% endifequal %}
+                    <li><a href="/dashboard/new/1">Create</a></li>
+                    <li class="nobg"><a href="/community/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clrflt"></div>
+    </div>
+</header>

@@ -1,0 +1,15 @@
+<aside class="sidebar">
+    <div class="trading_box">
+        <h3>Your Creations</h3>
+        <ul>
+            {% for insight in your_creations %}
+                <li>
+                    {% include 'thecommunity/shared/insight_image.html' with width=150 height=94 fill_color=333333 insight=insight %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="bottom_box">
+        <a href="#"><img src="/static/images/thecommunity/bottom_box_img.jpg" alt=""></a>
+    </div>
+</aside>

@@ -1,60 +1,77 @@
-{% extends 'base.html' %}
 {% load compress %}
 
-{% block js %}
-    {{ block.super }}
-    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script>
-    <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MetaLayer.com | {% block page_title %}Drag and Drop Data Science{% endblock %}</title>
+    {% block meta %}{% endblock %}
+    {% compress css %}
+        <link href="/static/css/lib/tipped.css" rel='stylesheet' type="text/css"/>
+        <link href="/static/css/lib/Aristo.css" rel='stylesheet' type="text/css"/>
+        <link href="/static/css/lib/jscrollpane2.css" rel='stylesheet' type="text/css"/>
+        <link href="/static/css/thecommunity/style2.css" rel="stylesheet" type="text/css"/>
+    {% endcompress %}
     {% compress js %}
+        <script type="text/javascript" src="/static/js/lib/jquery.js"></script>
         <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.cycle.all.js"></script>
         <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
-        <script type="text/javascript" src="/static/js/lib/excanvas.js"></script>
+        <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
         <script type="text/javascript" src="/static/js/lib/tipped.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
-        <script type="text/javascript" src="/static/js/thecommunity/insights_insight.js"></script>
-        <script type="text/javascript" src="/static/js/thecommunity/insights_trending_insights.js"></script>
-        <script type="text/javascript">
-            function getURLParameter(name) {
-                return decodeURI(
-                        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-                );
-            }
-            $(document).ready
+        <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane2.js"></script>
+        {% block js %}{% endblock %}
+    {% endcompress %}
+    {% block uncompressed_js %}{% endblock %}
+    <!--[if lt IE 8]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        document.createElement('header');
+        document.createElement('nav');
+        document.createElement('article');
+        document.createElement('aside');
+        document.createElement('section');
+        document.createElement('footer');
+    </script>
+    <script type="text/javascript">
+        $(document).ready
             (
                 function()
                 {
-                    $('.page_block').corner('20px');
+                    $('.video').cycle({ fx:'fade', timeout:0, pager:'.pager' });
+                    Tipped.create('.tool_tip');
                 }
             );
-        </script>
-    {% endcompress %}
-{% endblock %}
+    </script>
+</head>
 
-{% block css %}
-    <link rel="stylesheet" href="/static/css/site/community.css" />
-    <link rel="stylesheet" href="/static/css/lib/tipped.css"/>
-    <link rel="stylesheet" href="/static/css/lib/jscrollpane.css"/>
-{% endblock %}
-
-{% block body %}
-    <div id="page_container">
-        {%  block page_body %}{% endblock %}
-        <div id='footer' class="clearfix">
-            <div id="main_links">
-                <a>About</a><span class="divider">.</span>
-                <a>Product</a><span class="divider">.</span>
-                <a>Blog</a><span class="divider">.</span>
-                <a>Careers</a><span class="divider">.</span>
-                <a>Privacy</a><span class="divider">.</span>
-                <a>Press</a><span class="divider">.</span>
-                <a>F.A.Q</a><span class="divider">.</span>
-                <a>Developers</a>
+<body class="{% block body_class %}{% endblock %}">
+<div id="outer">
+    {% if user.is_authenticated %}
+        {% include 'thecommunity/headers/logged_in.html' %}
+    {% else %}
+        {% include 'thecommunity/headers/logged_out.html' %}
+    {% endif %}
+    {% block page_body %}{% endblock %}
+    <footer class="footerwrap">
+        <div class="footer">
+            <div class="footer_nav">
+                <ul>
+                    <li class="nobg"><a href="#">About</a></li>
+                    <li><a href="#">Product</a></li>
+                    <li><a href="#">Blog </a></li>
+                    <li><a href="#">Careers </a></li>
+                    <li><a href="#">Privacy </a></li>
+                    <li><a href="#">Press </a></li>
+                    <li><a href="#">F.A.Q</a></li>
+                    <li><a href="#">Developers</a></li>
+                </ul>
             </div>
-            <div id='copyright'>
-                Copyright &copy; 2012 <b>metaLayer Inc.</b>
-            </div>
+            <div class="credit">Copyright &copy; 2012 <strong>metaLayer Inc.</strong> </div>
         </div>
-    </div>
-{% endblock %}
+    </footer>
+</div>
+<div id="modal_container"></div>
+</body>
+</html>

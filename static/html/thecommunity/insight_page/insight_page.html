@@ -1,7 +1,15 @@
 {% extends 'thecommunity/base.html' %}
 
+{% block meta %}
+    <meta property='og:title' content="metaLayer.com - {{ insight.name }} by {{ insight.username }}" />
+    <meta property='og:type' content="article" />
+    <meta property='og:image' content="http://{{ site_url }}/i/facebook/{{ insight.id }}.png" />
+    <meta property='og:url' content="http://{{ site_url }}/d/{{ insight.short_url.url_identifier }}" />
+    <meta property='og:site_name' content="metaLayer" />
+    <meta property='og:app_id' content="140737952711154" />
+{% endblock %}
+
 {% block js %}
-    {{ block.super }}
     <script type="text/javascript" src="/static/js/thecommunity/insight_page.js"></script>
     <script type="text/javascript">
         function apply_helper_class_functions(element)
@@ -12,61 +20,72 @@
         function clean_user_generated_html(element)
         {
             element.find('a').each
-                (
-                    function()
-                    {
-                        $(this).attr('target', '_blank');
-                    }
-                )
+                    (
+                            function()
+                            {
+                                $(this).attr('target', '_blank');
+                            }
+                    )
         }
-
-        $(document).ready
-            (
-                function()
-                {
-                    $('#page').insight_page({{ insight_json|safe }});
-                }
-            );
     </script>
 {% endblock %}
 
+{% block uncompressed_js %}
+    <script type="text/javascript">
+        $(document).ready
+                (
+                        function()
+                        {
+                            $('body').insight_page({{ insight_json|safe }});
+                        }
+                );
+    </script>
+{% endblock %}
+
+{% block page_title %} {{ insight.name }} by {{ profile_user.username }}{% endblock %}
+
+{% block body_class %}insight_page{% endblock %}
+
 {% block page_body %}
-    <div id="page" class="insight_page">
-        <div id="user_details" class="page_block">
-            <h3>{{ profile_user.username }}</h3>
-            <div class="page_block_inner">
-                <div class="clearfix">
-                    <div class="description">
-                        <h4>{{ insight.name }}</h4>
-                        <p>{{ insight.config.description }}</p>
-                    </div>
-                    <table id="metadata_table">
+    <div id="fb-root"></div>
+    <form id='csrf_form'>
+        {% csrf_token %}
+    </form>
+    <section id="main_wrapper">
+        <section class="main">
+            <div id="user_and_insight_details">
+                <div class="user_details">
+                    <h2><a href="/community/{{ profile_user.username }}">{{ profile_user.username }}</a></h2>
+                </div>
+                <div class="insight_details">
+                    <h2>{{ insight.name }}</h2>
+                    <p class="description">{{ insight.config.description }}</p>
+                    <table class="meta">
                         <tr>
-                            <th>Created by</th>
-                            <td><a href="/community/${insight.username}">{{ insight.username }}</a></td>
-                            <th>Created</th>
-                            <td>{{ insight.created_pretty }}</td>
-                        </tr>
-                        <tr>
-                            <th>Viewed</th>
-                            <td>XXX</td>
-                            <th>Remixed</th>
-                            <td>XXX</td>
+                            <th>Data Sources</th>
+                            <td>
+                                <ul>
+                                    {% for collection in insight.collections %}
+                                        {% for data_point in collection.data_points %}
+                                            <li>
+                                                <img src="{{ data_point.image_small }}" /> {{ data_point.configured_display_name }}
+                                            </li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <th>Time Frame</th>
+                            <td>{{ insight.tz }}</td>
                         </tr>
                     </table>
                 </div>
             </div>
-        </div>
-        <div id="insight">
-            <div class="page_block_inner clearfix" id="collections_container"></div>
-        </div>
-        <div id='trending_insights' class="page_block">
-            <h3><span>Trending Insights</span></h3>
-            <div class="page_block_inner">
-                <ul class="clearfix">
-                    <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" /></li>
-                </ul>
+            <div id="insight">
+                <div class="collections">
+
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </section>
+    <div class="clrflt"></div>
 {% endblock %}
