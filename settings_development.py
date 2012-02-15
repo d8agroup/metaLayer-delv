@@ -11,10 +11,10 @@ STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_engine', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ml_dashboard_staging', # Or path to database file if using sqlite3.
+        'NAME': 'ml_dashboard_dev', # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10049/ml_dashboard_staging',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10049/ml_dashboard_dev',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': 10049,                      # Set to empty string for default. Not used with sqlite3.
     }
 }
