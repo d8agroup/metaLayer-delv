@@ -50,7 +50,7 @@ class Visualization(VisualizationBase):
             return_data.append([{
                 'name':dimension['value']['value'],
                 'type':'basic_facet',
-                'limit':20
+                'limit':5
             }])
         return return_data
 

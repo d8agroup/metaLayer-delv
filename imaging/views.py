@@ -17,18 +17,18 @@ def insight_image_for_facebook(request, dashboard_id):
 def crop(request, dashboard_id, width, height):
     width = int(width)
     height = int(height)
-    dashboard = DashboardsController.GetDashboardById(dashboard_id)
+    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
         return ImagingController.GenerateNotFoundImage(width, height, None)
     visualization_svg = dashboard.visualization_for_image()
     svg = rsvg.Handle(data=visualization_svg)
     image_height = svg.props.height
-    required_height = height * 1.5
+    required_height = height * 1.8
     scale = (float(required_height) / float(image_height))
     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
     context = cairo.Context(surface)
     context.scale(scale, scale)
-    context.translate((width / 2) * -1, (height / 2) * -1)
+    context.translate((width + width/4) * -1, (height / 2) * -1)
     svg.render_cairo(context)
     response = HttpResponse(mimetype='image/png')
     surface.write_to_png(response)
@@ -37,9 +37,9 @@ def crop(request, dashboard_id, width, height):
 def shrink(request, dashboard_id, max_width, max_height):
     max_width = int(max_width)
     max_height = int(max_height)
-    dashboard = DashboardsController.GetDashboardById(dashboard_id)
+    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
-        return ImagingController.GenerateNotFoundImage(width, height, None)
+        return ImagingController.GenerateNotFoundImage(max_width, max_height, None)
     visualization_svg = dashboard.visualization_for_image()
     svg = rsvg.Handle(data=visualization_svg)
     x = width = svg.props.width

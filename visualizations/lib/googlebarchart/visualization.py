@@ -1,3 +1,4 @@
+from django.utils.html import escape
 from utils import get_pretty_date
 from visualizations.classes import VisualizationBase
 from django.utils import simplejson as json
@@ -28,9 +29,10 @@ class Visualization(VisualizationBase):
                     ],
                     'value':'No - Show totals only'
                 },
+                self._generate_colorscheme_config_element(),
                 {
-                    'name':'colorscheme',
-                    'display_name':'Color Scheme',
+                    'name':'background',
+                    'display_name':'Background',
                     'help':'',
                     'type':'select',
                     'values':[
@@ -38,6 +40,13 @@ class Visualization(VisualizationBase):
                         'Dark'
                     ],
                     'value':'Light'
+                },
+                {
+                    'name':'title',
+                    'display_name':'Chart Title',
+                    'help':'',
+                    'type':'text',
+                    'value':'Bar Chart'
                 }
             ],
             'data_dimensions':[
@@ -86,11 +95,15 @@ class Visualization(VisualizationBase):
             data_columns, data_rows = self._generate_data_with_time(config, search_results_collection, search_configuration)
             legend = True
 
+        number_of_colors = len(data_columns) - 1
         data_columns = '\n'.join(["data.addColumn('%s', '%s');" % (t['type'], t['name']) for t in data_columns])
         data_rows = json.dumps(data_rows)
 
         color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
-        if color_scheme == 'Dark':
+        colors = self._generate_colors(color_scheme, number_of_colors)
+
+        background = [e for e in config['elements'] if e['name'] == 'background'][0]['value']
+        if background == 'Dark':
             background_color = '#333333'
             text_color = '#FFFFFF'
             line_color = '#DDDDDD'
@@ -101,8 +114,8 @@ class Visualization(VisualizationBase):
 
         options = json.dumps({
             'backgroundColor':background_color,
-            'colors':['#FF0000', '#FFFF00', '#FF00FF', '#0000FF', '#00FFFF', '#00FF00'],
-            'title':config['data_dimensions'][0]['value']['name'],
+            'colors':colors,
+            'title':escape([e for e in config['elements'] if e['name'] == 'title'][0]['value']),
             'titleTextStyle':{
                 'color':text_color
             },

@@ -54,19 +54,19 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .header_login ul li { font-size:12px; color:#333; line-height:28px; font-weight:bold; float:left; padding:0px 10px 0 5px; background:url(/static/images/thecommunity/header-login_sep.jpg) no-repeat right center; }
 .header_login ul li a { text-decoration:none; color:#333; }
 .header_login ul li.nobg { background:none; padding:0 0 0 5px; }
-.banner { width:820px; height:302px; border:#d6dcd6 3px solid; margin:0px auto; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; behavior:url(PIE.htc); box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:16px 16px 0 19px; position:relative; }
+.banner { width:820px; height:269px; border:#d6dcd6 3px solid; margin:0px auto; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; behavior:url(PIE.htc); box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:16px 16px 0 19px; position:relative; }
 .banner h1 { font-family:Arial, Helvetica, sans-serif; font-size:20px; text-align:center; color:#333; font-style:italic; font-weight:bold; line-height:26px; padding:0 0 18px 0; margin:0px; }
 .banner h1 span { color:#2e6098; }
 .banner h1 strong { color:#aa4040; }
-.banner_left { width:431px; float:left; }
+.banner_left { float:left; }
 .slider { width:120px; float:left; }
 .slider ul {}
-.slider ul li { height:76px; padding:0 0 10px 0; }
+.slider ul li { padding:0 0 5px 0; }
 .slider ul li.nopad { padding:0px; }
-.slideshow { width:307px; text-align:right; font-size:12px; color:#333; float:right; line-height:20px; font-weight:bold; }
-.slideshow_pic { width:307px; height:234px; }
-.videoarea { width:350px; float:right; }
-.video { width:350px; height:198px; margin-bottom:16px; }
+.slideshow { width:357px; text-align:right; font-size:12px; color:#333; float:right; line-height:20px; font-weight:bold; }
+.slideshow_pic { width:350px; }
+.videoarea { width:330px; float:right; }
+.video { width:330px; margin-bottom:16px; }
 .pager { height:12px; text-align:center; }
 .pager a { width:12px; height:12px; display:inline-block; text-indent:-9999px; margin:0px 2px; background:url(/static/images/thecommunity/pager_bg.jpg) no-repeat 0px 0px; }
 .pager a:hover, .pager a.activeSlide { background:url(/static/images/thecommunity/pager_bg.jpg) no-repeat 0px -18px; }

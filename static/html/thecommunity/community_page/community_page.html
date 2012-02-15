@@ -18,15 +18,15 @@
                 <ul>
                     {% for insight in top_insights_list %}
                         <li>
-                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=90 height=59 insight=insight %}
                         </li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="slideshow">
-                <div class="slideshow_pic">
+                <div class="slideshow_pic border corner">
                     {% if top_insights_main %}
-                        {% include 'thecommunity/shared/insight_image_scale.html' with width=307 height=234 insight=top_insights_main %}
+                        {% include 'thecommunity/shared/insight_image_scale.html' with width=350 height=380 insight=top_insights_main %}
                     {% endif %}
                 </div>
                 Top Insights of the Day
@@ -36,9 +36,9 @@
 
         <div class="videoarea">
             <div class="video">
-                <iframe src="http://player.vimeo.com/video/31801964?title=0&amp;byline=0&amp;portrait=0" width="350" height="198"></iframe>
-                <iframe src="http://player.vimeo.com/video/31676970?title=0&amp;byline=0&amp;portrait=0" width="350" height="198"></iframe>
-                <iframe src="http://player.vimeo.com/video/31676791?title=0&amp;byline=0&amp;portrait=0" width="350" height="198"></iframe>
+                <iframe src="http://player.vimeo.com/video/31801964?title=0&amp;byline=0&amp;portrait=0" width="330" ></iframe>
+                <iframe src="http://player.vimeo.com/video/31676970?title=0&amp;byline=0&amp;portrait=0" width="330" ></iframe>
+                <iframe src="http://player.vimeo.com/video/31676791?title=0&amp;byline=0&amp;portrait=0" width="330" ></iframe>
             </div>
             <div class="pager"></div>
         </div>
@@ -71,16 +71,16 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="discover_area">
-                <h3>Discover Insights By Category</h3>
-                <div class="discover_box fltleft">
-                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_1 %}
-                </div>
-                <div class="discover_box2 fltright">
-                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_2 %}
-                </div>
-                <div class="clrflt"></div>
-            </div>
+{#            <div class="discover_area">#}
+{#                <h3>Discover Insights By Category</h3>#}
+{#                <div class="discover_box fltleft">#}
+{#                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_1 %}#}
+{#                </div>#}
+{#                <div class="discover_box2 fltright">#}
+{#                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_2 %}#}
+{#                </div>#}
+{#                <div class="clrflt"></div>#}
+{#            </div>#}
         </div>
         {% if user.is_authenticated %}
             {% include 'thecommunity/community_page/sidebar_logged_in.html' %}

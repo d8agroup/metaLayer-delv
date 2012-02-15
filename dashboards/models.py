@@ -24,6 +24,7 @@ class Dashboard(Model):
             'created': time.time(),
             'accessed':1,
             'last_saved_pretty':'Not yet used',
+            'last_saved':time.time(),
             'collections':template['collections'] if template else {},
             'widgets':template['widgets'] if template else {},
             'active':False,
@@ -108,7 +109,6 @@ class Dashboard(Model):
         return dashboards
 
     def save(self, *args, **kwargs):
-        self['last_saved'] = time.time()
         self['active'] = True if sum([len(c['data_points']) for c in self['collections'] if 'data_points' in c]) else False
         return super(Dashboard, self).save(*args, **kwargs)
 

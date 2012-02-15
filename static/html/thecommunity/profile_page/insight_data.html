@@ -1,4 +1,4 @@
-<li class="insight data_insight">
+<li class="insight data_insight"  id="{{ insight.id }}">
     {% include 'thecommunity/profile_page/insight_action_buttons.html' %}
     <a id="{{ insight.id }}" class="image_container" href="/community/{{ insight.username }}/{{ insight.id }}">
         {% for image_url in insight.four_data_points_for_image %}

@@ -77,6 +77,7 @@
     {
         run_helpers();
         init_social_buttons();
+        //$('.activity').jScrollPane();
         $('.remixes_link').click(function(event){remixes_click(event, $(this));});
         $('.like_link').click(function(event){like_click(event, $(this));});
     };

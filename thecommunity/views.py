@@ -17,7 +17,10 @@ def xd_receiver(request):
 
 def user_home(request, user_name):
     if 'insight' in request.GET:
-        DashboardsController.RecordDashboardView(request.GET['insight'])
+        insight_id = request.GET['insight']
+        if user_name != request.user.username:
+            DashboardsController.RecordDashboardView(insight_id)
+        return redirect('/community/%s#%s' % (user_name, insight_id))
 
     template_data = _base_template_data()
 

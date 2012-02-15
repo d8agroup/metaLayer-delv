@@ -225,6 +225,7 @@ OUTPUTS_CONFIG = {
 
 VISUALIZATIONS_CONFIG = {
     'enabled_visualizations':[
+        'googlegeochart',
         'googlebarchart',
         'googlepiechart',
     ],

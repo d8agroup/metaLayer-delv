@@ -1,3 +1,4 @@
+import time
 from dashboards.models import Dashboard, DashboardTemplate
 from logger import Logger
 
@@ -9,10 +10,10 @@ class DashboardsController(object):
         Logger.Info('%s - DashboardsController - finished' % __name__)
 
     @classmethod
-    def GetDashboardById(cls, id):
+    def GetDashboardById(cls, id, increment_load_count=True):
         Logger.Info('%s - DashboardsController.GetDashboardById - started' % __name__)
         Logger.Debug('%s - DashboardsController.GetDashboardById - started with id:%s' % (__name__, id))
-        dashboard = Dashboard.Load(id, True)
+        dashboard = Dashboard.Load(id, increment_load_count)
         Logger.Info('%s - DashboardsController.GetDashboardById - finished' % __name__)
         return dashboard
 
@@ -120,6 +121,7 @@ class DashboardsController(object):
         db['name'] = dashboard['name']
         if 'config' in dashboard:
             db['config'] = dashboard['config']
+        db['last_saved'] = time.time()
         db.save()
         Logger.Info('%s - update_dashboard - finished' % __name__)
 

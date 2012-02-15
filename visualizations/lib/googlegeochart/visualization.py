@@ -39,18 +39,17 @@ class Visualization(VisualizationBase):
                     ],
                     'value':'World'
                 },
+                self._generate_colorscheme_config_element(),
                 {
-                    'name':'color',
-                    'display_name':'Color Scheme',
+                    'name':'background',
+                    'display_name':'Background',
                     'help':'',
                     'type':'select',
                     'values':[
-                        'Red',
-                        'Blue',
-                        'Green',
-                        'Black and White'
+                        'Light',
+                        'Dark',
                     ],
-                    'value':'Red'
+                    'value':'Light'
                 }
             ],
             'data_dimensions':[
@@ -92,12 +91,25 @@ class Visualization(VisualizationBase):
 
         data_rows = ','.join(["['%s', %i]" % (f['name'], f['count']) for f in facets])
         js = js.replace("{data_rows}", data_rows)
+
+        background = [e for e in config['elements'] if e['name'] == 'background'][0]['value']
+        if background == 'Dark':
+            background_color = '#333333'
+            empty_region_color = '#444444'
+        else:
+            background_color = '#FFFFFF'
+            empty_region_color = '#DDDDDD'
+
+        color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
+        colors = self._generate_colors(color_scheme, 200)
+        colors = [colors[0], colors[-1]]
+
         options = {
-            'backgroundColor':'#333333',
-            'datalessRegionColor':'#444444',
+            'backgroundColor':background_color,
+            'datalessRegionColor':empty_region_color,
             'colorAxis':{
                 'minValue':0,
-                'colors':self._map_map_colors([e for e in config['elements'] if e['name'] == 'color'][0]['value'])
+                'colors':colors
             },
             'region':self._map_map_focus([e for e in config['elements']][1]['value'])
         }
@@ -115,10 +127,3 @@ class Visualization(VisualizationBase):
         if focus == 'Asia': return '142'
         if focus == 'Oceania': return '009'
         return 'world'
-
-    def _map_map_colors(self, color):
-        if color == 'Blue': return ['#CCCCFF', '#0000FF']
-        if color == 'Green': return ['#33CC66', '#006600']
-        if color == 'Black and White': return ['#FFFFFF', '#000000']
-        return ['#FFCC66', '#FF6600']
-

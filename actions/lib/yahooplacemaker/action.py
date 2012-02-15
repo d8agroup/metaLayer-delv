@@ -99,7 +99,7 @@ class LocationGetter(threading.Thread):
             text = text.encode('ascii', 'ignore')
             api_key = [e for e in self.config['elements'] if e['name'] == 'api_key'][0]['value']
             url = 'http://wherein.yahooapis.com/v1/document'
-            post_data = urlencode({ 'documentContent':text, 'documentType':'text/plain', 'outputType':'json', 'appid':api_key })
+            post_data = urlencode({ 'documentContent':text, 'documentType':'text/plain', 'outputType':'json', 'appid':api_key, 'autoDisambiguate':False })
             request = Request(url, post_data)
             response = urlopen(request)
             response = json.loads(response.read())
