@@ -35,7 +35,7 @@ TEMPLATE_DIRS = (
 SOLR_CONFIG = {
     'default_page_size':20,
     'solr_url':'http://localhost:8080/solr',
-    'solr_params':'wt=json&facet=on&sort=time+desc&rows=100',
+    'solr_params':'wt=json&facet=on&sort=time+desc&rows=100&facet.mincount=1',
     'solr_facets':{
         'source_display_name':{
             'display_name':'Source',
