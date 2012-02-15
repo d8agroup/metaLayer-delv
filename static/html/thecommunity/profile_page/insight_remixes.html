@@ -1,7 +1,7 @@
 <ul>
     <li>
         {% for insight in insights %}
-            {% include 'thecommunity/shared/insight_image.html' with width=80 height=80 fill_color=333333 insight=insight %}
+            {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
         {% endfor %}
     </li>
 </ul>

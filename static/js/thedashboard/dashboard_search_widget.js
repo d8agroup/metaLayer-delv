@@ -11,9 +11,8 @@
             if (configuration.search_filters.time == null)
             {
                 var date = new Date();
-                var one_hour_ago = ((date.valueOf() * 0.001)|0) - 3600;
-                one_hour_ago += (date.getTimezoneOffset() * 60)
-                configuration.search_filters.time = '[' + one_hour_ago + '%20TO%20*]';
+                var six_hour_ago = ((date.valueOf() * 0.001)|0) - 21600;
+                configuration.search_filters.time = '[' + six_hour_ago + '%20TO%20*]';
             }
             this.dashboard_search_widget('render');
             return this;

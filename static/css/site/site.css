@@ -7,9 +7,15 @@
 /***********************************************************************************************************************
 HEADER
 ***********************************************************************************************************************/
-#page_header .editing, #page_header .focus { backgound-color:#000 !important; color:#FFF !important; font-weight:bold;}
-#page_header #dashboard_name { display:inline-block; margin:0 20px; color:#DDD; border:none; background-color:#333; font-size:100%; position:relative; top:1px; padding:2px 5px; width:300px; }
-#page_header .saving { font-weight:bold; color:#FFF;}
+.headerwrap1 { width:100%; height:41px; margin-bottom:12px; min-width:871px; background:#333; }
+.header { width:1000px; padding:6px 0 0 0; margin:0px auto; }
+.logo1 { width:90px; height:21px; float:left; line-height:41px; }
+.header_right { width:565px; float:right; }
+.header_logout { width:320px; float:right; }
+.header_logout ul { float:right; }
+.header_logout ul li { font-size:12px; color:#FFF; line-height:28px; font-weight:bold; float:left; padding:0px 10px 0 5px; background:url(/static/images/thecommunity/header-login_sep.png) no-repeat right center; }
+.header_logout ul li a { text-decoration:none; color:#FFF; }
+.header_logout ul li.nobg { background:none; padding:0 0 0 5px; }
 
 /***********************************************************************************************************************
 DASHBOARD
@@ -19,7 +25,7 @@ DASHBOARD
 .widgets { height:105px; padding:5px; }
 .widget_panel table { width:100%; }
 .widget_panel table td { width:25%; text-align:center;}
-.widget_panel h3 { text-align:center; font-size:100%; margin-bottom:5px; color:#FFF;}
+.widget_panel h3 { text-align:center; font-size:100%; margin-bottom:5px; color:#000;}
 
 .data_point_widget,
 .action_widget,

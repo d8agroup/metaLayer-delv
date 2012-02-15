@@ -4,7 +4,7 @@ from urllib import quote
 from datapoints.classes import BaseDataPoint
 from logger import Logger
 from django.utils import simplejson as json
-from dateutil import parser as dateutil_parser
+from dateutil import parser as dateutil_parser, tz
 import time
 
 class DataPoint(BaseDataPoint):
@@ -94,7 +94,7 @@ class DataPoint(BaseDataPoint):
         return {
             'id':item['id'],
             'text':[ { 'title':item['title'], } ],
-            'time': time.mktime(dateutil_parser.parse(item['updated']).timetuple()),
+            'time': time.mktime(dateutil_parser.parse(item['updated']).astimezone(tz.tzutc()).timetuple()),
             'link':item['url'],
             'author':{
                 'display_name':item['actor']['displayName'],

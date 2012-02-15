@@ -23,7 +23,6 @@
                                 {
                                     var date = new Date();
                                     var time = ((date.valueOf() * 0.001)|0);
-                                    time += (date.getTimezoneOffset() * 60)
                                     dashboard.collections[x].search_filters.time = dashboard.collections[x].search_filters.time.replace('*]', time + ']');
                                 }
                                 else if (dashboard.config.live)
@@ -54,10 +53,15 @@
                                     async:false,
                                     url:'/dashboard/save',
                                     type:'POST',
-                                    data:post_data
+                                    data:post_data,
+                                    complete:function()
+                                    {
+                                        $('#waiting_modal').jqmHide();
+                                        on_exit_modal.jqmHide();
+                                    }
                                 }
                             );
-                        return true;
+                        return on_exit_modal.data('leave_dashboard');
                     }
                 );
             on_exit_modal.find('.back').click
@@ -72,6 +76,7 @@
         {
             var dashboard = data.dashboard;
             var on_exit_modal = this;
+            on_exit_modal.data('leave_dashboard', data.leave_dashboard);
             if (dashboard.config == null)
                 dashboard.config = {};
 

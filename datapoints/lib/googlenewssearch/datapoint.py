@@ -4,7 +4,7 @@ import urlparse
 import re
 from datapoints.classes import BaseDataPoint
 from logger import Logger
-from dateutil import parser as dateutil_parser
+from dateutil import parser as dateutil_parser, tz
 import feedparser
 import time
 
@@ -34,8 +34,9 @@ class DataPoint(BaseDataPoint):
     def get_content_item_template(self):
         return ""\
                "<li style='width:100%;'>"\
-                   "<img src='/static/images/lib/yoo/google_2424.png' style='width:20px; padding-right:10px;' align='left'/>"\
-                   "<p style='margin-bottom:2px;'>${source_display_name}</p>"\
+                   "<img src='/static/images/lib/yoo/google_2424.png' style='width:20px; padding-right:10px;' align='left'/>" \
+                   "<p style='float:right;padding-right:10px;'>${pretty_date}</p>"\
+                   "<p style='margin-bottom:2px;'>${source_display_name} - ${action_localsentimentanalysis_sentiment_s}</p>"\
                    "<a href='${link}' class='tool_tip' title='click to view the original article'><p style='padding-left:30px;'>${author_display_name}<span style='font-weight:bold'> ${title}</span></p></a>" \
                "</li>"
 
@@ -75,7 +76,7 @@ class DataPoint(BaseDataPoint):
                     'tags':[t['term'] for t in item['tags']] if 'tags' in item else []
                 }
             ],
-            'time': time.mktime(dateutil_parser.parse(item['updated']).timetuple()),
+            'time': time.mktime(dateutil_parser.parse(item['updated']).astimezone(tz.tzutc()).timetuple()),
             'link':item['link'],
             'author':{
                 'display_name':item['author'] if 'author' in item else 'none',

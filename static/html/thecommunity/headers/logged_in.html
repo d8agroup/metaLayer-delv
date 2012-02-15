@@ -12,7 +12,11 @@
                         {% endifnotequal %}
                         <li><a href="/community">Community</a></li>
                     {% endifequal %}
-                    <li><a href="/dashboard/new/1">Create</a></li>
+                    {% ifequal context 'dashboard' %}
+                        <li><a id="configure_link">Configure</a></li>
+                    {% else %}
+                        <li><a href="/dashboard/new/1">Create</a></li>
+                    {% endifequal %}
                     <li class="nobg"><a href="/community/logout">Logout</a></li>
                 </ul>
             </div>

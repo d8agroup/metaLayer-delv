@@ -26,7 +26,7 @@ class Dashboard(Model):
             'last_saved_pretty':'Not yet used',
             'collections':template['collections'] if template else {},
             'widgets':template['widgets'] if template else {},
-            'active':True,
+            'active':False,
             'name':template['name'],
             'config':{}
         })
@@ -47,15 +47,7 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.AllForUser - started' % __name__)
         Logger.Debug('%s - Dashboard.AllForUser - started with user:%s' % (__name__, user))
         dashboards = Dashboard.collection.find({'username': user.username})
-        for dashboard in dashboards:
-            should_remove = True
-            for collection in dashboard['collections']:
-                if 'data_points' in collection:
-                    should_remove = False
-            if should_remove:
-                dashboard.remove()
-        dashboards = Dashboard.collection.find({'username': user.username})
-        dashboards = [d for d in dashboards if d['active']]
+        dashboards = [d for d in dashboards if d['active'] == True]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
         for dashboard in dashboards:
             dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
@@ -117,6 +109,7 @@ class Dashboard(Model):
 
     def save(self, *args, **kwargs):
         self['last_saved'] = time.time()
+        self['active'] = True if sum([len(c['data_points']) for c in self['collections'] if 'data_points' in c]) else False
         return super(Dashboard, self).save(*args, **kwargs)
 
     def change_community_value(self, value_type, value_change):

@@ -3,7 +3,7 @@
     var run_helpers = function()
     {
         Tipped.create('.tool_tip');
-        $('.corner, .chart_display img, .treding_row1 img, .treding_row2 img, .treding_row3 img, .remixes img').corner('6px');
+        $('.corner, .chart_display img, .treding_row1 img, .treding_row2 img, .treding_row3 img, .remixes img, .like_links table, .border').corner('6px');
     };
 
     var remixes_click = function(event, link)
@@ -38,15 +38,19 @@
 
     var like_click = function(event, link)
     {
-        link.parents('.insight').find('.like_modal').dialog
-            (
-                {
-                    modal:true,
-                    height:400,
-                    width:600
-                }
-            );
+        var insight_id = link.data('insight_id');
+        var like_links = $('#like_links_' + insight_id);
+        if (link.is('.open'))
+        {
+            link.removeClass('open');
+            like_links.slideUp();
+        }
+        else
+        {
+            link.addClass('open');
+            like_links.slideDown();
 
+        }
     };
 
     var init_social_buttons = function()

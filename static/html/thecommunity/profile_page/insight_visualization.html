@@ -1,7 +1,9 @@
 <li class="insight visualization_insight">
     {% include 'thecommunity/profile_page/insight_action_buttons.html' %}
     <div class="image_container">
-        {% include 'thecommunity/shared/insight_image.html' with width=400 height=300 insight=insight %}
+        <a href="/community/{{ insight.username }}/{{ insight.id }}">
+            {% include 'thecommunity/shared/insight_image_scale.html' with width=400 height=300 insight=insight link_type='full' %}
+        </a>
     </div>
     {% include 'thecommunity/profile_page/insight_community_values.html' %}
 </li>

@@ -12,7 +12,7 @@ class Visualization(VisualizationBase):
         return {
             'name':'googlebarchart',
             'display_name_short':'Bar Chart',
-            'display_name_long':'Google Bar Chart',
+            'display_name_long':'Bar Chart',
             'image_small':'/static/images/thedashboard/bar_chart.png',
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
@@ -25,11 +25,20 @@ class Visualization(VisualizationBase):
                     'type':'select',
                     'values':[
                         'No - Show totals only',
-                        'Breakdown by minutes',
-                        'Breakdown by hours',
-                        'Breakdown by days'
+                        'Yes - Break down by time'
                     ],
                     'value':'No - Show totals only'
+                },
+                {
+                    'name':'colorscheme',
+                    'display_name':'Color Scheme',
+                    'help':'',
+                    'type':'select',
+                    'values':[
+                        'Dark',
+                        'Light'
+                    ],
+                    'value':'Dark'
                 }
             ],
             'data_dimensions':[
@@ -49,130 +58,134 @@ class Visualization(VisualizationBase):
             for dimension in config['data_dimensions']:
                 return_data.append([{
                     'name':dimension['value']['value'],
-                    'type':'basic_facet',
-                    'limit':10
+                    'type':'basic_facet'
                 }])
         else:
-            time_variable = time_variable.replace('Breakdown by ', '')
-            end, start, time_increment = self._parse_time_parameters(time_variable, self.steps_backwards, search_configuration['search_filters']['time'])
-            for s in range(start, end, time_increment):
+            start_time, end_time = self._extract_time_bounds_from_search_configuration(search_configuration)
+            time_interval = int((end_time - start_time) / self.steps_backwards)
+            for s in range(start_time, end_time, time_interval):
                 this_search = []
                 for dimension in config['data_dimensions']:
                     this_search.append({
                         'name':dimension['value']['value'],
-                        'type':'basic_facet',
-                        'limit':3
+                        'type':'basic_facet'
                     })
                 this_search.append({
                     'name':'time',
-                    'range':{'start':s, 'end':(s + time_increment - 1)},
+                    'range':{'start':s, 'end':(s + time_interval - 1)},
                     'type':'range_query'
                 })
                 return_data.append(this_search)
         return return_data
 
     def render_javascript_based_visualization(self, config, search_results_collection, search_configuration):
-        js = ""\
-             "$.getScript\n"\
-             "(\n"\
-             "   'https://www.google.com/jsapi',\n"\
-             "   function()"\
-             "   {\n"\
-             "       google.load('visualization', '1', {'packages': ['corechart'], 'callback':drawchart_" + config['id'] + "});\n"\
-             "       function drawchart_" + config['id'] + "()\n"\
-             "       {\n"\
-             "           if(!document.getElementById('" + config['id'] + "'))\n"\
-             "               return;\n"\
-             "           var data = new google.visualization.DataTable();\n"\
-             "           {data_columns}\n"\
-             "           data.addRows(\n"\
-             "               {data_rows}\n"\
-             "           );\n"\
-             "           var options = {options};\n"\
-             "           var chart = new google.visualization.BarChart(document.getElementById('" + config['id'] + "'));\n"\
-             "           chart.draw(data, options);\n"\
-             "       }\n"\
-             "   }\n"\
-             ");\n"
-
-        #TODO this only support one data dimension at the moment
         time_variable = [e for e in config['elements'] if e['name'] == 'time'][0]['value']
         if time_variable == 'No - Show totals only':
-            search_result = search_results_collection[0]
-            data_dimensions_value = config['data_dimensions'][0]['value']
-            facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
-            data_columns = [{'type':'string', 'name':data_dimensions_value['name']}, {'type':'number', 'name':'count'}]
-            data_rows = [[f['name'], f['count']] for f in facets]
+            data_columns, data_rows = self._generate_data_without_time(config, search_results_collection, search_configuration)
+            legend = False
         else:
-            data_columns = [{'type':'string', 'name':'Time'}]
-            data_rows = []
-            data_dimensions_value = config['data_dimensions'][0]['value']
-            time_variable = time_variable.replace('Breakdown by ', '')
-            end, start, time_increment = self._parse_time_parameters(time_variable, self.steps_backwards, search_configuration['search_filters']['time'])
-            array_of_start_times = range(start, end, time_increment)
-            results_data_columns = []
-            for search_result in search_results_collection:
-                facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
-                for f in facets:
-                    if f['name'] not in results_data_columns:
-                        results_data_columns.append(f['name'])
-            data_columns += [{'type':'number', 'name':'%s' % c } for c in results_data_columns]
-            number_of_empty_ranges = 0
-            for x in range(len(array_of_start_times)):
-                search_result = search_results_collection[x]
-                start_time_pretty = get_pretty_date(array_of_start_times[x] + time_increment)
-                data_row = [start_time_pretty]
-                facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
-                dynamic_data_rows = []
-                for c in results_data_columns:
-                    candidate_facet = [f for f in facets if f['name'] == c]
-                    if candidate_facet:
-                        dynamic_data_rows.append(candidate_facet[0]['count'])
-                    else:
-                        dynamic_data_rows.append(0)
-                if not sum(dynamic_data_rows):
-                    number_of_empty_ranges += 1
-                data_row += dynamic_data_rows
-                data_rows.append(data_row)
-            if number_of_empty_ranges == len(array_of_start_times):
-                return "$('#" + config['id'] + "').html(\"<div class='empty_dataset'>Sorry, there is no data to visualize</div>\");"
-
+            data_columns, data_rows = self._generate_data_with_time(config, search_results_collection, search_configuration)
+            legend = True
 
         data_columns = '\n'.join(["data.addColumn('%s', '%s');" % (t['type'], t['name']) for t in data_columns])
         data_rows = json.dumps(data_rows)
 
+        color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
+        if color_scheme == 'Dark':
+            background_color = '#333333'
+            text_color = '#FFFFFF'
+            line_color = '#DDDDDD'
+        else:
+            background_color = '#FFFFFF'
+            text_color = '#000000'
+            line_color = '#333333'
+
         options = json.dumps({
-            'backgroundColor':'#333333',
+            'backgroundColor':background_color,
             'colors':['#FF0000', '#FFFF00', '#FF00FF', '#0000FF', '#00FFFF', '#00FF00'],
             'title':config['data_dimensions'][0]['value']['name'],
             'titleTextStyle':{
-                'color':'#FFFFFF'
+                'color':text_color
             },
             'hAxis':{
-                'baselineColor':'#DDDDDD',
+                'baselineColor':line_color,
                 'textStyle':{
-                    'color':'#DDDDDD'
+                    'color':text_color
                 },
                 'slantedText':True,
-                'gridlines.color':'#AAAAAA',
+                'gridlines.color':line_color,
                 },
             'legend':{
-                'position':'right',
+                'position':'right' if legend else 'none',
                 'textStyle':{
-                    'color':'#DDDDDD'
+                    'color':text_color
                 }
             },
             'vAxis':{
-                'baselineColor':'#DDDDDD',
+                'baselineColor':line_color,
                 'textStyle':{
-                    'color':'#DDDDDD'
+                    'color':text_color
                 },
                 'minValue':0
             }
         })
 
-        js = js.replace('{data_columns}', data_columns)
-        js = js.replace('{data_rows}', data_rows)
-        js = js.replace('{options}', options)
-        return js
+        js = "" \
+            "$.getScript('https://www.google.com/jsapi', function(){ google.load('visualization', '1', {'packages': ['corechart'], 'callback':drawchart_VISUALIZATION_ID}); });\n" \
+            "function drawchart_VISUALIZATION_ID() {\n" \
+            "   if (!document.getElementById('VISUALIZATION_ID')) return;\n" \
+            "   var data = new google.visualization.DataTable();\n" \
+            "   DATA_COLUMNS\n" \
+            "   data.addRows(DATA_ROWS);\n" \
+            "   var options = OPTIONS;\n" \
+            "   var chart = new google.visualization.BarChart(document.getElementById('VISUALIZATION_ID'));\n" \
+            "   chart.draw(data, options);\n" \
+            "}"
+        return js.replace('VISUALIZATION_ID', config['id'])\
+            .replace('DATA_COLUMNS', data_columns)\
+            .replace('DATA_ROWS', data_rows)\
+            .replace('OPTIONS', options)
 
+
+    def _generate_data_without_time(self, config, search_results_collection, search_configuration):
+        search_result = search_results_collection[0]
+        data_dimensions_value = config['data_dimensions'][0]['value']
+        facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
+        data_columns = [{'type':'string', 'name':data_dimensions_value['name']}, {'type':'number', 'name':'count'}]
+        data_rows = [[f['name'], f['count']] for f in facets]
+        return data_columns, data_rows
+
+    def _generate_data_with_time(self, config, search_results_collection, search_configuration):
+        data_columns = [{'type':'string', 'name':'Time'}]
+        data_rows = []
+        data_dimensions_value = config['data_dimensions'][0]['value']
+        start_time, end_time = self._extract_time_bounds_from_search_configuration(search_configuration)
+        time_interval = int((end_time - start_time) / self.steps_backwards)
+        array_of_start_times = range(start_time, end_time, time_interval)
+        results_data_columns = []
+        for search_result in search_results_collection:
+            facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
+            for f in facets:
+                if f['name'] not in results_data_columns:
+                    results_data_columns.append(f['name'])
+        data_columns += [{'type':'number', 'name':'%s' % c } for c in results_data_columns]
+        number_of_empty_ranges = 0
+        for x in range(len(array_of_start_times)):
+            if x >= len(search_results_collection):
+                continue
+            search_result = search_results_collection[x]
+            start_time_pretty = get_pretty_date(array_of_start_times[x] + time_interval)
+            data_row = [start_time_pretty]
+            facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
+            dynamic_data_rows = []
+            for c in results_data_columns:
+                candidate_facet = [f for f in facets if f['name'] == c]
+                if candidate_facet:
+                    dynamic_data_rows.append(candidate_facet[0]['count'])
+                else:
+                    dynamic_data_rows.append(0)
+            if not sum(dynamic_data_rows):
+                number_of_empty_ranges += 1
+            data_row += dynamic_data_rows
+            data_rows.append(data_row)
+        return data_columns, data_rows

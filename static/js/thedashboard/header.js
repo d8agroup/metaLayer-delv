@@ -7,9 +7,6 @@
                 var header = this;
                 var dashboard = data.dashboard;
                 header.data('dashboard', dashboard);
-                header.find('#logo_container').append("<input type='text' id='dashboard_name'/>")
-                this.find('#dashboard_name').header_dashboard_name(dashboard);
-
                 this.find('a').click
                 (
                     function(e)
@@ -22,7 +19,7 @@
                             return true;
                         }
                         $('.dashboard').dashboard('save');
-                        $('#on_exit_modal').on_exit_modal('open', { dashboard:dashboard });
+                        $('#on_exit_modal').on_exit_modal('open', { dashboard:dashboard, leave_dashboard:$(this).attr('id') != 'configure_link' });
                         return false;
                     }
                 );

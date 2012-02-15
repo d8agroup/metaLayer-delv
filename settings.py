@@ -209,7 +209,7 @@ DATA_POINTS_CONFIG = {
 
 ACTIONS_CONFIG = {
     'enabled_actions':[
-        'datalayersentimentanalysis',
+        'localsentimentanalysis',
         'yahooplacemaker',
         'languagedetection',
         'datalayertagging'
@@ -225,11 +225,7 @@ OUTPUTS_CONFIG = {
 
 VISUALIZATIONS_CONFIG = {
     'enabled_visualizations':[
-        'googlegeochart',
-        'googlelinechart',
         'googlebarchart',
-        'googlepiechart',
-        'googleareachart'
     ],
     'visualization_display_hierarchy':[
         'googlegeochart',

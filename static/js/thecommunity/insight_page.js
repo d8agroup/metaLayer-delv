@@ -41,7 +41,7 @@
     $.fn.insight_page = function(insight)
     {
         var insight_page = this;
-        insight_page.find('#user_and_insight_details, #insight').corner('5px');
+        insight_page.find('#user_and_insight_details, #insight, #social_links').corner('5px');
         //insight_page.find('#trending_insights').insights_trending_insights(9);
         var collections_container = insight_page.find('.collections');
         for (var c=0; c<insight.collections.length; c++)

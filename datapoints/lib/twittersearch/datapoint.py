@@ -4,7 +4,7 @@ from urllib import quote
 from datapoints.classes import BaseDataPoint
 from logger import Logger
 from django.utils import simplejson as json
-from dateutil import parser as dateutil_parser
+from dateutil import parser as dateutil_parser, tz
 import time
 
 class DataPoint(BaseDataPoint):
@@ -74,8 +74,8 @@ class DataPoint(BaseDataPoint):
     def _map_twitter_item_to_content_item(self, config, item):
         return {
             'id':md5(item['id_str']).hexdigest(),
-            'text':[ { 'title':item['text'], } ],
-            'time': time.mktime(dateutil_parser.parse(item['created_at']).timetuple()),
+            'text':[ { 'title':item['text'].encode('ascii', 'ignore'), } ],
+            'time': int(time.mktime(dateutil_parser.parse(item['created_at']).astimezone(tz.tzutc()).timetuple())),
             'link':'https://twitter.com/#!/%s/status/%s' % (item['from_user'], item['id_str']),
             'author':{
                 'display_name':item['from_user'],

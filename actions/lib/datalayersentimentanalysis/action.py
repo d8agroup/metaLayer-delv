@@ -60,12 +60,22 @@ class SentimentGetter(threading.Thread):
     def run(self):
         try:
             text = self.extract_content()
+            text = text.encode('ascii', 'ignore')
+            url = 'http://50.57.101.174/getsentiment'
+            post_data = urlencode({ 'text':text })
+            request = Request(url, post_data)
+            response = json.loads(urlopen(request).read())
+            self.result = self._map_sentiment(response['sentiment']) if response['status'] == 'success' else False
+            """
+            text = self.extract_content()
+            text = text.encode('ascii', 'ignore')
             url = 'http://api.metalayer.com/s/dashboard/1/sentiment'
             post_data = urlencode({ 'text':text })
             request = Request(url, post_data)
             response = urlopen(request)
             response = json.loads(response.read())
             self.result = self._map_sentiment(response['response']['datalayer']['sentiment']) if response['status'] == 'success' else False
+            """
         except Exception, e:
             self.result = None
 

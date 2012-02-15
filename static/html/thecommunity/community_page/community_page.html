@@ -1,5 +1,15 @@
 {% extends 'thecommunity/base.html' %}
 
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.video').cycle({ fx:'fade', timeout:0, pager:'.pager' });
+            $('.border').corner('5px');
+            Tipped.create('.tool_tip');
+        })
+    </script>
+{% endblock %}
+
 {% block page_body %}
     <div class="banner">
         <h1>A fast, intuitive way to <span>discover</span> and <strong>share</strong> insights from data. </h1>
@@ -8,7 +18,7 @@
                 <ul>
                     {% for insight in top_insights_list %}
                         <li>
-                            {% include 'thecommunity/shared/insight_image.html' with width=120 height=76 fill_color=333333 insight=insight %}
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
                         </li>
                     {% endfor %}
                 </ul>
@@ -16,7 +26,7 @@
             <div class="slideshow">
                 <div class="slideshow_pic">
                     {% if top_insights_main %}
-                        {% include 'thecommunity/shared/insight_image.html' with width=307 height=234 fill_color=333333 insight=top_insights_main %}
+                        {% include 'thecommunity/shared/insight_image_scale.html' with width=307 height=234 insight=top_insights_main %}
                     {% endif %}
                 </div>
                 Top Insights of the Day
@@ -38,15 +48,15 @@
         <div class="content_left">
             {% if not user.is_authenticated %}
                 <h2>We're making the world's information easier to understand, visualize and share!</h2>
-                <div class="signup_button"><a href="#"><img src="/static/images/thecommunity/sign_up_button.jpg" alt=""></a></div>
-                <p>Are you a data professional or organization? <a href="#">Go Pro!</a></p>
+                <div class="signup_button"><a href="/community/welcome"><img src="/static/images/thecommunity/sign_up_button.jpg" alt=""></a></div>
+                <br/><!--<p>Are you a data professional or organization? <a href="#">Go Pro!</a></p>-->
             {% endif %}
             <div class="trading_box">
                 <h3>What's Trending?</h3>
                 <ul>
                     {% for insight in trending_insights %}
                         <li>
-                            {% include 'thecommunity/shared/insight_image.html' with width=120 height=76 fill_color=333333 insight=insight %}
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
                         </li>
                     {% endfor %}
                 </ul>
@@ -56,7 +66,7 @@
                 <ul>
                     {% for insight in recent_challenges %}
                         <li>
-                            {% include 'thecommunity/shared/insight_image.html' with width=120 height=76 fill_color=333333 insight=insight %}
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
                         </li>
                     {% endfor %}
                 </ul>

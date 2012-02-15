@@ -98,5 +98,3 @@ class ActionController(object):
         if type == 'string': return '_none'
         if type == 'location_string': return '_none'
         return '_s'
-
-

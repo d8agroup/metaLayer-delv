@@ -43,6 +43,6 @@ class RunRecord(Model):
         run_record = RunRecord.collection.find_one({'key':key})
         if not run_record:
             run_record = RunRecord({'key':key})
-        run_record['last_success'] = time.time()
+        run_record['last_success'] = time.mktime(time.gmtime())
         run_record.save()
         Logger.Info('%s - RunRecord.RecordRun - finished' % __name__)
