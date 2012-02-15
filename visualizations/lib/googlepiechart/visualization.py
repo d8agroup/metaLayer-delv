@@ -1,3 +1,4 @@
+from django.utils.html import escape
 from visualizations.classes import VisualizationBase
 from django.utils import simplejson as json
 
@@ -12,7 +13,27 @@ class Visualization(VisualizationBase):
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
             'configured':False,
-            'elements':[],
+            'elements':[
+                self._generate_colorscheme_config_element(),
+                {
+                    'name':'background',
+                    'display_name':'Background',
+                    'help':'',
+                    'type':'select',
+                    'values':[
+                        'Light',
+                        'Dark'
+                    ],
+                    'value':'Light'
+                },
+                {
+                    'name':'title',
+                    'display_name':'Chart Title',
+                    'help':'',
+                    'type':'text',
+                    'value':'Pie Chart'
+                }
+            ],
             'data_dimensions':[
                 {
                     'name':'category1',
@@ -64,35 +85,33 @@ class Visualization(VisualizationBase):
         data_columns = [{'type':'string', 'name':data_dimensions_value['name']}, {'type':'number', 'name':'count'}]
         data_rows = [[f['name'], f['count']] for f in facets]
         data_columns = '\n'.join(["data.addColumn('%s', '%s');" % (t['type'], t['name']) for t in data_columns])
+        number_of_data_rows = len(data_rows)
         data_rows = json.dumps(data_rows)
 
+        background = [e for e in config['elements'] if e['name'] == 'background'][0]['value']
+        if background == 'Dark':
+            background_color = '#333333'
+            text_color = '#FFFFFF'
+        else:
+            background_color = '#FFFFFF'
+            text_color = '#000000'
+
+        color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
+        colors = self._generate_colors(color_scheme, number_of_data_rows)
+
         options = json.dumps({
-            'backgroundColor':'#333333',
-            'title':config['data_dimensions'][0]['value']['name'],
+            'backgroundColor':background_color,
+            'title':escape([e for e in config['elements'] if e['name'] == 'title'][0]['value']),
             'titleTextStyle':{
-                'color':'#FFFFFF'
+                'color':text_color
             },
-            'hAxis':{
-                'baselineColor':'#DDDDDD',
-                'textStyle':{
-                    'color':'#DDDDDD'
-                },
-                'slantedText':True,
-                'gridlines.color':'#AAAAAA',
-                },
+            'colors':colors,
             'legend':{
                 'position':'right',
                 'textStyle':{
-                    'color':'#DDDDDD'
+                    'color':text_color
                 }
             },
-            'vAxis':{
-                'baselineColor':'#DDDDDD',
-                'textStyle':{
-                    'color':'#DDDDDD'
-                },
-                'minValue':0
-            }
         })
 
         js = js.replace('{data_columns}', data_columns)

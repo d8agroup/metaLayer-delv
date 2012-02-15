@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = None
+TIME_ZONE = 'Europe/London'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -226,6 +226,7 @@ OUTPUTS_CONFIG = {
 VISUALIZATIONS_CONFIG = {
     'enabled_visualizations':[
         'googlebarchart',
+        'googlepiechart',
     ],
     'visualization_display_hierarchy':[
         'googlegeochart',

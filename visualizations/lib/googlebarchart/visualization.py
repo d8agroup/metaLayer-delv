@@ -1,4 +1,3 @@
-import time
 from utils import get_pretty_date
 from visualizations.classes import VisualizationBase
 from django.utils import simplejson as json
@@ -35,10 +34,10 @@ class Visualization(VisualizationBase):
                     'help':'',
                     'type':'select',
                     'values':[
-                        'Dark',
-                        'Light'
+                        'Light',
+                        'Dark'
                     ],
-                    'value':'Dark'
+                    'value':'Light'
                 }
             ],
             'data_dimensions':[
@@ -145,7 +144,6 @@ class Visualization(VisualizationBase):
             .replace('DATA_COLUMNS', data_columns)\
             .replace('DATA_ROWS', data_rows)\
             .replace('OPTIONS', options)
-
 
     def _generate_data_without_time(self, config, search_results_collection, search_configuration):
         search_result = search_results_collection[0]
