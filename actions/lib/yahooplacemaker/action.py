@@ -8,6 +8,21 @@ from logger import Logger
 
 class Action(BaseAction):
     def get_unconfigured_config(self):
+        """
+                ,
+                {
+                    'name':'collection_type',
+                    'display_name':'Location type',
+                    'help':'Choose the type of location data to collect',
+                    'type':'select',
+                    'values':[
+                        'Countries',
+                        'Places'
+                    ],
+                    'value':''
+
+                }
+                """
         return {
             'name':'yahooplacemaker',
             'display_name_short':'Location',
@@ -23,18 +38,6 @@ class Action(BaseAction):
                     'help':'Using Yahoo Placemaker requires an API key, if you don\'t have one, visit <a href="http://developer.yahoo.com/geo/placemaker/" target="_blank">here</a>',
                     'type':'text',
                     'value':''
-                },
-                {
-                    'name':'collection_type',
-                    'display_name':'Location type',
-                    'help':'Choose the type of location data to collect',
-                    'type':'select',
-                    'values':[
-                        'Countries',
-                        'Places'
-                    ],
-                    'value':''
-
                 }
             ],
             'content_properties':{
@@ -99,7 +102,7 @@ class LocationGetter(threading.Thread):
             text = text.encode('ascii', 'ignore')
             api_key = [e for e in self.config['elements'] if e['name'] == 'api_key'][0]['value']
             url = 'http://wherein.yahooapis.com/v1/document'
-            post_data = urlencode({ 'documentContent':text, 'documentType':'text/plain', 'outputType':'json', 'appid':api_key, 'autoDisambiguate':False })
+            post_data = urlencode({ 'documentContent':text, 'documentType':'text/plain', 'outputType':'json', 'appid':api_key})
             request = Request(url, post_data)
             response = urlopen(request)
             response = json.loads(response.read())
@@ -149,7 +152,12 @@ class LocationGetter(threading.Thread):
 
         if not isinstance(response['document'], dict):
             return False
-        collection_type = [e for e in config['elements'] if e['name'] == 'collection_type'][0]['value']
+        #collection_type = [e for e in config['elements'] if e['name'] == 'collection_type'][0]['value']
+        locations = []
+        countries(response, locations)
+        places(response, locations)
+        return locations
+        """
         if collection_type == 'Countries':
             locations = []
             countries(response, locations)
@@ -158,5 +166,5 @@ class LocationGetter(threading.Thread):
             locations = []
             places(response, locations)
             return sorted(locations)[0] if locations else False
-
+        """
 

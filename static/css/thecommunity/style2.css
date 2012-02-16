@@ -59,14 +59,14 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .banner h1 span { color:#2e6098; }
 .banner h1 strong { color:#aa4040; }
 .banner_left { float:left; }
-.slider { width:120px; float:left; }
+.slider { width:105px; float:left; }
 .slider ul {}
 .slider ul li { padding:0 0 5px 0; }
 .slider ul li.nopad { padding:0px; }
 .slideshow { width:357px; text-align:right; font-size:12px; color:#333; float:right; line-height:20px; font-weight:bold; }
 .slideshow_pic { width:350px; height:185px; overflow:hidden; }
-.videoarea { width:330px; float:right; }
-.video { width:330px; margin-bottom:16px; }
+.videoarea { width:345px; float:right; }
+.video { width:345px; margin-bottom:16px; }
 .pager { height:12px; text-align:center; }
 .pager a { width:12px; height:12px; display:inline-block; text-indent:-9999px; margin:0px 2px; background:url(/static/images/thecommunity/pager_bg.jpg) no-repeat 0px 0px; }
 .pager a:hover, .pager a.activeSlide { background:url(/static/images/thecommunity/pager_bg.jpg) no-repeat 0px -18px; }
@@ -207,6 +207,7 @@ aside{ width:333px; float:left; }
 .collection h4 { font-size:150%; color:#FFF; margin:10px 0;}
 .collection .visualization { background-color:#222; margin-bottom:20px; border:1px solid #1a1a1a; overflow:hidden; }
 .collection_1 .visualization { height:300px;}
+.collection_2 .visualization { height:220px;}
 .collection .search_widget_header { background-color:#1a1a1a; padding:1px; height:26px; }
 .collection .search_widget_header img { width:24px; }
 .collection .search_results_container { background-color:#222; height:250px;}
