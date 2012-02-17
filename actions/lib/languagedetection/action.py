@@ -16,6 +16,7 @@ class Action(BaseAction):
             'image_small':'/static/images/lib/aluminum/speach.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,
+            'elements':[],
             'content_properties':{
                 'added':[
                     {

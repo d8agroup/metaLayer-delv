@@ -157,3 +157,12 @@ ON EXIT MODAL
 #waiting_modal { background-color:#1a1a1a; color:#FFF; padding:0; border:none; height:433px;}
 #waiting_modal p { padding-top:200px; text-align:center; }
 #waiting_modal p img { position:relative; top:5px; }
+
+.modal { display:none; }
+.modal .waiting { background:none; color:#FFF; text-align:center; width:90%; padding-top:12%; }
+.modal .waiting img { position:relative; top:8px; left:5px;}
+
+.modal .api_key_line { margin-bottom:15px; }
+.modal .api_key_line label { display:inline-block; width:200px; }
+.modal .api_key_line input { display:inline-block; width:350px; }
+.modal .api_key_line .instruction { padding:10px;}

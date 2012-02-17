@@ -80,3 +80,14 @@ class DataPointController(object):
         data_point = getattr(data_point, 'DataPoint')()
         Logger.Info('%s - DataPointController.LoadDataPoint - finished' % __name__)
         return data_point
+
+    @classmethod
+    def ExtractAPIKeyHelp(cls, data_point_name):
+        Logger.Info('%s - DataPointController.ExtractAPIKeyHelp - started' % __name__)
+        Logger.Debug('%s - DataPointController.ExtractAPIKeyHelp - started with data_point_name:%s' % (__name__, data_point_name))
+        data_point = my_import('dashboard.datapoints.lib.%s.datapoint' % data_point_name)
+        data_point = getattr(data_point, 'DataPoint')()
+        api_element = [e for e in data_point.get_unconfigured_config()['elements'] if e['name'] == 'api_key'][0]
+        help_text = api_element['help']
+        Logger.Info('%s - DataPointController.ExtractAPIKeyHelp - finished' % __name__)
+        return help_text

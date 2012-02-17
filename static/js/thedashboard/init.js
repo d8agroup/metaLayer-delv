@@ -105,5 +105,6 @@ $(document).ready
         $.get('/static/html/thedashboard/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
         $.get('/static/html/thedashboard/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
         $.get('/static/html/thedashboard/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
+        $.get('/static/html/thedashboard/modals/api_key_line.html', function(t) { $.template('api_key_line', t)});
     }
 );

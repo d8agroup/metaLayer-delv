@@ -8,21 +8,6 @@ from logger import Logger
 
 class Action(BaseAction):
     def get_unconfigured_config(self):
-        """
-                ,
-                {
-                    'name':'collection_type',
-                    'display_name':'Location type',
-                    'help':'Choose the type of location data to collect',
-                    'type':'select',
-                    'values':[
-                        'Countries',
-                        'Places'
-                    ],
-                    'value':''
-
-                }
-                """
         return {
             'name':'yahooplacemaker',
             'display_name_short':'Location',

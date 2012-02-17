@@ -5,11 +5,12 @@ from dashboards.controllers import DashboardsController
 from logger import Logger
 from django.db import models
 from django.contrib.auth.models import User
-from djangotoolbox.fields import DictField
+from djangotoolbox.fields import DictField, ListField
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     linked_accounts = DictField()
+    api_keys = ListField()
 
     def community_values(self):
         dc = DashboardsController(self.user)

@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/static/css/thedashboard/reset.css" />
         <link rel="stylesheet" href="/static/css/thedashboard/hacks.css" />
         <link rel="stylesheet" href="/static/css/thedashboard/base.css" />
-        <link rel="stylesheet" href="/static/css/lib/Aristo.css"/>
+        <link rel="stylesheet" href="/static/css/lib/jquery-ui-vader.css"/>
         <link rel="stylesheet" href="/static/css/thedashboard/site.css" />
         <link rel="stylesheet" href="/static/css/lib/jscrollpane.css" />
         <link rel="stylesheet" href="/static/css/lib/jqmodal.css" />
@@ -44,6 +44,7 @@
         <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualizations.js"></script>
         <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualization.js"></script>
         <script type="text/javascript" src="/static/js/thedashboard/on_exit_modal.js"></script>
+        <script type="text/javascript" src="/static/js/thedashboard/modal_api_key_manager.js"></script>
         <script type="text/javascript" src="/static/js/thedashboard/init.js"></script>
         <script type="text/javascript">
             EMBEDDED_MODE = false;
@@ -98,7 +99,7 @@
                 <img src="/static/images/thedashboard/icon_publish.png" width='1px' height="1px" />
                 <img src="/static/images/thedashboard/icon_search.png" width='1px' height="1px" />
             </div>
-            <div id='on_exit_modal' class='jqmWindow'>
+            <div id='on_exit_modal' class="jqmWindow">
                 <h3>Before you leave this insight</h3>
                 <div class='container'>
                     <p class="instructions"></p>
@@ -134,6 +135,7 @@
                     <p>Saving <img src='/static/images/_thecommunity/loading_circle.gif'/></p>
                 </div>
             </div>
+            {% include 'thedashboard/modals/api_key_manager.html' %}
         </div>
     </div>
 </body>

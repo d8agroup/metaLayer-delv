@@ -27,6 +27,17 @@ class ActionController(object):
         Logger.Info('%s - ActionController.GetAllForTemplateOptions - finished' % __name__)
         return actions
 
+    @classmethod
+    def ExtractAPIKeyHelp(cls, action_name):
+        Logger.Info('%s - ActionController.ExtractAPIKeyHelp - started' % __name__)
+        Logger.Info('%s - ActionController.ExtractAPIKeyHelp - started with action_name:%s' % (__name__, action_name))
+        action = my_import('dashboard.actions.lib.%s.action' % action_name)
+        action = getattr(action, 'Action')()
+        api_element = [e for e in action.get_unconfigured_config()['elements'] if e['name'] == 'api_key'][0]
+        help_text = api_element['help']
+        Logger.Info('%s - ActionController.ExtractAPIKeyHelp - finished' % __name__)
+        return help_text
+
     def is_valid(self):
         Logger.Info('%s - ActionController.is_valid - started' % __name__)
         action_name = self.action['name']
@@ -98,3 +109,4 @@ class ActionController(object):
         if type == 'string': return '_none'
         if type == 'location_string': return '_none'
         return '_s'
+

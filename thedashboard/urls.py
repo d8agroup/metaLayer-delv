@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'outputs/remove_output$', dashboard_output_removed),
     url(r'run_search$', dashboard_run_search),
     url(r'data_points/get_content_item_template/(\w+)/(\w+)', dashboard_get_content_item_template),
+    url(r'api_keys/load', load_api_keys),
+    url(r'api_keys/save', save_api_keys),
     url(r'save$', dashboard_save),
     url(r'(\w+)$', dashboard_load)
 )

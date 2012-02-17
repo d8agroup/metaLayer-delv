@@ -15,6 +15,7 @@ class Action(BaseAction):
             'image_small':'/static/images/lib/aluminum/positive.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,
+            'elements':[],
             'content_properties':{
                 'added':[
                     {

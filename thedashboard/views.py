@@ -238,3 +238,34 @@ def dashboard_save(request):
     dbc = DashboardsController(user)
     dbc.update_dashboard(dashboard)
     Logger.Info('%s - dashboard_save - finished' % __name__)
+
+@login_required(login_url='/')
+def load_api_keys(request):
+    def user_has_api_value(dp_name, u):
+        for apik in u.profile.api_keys:
+            if apik['name'] == dp_name:
+                return apik['api_key']
+        return ''
+    user = request.user
+    data_points = DataPointController.GetAllForTemplateOptions(user)
+    data_point_api_keys = [{
+        'name':dp['full_display_name'],
+        'api_key':user_has_api_value(dp['full_display_name'], user),
+        'help_text':DataPointController.ExtractAPIKeyHelp(dp['type'])}
+        for dp in data_points if [e for e in dp['elements'] if e['name'] == 'api_key']]
+    action_api_keys = [{
+        'name':a['display_name_long'],
+        'api_key':user_has_api_value(a['display_name_long'], user),
+        'help_text':ActionController.ExtractAPIKeyHelp(a['name'])}
+        for a in ActionController.GetAllForTemplateOptions(user)
+        if [e for e in a['elements'] if e['name'] == 'api_key']]
+    return JSONResponse({ 'api_keys':data_point_api_keys + action_api_keys })
+
+@login_required(login_url='/')
+def save_api_keys(request):
+    api_keys = [{'name': key, 'api_key': request.GET[key]}  for key in request.GET]
+    user = request.user
+    profile = user.profile
+    profile.api_keys = api_keys
+    profile.save()
+    return JSONResponse()
