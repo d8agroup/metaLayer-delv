@@ -37,7 +37,7 @@ a, img a, img, a img {border:0;	outline:0; text-decoration:none;}
 .clrflt { clear:both; line-height:1px; font-size:1px; overflow: hidden; }
 .waiting { text-align:center; padding:5%; width:100%;}
 .waiting img { position:relative; top:11px; left:5px;}
-.border { border:3px solid #333;}
+.border { border:1px solid #333;}
 .image_outer { display:inline-block; }
 
 body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; font-family:Arial, Helvetica, sans-serif; font-size:13px; font-weight:normal; color:#000000; outline:0; }
@@ -117,7 +117,7 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .header_logout { width:320px; float:right; }
 .header_logout ul { float:right; }
 .header_logout ul li { font-size:12px; color:#FFF; line-height:28px; font-weight:bold; float:left; padding:0px 10px 0 5px; background:url(/static/images/thecommunity/header-login_sep.png) no-repeat right center; }
-.header_logout ul li a { text-decoration:none; color:#FFF; }
+.header_logout  ul li a { text-decoration:none; color:#FFF; }
 .header_logout ul li.nobg { background:none; padding:0 0 0 5px; }
 section{ width:872px; padding:7px 0 0 10px; margin:0px auto; min-height: 500px;}
 aside{ width:333px; float:left; }
@@ -157,6 +157,10 @@ aside{ width:333px; float:left; }
 .container h2{ color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:12px 0 0 12px; margin-bottom:18px; }
 .activity { max-height:800px; overflow:auto; padding:5px;}
 .insight { border:1px solid #DDD; margin:10px;}
+.insight span.time { float:right; color:#AAA; padding:10px;}
+.insight h3 { font-weight:normal; font-size:120%; padding:10px; }
+.insight h3 a { color:#000; }
+.insight h3 em { font-size:80%;}
 .insight .image_container { text-align:center; margin:20px 0}
 .insight.data_insight .image_container img { width:120px; height:120px; }
 .insight .action_buttons { float:right; margin:5px}

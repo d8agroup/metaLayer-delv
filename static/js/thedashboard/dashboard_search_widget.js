@@ -11,8 +11,8 @@
             if (configuration.search_filters.time == null)
             {
                 var date = new Date();
-                var six_hour_ago = ((date.valueOf() * 0.001)|0) - 21600;
-                configuration.search_filters.time = '[' + six_hour_ago + '%20TO%20*]';
+                var two_hours_ago = ((date.valueOf() * 0.001)|0) - 7200;
+                configuration.search_filters.time = '[' + two_hours_ago + '%20TO%20*]';
             }
             this.dashboard_search_widget('render');
             return this;

@@ -7,8 +7,8 @@ class Visualization(VisualizationBase):
     def get_unconfigured_config(self):
         return {
             'name':'googlepiechart',
-            'display_name_short':'Pie Chart',
-            'display_name_long':'Pie Chart',
+            'display_name_short':'Pie',
+            'display_name_long':'Pie',
             'image_small':'/static/images/lib/Impressions/pie_chart.png',
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
@@ -64,7 +64,7 @@ class Visualization(VisualizationBase):
              "       google.load('visualization', '1', {'packages': ['corechart'], 'callback':drawchart_" + config['id'] + "});\n"\
              "       function drawchart_" + config['id'] + "()\n"\
              "       {\n"\
-             "           if(!document.getElementById('" + config['id'] + "'))\n"\
+             "           if(!document.getElementById('v_" + config['id'] + "'))\n"\
              "               return;\n"\
              "           var data = new google.visualization.DataTable();\n"\
              "           {data_columns}\n"\
@@ -72,7 +72,7 @@ class Visualization(VisualizationBase):
              "               {data_rows}\n"\
              "           );\n"\
              "           var options = {options};\n"\
-             "           var chart = new google.visualization.PieChart(document.getElementById('" + config['id'] + "'));\n"\
+             "           var chart = new google.visualization.PieChart(document.getElementById('v_" + config['id'] + "'));\n"\
              "           chart.draw(data, options);\n"\
              "       }\n"\
              "   }\n"\

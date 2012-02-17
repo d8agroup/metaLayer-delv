@@ -11,8 +11,8 @@ class Visualization(VisualizationBase):
     def get_unconfigured_config(self):
         return {
             'name':'googlebarchart',
-            'display_name_short':'Bar Chart',
-            'display_name_long':'Bar Chart',
+            'display_name_short':'Bar',
+            'display_name_long':'Bar',
             'image_small':'/static/images/thedashboard/bar_chart.png',
             'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
             'type':'javascript',
@@ -145,12 +145,12 @@ class Visualization(VisualizationBase):
         js = "" \
             "$.getScript('https://www.google.com/jsapi', function(){ google.load('visualization', '1', {'packages': ['corechart'], 'callback':drawchart_VISUALIZATION_ID}); });\n" \
             "function drawchart_VISUALIZATION_ID() {\n" \
-            "   if (!document.getElementById('VISUALIZATION_ID')) return;\n" \
+            "   if (!document.getElementById('v_VISUALIZATION_ID')) return;\n" \
             "   var data = new google.visualization.DataTable();\n" \
             "   DATA_COLUMNS\n" \
             "   data.addRows(DATA_ROWS);\n" \
             "   var options = OPTIONS;\n" \
-            "   var chart = new google.visualization.BarChart(document.getElementById('VISUALIZATION_ID'));\n" \
+            "   var chart = new google.visualization.BarChart(document.getElementById('v_VISUALIZATION_ID'));\n" \
             "   chart.draw(data, options);\n" \
             "}"
         return js.replace('VISUALIZATION_ID', config['id'])\

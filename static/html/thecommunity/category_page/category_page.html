@@ -1,18 +1,4 @@
-{% extends 'thecommunity/_oldbase.html' %}
-
-{% block js %}
-    {{ block.super }}
-    <script type="text/javascript" src="/static/js/thecommunity/category_page.js"></script>
-    <script type="text/javascript">
-        $(document).ready
-        (
-            function()
-            {
-                $('#page').category_page({insights:{{ insights_json|safe }}});
-            }
-        );
-    </script>
-{% endblock %}
+{% extends 'thecommunity/base.html' %}
 
 {% block page_body %}
     <div class="category_page" id="page">

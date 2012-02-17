@@ -104,7 +104,7 @@ def category_page(request, category):
 def login_or_register(request):
     if not request.method == 'POST':
         return render_to_response(
-            'thecommunity/login_or_register.html',
+            'thecommunity/login_or_register/login_or_register.html',
             context_instance=RequestContext(request)
         )
     else:
@@ -114,7 +114,7 @@ def login_or_register(request):
             passed, errors = UserController.LoginUser(request, username, password)
             if not passed:
                 return render_to_response(
-                    'thecommunity/login_or_register.html',
+                    'thecommunity/login_or_register/login_or_register.html',
                     { 'login_errors':errors },
                     context_instance=RequestContext(request)
                 )
@@ -125,7 +125,7 @@ def login_or_register(request):
             passed, errors = UserController.RegisterUser(request, username, password1, password2)
             if not passed:
                 return render_to_response(
-                    'thecommunity/login_or_register.html',
+                    'thecommunity/login_or_register/login_or_register.html',
                     { 'register_errors':errors },
                     context_instance=RequestContext(request)
                 )
@@ -248,10 +248,3 @@ def load_remixes(request, insight_id, count):
     template_data['insights']  = DashboardsController.GetRemixes(insight_id, int(count))
     return render_to_response( 'thecommunity/profile_page/insight_remixes.html', template_data )
 
-def like_insight(request, insight_id):
-    template_data = _base_template_data()
-    template_data['insight'] = DashboardsController.GetDashboardById(insight_id)
-    return render_to_response(
-        'thecommunity/shared/like_modal.html',
-        template_data
-    )

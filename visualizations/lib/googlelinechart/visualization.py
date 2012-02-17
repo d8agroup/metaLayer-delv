@@ -72,7 +72,7 @@ class Visualization(VisualizationBase):
             "       google.load('visualization', '1', {'packages': ['corechart'], 'callback':drawchart_" + config['id'] + "});\n"\
             "       function drawchart_" + config['id'] + "()\n"\
             "       {\n"\
-            "           if(!document.getElementById('" + config['id'] + "'))\n"\
+            "           if(!document.getElementById('v_" + config['id'] + "'))\n"\
             "               return;\n"\
             "           var data = new google.visualization.DataTable();\n"\
             "           {data_columns}\n"\
@@ -80,7 +80,7 @@ class Visualization(VisualizationBase):
             "               {data_rows}\n"\
             "           );\n"\
             "           var options = {options};\n"\
-            "           var chart = new google.visualization.LineChart(document.getElementById('" + config['id'] + "'));\n"\
+            "           var chart = new google.visualization.LineChart(document.getElementById('v_" + config['id'] + "'));\n"\
             "           chart.draw(data, options);\n"\
             "       }\n"\
             "   }\n"\

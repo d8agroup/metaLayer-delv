@@ -228,9 +228,12 @@ VISUALIZATIONS_CONFIG = {
         'googlegeochart',
         'googlebarchart',
         'googlepiechart',
+        'googleareachart',
+        'd3cloud'
     ],
     'visualization_display_hierarchy':[
         'googlegeochart',
+        'd3cloud',
         'googlelinechart',
         'googlebarchart',
         'googlepiechart',

@@ -245,7 +245,7 @@
             var collection = this;
             var configuration = collection.data('configuration');
             collection.find('.visualizations_container').dashboard_visualizations('capture_snapshots');
-            collection.find('.visualizations_container').dashboard_visualizations('render');
+            collection.find('.visualizations_container').dashboard_visualizations('update');
             collection.find('.ouputs_container').dashboard_outputs(configuration);
         }
     };

@@ -2,7 +2,11 @@
     <ul>
         <li><a class='like_link' data-insight_id='{{ insight.id }}'><img src="/static/images/thecommunity/link_like.jpg" alt="" /></a></li>
         {% ifnotequal profile_user user %}
-            <li><a href="/dashboard/remix/{{ insight.id }}"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
+            {% if profile_user.is_authneticated %}
+                <li><a href="/dashboard/remix/{{ insight.id }}"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
+            {% else %}
+                <li><a href="/community/welcome"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
+            {% endif %}
         {% else %}
             <li><a href="/dashboard/{{ insight.id }}">edit</a></li>
         {% endifnotequal %}

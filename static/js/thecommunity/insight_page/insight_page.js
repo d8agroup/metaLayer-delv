@@ -55,7 +55,7 @@
             for (var v=0; v<collection.visualizations.length; v++)
             {
                 var visualization = collection.visualizations[v];
-                var visualization_container = $("<div class='visualization' id='" + visualization.id + "'></div>");
+                var visualization_container = $("<div class='visualization' id='v_" + visualization.id + "'></div>");
                 collection_html.append(visualization_container);
                 var timestamp = new Date;
                 timestamp = timestamp.getTime();

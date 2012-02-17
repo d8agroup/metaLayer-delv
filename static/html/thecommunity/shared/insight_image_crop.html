@@ -4,7 +4,7 @@
     <a href="/community/{{ insight.username }}?insight={{ insight.id }}">
 {% endif %}
     {% if insight.has_visualizations %}
-        <img src='http://{{ site_url }}/i/c/{{ width }}/{{ height }}/{{ insight.id }}.png' alt='Image of {{ insight.name }}'   class='tool_tip border' title='<strong>{{ insight.name }}</strong><br/><i>{{ insight.username }}</i><br/>{{ insight.last_saved_pretty }}'/>
+        <img src='http://{{ site_url }}/i/c/{{ width }}/{{ height }}/{{ insight.id }}.png'  class='tool_tip border' title='<strong>{{ insight.name }}</strong><br/><i>{{ insight.username }}</i><br/>{{ insight.last_saved_pretty }}' style="width:{{ width }}px; height:{{ height }}px;"/>
     {% else %}
         <div class="image_outer border" style="width:{{ width }}px;height:{{ height }}px; text-align:center;">
             <img src="{{ insight.single_data_point_for_image }}" class='tool_tip' title='<strong>{{ insight.name }}</strong><br/><i>{{ insight.username }}</i><br/>{{ insight.last_saved_pretty }}' height='{{ height }}px' />
