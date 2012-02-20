@@ -12,9 +12,11 @@ class Visualization(VisualizationBase):
         return {
             'name':'googleareachart',
             'display_name_short':'Area',
-            'display_name_long':'Area',
+            'display_name_long':'Area chart',
             'image_small':'/static/images/thedashboard/area_chart.png',
-            'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
+            'unconfigurable_message':'There is no category data available to be plotted. Try adding something like '
+                                     'sentiment analysis',
+            'instructions':'Area charts make it really easy to contrast discrete category based data over time.',
             'type':'javascript',
             'configured':False,
             'elements':[
