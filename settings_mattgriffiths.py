@@ -1,6 +1,6 @@
 import logging
 
-DEBUG = True
+DEBUG = False
 
 COMPRESS_ENABLED = False
 
