@@ -8,6 +8,8 @@ SITE_HOST='dev.metalayer.com'
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
+DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_engine', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
