@@ -2,6 +2,6 @@
 *.db*
 .idea
 fabfile.py
-static/CACHE/*.css
-static/CACHE/*.js
+static/CACHE/css
+static/CACHE/js
 imaging/CACHE/*.png
