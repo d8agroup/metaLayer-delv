@@ -12,6 +12,8 @@ SITE_HOST='50.57.202.85'
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
+DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
+
 logging.basicConfig(
     level = logging.ERROR,
     format = '%(asctime)s %(levelname)s %(message)s',
