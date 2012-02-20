@@ -8,7 +8,9 @@ SESSION_COOKIE_SECURE =False
 
 SITE_ID=u'4f2bbe147a9c1b698d00001d'
 
-SITE_HOST='50.57.202.85'
+SITE_HOST='metalayer.com'
+
+SITE_HOST_SHORT = 'mlyr.co'
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 

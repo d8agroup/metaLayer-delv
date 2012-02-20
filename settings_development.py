@@ -6,9 +6,18 @@ SITE_ID=u'4f13fca68451d31efe00001d'
 
 SITE_HOST='dev.metalayer.com'
 
+SITE_HOST_SHORT = SITE_HOST
+
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
+
+DB_LOGGING = {
+    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
+    'database_name':'ml_dashboard_dev',
+    'database_host':'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10049/ml_dashboard_dev',
+    'database_port':10049
+}
 
 DATABASES = {
     'default': {

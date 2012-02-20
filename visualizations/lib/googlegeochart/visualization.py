@@ -95,10 +95,10 @@ class Visualization(VisualizationBase):
         background = [e for e in config['elements'] if e['name'] == 'background'][0]['value']
         if background == 'Dark':
             background_color = '#333333'
-            empty_region_color = '#444444'
+            empty_region_color = '#CCCCCC'
         else:
             background_color = '#FFFFFF'
-            empty_region_color = '#DDDDDD'
+            empty_region_color = '#CCCCCC'
 
         color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
         colors = self._generate_colors(color_scheme, 200)

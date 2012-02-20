@@ -10,12 +10,21 @@ SITE_ID=u'4f1d5db8c845b30a5600001d'
 
 SITE_HOST='50.57.164.87'
 
+SITE_HOST_SHORT = SITE_HOST
+
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 logging.basicConfig(
     level = logging.ERROR,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
+
+DB_LOGGING = {
+    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
+    'database_name':'ml_dashboard_staging',
+    'database_host':'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10081/ml_dashboard_staging',
+    'database_port':10081
+}
 
 DATABASES = {
     'default': {
