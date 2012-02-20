@@ -1,6 +1,5 @@
 from logger import Logger
 from outputs.models import ShortUrl
-import settings
 from utils import my_import
 from django.conf import settings
 
