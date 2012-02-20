@@ -1,7 +1,5 @@
 import StringIO
 from django.conf import settings
-import cairo
-import rsvg
 from django.http import HttpResponse
 from dashboards.controllers import DashboardsController
 from imaging.controllers import ImagingController
@@ -10,6 +8,8 @@ def insight_image_for_facebook(request, dashboard_id):
     return crop(request, dashboard_id, 200, 200)
 
 def crop(request, dashboard_id, width, height):
+    import cairo
+    import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
         return ImagingController.GenerateNotFoundImage(width, height, None)
@@ -38,6 +38,8 @@ def crop(request, dashboard_id, width, height):
     return response
 
 def shrink(request, dashboard_id, max_width, max_height):
+    import cairo
+    import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
         return ImagingController.GenerateNotFoundImage(max_width, max_height, None)

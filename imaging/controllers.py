@@ -1,11 +1,11 @@
 import os
-import cairo
 import StringIO
 from logger import Logger
 
 class ImagingController(object):
     @classmethod
     def GenerateNotFoundImage(cls, width, height, fill_color):
+        import cairo
         text_sizes = (14, 10) if width > 100 else (10, 7)
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         context = cairo.Context(surface)
