@@ -75,7 +75,14 @@
                 function(event) { save_button_click_function(event, dashboard_unconfigured_action, action); }
             );
         dashboard_unconfigured_action.html(unconfigured_action_html);
-        dashboard_unconfigured_action.find('.cancel, .save').button();
+        dashboard_unconfigured_action.find('.cancel, .save, .api_key_link').button();
+        dashboard_unconfigured_action.find('.api_key_link').click
+            (
+                function()
+                {
+                    $('#api_key_manager').modal_api_key_manager();
+                }
+            );
         return dashboard_unconfigured_action
     }
 })( jQuery );

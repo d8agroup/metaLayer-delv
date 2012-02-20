@@ -35,7 +35,19 @@ def dashboard_load(request, id):
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
     Logger.Info('%s - dashboard - finished' % __name__)
-    return render_to_response('thedashboard/dashboard.html',{ 'dashboard_id':db['id'], 'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES }, context_instance=RequestContext(request))
+    raw_api_keys = request.user.profile.api_keys
+    api_keys = {}
+    for api_key in raw_api_keys:
+        api_keys[api_key['name']] = api_key['api_key']
+    api_keys = json.dumps(api_keys)
+    return render_to_response(
+        'thedashboard/dashboard.html',
+        {
+            'dashboard_id':db['id'],
+            'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES,
+            'api_keys': api_keys
+        },
+        context_instance=RequestContext(request))
 
 @login_required(login_url='/')
 def dashboard_new(request, template_id):
@@ -249,13 +261,15 @@ def load_api_keys(request):
     user = request.user
     data_points = DataPointController.GetAllForTemplateOptions(user)
     data_point_api_keys = [{
-        'name':dp['full_display_name'],
-        'api_key':user_has_api_value(dp['full_display_name'], user),
+        'name':dp['type'],
+        'display_name':dp['full_display_name'],
+        'api_key':user_has_api_value(dp['type'], user),
         'help_text':DataPointController.ExtractAPIKeyHelp(dp['type'])}
         for dp in data_points if [e for e in dp['elements'] if e['name'] == 'api_key']]
     action_api_keys = [{
-        'name':a['display_name_long'],
-        'api_key':user_has_api_value(a['display_name_long'], user),
+        'name':a['name'],
+        'display_name':a['display_name_long'],
+        'api_key':user_has_api_value(a['name'], user),
         'help_text':ActionController.ExtractAPIKeyHelp(a['name'])}
         for a in ActionController.GetAllForTemplateOptions(user)
         if [e for e in a['elements'] if e['name'] == 'api_key']]

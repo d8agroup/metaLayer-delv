@@ -7,7 +7,8 @@
                 var header = this;
                 var dashboard = data.dashboard;
                 header.data('dashboard', dashboard);
-                this.find('a').click
+                $('.help').corner('5px bottom');
+                this.find('a.config_link').click
                 (
                     function(e)
                     {
@@ -23,6 +24,25 @@
                         return false;
                     }
                 );
+                this.find('.help_link').click
+                    (
+                        function()
+                        {
+                            var link = $(this);
+                            if (link.is('.active'))
+                            {
+                                link.removeClass('active');
+                                $('.help').slideUp();
+                                link.html('Show Help');
+                            }
+                            else
+                            {
+                                link.addClass('active');
+                                $('.help').slideDown();
+                                link.html('Hide Help');
+                            }
+                        }
+                    );
             },
             dashboard_saved:function()
             {

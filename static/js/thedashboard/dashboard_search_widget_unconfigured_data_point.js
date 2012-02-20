@@ -76,7 +76,14 @@
                 function(event) { save_button_click_function(event, dashboard_unconfigured_data_point, data_point); }
             );
         dashboard_unconfigured_data_point.html(unconfigured_data_point_html);
-        dashboard_unconfigured_data_point.find('.cancel, .save').button();
+        dashboard_unconfigured_data_point.find('.cancel, .save, .api_key_link').button();
+        dashboard_unconfigured_data_point.find('.api_key_link').click
+            (
+                function()
+                {
+                    $('#api_key_manager').modal_api_key_manager();
+                }
+            );
         return dashboard_unconfigured_data_point
     }
 })( jQuery );

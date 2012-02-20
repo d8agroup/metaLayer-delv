@@ -27,6 +27,14 @@
                         <p class="help">{{html element.help}}</p>
                     </div>
                 {{/if}}
+                {{if element.type == 'api_key'}}
+                    <div class='form_row api_key_row'>
+                        <label>${element.display_name}</label>
+                        <input disabled='disabled' type="text" name="${element.name}" class="${element.name}" value="${access_api_key_store_value($data.name)}"/>
+                        <a class="api_key_link">Change</a>
+                        <p class="help">Click the 'change' button to open the api key manager</p>
+                    </div>
+                {{/if}}
             {{/each}}
         </div>
         <div class="form_actions">

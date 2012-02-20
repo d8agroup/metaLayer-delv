@@ -81,6 +81,12 @@ function search_encode_property(action_name, property_name, property_type)
     return encoded_property
 }
 
+function access_api_key_store_value(key)
+{
+    var store = $('#api_key_store').data('store');
+    return (store != null) ? store[key] : '';
+}
+
 $(document).ready
 (
     function()

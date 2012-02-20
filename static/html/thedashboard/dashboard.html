@@ -81,14 +81,16 @@
     <form id='csrf_form'>
         {% csrf_token %}
     </form>
-    {% include 'thecommunity/headers/logged_in.html' with context='dashboard' %}
+    {% include 'thedashboard/header/header.html' with context='dashboard' %}
     <div id="page_container">
         <div id='page' data-username='{{ user.username }}'>
             <div id='content'>
                 <div class="dashboard">
                     <h3 class="title">Gain new insight</h3>
                     <div class='widgets'></div>
-                    <div class='collections clearfix'></div>
+                    <div class='collections clearfix'>
+                        <p class="waiting">Loading <img src="/static/images/thedashboard/loading_circle_on_white.gif" /></p>
+                    </div>
                 </div>
             </div>
             <div class="hidden">
@@ -99,42 +101,7 @@
                 <img src="/static/images/thedashboard/icon_publish.png" width='1px' height="1px" />
                 <img src="/static/images/thedashboard/icon_search.png" width='1px' height="1px" />
             </div>
-            <div id='on_exit_modal' class="jqmWindow">
-                <h3>Before you leave this insight</h3>
-                <div class='container'>
-                    <p class="instructions"></p>
-                    <div class="form_row name">
-                        <label class="form_row_label">The name of this insight</label>
-                        <input type="text" />
-                    </div>
-                    <div class="form_row description">
-                        <label class="form_row_label">Can you describe you're insight</label>
-                        <textarea></textarea>
-                    </div>
-                    <div class="form_row live">
-                        <label class="form_row_label">Keep this insight running?</label>
-                        <div class="radio">
-                            <input type="radio" name='live' id='keep_running_yes'><label for="keep_running_yes">yes</label>
-                            <input type="radio" name='live' id='keep_running_no' checked="checked"><label for="keep_running_no">no</label>
-                        </div>
-                    </div>
-                    <div class="form_row categories">
-                        <label class="form_row_label">Categories this insight belongs to</label>
-                        <ul class="clearfix">
-                            {% for category in INSIGHT_CATEGORIES %}
-                                <li><input type="checkbox" id='category_{{ forloop.counter }}'/><label class="checkbox_label" for="category_{{ forloop.counter }}">{{ category }}</label></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="form_actions">
-                        <a class="back">Go back to insight</a>
-                        <a class="save" href="/community/{{ user.username }}">Save and continue</a>
-                    </div>
-                </div>
-                <div id='waiting_modal' class="jqmWindow">
-                    <p>Saving <img src='/static/images/_thecommunity/loading_circle.gif'/></p>
-                </div>
-            </div>
+            {% include 'thedashboard/modals/on_exit.html' %}
             {% include 'thedashboard/modals/api_key_manager.html' %}
         </div>
     </div>

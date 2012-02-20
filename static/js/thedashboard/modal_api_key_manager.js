@@ -16,20 +16,29 @@
             (
                 {
                     modal:true,
-                    minHeight:300,
+                    minHeight:450,
                     width:600,
+                    draggable:false,
+                    resizable:false,
                     buttons:
                     {
                         'Save and Exit':function()
                         {
                             var inputs = $('#api_key_manager .api_key_line input');
                             var return_data = [];
+                            var store_data = {};
                             for (var x=0; x<inputs.length; x++)
                                 if ($(inputs[x]).val() > '')
-                                    return_data.push($(inputs[x]).attr('name') + "=" + $(inputs[x]).val())
+                                {
+                                    var name = $(inputs[x]).attr('name');
+                                    var value = $(inputs[x]).val();
+                                    return_data.push(name + "=" + value);
+                                    store_data[name] = value;
+                                }
+                            $('#api_key_store').data('store', store_data);
                             $.get('/dashboard/api_keys/save?' + return_data.join('&'));
                             $(this).dialog('close');
-                            $('.dashboard_collection').dashboard_collection('render');
+                            $('.dashboard').dashboard('render_collections');
                         }
                     }
                 }

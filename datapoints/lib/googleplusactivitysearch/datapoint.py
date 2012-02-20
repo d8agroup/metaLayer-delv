@@ -30,8 +30,15 @@ class DataPoint(BaseDataPoint):
                 {
                     'name':'api_key',
                     'display_name':'Your Google+ api key',
-                    'help':'Searching Google+ requires and api key. If you don\'t have one visit <a href="https://developers.google.com/+/api/" target="_blank">here</a>.',
-                    'type':'text',
+                    'help':'Searching Google+ requires and api key. to get one or change your\'s, click '
+                           '<a href="https://code.google.com/apis/console#access" target="_blank">'
+                           'here</a>.<br/><br/>'
+                           '<span class="extra">It\'s quite easy to get an API Key, just choose to create '
+                           'a new project from the drop down menu in the top left of the screen, make '
+                           'sure you turn on Google+ API in the services section then click on API '
+                           'Access on the left and copy the API Key (found about half way down the screen) '
+                           'into the box above and your done!</span>',
+                    'type':'api_key',
                     'value':''
                 },
             ]

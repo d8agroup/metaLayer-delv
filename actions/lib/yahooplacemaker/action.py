@@ -20,8 +20,21 @@ class Action(BaseAction):
                 {
                     'name':'api_key',
                     'display_name':'Your Yahoo API key',
-                    'help':'Using Yahoo Placemaker requires an API key, if you don\'t have one, visit <a href="http://developer.yahoo.com/geo/placemaker/" target="_blank">here</a>',
-                    'type':'text',
+                    'help':'Using Yahoo Placemaker requires an API key, to get one or change your\'s, click '
+                           '<a href="http://developer.yahoo.com/geo/placemaker/" target="_blank">here</a>'
+                           '<br/><br/>'
+                           '<span class="extra">Getting a Yahoo Placemaker API Key is a little tricky but nothing to '
+                           'worry about.'
+                           '<br/><br/> '
+                           'First click on the link above and sign in with your Yahoo, Google or '
+                           'Facebook id. <br/>On the next screen you can enter "metalayer" for the application name, '
+                           'description and Application Owner (at the bottom). <br/>Then enter "http://metalayer.com" for '
+                           'the Application URL and Application domain and "http://metalayer.com/favicon.ico" for the '
+                           'Favicon URL. <br/>Finally enter "support@metalayer.com" for the Contact email. Then on the next '
+                           'screen, copy the api into the box above and click "Save and Exit".<br/><br/> '
+                           'You can of cause use your own details while singing up for an API key with Yahoo if you '
+                           'want to.</span>',
+                    'type':'api_key',
                     'value':''
                 }
             ],
