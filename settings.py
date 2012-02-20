@@ -145,6 +145,8 @@ LOGGING = {
     }
 }
 
+DB_LOGGING = {}
+
 SUBSCRIPTIONS_SETTINGS = {
     'allow_subscription_migrations':True,
     'subscriptions':{

@@ -1,6 +1,6 @@
 import logging
 
-DEBUG = True
+DEBUG = False
 
 COMPRESS_ENABLED = True
 
@@ -10,12 +10,18 @@ SITE_ID=u'4f2bbe147a9c1b698d00001d'
 
 SITE_HOST='50.57.202.85'
 
+SITE_HOST_SHORT = 'mlyr.co'
+
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
-logging.basicConfig(
-    level = logging.ERROR,
-    format = '%(asctime)s %(levelname)s %(message)s',
-)
+DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
+
+DB_LOGGING = {
+    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
+    'database_name':'ml_dashboard_production_logging',
+    'database_host':'mongodb://metalayer:M3taM3ta@arrow.mongohq.com:27094/ml_dashboard_production_logging',
+    'database_port':27094
+}
 
 DATABASES = {
     'default': {
@@ -23,8 +29,8 @@ DATABASES = {
         'NAME': 'ml_dashboard_production', # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10086/ml_dashboard_production',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': 10081,                      # Set to empty string for default. Not used with sqlite3.
+        'HOST': 'mongodb://metalayer:M3taM3ta@arrow.mongohq.com:27093/ml_dashboard_production',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': 27093,                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 

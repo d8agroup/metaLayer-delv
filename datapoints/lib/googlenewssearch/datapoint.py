@@ -16,9 +16,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Google News',
             'full_display_name':'Google News',
             'instructions':'Use this data point to search Google news.',
-            'image_large':'/static/images/lib/yoo/google_6464.png',
-            'image_medium':'/static/images/lib/yoo/google_4848.png',
-            'image_small':'/static/images/lib/yoo/google_2424.png',
+            'image_large':'/static/images/thedashboard/data_points/googlenews_large.png',
+            'image_medium':'/static/images/thedashboard/data_points/googlenews_medium.png',
+            'image_small':'/static/images/thedashboard/data_points/googlenews_small.png',
             'configured':False,
             'elements':[
                 {

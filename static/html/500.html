@@ -1,0 +1,15 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block page_title %}- Oh no{% endblock %}
+
+{% block body_class %}error_page{% endblock %}
+
+{% block page_body %}
+<div id="error_page">
+    <div id="error_inner">
+        <img src="/static/images/thecommunity/error_500_picture.jpeg" />
+        <h1>Oh no! Something happened that we didn't expect</h1>
+        <p>We know about this problem and will work to fix it, if you would like to, please leave us feedback about this.</p>
+    </div>
+</div>
+{% endblock %}

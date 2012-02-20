@@ -133,14 +133,14 @@ class Dashboard(Model):
     def single_data_point_for_image(self):
         for collection in self['collections']:
             for data_point in collection['data_points']:
-                return data_point['image_large']
+                return data_point['image_medium']
         return 'http://%s/80/80/no_image.png' % settings.SITE_HOST
 
     def four_data_points_for_image(self):
         data_points = []
         for collection in self['collections']:
             for data_point in collection['data_points']:
-                data_points.append(data_point['image_large'])
+                data_points.append(data_point['image_medium'])
         return data_points[:4]
 
     def tz(self):
@@ -148,6 +148,8 @@ class Dashboard(Model):
         end_times = [c['search_filters']['time'].split('%20TO%20')[1].strip(']') for c in self['collections'] if 'time' in c['search_filters']]
         start_time = self._pretty_date(min([int(t) for t in start_times])) if not '*' in start_times else 'Historic'
         end_time = self._pretty_date(max([int(t) for t in end_times])) if not '*' in end_times else 'Now'
+        if start_time == end_time:
+            return start_time
         return '%s to %s' % (start_time, end_time)
 
     def _pretty_date(self, time=False):

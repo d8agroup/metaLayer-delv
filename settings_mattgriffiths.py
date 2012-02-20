@@ -8,7 +8,11 @@ SITE_ID=u'4f1408ebc845b317df00000d'
 
 SITE_HOST='localhost:8000'
 
+SITE_HOST_SHORT = SITE_HOST
+
 STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
+
+DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
@@ -16,6 +20,13 @@ logging.basicConfig(
     level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
+
+DB_LOGGING = {
+    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
+    'database_name':'ml_dashboard',
+    'database_host':'localhost',
+    'database_port':27017
+}
 
 DATABASES = {
     'default': {

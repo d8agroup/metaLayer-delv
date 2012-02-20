@@ -89,16 +89,16 @@ class Visualization(VisualizationBase):
             "   }\n" \
             ");\n"
 
-        data_rows = ','.join(["['%s', %i]" % (f['name'], f['count']) for f in facets])
+        data_rows = ','.join(["['%s', %i]" % (f['name'].replace('\'', ''), f['count']) for f in facets])
         js = js.replace("{data_rows}", data_rows)
 
         background = [e for e in config['elements'] if e['name'] == 'background'][0]['value']
         if background == 'Dark':
             background_color = '#333333'
-            empty_region_color = '#444444'
+            empty_region_color = '#CCCCCC'
         else:
             background_color = '#FFFFFF'
-            empty_region_color = '#DDDDDD'
+            empty_region_color = '#CCCCCC'
 
         color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
         colors = self._generate_colors(color_scheme, 200)

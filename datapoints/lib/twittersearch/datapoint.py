@@ -15,9 +15,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Twitter',
             'full_display_name':'Twitter Search',
             'instructions':'Use this data point to search the public tweet stream.',
-            'image_large':'/static/images/lib/yoo/twitter_256256.png',
-            'image_medium':'/static/images/lib/yoo/twitter_4848.png',
-            'image_small':'/static/images/lib/yoo/twitter_2424.png',
+            'image_large':'/static/images/thedashboard/data_points/twitter_large.png',
+            'image_medium':'/static/images/thedashboard/data_points/twitter_medium.png',
+            'image_small':'/static/images/thedashboard/data_points/twitter_small.png',
             'configured':False,
             'elements':[
                 {
@@ -62,7 +62,7 @@ class DataPoint(BaseDataPoint):
         Logger.Info('%s - tick - started - with config: %s' % (__name__, config))
         keywords = [e for e in config['elements'] if e['name'] == 'keywords'][0]['value']
         keywords = quote(keywords)
-        url = 'http://search.twitter.com/search.json?q=%s&rpp=25' % keywords
+        url = 'http://search.twitter.com/search.json?q=%s&rpp=50' % keywords
         response = urlopen(url).read()
         Logger.Debug('%s - tick - raw response: %s' % (__name__, response))
         response = json.loads(response)
