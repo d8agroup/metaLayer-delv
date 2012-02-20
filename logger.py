@@ -55,11 +55,12 @@ class Logger(object):
 
 
 class LogMessage(Model):
-    host = settings.DB_LOGGING['database_host']
-    port = settings.DB_LOGGING['database_port']
-    database = settings.DB_LOGGING['database_name']
-    collection = 'log_messages'
-    #indices = ( Index('username'), )
+    class Meta:
+        host = settings.DB_LOGGING['database_host']
+        port = settings.DB_LOGGING['database_port']
+        database = settings.DB_LOGGING['database_name']
+        collection = 'log_messages'
+        #indices = ( Index('username'), )
 
     @classmethod
     def Create(cls, level, message):
