@@ -11,6 +11,8 @@ SITE_HOST='localhost:8000'
 
 SITE_HOST_SHORT = SITE_HOST
 
+IMAGE_HOST = '50.57.227.192'
+
 STATIC_ROOT = '%sstatic/' % YOUR_CODE_ROOT
 
 DYNAMIC_IMAGES_ROOT = '%simaging/CACHE/' % YOUR_CODE_ROOT
@@ -24,15 +26,14 @@ DB_LOGGING = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_mongodb_engine',
-        'NAME': 'ml_dashboard_tmcneal', 
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10063/ml_dashboard_tmcneal', 
-        'PORT': 10063,
+        'ENGINE': 'django_mongodb_engine', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'ml_dashboard_dev', # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10049/ml_dashboard_dev',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': 10049,                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
 
 TEMPLATE_DIRS = (
     '%sstatic/html/' % YOUR_CODE_ROOT

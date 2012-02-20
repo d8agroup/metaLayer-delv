@@ -10,6 +10,8 @@ SITE_HOST='localhost:8000'
 
 SITE_HOST_SHORT = SITE_HOST
 
+IMAGE_HOST = SITE_HOST
+
 STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
