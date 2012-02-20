@@ -1,3 +1,5 @@
+from minimongo.model import Model
+
 class Logger(object):
     @classmethod
     def Error(cls, message):
@@ -16,3 +18,6 @@ class Logger(object):
         import logging
         logger = logging.getLogger(__name__)
         logger.debug('USER %s' % message)
+
+
+class LogMessage(Model):

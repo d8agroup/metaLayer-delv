@@ -25,8 +25,8 @@ DATABASES = {
         'NAME': 'ml_dashboard_production', # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:10086/ml_dashboard_production',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': 10081,                      # Set to empty string for default. Not used with sqlite3.
+        'HOST': 'mongodb://metalayer:M3taM3ta@staff.mongohq.com:27093/ml_dashboard_production',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': 27093,                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
