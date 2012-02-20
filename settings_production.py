@@ -15,7 +15,7 @@ STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 
 DB_LOGGING = {
-    'logging_level':1, #0=ERROR, 1=INFO, 2=DEBUG
+    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
     'database_name':'ml_dashboard_production_logging',
     'database_host':'mongodb://metalayer:M3taM3ta@arrow.mongohq.com:27094/ml_dashboard_production_logging',
     'database_port':27094
