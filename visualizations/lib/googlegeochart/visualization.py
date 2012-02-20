@@ -89,7 +89,7 @@ class Visualization(VisualizationBase):
             "   }\n" \
             ");\n"
 
-        data_rows = ','.join(["['%s', %i]" % (f['name'], f['count']) for f in facets])
+        data_rows = ','.join(["['%s', %i]" % (f['name'].replace('\'', ''), f['count']) for f in facets])
         js = js.replace("{data_rows}", data_rows)
 
         background = [e for e in config['elements'] if e['name'] == 'background'][0]['value']
