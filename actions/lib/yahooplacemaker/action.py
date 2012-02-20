@@ -12,8 +12,8 @@ class Action(BaseAction):
             'name':'yahooplacemaker',
             'display_name_short':'Location',
             'display_name_long':'Location Detection',
-            'image_large':'/static/images/lib/aluminum/compass.png',
-            'image_small':'/static/images/lib/aluminum/compass.png',
+            'image_large':'/static/images/thedashboard/actions/location_small.png',
+            'image_small':'/static/images/thedashboard/actions/location_small.png',
             'instructions':'Yahoo Placemaker will extract location based information from content allowing you to visualize content on a map',
             'configured':False,
             'elements':[

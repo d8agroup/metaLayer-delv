@@ -91,7 +91,7 @@
                     );
             }
             var search_results_html = $("<div class='search_results_container'></div>");
-            search_results_html.append("<div class='waiting'>Loading <img src='/static/images/_thecommunity/loading_circle.gif'></div>")
+            search_results_html.append("<div class='waiting'>Loading <img src='/static/images/thedashboard/loading_circle.gif'></div>")
             collection_html.append(search_results_html);
 
             var run_search_function = function(collection)
