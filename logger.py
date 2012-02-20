@@ -1,7 +1,17 @@
 import datetime
+from threading import Thread
 from django.conf import settings
 from minimongo.model import Model
-from thedashboard.views import async
+
+def async(gen):
+    def func(*args, **kwargs):
+        it = gen(*args, **kwargs)
+        result = it.next()
+        Thread(target=lambda: list(it)).start()
+        return result
+    return func
+
+
 
 class Logger(object):
     @classmethod
