@@ -249,4 +249,3 @@ def load_remixes(request, insight_id, count):
     template_data = _base_template_data()
     template_data['insights']  = DashboardsController.GetRemixes(insight_id, int(count))
     return render_to_response( 'thecommunity/profile_page/insight_remixes.html', template_data )
-

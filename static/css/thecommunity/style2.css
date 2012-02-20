@@ -224,6 +224,10 @@ aside{ width:333px; float:left; }
 .collection .search_results { height:244px; overflow:auto; padding:0 5px;}
 .collection .search_results li { padding:5px 0 35px 0;; font-size:80%; }
 
+#error_page #error_inner { width:800px; margin:20px auto; text-align:center;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
+#error_page #error_inner img { width:500px; border:1px solid; }
+#error_page #error_inner img.portrait { width:300px; }
+#error_page #error_inner h1 { margin:20px; font-size:200%;}
 
 .jspVerticalBar { margin:20px;}
 .jspTrack { background-color:#444;}

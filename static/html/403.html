@@ -1,0 +1,14 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block page_title %}- Sorry you're not allowed to do that{% endblock %}
+
+{% block body_class %}error_page{% endblock %}
+
+{% block page_body %}
+<div id="error_page">
+    <div id="error_inner">
+        <img class="portrait" src="/static/images/thecommunity/error_403_picture.jpeg" />
+        <h1>Sorry, you're not allowed to do that</h1>
+    </div>
+</div>
+{% endblock %}
