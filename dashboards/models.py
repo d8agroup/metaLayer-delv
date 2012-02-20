@@ -148,6 +148,8 @@ class Dashboard(Model):
         end_times = [c['search_filters']['time'].split('%20TO%20')[1].strip(']') for c in self['collections'] if 'time' in c['search_filters']]
         start_time = self._pretty_date(min([int(t) for t in start_times])) if not '*' in start_times else 'Historic'
         end_time = self._pretty_date(max([int(t) for t in end_times])) if not '*' in end_times else 'Now'
+        if start_time == end_time:
+            return start_time
         return '%s to %s' % (start_time, end_time)
 
     def _pretty_date(self, time=False):

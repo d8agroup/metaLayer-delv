@@ -10,6 +10,8 @@ SITE_HOST='localhost:8000'
 
 STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
 
+DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
+
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 logging.basicConfig(

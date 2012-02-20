@@ -1,7 +1,7 @@
-from django.conf import settings
-from imaging.converters import SVGToPNGConverter
+import os
 import cairo
 import StringIO
+from logger import Logger
 
 class ImagingController(object):
     @classmethod
@@ -32,25 +32,23 @@ class ImagingController(object):
         string_io.seek(0)
         return string_io
 
-    def __init__(self, dashboard, max_width=0, max_height=0, fill_color=None):
-        self.dashboard = dashboard
-        self.max_width = max_width
-        self.max_height = max_height
-        self.fill_color = fill_color
-
-    def insight_image(self):
-        if self.dashboard.has_visualizations():
-            visualization_svg = self.dashboard.visualization_for_image()
-            image_string_io = SVGToPNGConverter.Convert(visualization_svg, self.max_width, self.max_height, self.fill_color)
-            return image_string_io
-        else:
-            return ImagingController.GenerateNotFoundImage(self.max_width, self.max_height, self.fill_color)
+    @classmethod
+    def ReadImageFromCache(cls, file_name, expiry_time):
+        try:
+            if os.path.getmtime(file_name) >= expiry_time:
+                return open(file_name, 'rb').read()
+            os.remove(file_name)
+        except OSError:
+            pass
+        return None
 
     @classmethod
-    def _html_color_to_rgb(self, color_string):
-        """ convert RRGGBB to an (R, G, B) tuple """
-        color_string = color_string.strip()
-        r, g, b = color_string[:2], color_string[2:4], color_string[4:]
-        r, g, b = [int(n, 16) for n in (r, g, b)]
-        return (float(r), float(g), float(b))
-
+    def WriteImageDataToCache(cls, file_name, image_data):
+        try:
+            image_data.seek(0)
+            output = open(file_name, 'wb')
+            output.write(image_data.read())
+            output.close()
+            image_data.seek(0)
+        except Exception, e:
+            Logger.Error('%s - ImagingController.WriteImageDataToCache - error: %s' % (__name__, e))
