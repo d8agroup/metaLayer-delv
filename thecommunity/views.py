@@ -56,9 +56,11 @@ def insight(request, user_name, insight_id):
 
 @login_required(login_url='/')
 def user_account(request):
+    template_data = _base_template_data()
+    #Add any new data you need in the template to this template_data dict
     return render_to_response(
         'thecommunity/account_page/account_page.html',
-            {},
+        template_data,
         context_instance=RequestContext(request)
     )
 
@@ -144,7 +146,7 @@ def current_subscription(request):
     current_active_subscription_name = user_subscriptions['active_subscription']
     current_active_subscription = settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][current_active_subscription_name]
     return render_to_response(
-        'thecommunity/account_page/account_page_user_account_management_current_subscription.html',
+        'thecommunity/account_page/_old/account_page_user_account_management_current_subscription.html',
         { 'subscription':current_active_subscription }
     )
 
@@ -160,7 +162,7 @@ def change_subscription(request):
             available_subscriptions = [settings.SUBSCRIPTIONS_SETTINGS['subscriptions'][sub] for sub in settings.SUBSCRIPTIONS_SETTINGS['subscriptions'].keys() if sub != current_active_subscription_name]
             Logger.Info('%s - change_subscription - finished' % __name__)
             return render_to_response(
-                'thecommunity/account_page/account_page_user_account_management_list_available_subscriptions.html',
+                'thecommunity/account_page/_old/account_page_user_account_management_list_available_subscriptions.html',
                     { 'subscriptions':available_subscriptions }
             )
         else:

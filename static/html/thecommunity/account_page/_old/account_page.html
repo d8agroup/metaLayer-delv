@@ -1,0 +1,62 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/account_page/account_page.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/account_page/account_page_user_account_management.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/account_page/account_page_user_account_management_change_subscription.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/account_page/account_page_user_account_management_current_subscription.js"></script>
+    <script type="text/javascript" language="JavaScript">
+        $(document).ready
+            (
+                function()
+                {
+                    $.get('/static/html/thecommunity/account_page/account_page_user_account_management.html', function(t) { $.template('account_page_user_account_management', t)});
+                    setTimeout( function() {$('#page').account_page();}, 500 );
+                }
+            );
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '140737952711154',
+                status     : true,
+                cookie     : true,
+                xfbml      : true,
+                oauth      : true
+            });
+        };
+        (function(d){
+            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            d.getElementsByTagName('head')[0].appendChild(js);
+        }(document));
+    </script>
+{% endblock %}
+
+{% block page_body %}
+<div id='page'>
+    <div id='account_page' class="page_block">
+        <h3>{{ user.username }}</h3>
+        <div class="page_block_inner">
+            <div class="clearfix">
+                <div class="left_column">
+                    <div id="social_media_accounts">
+                        <h4>Social Media Accounts</h4>
+                        <div class="social_media_account" id="facebook_account_container">
+                            <div id="fb-root"></div>
+                            <div class="fb-login-button" data-scope='user_status,offline_access,friends_status'>
+                        </div>
+                    </div>
+                </div>
+                <div class="right_column">
+                    <div id='account_management_container'>
+                        <div class="waiting">
+                            <p>Loading you subscription information <img src="/static/images/_thecommunity/loading_circle.gif" /></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
