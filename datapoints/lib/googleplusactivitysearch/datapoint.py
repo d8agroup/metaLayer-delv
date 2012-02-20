@@ -15,9 +15,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Google+',
             'full_display_name':'Google+ Search',
             'instructions':'Use this data point to search the public Google+ activity stream.',
-            'image_large':'/static/images/lib/yoo/google_plus_128128.png',
-            'image_medium':'/static/images/lib/yoo/google_plus_3232.png',
-            'image_small':'/static/images/lib/yoo/google_plus_2424.png',
+            'image_large':'/static/images/thedashboard/data_points/googleplus_large.png',
+            'image_medium':'/static/images/thedashboard/data_points/googleplus_medium.png',
+            'image_small':'/static/images/thedashboard/data_points/googleplus_small.png',
             'configured':False,
             'elements':[
                 {

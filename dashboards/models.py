@@ -133,14 +133,14 @@ class Dashboard(Model):
     def single_data_point_for_image(self):
         for collection in self['collections']:
             for data_point in collection['data_points']:
-                return data_point['image_large']
+                return data_point['image_medium']
         return 'http://%s/80/80/no_image.png' % settings.SITE_HOST
 
     def four_data_points_for_image(self):
         data_points = []
         for collection in self['collections']:
             for data_point in collection['data_points']:
-                data_points.append(data_point['image_large'])
+                data_points.append(data_point['image_medium'])
         return data_points[:4]
 
     def tz(self):

@@ -15,9 +15,9 @@ class DataPoint(BaseDataPoint):
             'display_name_short':'Feed',
             'full_display_name':'Web Feed (rss/atom)',
             'instructions':'Use this data point to subscribe to any web feed published using either rss or atom syndication.',
-            'image_large':'/static/images/lib/yoo/feed_256256.png',
-            'image_medium':'/static/images/lib/yoo/feed_4848.png',
-            'image_small':'/static/images/lib/yoo/feed_2424.png',
+            'image_large':'/static/images/thedashboard/data_points/feed_large.png',
+            'image_medium':'/static/images/thedashboard/data_points/feed_medium.png',
+            'image_small':'/static/images/thedashboard/data_points/feed_small.png',
             'configured':False,
             'elements':[
                 {
