@@ -81,7 +81,7 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .trading_box h3 { font-size:14px; color:#333; line-height:16px; font-weight:bold; padding:0 0 10px 0; margin:0px; }
 .trading_box ul {}
 .trading_box ul li { float:left; padding:0 6px 0 0; }
-.sidebar .trading_box ul li { float:left; padding:5px 10px 5px 0; }
+.sidebar .trading_box ul li { float:none; display:inline-block; padding:5px 10px 5px 0; }
 .discover_area { width:352px; padding:12px 0 0 65px; }
 .discover_area h3 { font-size:14px; color:#333; font-weight:bold; line-height:16px; padding:0 0 12px 50px; margin:0px; }
 .discover_area ul { }
