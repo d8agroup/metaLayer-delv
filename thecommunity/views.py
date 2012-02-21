@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.shortcuts import redirect, render_to_response
 from django.template.context import RequestContext
@@ -59,12 +60,38 @@ def insight(request, user_name, insight_id):
 @login_required(login_url='/')
 def user_account(request):
     template_data = _base_template_data()
-    #Add any new data you need in the template to this template_data dict
+    template_data['facebook_api_key'] = settings.FACEBOOK_SETTINGS['api_key']
+    template_data['facebook_permissions'] = ','.join(settings.FACEBOOK_SETTINGS['requested_permissions'])
+    
     return render_to_response(
         'thecommunity/account_page/account_page.html',
         template_data,
         context_instance=RequestContext(request)
     )
+
+@login_required(login_url='/')
+@csrf_exempt
+def link_facebook_profile(request):
+    """
+    Associates a Facebook profile to a metaLayer user account.
+    
+    """
+    
+    if not request.method == 'POST':
+        return redirect('/community/%s' % request.user.username)
+    
+    facebook_id = request.POST.get('facebook_id')
+    access_token = request.POST.get('access_token')
+    
+    controller = UserController(request.user)
+    passed, errors = controller.link_facebook_profile(facebook_id, access_token)
+    
+    # return profile pic location to caller so front-end can display profile picture
+    if passed:
+        return JSONResponse({'profile_picture': request.user.profile.profile_image() })
+    else:
+        return JSONResponse({'errors': errors })
+    
 
 def community_page(request):
     template_data = _base_template_data()

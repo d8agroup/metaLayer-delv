@@ -61,7 +61,7 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .banner h1 strong { color:#aa4040; }
 .banner_left { float:left; }
 .community_content { margin-bottom:1em; }
-.community_content .subsection { margin-bottom:3em; line-height:21px; }
+.community_content .subsection { margin-bottom:3em; line-height:21px; clear:both; }
 .community_content h2 { font-size:125%; margin-top:.5em; margin-bottom:.5em; }
 .slider { width:105px; float:left; }
 .slider ul {}
@@ -181,6 +181,8 @@ aside{ width:333px; float:left; }
 .insight .remixes ul li { display:inline-block; padding:15px 5px; }
 .profile_page .image_outer {position:relative; bottom:3px}
 
+.profile_pic_container { border:1px solid #D9D9D9; height:81px; min-height:81px; width:81px; }
+.profile_pic { background-position:50% 50%; background-repeat:no-repeat; border:4px solid #FFFFFF; height: 73px; width:73px; }
 
 #login_or_register_page table { width:1000px; margin:60px auto 60px; height:400px;}
 #login, #register { width:400px; min-height:200px; border:#d6dcd6 3px solid; margin:0px auto; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; behavior:url(PIE.htc); box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:16px 16px 0 19px; position:relative; }

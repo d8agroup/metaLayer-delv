@@ -4,9 +4,10 @@ from django.core.validators import email_re
 from django.conf import settings
 from chargifyapi.chargify import Chargify
 from logger import Logger
-from userprofiles.models import UserStatistics, UserSubscriptions
+from userprofiles.models import UserStatistics, UserSubscriptions, UserProfile
 from utils import empty
 import constants
+from integrations import facebook
 
 class UserController(object):
     def __init__(self, user):
@@ -114,6 +115,20 @@ class UserController(object):
         self.user.set_password(new_password1)
         self.user.save()
         
+        return True, []
+    
+    def link_facebook_profile(self, facebook_id, access_token):
+        Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)
+        
+        #TODO check for errors
+        
+        # save Facebook metadata to user profile
+        profile = self.user.profile
+        profile.linked_accounts = { 'facebook': { 'facebook_id': facebook_id, 'access_token': access_token } }
+        profile.save()
+        
+        
+        Logger.Info('%s - UserController.link_facebook_profile - finished' % __name__)
         return True, []
 
     def logout_user(self, request):

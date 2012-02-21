@@ -28,10 +28,30 @@
 		
 		<div class="subsection">
 			
-			<h2>Account Details</h2>
+			<h2>Profile Picture</h2>
 			
-			<a href="#">Associate profile with Facebook</a> <br />
-			<a href="#">Associate profile with Twitter</a> <br />
+			<div class="profile_pic_container" style="margin-bottom:.5em">
+				<!--<div style="background-image: url('http://graph.facebook.com/6101933/picture?type=normal')" class="profile_pic"></div>-->
+				{% if user.profile.profile_image %}
+					{% if request.is_secure %}
+						<div style="background-image: url('https://{{ user.profile.profile_image }}')" class="profile_pic"></div>
+					{% else %}
+						<div style="background-image: url('http://{{ user.profile.profile_image }}')" class="profile_pic"></div>
+					{% endif %}
+				{% else %}
+					<div style="background-image: url('/static/images/thecommunity/sample_profile_pic.png')" class="profile_pic"></div>
+				{% endif %}
+			</div>
+			
+			<div>
+				{% if user.profile.linked_via_facebook %}
+					<span id="associate_facebook_profile">Linked to Facebook</span> <br />
+				{% else %}
+					<span id="associate_facebook_profile"><a href="#" onclick="account.facebook.sign_in('{{ facebook_permissions }}');return false;">Associate Facebook profile</a></span> <br />
+				{% endif %}
+				
+				<span id="associate_twitter_profile"><a href="#">Associate Twitter profile</a></span> <br />
+			</div>
 			
 		</div>
 
@@ -62,5 +82,16 @@
 		</div>
 		
 	</div>
-		
+	
+	<!-- Begin Facebook integration snippet -->
+	<div id="fb-root"></div>
+	<script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	 FB.init({ appId: '{{ facebook_api_key }}', status: true, cookie: true, xfbml: true, frictionlessRequests: true, oauth: true });
+
+	</script>
+	<!-- End Facebook integration snippet -->
+	
+	<script src="/static/js/thecommunity/account_page/account_page.js" type="text/javascript"></script>
+	
 {% endblock %}

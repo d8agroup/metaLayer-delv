@@ -17,6 +17,30 @@ class UserProfile(models.Model):
         return {
             'number_of_insights':len(dc.get_saved_dashboards())
         }
+    
+    def profile_image(self):
+        """
+        Returns the URL of the user's profile image.
+        
+        Note that we do not include the protocol in the profile image URL so that 
+        the caller can determine whether to use 'http' or 'https'.
+        
+        """
+        
+        if 'facebook' in self.linked_accounts and 'facebook_id' in self.linked_accounts['facebook']:
+            return 'graph.facebook.com/%s/picture?type=normal' % self.linked_accounts['facebook']['facebook_id']
+        
+        #TODO add twitter logic here
+        
+        return None
+    
+    def linked_via_facebook(self):
+        """
+        Returns true if the user has linked their metaLayer account with their Facebook profile.
+        
+        """
+        return 'facebook' in self.linked_accounts and 'facebook_id' in self.linked_accounts['facebook']
+
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
