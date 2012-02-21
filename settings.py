@@ -3,6 +3,12 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mrmatthewgriffiths@gmail.com'
+EMAIL_HOST_PASSWORD = 'hellitifyoulike01'
+EMAIL_PORT = 587
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

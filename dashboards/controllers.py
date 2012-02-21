@@ -76,7 +76,7 @@ class DashboardsController(object):
     def get_live_dashboard(self, count=0):
         Logger.Info('%s - get_live_dashboard - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)
-        saved_dashboards = [d for d in saved_dashboards if 'live' in d['config'] and d['config']['live']]
+        saved_dashboards = [d for d in saved_dashboards if 'live' not in d['config'] or d['config']['live']]
         if count:
             saved_dashboards = saved_dashboards[:count]
         Logger.Info('%s - get_live_dashboard - finished' % __name__)
