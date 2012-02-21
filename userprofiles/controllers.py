@@ -72,7 +72,7 @@ class UserController(object):
         if registration_code:
             user.profile.registration_code = registration_code
         Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
-        return user
+        return True, []
 
     @classmethod
     def GetUserByUserName(cls, user_name):
