@@ -67,7 +67,7 @@ class _UserThread(threading.Thread):
         Logger.Debug('%s - AggregationController._UserThread.run - started with user: %s' % (__name__, self.user))
         all_data_points_with_actions = []
         dc = DashboardsController(self.user)
-        for dashboard in dc.get_saved_dashboards():
+        for dashboard in dc.get_live_dashboard():
             for collection in dashboard['collections']:
                 actions = collection['actions']
                 for data_point in collection['data_points']:

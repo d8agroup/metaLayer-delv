@@ -68,6 +68,15 @@ class DashboardsController(object):
         Logger.Info('%s - get_saved_dashboards - finished' % __name__)
         return saved_dashboards
 
+    def get_live_dashboard(self, count=0):
+        Logger.Info('%s - get_live_dashboard - started' % __name__)
+        saved_dashboards = Dashboard.AllForUser(self.user)
+        saved_dashboards = [d for d in saved_dashboards if 'live' in d['config'] and d['config']['live']]
+        if count:
+            saved_dashboards = saved_dashboards[:count]
+        Logger.Info('%s - get_live_dashboard - finished' % __name__)
+        return saved_dashboards
+
     def get_dashboard_by_id(self, id):
         Logger.Info('%s - get_dashboard_by_id - started' % __name__)
         Logger.Debug('%s - get_dashboard_by_id - started with id:%s' % (__name__, id))
