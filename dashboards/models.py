@@ -28,6 +28,7 @@ class Dashboard(Model):
             'collections':template['collections'] if template else {},
             'widgets':template['widgets'] if template else {},
             'active':False,
+            'deleted':False,
             'name':template['name'],
             'config':{}
         })
@@ -48,7 +49,7 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.AllForUser - started' % __name__)
         Logger.Debug('%s - Dashboard.AllForUser - started with user:%s' % (__name__, user))
         dashboards = Dashboard.collection.find({'username': user.username})
-        dashboards = [d for d in dashboards if d['active'] == True]
+        dashboards = [d for d in dashboards if d['active'] == True and d['deleted'] == False]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
         for dashboard in dashboards:
             dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
@@ -74,7 +75,7 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.Trending - started' % __name__)
         Logger.Debug('%s - Dashboard.Trending - started with count:%s' % (__name__, count))
         dashboards = Dashboard.collection.find()
-        dashboards = [d for d in dashboards if d['active']]
+        dashboards = [d for d in dashboards if d['active'] and not d['deleted']]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
         dashboards = dashboards[:int(count)]
         for dashboard in dashboards:
@@ -87,7 +88,7 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.Top - started' % __name__)
         Logger.Debug('%s - Dashboard.Top - started with count:%s' % (__name__, count))
         dashboards = Dashboard.collection.find()
-        dashboards = [d for d in dashboards if d['active']]
+        dashboards = [d for d in dashboards if d['active'] and not d['deleted']]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
         dashboards = dashboards[:int(count)]
         for dashboard in dashboards:
@@ -100,13 +101,19 @@ class Dashboard(Model):
         Logger.Info('%s - Dashboard.Recent - started' % __name__)
         Logger.Debug('%s - Dashboard.Recent - started with count:%s' % (__name__, count))
         dashboards = Dashboard.collection.find()
-        dashboards = [d for d in dashboards if d['active']]
+        dashboards = [d for d in dashboards if d['active'] and not d['deleted']]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
         dashboards = dashboards[:int(count)]
         for dashboard in dashboards:
             dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
         Logger.Info('%s - Dashboard.Recent - finished' % __name__)
         return dashboards
+
+    def delete(self):
+        self['deleted'] = True
+        self['active'] = False
+        self['config']['live'] = False
+        self.save()
 
     def save(self, *args, **kwargs):
         self['active'] = True if sum([len(c['data_points']) for c in self['collections'] if 'data_points' in c]) else False

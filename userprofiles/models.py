@@ -11,12 +11,22 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     linked_accounts = DictField()
     api_keys = ListField()
+    registration_code = models.TextField()
 
     def community_values(self):
         dc = DashboardsController(self.user)
         return {
             'number_of_insights':len(dc.get_saved_dashboards())
         }
+
+    def get_registration_type(self):
+        if self.registration_code:
+            for key in settings.REGISTRATION_CODES['codes']:
+                if self.registration_code in settings.REGISTRATION_CODES['codes'][key]:
+                    return key
+            return 'UNRECOGNISED'
+        return None
+
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

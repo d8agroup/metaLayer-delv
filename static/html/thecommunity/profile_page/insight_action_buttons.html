@@ -7,8 +7,6 @@
             {% else %}
                 <li><a href="/community/welcome"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
             {% endif %}
-        {% else %}
-            <li><a href="/dashboard/{{ insight.id }}">edit</a></li>
         {% endifnotequal %}
         <li><a href="/community/{{ profile_user.username }}/{{ insight.id }}"><img src="/static/images/thecommunity/link_share.jpg" alt="" /></a></li>
     </ul>

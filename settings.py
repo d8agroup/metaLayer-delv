@@ -258,6 +258,13 @@ INSIGHT_CATEGORIES = [
     'Technology'
 ]
 
+REGISTRATION_CODES = {
+    'codes':{
+        'TED':['12345', '23456'],
+    },
+    'require_code':True
+}
+
 import socket
 if socket.gethostname() in ['mattgriffiths']:
     from settings_mattgriffiths import *

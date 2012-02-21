@@ -60,6 +60,11 @@ class DashboardsController(object):
         dashboards = sorted(dashboards, key=lambda x: x['last_saved'], reverse=True)
         return dashboards[:count]
 
+    @classmethod
+    def DeleteDashboardById(cls, dashboard_id):
+        dashboard = DashboardsController.GetDashboardById(dashboard_id)
+        dashboard.delete()
+
     def get_saved_dashboards(self, count=0):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)

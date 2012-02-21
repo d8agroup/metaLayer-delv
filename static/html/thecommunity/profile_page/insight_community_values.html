@@ -1,15 +1,22 @@
-<ul class="community_data">
-    <li>{{ insight.community.views|floatformat }} Views</li>
-    {% if insight.community.remixes > 0 %}
-        <li>
-            <a class="remixes_link tool_tip" title="View remixes of this insight" data-insight_id='{{ insight.id }}'>
-                {{ insight.community.remixes|floatformat }} Remixes
-            </a>
-        </li>
-    {% else %}
-        <li>{{ insight.community.remixes|floatformat }} Remixes</li>
-    {% endif %}
-</ul>
+<div class="community_data">
+    <div class="owner_actions">
+        {% ifequal user profile_user %}
+            <a href="/dashboard/{{ insight.id }}" class="tool_tip" title='Edit this insight'>edit</a><span class="divider">|</span><a href="/community/delete_insight/{{ insight.id }}" class="tool_tip" title='Delete this insight'>delete</a>
+        {% endifequal %}
+    </div>
+    <ul>
+        <li>{{ insight.community.views|floatformat }} Views</li>
+        {% if insight.community.remixes > 0 %}
+            <li>
+                <a class="remixes_link tool_tip" title="View remixes of this insight" data-insight_id='{{ insight.id }}'>
+                    {{ insight.community.remixes|floatformat }} Remixes
+                </a>
+            </li>
+        {% else %}
+            <li>{{ insight.community.remixes|floatformat }} Remixes</li>
+        {% endif %}
+    </ul>
+</div>
 <div class="remixes" id="remixes_{{ insight.id }}">
     <ul>
         <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle_333333.gif" /></li>
