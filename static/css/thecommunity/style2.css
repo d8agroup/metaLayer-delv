@@ -54,11 +54,15 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .header_login ul li { font-size:12px; color:#333; line-height:28px; font-weight:bold; float:left; padding:0px 10px 0 5px; background:url(/static/images/thecommunity/header-login_sep.jpg) no-repeat right center; }
 .header_login ul li a { text-decoration:none; color:#333; }
 .header_login ul li.nobg { background:none; padding:0 0 0 5px; }
-.banner { width:820px; height:269px; border:#d6dcd6 3px solid; margin:0px auto; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; behavior:url(PIE.htc); box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:16px 16px 0 19px; position:relative; }
+.banner, .community_content { width:820px; border:#d6dcd6 3px solid; margin:0px auto; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; behavior:url(PIE.htc); box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:16px 16px 0 19px; position:relative; }
+.banner { height:269px; }
 .banner h1 { font-family:Arial, Helvetica, sans-serif; font-size:20px; text-align:center; color:#333; font-style:italic; font-weight:bold; line-height:26px; padding:0 0 18px 0; margin:0px; }
 .banner h1 span { color:#2e6098; }
 .banner h1 strong { color:#aa4040; }
 .banner_left { float:left; }
+.community_content { margin-bottom:1em; }
+.community_content .subsection { margin-bottom:3em; line-height:21px; }
+.community_content h2 { font-size:125%; margin-top:.5em; margin-bottom:.5em; }
 .slider { width:105px; float:left; }
 .slider ul {}
 .slider ul li { padding:0 0 5px 0; }
@@ -190,6 +194,11 @@ aside{ width:333px; float:left; }
 #register .form-row label { display:inline-block; width:40%; }
 #register .form-row input { display:inline-block; width:50%; }
 #register .action-row input { width:100%; margin:20px 0;}
+#change_password .form-row { margin-top: 5px; }
+#change_password .form-row label { display:inline-block; width:175px; }
+#change_password .form-row input { display:inline-block; width:200px; }
+#change_password .action-row input { width:100%; margin:20px 0; }
+#change_password input[type=button], #change_password input[type=submit] { width: 250px; }
 
 .insight_page #user_and_insight_details { background-color:#FFF; margin:0 25px 0 5px; min-height:150px; padding-bottom:15px;}
 .insight_page .user_details h2 { font-size:200%; padding:20px; float:right;}

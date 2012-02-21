@@ -126,3 +126,10 @@ def format_template_and_json_response(template, context, data):
         data = data
     return_data = { "template":html, "data": data }
     return JSONResponse(return_data)
+
+def empty(str):
+    """
+    Returns true if the given string is empty.
+    
+    """
+    return not str or not str.strip()

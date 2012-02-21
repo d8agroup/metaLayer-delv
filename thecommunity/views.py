@@ -135,6 +135,42 @@ def login_or_register(request):
                 )
         return redirect('/community/%s' % request.user.username)
 
+@login_required(login_url='/')
+def change_password(request):
+    """
+    Allows logged-in user to change their password.
+    
+    """
+    
+    Logger.Info("%s - change_password - started" % __name__)
+    if not request.method == 'POST':
+        return redirect('/community/%s' % request.user.username)
+    
+    current_password = request.POST.get('current_password')
+    new_password = request.POST.get('new_password')
+    confirm_password = request.POST.get('confirm_password')
+    
+    passed, errors = UserController.ChangePassword(request, request.user, current_password, new_password, confirm_password)
+    
+    template_data = _base_template_data()
+    
+    if errors:
+        template_data['messages'] = errors
+        template_data['current_password'] = current_password
+        template_data['new_password'] = new_password
+        template_data['confirm_password'] = confirm_password
+    else:
+        template_data['messages'] = ['Your password has been changed successfully!']
+    
+    Logger.Info('%s - change_password - finished' % __name__)
+    
+    return render_to_response(
+        'thecommunity/account_page/account_page.html',
+        template_data,
+        context_instance=RequestContext(request)
+    )
+    
+
 def logout(request):
     uc = UserController(request.user)
     uc.logout_user(request)

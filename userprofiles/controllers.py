@@ -5,6 +5,8 @@ from django.conf import settings
 from chargifyapi.chargify import Chargify
 from logger import Logger
 from userprofiles.models import UserStatistics, UserSubscriptions
+from utils import empty
+import constants
 
 class UserController(object):
     def __init__(self, user):
@@ -48,7 +50,7 @@ class UserController(object):
         Logger.Info('%s - UserController.RegisterUser - started' % __name__)
         Logger.Debug('%s - UserController.RegisterUser - started with request:%s and username:%s and password1:%s and password2:%s' % (__name__, request, username, password1, password2))
         errors = []
-        if not username or not username.strip() or not bool(email_re.search(username)):
+        if empty(username) or not bool(email_re.search(username)):
             errors.append('You have not entered a valid email address')
         try:
             User.objects.get(username=username)
@@ -58,8 +60,10 @@ class UserController(object):
         if errors:
             Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
             return False, errors
-        if len(password1) < 6:
-            errors.append('Your password must be at least 6 characters long')
+        
+        passed, rules_errors = _check_password_rules(password1)
+        if not passed:
+            errors += rules_errors
         if password1 != password2:
             errors.append('The passwords you entered don\'t match')
         if errors:
@@ -74,6 +78,43 @@ class UserController(object):
     @classmethod
     def GetUserByUserName(cls, user_name):
         return User.objects.get(username=user_name)
+        
+    def change_password(self, request, password, new_password1, new_password2):
+        Logger.Info('%s - UserController.ChangePassword - started' % __name__)
+        Logger.Debug('%s - UserController.ChangePassword - started with request:%s and password:%s and new_password1:%s and new_password2:%s' 
+                % (__name__, request, password, new_password1, new_password2))
+        errors = []
+        if not self.user:
+            errors.append(constants.USER_DOES_NOT_EXIST)
+        
+        if empty(password):
+            errors.append(constants.PASSWORD_BLANK)
+        
+        if empty(new_password1):
+            errors.append(constants.NEW_PASSWORD_BLANK)
+        
+        if empty(new_password2):
+            errors.append(constants.CONFIRM_PASSWORD_BLANK)
+        
+        if new_password1 != new_password2:
+            errors.append(constants.NEW_PASSWORD_MISMATCH)
+        
+        if len(errors) > 0:
+            return False, errors
+        
+        if not self.user.check_password(password):
+            return False, [constants.PASSWORD_INCORRECT]
+        
+        # Verify password rules
+        passed, rules_errors = _check_password_rules(new_password1)
+        if not passed:
+            return False, rules_errors
+        
+        # Request is valid. Let's change the password.
+        self.user.set_password(new_password1)
+        self.user.save()
+        
+        return True, []
 
     def logout_user(self, request):
         Logger.Info('%s - UserController.logout_user - started' % __name__)
@@ -183,5 +224,19 @@ class UserController(object):
         number_of_saved_dashboards = active_subscription_config['config']['number_of_saved_dashboards']
         Logger.Info('%s - UserController.maximum_number_of_saved_dashboards_allowed_by_subscription - finished' % __name__)
         return number_of_saved_dashboards
+
+
+def _check_password_rules(new_password):
+    """
+    Verify that the given password matches the rules for this site.
+    
+    """
+    
+    if len(new_password) < 6:
+        return False, [constants.PASSWORD_TOO_SHORT]
+    
+    return True, []
+
+
 
 

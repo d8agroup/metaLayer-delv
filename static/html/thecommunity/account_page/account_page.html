@@ -13,5 +13,54 @@
 {% endblock %}
 
 {% block page_body %}
-    <h1>Account page HTML here</h1>
+
+	{% if messages %}
+		<div id="error_page">
+			<div id="error_inner">
+		{% for message in messages %}
+			<strong>{{ message }}</strong> <br />
+		{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	
+	<div class="community_content">
+		
+		<div class="subsection">
+			
+			<h2>Account Details</h2>
+			
+			<a href="#">Associate profile with Facebook</a> <br />
+			<a href="#">Associate profile with Twitter</a> <br />
+			
+		</div>
+
+		<div class="subsection" id="change_password">
+			
+			<h2>Change Password</h2>
+		
+			<form name="change-password" method="post" action="/community/change_password">
+				{% csrf_token %}
+
+				<div class="form-row clearfix">
+					<label for="current_password">Current Password:</label>
+					<input name="current_password" type="password" value="{{ current_password }}"/>
+				</div>
+				<div class="form-row clearfix">
+					<label for="new_password">New Password:</label>
+					<input name="new_password" type="password" value="{{ new_password }}"/>
+				</div>
+				<div class="form-row clearfix">
+					<label for="confirm_password">Confirm Password:</label>
+					<input name="confirm_password" type="password" value="{{ confirm_password }}"/>
+				</div>
+				<div class="action-row clearfix">
+					<input type="submit" name="change_password" value="change password" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false">
+				</div>
+				
+			</form>
+		</div>
+		
+	</div>
+		
 {% endblock %}
