@@ -40,6 +40,7 @@
             {
                 event.preventDefault();
                 container.parents('.collection_container').dashboard_collection('remove_visualization', visualization.id);
+                container.remove();
                 track_event('visualization', 'remove', visualization.name);
             };
 

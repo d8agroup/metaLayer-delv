@@ -76,7 +76,7 @@ class Dashboard(Model):
         Logger.Debug('%s - Dashboard.Trending - started with count:%s' % (__name__, count))
         dashboards = Dashboard.collection.find()
         dashboards = [d for d in dashboards if d['active'] and not d['deleted']]
-        dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
+        dashboards = sorted(dashboards, key=lambda dashboard: dashboard['community']['views'], reverse=True)
         dashboards = dashboards[:int(count)]
         for dashboard in dashboards:
             dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
@@ -87,6 +87,9 @@ class Dashboard(Model):
     def Top(cls, count):
         Logger.Info('%s - Dashboard.Top - started' % __name__)
         Logger.Debug('%s - Dashboard.Top - started with count:%s' % (__name__, count))
+        Logger.Info('%s - Dashboard.Top - finished' % __name__)
+        return Dashboard.Trending(count)
+        """
         dashboards = Dashboard.collection.find()
         dashboards = [d for d in dashboards if d['active'] and not d['deleted']]
         dashboards = sorted(dashboards, key=lambda dashboard: dashboard['last_saved'], reverse=True)
@@ -95,6 +98,7 @@ class Dashboard(Model):
             dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
         Logger.Info('%s - Dashboard.Top - finished' % __name__)
         return dashboards
+        """
 
     @classmethod
     def Recent(cls, count):
