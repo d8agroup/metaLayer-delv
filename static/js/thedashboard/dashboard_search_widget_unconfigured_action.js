@@ -5,10 +5,12 @@
 {
     $.fn.dashboard_unconfigured_action = function(action)
     {
-        var cancel_button_click_function = function(event, container, action_id)
+        var cancel_button_click_function = function(event, container, action)
         {
+            var action_id = action.id;
             event.preventDefault();
             container.parents('.search_widget').dashboard_search_widget('remove_action', action_id);
+            track_event('action', 'removed', action.name);
         };
         var save_button_click_function = function(event, container, action)
         {
@@ -68,7 +70,7 @@
         var unconfigured_action_html = $.tmpl('dashboard_unconfigured_action', action);
         unconfigured_action_html.find('.cancel').click
             (
-                function(event) { cancel_button_click_function(event, dashboard_unconfigured_action, action.id); }
+                function(event) { cancel_button_click_function(event, dashboard_unconfigured_action, action); }
             );
         unconfigured_action_html.find('.save').click
             (

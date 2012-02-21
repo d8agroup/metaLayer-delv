@@ -5,10 +5,12 @@
 {
     $.fn.dashboard_unconfigured_data_point = function(data_point)
     {
-        var cancel_button_click_function = function(event, container, data_point_id)
+        var cancel_button_click_function = function(event, container, data_point)
         {
+            var data_point_id = data_point.id;
             event.preventDefault();
             container.parents('.search_widget').dashboard_search_widget('remove_data_point', data_point_id);
+            track_event('data_point', 'removed', data_point.type);
         };
         var save_button_click_function = function(event, container, data_point)
         {
@@ -69,7 +71,7 @@
         var unconfigured_data_point_html = $.tmpl('dashboard_unconfigured_data_point', data_point);
         unconfigured_data_point_html.find('.cancel').click
             (
-                function(event) { cancel_button_click_function(event, dashboard_unconfigured_data_point, data_point.id); }
+                function(event) { cancel_button_click_function(event, dashboard_unconfigured_data_point, data_point); }
             );
         unconfigured_data_point_html.find('.save').click
             (

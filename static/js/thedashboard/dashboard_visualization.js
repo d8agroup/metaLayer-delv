@@ -36,10 +36,11 @@
                 return unconfigurable > 0;
             };
 
-            var remove_click_function = function(event, container, visualization_id)
+            var remove_click_function = function(event, container, visualization)
             {
                 event.preventDefault();
-                container.parents('.collection_container').dashboard_collection('remove_visualization', visualization_id);
+                container.parents('.collection_container').dashboard_collection('remove_visualization', visualization.id);
+                track_event('visualization', 'remove', visualization.name);
             };
 
             var save_button_clicked = function(event, container, visualization)
@@ -81,7 +82,7 @@
             if (visualization_is_unconfigurable(visualization_container, visualization))
             {
                 var visualization_html = $.tmpl('unconfigurable_visualization_container', visualization);
-                visualization_html.find('.remove').click(function(e) { remove_click_function(e, visualization_container, visualization.id); });
+                visualization_html.find('.remove').click(function(e) { remove_click_function(e, visualization_container, visualization); });
                 visualization_container.append(visualization_html);
                 visualization_container.find('.remove, .save').button();
                 return visualization_container;

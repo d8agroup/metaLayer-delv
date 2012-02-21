@@ -87,6 +87,14 @@ function access_api_key_store_value(key)
     return (store != null) ? store[key] : '';
 }
 
+function track_event(category, action, label)
+{
+    if (label != null)
+        _gaq.push(['_trackEvent', category, action, label]);
+    else
+        _gaq.push(['_trackEvent', category, action]);
+}
+
 $(document).ready
 (
     function()
