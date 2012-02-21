@@ -177,7 +177,8 @@ def change_password(request):
     new_password = request.POST.get('new_password')
     confirm_password = request.POST.get('confirm_password')
     
-    passed, errors = UserController.ChangePassword(request, request.user, current_password, new_password, confirm_password)
+    controller = UserController(request.user)
+    passed, errors = controller.change_password(current_password, new_password, confirm_password)
     
     template_data = _base_template_data()
     

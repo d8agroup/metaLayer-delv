@@ -80,10 +80,10 @@ class UserController(object):
     def GetUserByUserName(cls, user_name):
         return User.objects.get(username=user_name)
         
-    def change_password(self, request, password, new_password1, new_password2):
+    def change_password(self, password, new_password1, new_password2):
         Logger.Info('%s - UserController.ChangePassword - started' % __name__)
-        Logger.Debug('%s - UserController.ChangePassword - started with request:%s and password:%s and new_password1:%s and new_password2:%s' 
-                % (__name__, request, password, new_password1, new_password2))
+        Logger.Debug('%s - UserController.ChangePassword - started with password:%s and new_password1:%s and new_password2:%s' 
+                % (__name__, password, new_password1, new_password2))
         errors = []
         if not self.user:
             errors.append(constants.USER_DOES_NOT_EXIST)
