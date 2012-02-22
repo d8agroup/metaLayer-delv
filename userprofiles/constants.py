@@ -12,3 +12,6 @@ NEW_PASSWORD_MISMATCH = 'Confirmed password does not match new password'
 PASSWORD_INCORRECT = 'Sorry, the password you entered is incorrect'
 PASSWORD_TOO_SHORT = 'Your password must be at least 6 characters long'
 
+# link facebook profile
+FACEBOOK_ID_MISSING = 'Facebook ID is missing from request'
+FACEBOOK_ACCESS_TOKEN_MISSING = 'Facebook access token is missing from request'

@@ -52,6 +52,39 @@ def test_passwords_blank():
     assert constants.CONFIRM_PASSWORD_BLANK in errors, errors
     assert constants.PASSWORD_BLANK in errors, errors
 
+def test_get_profile_image_none():
+    
+    assert test_user.profile.profile_image() == None, test_user.profile.profile_image()
+
+def test_link_facebook_profile_missing_facebook_id():
+    
+    passed, errors = controller.link_facebook_profile('', 'bogus_access_token')
+    
+    assert not passed
+    assert constants.FACEBOOK_ID_MISSING in errors, errors
+
+def test_link_facebook_profile_missing_access_token():
+    
+    passed, errors = controller.link_facebook_profile('bogus_facebook_id', None)
+    
+    assert not passed
+    assert constants.FACEBOOK_ACCESS_TOKEN_MISSING in errors, errors
+
+def test_link_facebook_profile_success():
+    
+    # Note that we don't validate that facebook id and access token are legit
+    facebook_id = 'bogus_fb_id'
+    access_token = 'bogus_access_token'
+    
+    passed, errors = controller.link_facebook_profile(facebook_id, access_token)
+    
+    assert passed
+    assert test_user.profile.profile_image() == 'graph.facebook.com/%s/picture?type=normal' % facebook_id, test_user.profile.profile_image()
+
+def teardown():
+    
+    test_user.delete()
+
 """
 def test_remove_linked_accounts():
     

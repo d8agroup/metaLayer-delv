@@ -122,14 +122,25 @@ class UserController(object):
     
     def link_facebook_profile(self, facebook_id, access_token):
         Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)
+        Logger.Debug('%s - UserController.link_facebook_profile - started with facebook_id:%s and access_token:%s' 
+                % (__name__, facebook_id, access_token))
         
-        #TODO check for errors
+        if not self.user:
+            errors.append(constants.USER_DOES_NOT_EXIST)
+        
+        if empty(facebook_id):
+            errors.append(constants.FACEBOOK_ID_MISSING)
+        
+        if empty(access_token):
+            errors.append(constants.FACEBOOK_ACCESS_TOKEN_MISSING)
+        
+        if len(errors) > 0:
+            return False, errors
         
         # save Facebook metadata to user profile
         profile = self.user.profile
         profile.linked_accounts = { 'facebook': { 'facebook_id': facebook_id, 'access_token': access_token } }
         profile.save()
-        
         
         Logger.Info('%s - UserController.link_facebook_profile - finished' % __name__)
         return True, []
