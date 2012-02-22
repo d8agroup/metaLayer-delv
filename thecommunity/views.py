@@ -62,6 +62,7 @@ def user_account(request):
     template_data = _base_template_data()
     template_data['facebook_api_key'] = settings.FACEBOOK_SETTINGS['api_key']
     template_data['facebook_permissions'] = ','.join(settings.FACEBOOK_SETTINGS['requested_permissions'])
+    template_data['twitter_api_key'] = settings.TWITTER_SETTINGS['api_key']
     
     return render_to_response(
         'thecommunity/account_page/account_page.html',
@@ -202,6 +203,10 @@ def change_password(request):
     else:
         template_data['messages'] = ['Your password has been changed successfully!']
     
+    template_data['facebook_api_key'] = settings.FACEBOOK_SETTINGS['api_key']
+    template_data['facebook_permissions'] = ','.join(settings.FACEBOOK_SETTINGS['requested_permissions'])
+    template_data['twitter_api_key'] = settings.TWITTER_SETTINGS['api_key']
+    
     Logger.Info('%s - change_password - finished' % __name__)
     
     return render_to_response(
@@ -209,7 +214,41 @@ def change_password(request):
         template_data,
         context_instance=RequestContext(request)
     )
+
+def change_email_opt_in(request):    
+    """
+    Allows user to opt in or opt out of email newsletters.
     
+    """
+    
+    Logger.Info("%s - change_email_opt_in - started" % __name__)
+    if not request.method == 'POST':
+        return redirect('/community/%s' % request.user.username)
+    
+    opt_in_status = request.POST.get('opt_in_status')
+    
+    controller = UserController(request.user)
+    passed, errors = controller.change_email_opt_in(opt_in_status)
+    
+    template_data = _base_template_data()
+    
+    if errors:
+        template_data['messages'] = errors
+        template_data['opt_in_status'] = opt_in_status
+    else:
+        template_data['messages'] = ['Your email opt-in status has been updated successfully.']
+    
+    template_data['facebook_api_key'] = settings.FACEBOOK_SETTINGS['api_key']
+    template_data['facebook_permissions'] = ','.join(settings.FACEBOOK_SETTINGS['requested_permissions'])
+    template_data['twitter_api_key'] = settings.TWITTER_SETTINGS['api_key']
+    
+    Logger.Info('%s - change_email_opt_in - finished' % __name__)
+    
+    return render_to_response(
+        'thecommunity/account_page/account_page.html',
+        template_data,
+        context_instance=RequestContext(request)
+    )
 
 def logout(request):
     uc = UserController(request.user)

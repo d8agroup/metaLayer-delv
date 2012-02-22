@@ -6,50 +6,46 @@
     };
 })( jQuery );
 
-
-
-FB.Event.subscribe('auth.authResponseChange', function(response) {
-  
-  if (response.authResponse && response.status == "connected") {
-      
-      // user has chosen to link their Facebook profile to this account
-      
-      $.ajax({
-         type: "POST",
-         url: "/community/save_facebook_profile",
-         data: "facebook_id=" + response.authResponse.userID + "&access_token=" + response.authResponse.accessToken,
-         dataType: "json",
-         success: function(response) {
-            $("#associate_facebook_profile").text("Linked to Facebook");
-            
-            $(".profile_pic").css("background-image", "url('" + window.location.protocol + "//" + response.profile_picture + "')");
-         },
-         error: function(response) {
-            alert('An error occurred when linking Facebook profile.');
-         }
-      });
-   }
-   
-});
-
-FB.Event.subscribe('auth.statusChange', function(response) {
-  
-  if (response.authResponse && response.status == "connected") {
-      // NO-OP - user is already connected via Facebook
-   }
-   
-});
-
 var account = {
    
    facebook: {
+      
+      init: function() {
+         FB.Event.subscribe('auth.authResponseChange', function(response) {
+
+           if (response.authResponse && response.status == "connected") {
+
+               // user has chosen to link their Facebook profile to this account
+
+               $.ajax({
+                  type: "POST",
+                  url: "/community/save_facebook_profile",
+                  data: "facebook_id=" + response.authResponse.userID + "&access_token=" + response.authResponse.accessToken,
+                  dataType: "json",
+                  success: function(response) {
+                     $("#associate_facebook_profile").text("Linked to Facebook");
+
+                     $(".profile_pic").css("background-image", "url('" + window.location.protocol + "//" + response.profile_picture + "')");
+                  },
+                  error: function(response) {
+                     alert('An error occurred when linking Facebook profile.');
+                  }
+               });
+            }
+
+         });
+         
+      },
+      
       sign_in: function(requested_permissions) {
          FB.login(function(response) {}, { scope: requested_permissions });
       }
    },
    
-   twitter: function() {
-      
+   twitter: {
+      sign_in: function() {
+    	  twttr.anywhere(function (T) { T.signIn(); });
+      }
    }
    
 }

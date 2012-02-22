@@ -84,8 +84,8 @@ class UserController(object):
         return User.objects.get(username=user_name)
         
     def change_password(self, password, new_password1, new_password2):
-        Logger.Info('%s - UserController.ChangePassword - started' % __name__)
-        Logger.Debug('%s - UserController.ChangePassword - started with password:%s and new_password1:%s and new_password2:%s' 
+        Logger.Info('%s - UserController.change_password - started' % __name__)
+        Logger.Debug('%s - UserController.change_password - started with password:%s and new_password1:%s and new_password2:%s' 
                 % (__name__, password, new_password1, new_password2))
         errors = []
         if not self.user:
@@ -118,7 +118,28 @@ class UserController(object):
         self.user.set_password(new_password1)
         self.user.save()
         
+        Logger.Info('%s - UserController.change_password - finished' % __name__)
         return True, []
+    
+    def change_email_opt_in(self, opt_in_status):
+        Logger.Info('%s - UserController.change_email_opt_in - started' % __name__)
+        Logger.Debug('%s - UserController.change_email_opt_in - started with opt_in_status: %s'
+                % (__name__, opt_in_status))
+        
+        if empty(opt_in_status):
+            return False, [constants.OPT_IN_STATUS_MISSING]
+        
+        profile = self.user.profile
+        
+        if 'email' not in profile.contact_options:
+            profile.contact_options['email'] = {}
+        profile.contact_options['email']['opt_in_status'] = True if opt_in_status == 'Y' else False
+        
+        profile.save()
+        
+        Logger.Info('%s - UserController.change_email_opt_in - finished' % __name__)
+        return True, []
+        
     
     def link_facebook_profile(self, facebook_id, access_token):
         Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)
