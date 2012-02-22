@@ -54,6 +54,22 @@
         }
     };
 
+    var show_templates_click = function(event, link)
+    {
+        if (link.is('.open'))
+        {
+            $('.insight_template').slideUp();
+            link.removeClass('open');
+            link.html('Show Templates');
+        }
+        else
+        {
+            $('.insight_template').slideDown();
+            link.addClass('open');
+            link.html('Hide Templates');
+        }
+    }
+
     var init_social_buttons = function()
     {
         /*Facebook*/
@@ -81,5 +97,6 @@
         //$('.activity').jScrollPane();
         $('.remixes_link').click(function(event){remixes_click(event, $(this));});
         $('.like_link').click(function(event){like_click(event, $(this));});
+        $('.show_templates').click(function(event){show_templates_click(event, $(this)); })
     };
 })(jQuery);

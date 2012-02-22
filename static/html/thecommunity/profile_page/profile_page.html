@@ -86,8 +86,14 @@
                 {% else %}
                     <h2>{{ profile_user.username }}'s Recent Activity</h2>
                 {% endifequal %}
-                {% if my_activity|length < 3 %}
+                {% if my_activity|length == 0 %}
                     {% include 'thecommunity/profile_page/insight_templates.html' %}
+                {% else %}
+                    {% if my_activity|length < 5 %}
+                        <div class="minimized">
+                            {% include 'thecommunity/profile_page/insight_templates.html' with minimized=True %}
+                        </div>
+                    {% endif %}
                 {% endif %}
                 <ul class="activity">
                     {% for insight in my_activity %}
