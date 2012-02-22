@@ -70,5 +70,9 @@ CHARGIFY_SETTINGS = {
     'subdomain':'metalayer-dashboard'
 }
 
+FACEBOOK_SETTINGS = {
+    'api_key': '140737952711154',
+    'requested_permissions': ['offline_access']
+}
 
 

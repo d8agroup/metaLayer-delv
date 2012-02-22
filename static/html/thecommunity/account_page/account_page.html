@@ -31,16 +31,7 @@
 			<h2>Profile Picture</h2>
 			
 			<div class="profile_pic_container" style="margin-bottom:.5em">
-				<!--<div style="background-image: url('http://graph.facebook.com/6101933/picture?type=normal')" class="profile_pic"></div>-->
-				{% if user.profile.profile_image %}
-					{% if request.is_secure %}
-						<div style="background-image: url('https://{{ user.profile.profile_image }}')" class="profile_pic"></div>
-					{% else %}
-						<div style="background-image: url('http://{{ user.profile.profile_image }}')" class="profile_pic"></div>
-					{% endif %}
-				{% else %}
-					<div style="background-image: url('/static/images/thecommunity/sample_profile_pic.png')" class="profile_pic"></div>
-				{% endif %}
+				{% include 'thecommunity/shared/profile_picture.html' with user=user %}
 			</div>
 			
 			<div>

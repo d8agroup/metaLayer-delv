@@ -126,10 +126,10 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 section{ width:872px; padding:7px 0 0 10px; margin:0px auto; min-height: 500px;}
 aside{ width:333px; float:left; }
 .left{ width:310px; }
-.left_top{ width:310px; padding-bottom:20px; background-color:#FFF; }
-.left_top img{ padding:5px 0 0 6px; float:left; margin-right:6px; }
-.left_top h2{ color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:9px 0 9px 9px; margin-bottom:7px; }
-.left_top span{ color:#7e7d7d; font-family:Arial, Helvetica, sans-serif; font-size:12px; padding:9px 0 9px 9px; }
+.left_top { width:310px; padding-bottom:20px; background-color:#FFF; height:80px; padding:10px 0 10px;}
+.left_top .profile_image_container { float:left; margin:0 10px; }
+.left_top h2 { color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:10px 0; margin-bottom:7px; }
+.left_top span{ color:#7e7d7d; font-family:Arial, Helvetica, sans-serif; font-size:12px; padding:0; }
 .usr_info{ background:url(/static/images/thecommunity/user_info_bg.jpg) top center repeat-x; height:95px; width:290px; margin:24px 0 0 10px; }
 .usr_info ul{ }
 .usr_info ul li{ background:url(/static/images/thecommunity/user_info_nav_sep.jpg) center right no-repeat; display:inline; float:left; padding-left:12px; padding-right:10px; }

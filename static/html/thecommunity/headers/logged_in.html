@@ -4,19 +4,10 @@
         <div class="header_right">
             <div class="header_logout">
                 <ul>
-                    {% ifequal request.path '/community/' %}
-                        <li><a href="/community/{{ user.username }}">Home</a></li>
-                    {% else %}
-                        {% ifnotequal user profile_user %}
-                            <li><a href="/community/{{ user.username }}">Home</a></li>
-                        {% endifnotequal %}
-                        <li><a href="/community">Community</a></li>
-                    {% endifequal %}
-                    {% ifequal context 'dashboard' %}
-                        <li><a id="configure_link">Configure</a></li>
-                    {% else %}
-                        <li><a href="/dashboard/new/1">Create</a></li>
-                    {% endifequal %}
+                    <li><a href="/community">Community</a></li>
+                    <li><a href="/community/{{ user.username }}">Home</a></li>
+                    <li><a href="/community/{{ user.username }}/account">Account</a></li>
+                    <li><a href="/dashboard/new/1">Create</a></li>
                     <li class="nobg"><a href="/community/logout">Logout</a></li>
                 </ul>
             </div>

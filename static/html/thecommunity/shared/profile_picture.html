@@ -1,0 +1,9 @@
+{% if user.profile.profile_image %}
+    {% if request.is_secure %}
+        <div style="background-image: url('https://{{ user.profile.profile_image }}')" class="profile_pic"></div>
+    {% else %}
+        <div style="background-image: url('http://{{ user.profile.profile_image }}')" class="profile_pic"></div>
+    {% endif %}
+{% else %}
+    <div style="background-image: url('/static/images/thecommunity/sample_profile_pic.png')" class="profile_pic"></div>
+{% endif %}
