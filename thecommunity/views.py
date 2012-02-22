@@ -12,7 +12,8 @@ def _base_template_data():
     return {
         'short_url':settings.SITE_HOST_SHORT,
         'site_url':settings.SITE_HOST,
-        'image_url':settings.IMAGE_HOST
+        'image_url':settings.IMAGE_HOST,
+        'facebook_app_id':settings.FACEBOOK_SETTINGS['api_key']
     }
 
 def xd_receiver(request):
