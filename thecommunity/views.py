@@ -152,6 +152,16 @@ def logout(request):
     uc.logout_user(request)
     return redirect(community_page)
 
+def create_from_template(request):
+    template_name = request.POST['template_name']
+    template = [t for t in settings.DASHBOARD_TEMPLATES if t['name'] == template_name][0]
+    template = template['template']
+    template['username'] = request.user.username
+    dc = DashboardsController(request.user)
+    db = dc.create_new_dashboard_from_settings(template)
+    return redirect('/dashboard/%s' % db.id)
+
+
 def delete_insight(request, insight_id):
     Logger.Info('%s - dashboard_delete - started' % __name__)
     Logger.Debug('%s - dashboard_delete - started with id:%s' % (__name__, id))

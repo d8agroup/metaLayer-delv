@@ -35,7 +35,8 @@ def dashboard_load(request, id):
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
     Logger.Info('%s - dashboard - finished' % __name__)
-    raw_api_keys = request.user.profile.api_keys
+    user_profile = request.user.profile
+    raw_api_keys = user_profile.api_keys
     api_keys = {}
     for api_key in raw_api_keys:
         api_keys[api_key['name']] = api_key['api_key']

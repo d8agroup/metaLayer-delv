@@ -9,7 +9,7 @@ from djangotoolbox.fields import DictField, ListField
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
-    linked_accounts = DictField()
+    #linked_accounts = DictField()
     api_keys = ListField()
     registration_code = models.TextField()
 

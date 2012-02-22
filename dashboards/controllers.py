@@ -127,6 +127,13 @@ class DashboardsController(object):
         Logger.Info('%s - create_new_dashboard_from_dashboard - finished' % __name__)
         return dashboard
 
+    def create_new_dashboard_from_settings(self, settings):
+        Logger.Info('%s - create_new_dashboard_from_settings - started' % __name__)
+        Logger.Debug('%s - create_new_dashboard_from_settings - started with settings:%s' % (__name__, settings))
+        dashboard = Dashboard.Create(self.user, settings)
+        Logger.Info('%s - create_new_dashboard_from_settings - finished' % __name__)
+        return dashboard
+
     def update_dashboard(self, dashboard):
         Logger.Info('%s - update_dashboard - started' % __name__)
         Logger.Debug('%s - update_dashboard - started with dashboard:%s' % (__name__, dashboard))
