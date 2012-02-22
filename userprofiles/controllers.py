@@ -122,9 +122,10 @@ class UserController(object):
     
     def link_facebook_profile(self, facebook_id, access_token):
         Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)
-        Logger.Debug('%s - UserController.link_facebook_profile - started with facebook_id:%s and access_token:%s' 
+        Logger.Debug('%s - UserController.link_facebook_profile - started with facebook_id:%s and access_token:%s'
                 % (__name__, facebook_id, access_token))
         
+        errors = []
         if not self.user:
             errors.append(constants.USER_DOES_NOT_EXIST)
         
@@ -143,6 +144,16 @@ class UserController(object):
         profile.save()
         
         Logger.Info('%s - UserController.link_facebook_profile - finished' % __name__)
+        return True, []
+    
+    def link_twitter_profile(self, twitter_id, access_token):
+        Logger.Info('%s - UserController.link_twitter_profile - started' % __name__)
+        Logger.Debug('%s - UserController.link_twitter_profile - started with facebook_id:%s and access_token:%s'
+                % (__name__, facebook_id, access_token))
+        
+        
+        
+        Logger.Info('%s - UserController.link_twitter_profile - finished' % __name__)
         return True, []
 
     def logout_user(self, request):

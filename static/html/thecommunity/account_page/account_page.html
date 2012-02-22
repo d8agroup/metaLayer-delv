@@ -5,11 +5,34 @@
 {% block body_class %}account_page{% endblock %}
 
 {% block js %}
+
+	<!-- Begin Twitter integration snippet -->
+	<script src="http://platform.twitter.com/anywhere.js" type="text/javascript"></script>
+	<span id="login"></span>
+	<script type="text/javascript">
+
+	  twttr.anywhere(function (T) {
+	    T("#login").connectButton();
+	  });
+
+	</script>
+	<!-- End Twitter integration snippet -->
+
+	<!-- Begin Facebook integration snippet -->
+	<div id="fb-root"></div>
+	<script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	 FB.init({ appId: '{{ facebook_api_key }}', status: true, cookie: true, xfbml: true, frictionlessRequests: true, oauth: true });
+
+	</script>
+	<!-- End Facebook integration snippet -->
+
     <script type="text/javascript">
         $(document).ready(function(){
             //Your JS code here or link to files and call them from here
         })
     </script>
+
 {% endblock %}
 
 {% block page_body %}
@@ -73,15 +96,6 @@
 		</div>
 		
 	</div>
-	
-	<!-- Begin Facebook integration snippet -->
-	<div id="fb-root"></div>
-	<script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	 FB.init({ appId: '{{ facebook_api_key }}', status: true, cookie: true, xfbml: true, frictionlessRequests: true, oauth: true });
-
-	</script>
-	<!-- End Facebook integration snippet -->
 	
 	<script src="/static/js/thecommunity/account_page/account_page.js" type="text/javascript"></script>
 	
