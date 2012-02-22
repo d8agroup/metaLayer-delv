@@ -1,3 +1,4 @@
+from random import randint
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
@@ -222,6 +223,11 @@ def create_from_template(request):
     template = [t for t in settings.DASHBOARD_TEMPLATES if t['name'] == template_name][0]
     template = template['template']
     template['username'] = request.user.username
+    for collection in template['collections']:
+        for visualization in collection['visualizations']:
+            for element in visualization['elements']:
+                if element['name'] == 'colorscheme':
+                    element['value'] = element['values'][randint(0, len(element['values']) - 1)]
     dc = DashboardsController(request.user)
     db = dc.create_new_dashboard_from_settings(template)
     return redirect('/dashboard/%s' % db.id)

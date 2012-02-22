@@ -160,15 +160,24 @@ aside{ width:333px; float:left; }
 .container { width:528px; float:right; margin:0 20px 10px 0; padding-bottom:20px; background-color:#FFF; }
 .container h2{ color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:12px 0 0 12px; margin-bottom:18px; }
 .activity { max-height:800px; overflow:auto; padding:5px;}
-.insight_templates { margin:20px; }
+.insight_templates { margin:20px; border:1px solid; background-color:#EEE; }
+.insight_templates .insight_templates_header { display:none; }
+.insight_templates .insight_templates_header a { display:inline-block; margin-left:170px; }
 .insight_templates .introduction p { width:400px; margin:0 auto 10px; }
 .insight_templates .insight_template { margin:20px; color:#FFF; padding:5px;}
 .insight_templates .insight_template h3 { font-size:150%; padding-bottom:5px; margin-top:2px;}
-.insight_templates .insight_template form { margin-top:5px; }
+.insight_templates .insight_template form { margin-top:5px; text-align:right; margin-right:20px;}
 .insight_templates .insight_template form label { display:block; padding:5px;}
 .insight_templates .insight_template form input[type=text] { display:inline-block; padding:5px; width:190px; margin-left:10px; }
 .insight_templates .insight_template form .button { margin:10px auto; width:150px; display:inline-block;}
 .insight_templates .insight_template.twitter { background: #69C url('/static/images/thedashboard/data_points/twitter_medium.png') no-repeat 0; background-size:60px; padding-left:60px; border:1px solid #003;}
+.minimized .insight_templates .insight_templates_header { display:block;}
+.minimized .insight_templates .introduction { display:none; }
+.minimized .insight_templates .insight_template { display:none; }
+.minimized .insight_templates .insight_template h3 { padding-bottom:0; }
+.minimized .insight_templates .insight_template p { display:none; }
+.minimized .insight_templates .insight_template { margin-top:0; }
+
 .insight { border:1px solid #DDD; margin:10px;}
 .insight span.time { float:right; color:#AAA; padding:10px;}
 .insight h3 { font-weight:normal; font-size:120%; padding:10px; }
