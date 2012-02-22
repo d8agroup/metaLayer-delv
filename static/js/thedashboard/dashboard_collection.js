@@ -70,6 +70,7 @@
                 $.post( '/dashboard/outputs/remove_output', { output:JSON.stringify(configuration.outputs[o]), csrfmiddlewaretoken:$('#csrf_form input').val() } );
             configuration.outputs = [];
             dashboard_collection.dashboard_collection('render');
+            track_event('collection', 'removed', null);
             return dashboard_collection;
         },
         apply_widget_droppable:function()
@@ -80,10 +81,14 @@
                 var data_point = clone(draggable.data('data_point'));
                 data_point['id'] = guid();
                 if (configuration.data_points == null)
+                {
                     configuration['data_points'] = [];
+                    track_event('collection', 'started', null);
+                }
                 configuration.data_points[configuration.data_points.length] = data_point;
                 collection.data('configuration', configuration);
                 collection.dashboard_collection('render');
+                track_event('data_point', 'added', data_point.type);
             };
 
             var dropped_function = function(event, ui, configuration, collection)
@@ -110,6 +115,7 @@
                     }
                     collection.data('configuration', configuration);
                     collection.dashboard_collection('render');
+                    track_event('action', 'added', action.name);
                 };
 
                 var output_dropped_function = function(event, ui, configuration, collection)
@@ -135,6 +141,7 @@
                             { output:JSON.stringify(output), csrfmiddlewaretoken:$('#csrf_form input').val()},
                             function(data) { process_get_url_function(data, configuration, collection); }
                         );
+                    track_event('output', 'added', output.name);
                 };
 
                 var visualization_dropped_function = function(event, ui, configuration, collection)
@@ -148,6 +155,7 @@
                     collection.data('configuration', configuration);
                     collection.find('.visualizations_container').dashboard_visualizations(configuration);
                     collection.parents('.dashboard').dashboard('save');
+                    track_event('visualization', 'added', visualization.name);
                 };
 
                 if (ui.draggable.is('.data_point_widget'))
@@ -190,6 +198,7 @@
                     configuration.data_points[configuration.data_points.length] = dragged_configuration.data_points[x];
                 $(dragged_collection).dashboard_collection('remove');
                 collection.dashboard_collection('render');
+                track_event('collection', 'moved', null);
             };
 
             var collection = this;

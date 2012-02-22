@@ -4,6 +4,7 @@
     {
         Tipped.create('.tool_tip');
         $('.corner, .chart_display img, .treding_row1 img, .treding_row2 img, .treding_row3 img, .remixes img, .like_links table, .border').corner('6px');
+        $('.button').button();
     };
 
     var remixes_click = function(event, link)

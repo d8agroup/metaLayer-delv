@@ -34,6 +34,10 @@
             data_point_html.find('a').click( function() { data_point_clicked_function($(this)); } );
             data_points_and_actions_summary_html.append( data_point_html );
         }
+        if (actions.length > 0)
+        {
+            data_points_and_actions_summary_html.append('<li class="divider"><span>|</span></li>')
+        }
         for (var y=0; y<actions.length; y++)
         {
             var action_html = $.tmpl('dashboard_search_widget_action', actions[y]);

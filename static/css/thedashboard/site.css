@@ -16,9 +16,9 @@ HEADER
 
 .help { width:1000px; margin:0 auto; background-color:#333; padding:10px 10px; color:#FFF; display:none; border-top:1px dashed;}
 .help h2 { text-align:center; font-size:200%; }
-.help #steps { font-size:150%; margin-top:10px; text-align:center;}
+.help #steps { font-size:150%; margin-top:10px; text-align:center; font-style:italic;}
 .help table {  }
-.help table td { padding:15px; text-align:justify;}
+.help table td { padding:15px; text-align:justify; color:#EEE;}
 .help table td h4 { font-size:130%; text-align:center; margin-bottom:5px;}
 .help table #step_1, .help table #step_2 { width:25%; }
 
@@ -27,9 +27,12 @@ DASHBOARD
 ***********************************************************************************************************************/
 .dashboard { width:1000px; margin:0 auto; margin-top:12px; }
 .dashboard h3.title { color:#FFF; padding:10px; display:none;}
-.widgets { height:105px; padding:5px; }
+.widgets { height:80px; padding:5px; }
 .widget_panel table { width:100%; }
 .widget_panel table td { width:25%; text-align:center;}
+.widget_panel table td#output_widgets_container { width:12%; }
+.widget_panel table td#visualization_widgets_container { width:37%;}
+.widget_panel table td#visualization_widgets_container .spacer { width:118px; display:inline-block;}
 .widget_panel h3 { text-align:center; font-size:100%; margin-bottom:5px; color:#000;}
 
 .data_point_widget,
@@ -96,7 +99,7 @@ DASHBOARD
 .visualization_container { margin:5px 2px; background-color:#333; height:301px;}
 .visualization_container .image_and_title { height:27px; overflow:hidden; background-color:#1a1a1a;}
 .visualization_container .image_and_title img { height:20px; padding:3px}
-.visualization_container .image_and_title h3 { display:inline-block; font-size:100%; width:50%; height:16px; overflow:hidden; position:relative; bottom:5px; }
+.visualization_container .image_and_title h3 { display:inline-block; font-size:120%; width:50%; height:16px; overflow:hidden; padding:5px; }
 .visualization_container .image_and_title .actions { float:right; width:30%; overflow:hidden; text-align:right;}
 .visualization_container .image_and_title .actions .publish img { height:18px; position:relative; bottom:1px; left:7px; }
 .visualization_container .image_and_title .actions .loading { height:17px; position:relative; bottom:1px; left:9px; display:none;}
@@ -109,8 +112,8 @@ DASHBOARD
 .visualization_config .instructions { color:#BBB; height:80px; overflow:auto; font-style:italic; }
 .visualization_config .instructions p { padding:10px; }
 .visualization_config .configuration { height:130px; overflow:auto; padding:0 20px; border-top:1px solid #222; border-bottom:1px solid #222; margin:0 10px; }
-.visualization_config .data_dimensions h4 { padding:10px;}
-.visualization_config .data_dimensions { border-bottom:1px dashed #222;}
+.visualization_config .data_dimensions h4 { display:none;}
+.visualization_config .data_dimensions { border-bottom:1px dashed #222; border:none;}
 .visualization_config .form_row { padding:10px; }
 .visualization_config .form_row label { display:inline-block; width:45%; }
 .visualization_config .form_row input { display:inline-block; width:50%; }
@@ -133,6 +136,7 @@ DASHBOARD
 .search_widget .data_points_and_actions_container { background-color:#1a1a1a; padding:2px; font-size:80%;}
 .search_widget .data_points_and_actions_container img { width:18px; margin:2px 2px 0;}
 .search_widget .data_points_and_actions_container .data_points_and_actions_summary li { display:inline-block }
+.search_widget .data_points_and_actions_container .data_points_and_actions_summary li.divider span { font-size:200%; position:relative; bottom:3px; color:#AAA; padding:0 2px;}
 
 .search_widget .search_filters { background-color:#222; font-size:80%; display:none; padding:15px 0;}
 .search_widget .pagination { padding:0 0 15px; text-align:center; font-size:90%; color:#AAA; width:90%; margin:0 auto;}

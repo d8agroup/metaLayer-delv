@@ -72,6 +72,7 @@
                     visualization_widgets_container_html.append(visualization_html);
                     visualization_html.corner();
                 }
+                visualization_widgets_container_html.append('<div class="spacer">&nbsp;</div>'); //This is because there is an odd number of viz's
                 empty_widget_panel_html.find('tr').append(visualization_widgets_container_html);
 
                 widget_panel.html(empty_widget_panel_html);

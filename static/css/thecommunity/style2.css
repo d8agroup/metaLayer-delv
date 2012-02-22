@@ -85,7 +85,7 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .trading_box h3 { font-size:14px; color:#333; line-height:16px; font-weight:bold; padding:0 0 10px 0; margin:0px; }
 .trading_box ul {}
 .trading_box ul li { float:left; padding:0 6px 0 0; }
-.sidebar .trading_box ul li { float:left; padding:5px 10px 5px 0; }
+.sidebar .trading_box ul li { float:none; display:inline-block; padding:5px 10px 5px 0; }
 .discover_area { width:352px; padding:12px 0 0 65px; }
 .discover_area h3 { font-size:14px; color:#333; font-weight:bold; line-height:16px; padding:0 0 12px 50px; margin:0px; }
 .discover_area ul { }
@@ -160,6 +160,15 @@ aside{ width:333px; float:left; }
 .container { width:528px; float:right; margin:0 20px 10px 0; padding-bottom:20px; background-color:#FFF; }
 .container h2{ color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:12px 0 0 12px; margin-bottom:18px; }
 .activity { max-height:800px; overflow:auto; padding:5px;}
+.insight_templates { margin:20px; }
+.insight_templates .introduction p { width:400px; margin:0 auto 10px; }
+.insight_templates .insight_template { margin:20px; color:#FFF; padding:5px;}
+.insight_templates .insight_template h3 { font-size:150%; padding-bottom:5px; margin-top:2px;}
+.insight_templates .insight_template form { margin-top:5px; }
+.insight_templates .insight_template form label { display:block; padding:5px;}
+.insight_templates .insight_template form input[type=text] { display:inline-block; padding:5px; width:190px; margin-left:10px; }
+.insight_templates .insight_template form .button { margin:10px auto; width:150px; display:inline-block;}
+.insight_templates .insight_template.twitter { background: #69C url('/static/images/thedashboard/data_points/twitter_medium.png') no-repeat 0; background-size:60px; padding-left:60px; border:1px solid #003;}
 .insight { border:1px solid #DDD; margin:10px;}
 .insight span.time { float:right; color:#AAA; padding:10px;}
 .insight h3 { font-weight:normal; font-size:120%; padding:10px; }
@@ -174,6 +183,9 @@ aside{ width:333px; float:left; }
 .insight .like_links table td { width:100px; padding:5px; vertical-align:center;}
 .insight .like_links table td.twitter { padding-top:8px;}
 .insight .like_links table td.facebook { padding-top:8px;}
+.insight .owner_actions { float:right; padding:15px 5px; }
+.insight .owner_actions a { color:#333; font-weight:bold; padding:0 3px;}
+.insight .owner_actions .divider { color:#555; position:relative; bottom:1px;}
 .insight .community_data { background-color:#DDD; padding:0 20px; }
 .insight .community_data li { display:inline-block; padding:15px; color:#555;}
 .insight .remixes { background-color:#DDD; height:112px; display:none; }
@@ -196,6 +208,7 @@ aside{ width:333px; float:left; }
 #register .form-row label { display:inline-block; width:40%; }
 #register .form-row input { display:inline-block; width:50%; }
 #register .action-row input { width:100%; margin:20px 0;}
+#register .instructions { padding:15px 15px 0; font-style:italic; font-size:80%; }
 #change_password .form-row { margin-top: 5px; }
 #change_password .form-row label { display:inline-block; width:175px; }
 #change_password .form-row input { display:inline-block; width:200px; }
@@ -240,6 +253,12 @@ aside{ width:333px; float:left; }
 #error_page #error_inner img { width:500px; border:1px solid; }
 #error_page #error_inner img.portrait { width:300px; }
 #error_page #error_inner h1 { margin:20px; font-size:200%;}
+
+#no_access_page #no_access_inner { width:800px; margin:20px auto; text-align:center;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
+#no_access_page #no_access_inner img { width:500px; }
+#no_access_page #no_access_inner h1 { margin:20px; font-size:300%;}
+#no_access_page #no_access_inner h2 { margin:20px auto; font-size:200%; width:250px;}
+#no_access_page #no_access_inner p { width:400px; margin:0 auto 10px; font-size:120%; text-align:justify;}
 
 .jspVerticalBar { margin:20px;}
 .jspTrack { background-color:#444;}

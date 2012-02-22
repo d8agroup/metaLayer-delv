@@ -1,0 +1,17 @@
+<div class="insight_templates">
+    <div class="introduction">
+        <h2>Welcome to metaLayer</h2>
+        <p>You can now dive right in and start creating insights by clicking the 'create' link above.</p>
+        <p>If however you want a little help getting started, why not try one of our starter insights!</p>
+    </div>
+    <div class="insight_template twitter">
+        <h3>Your own Twitter word art</h3>
+        <p>Create an interesting visualization of the things you talk about on twitter.</p>
+        <p>Just click create insight an then enter your username in the search box on the next screen</p>
+        <form action='/community/create_from_template' method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="template_name" value="twitter_personal_words"/>
+            <input type="submit" value="Create this insight" class="button"/>
+        </form>
+    </div>
+</div>

@@ -58,17 +58,22 @@
                         <form method="POST">
                             {% csrf_token %}
                             <div class="form-row clearfix">
-                                <label for='register_username'>Your Email</label>
+                                <label for='register_username'>Your Email *</label>
                                 <input type="text" name="register_username" id='register_username' />
                             </div>
                             <div class="form-row clearfix">
-                                <label for='register_password1'>Your Password</label>
+                                <label for='register_password1'>Your Password *</label>
                                 <input type="password" name='register_password1' id='register_password1' />
                             </div>
                             <div class="form-row clearfix">
-                                <label for='register_password2'>Your Password Again</label>
+                                <label for='register_password2'>Your Password Again *</label>
                                 <input type="password" name='register_password2' id='register_password2' />
                             </div>
+                            <div class="form-row clearfix">
+                                <label for='register_code'>Registration code?</label>
+                                <input type="text" name='register_code' id='register_code' />
+                            </div>
+                            <p class="instructions">* denotes required fields</p>
                             <div class="action-row clearfix">
                                 <input type="submit" class="submit" value="register" name='register' />
                             </div>

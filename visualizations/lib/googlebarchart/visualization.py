@@ -12,9 +12,12 @@ class Visualization(VisualizationBase):
         return {
             'name':'googlebarchart',
             'display_name_short':'Bar',
-            'display_name_long':'Bar',
+            'display_name_long':'Bar Chart',
             'image_small':'/static/images/thedashboard/bar_chart.png',
-            'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
+            'unconfigurable_message':'There is no category data available to be plotted. Try adding something like '
+                                     'sentiment analysis',
+            'instructions':'Bar charts provide a great way to visualize category based data. You can choose to visualize '
+                           'the total value for these categories or break them down over time.',
             'type':'javascript',
             'configured':False,
             'elements':[

@@ -11,7 +11,6 @@ class Action(BaseAction):
             'name':'localsentimentanalysis',
             'display_name_short':'Sentiment',
             'display_name_long':'Sentiment Analysis',
-            'image_large':'/static/images/thedashboard/actions/sentiment_large.png',
             'image_small':'/static/images/thedashboard/actions/sentiment_small.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,

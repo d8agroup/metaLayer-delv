@@ -8,16 +8,20 @@ class Visualization(VisualizationBase):
         return {
             'name':'googlepiechart',
             'display_name_short':'Pie',
-            'display_name_long':'Pie',
+            'display_name_long':'Pie Chart',
             'image_small':'/static/images/lib/Impressions/pie_chart.png',
-            'unconfigurable_message':'There is no category data available to be plotted. Try adding something like sentiment analysis',
+            'unconfigurable_message':'There is no category data available to be plotted. Try adding something like '
+                                     'sentiment analysis',
+            'instructions':'The pie chart is perhaps the most widely used chart in business and although some criticize '
+                           'it, it remains a popular choice when you want to visualize proportions and where exact '
+                           'comparison of values is not needed, and they can look really nice.',
             'type':'javascript',
             'configured':False,
             'elements':[
                 self._generate_colorscheme_config_element(),
                 {
                     'name':'background',
-                    'display_name':'Background',
+                    'display_name':'Background Color',
                     'help':'',
                     'type':'select',
                     'values':[
@@ -37,7 +41,7 @@ class Visualization(VisualizationBase):
             'data_dimensions':[
                 {
                     'name':'category1',
-                    'display_name':'Slices',
+                    'display_name':'Pie Slices',
                     'type':'string',
                     'help':''
                 }

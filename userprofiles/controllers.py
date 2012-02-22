@@ -47,7 +47,7 @@ class UserController(object):
         return users
 
     @classmethod
-    def RegisterUser(cls, request, username, password1, password2):
+    def RegisterUser(cls, request, username, password1, password2, registration_code=None):
         Logger.Info('%s - UserController.RegisterUser - started' % __name__)
         Logger.Debug('%s - UserController.RegisterUser - started with request:%s and username:%s and password1:%s and password2:%s' % (__name__, request, username, password1, password2))
         errors = []
@@ -72,9 +72,12 @@ class UserController(object):
             return False, errors
         User.objects.create_user(username, username, password1)
         UserSubscriptions.InitForUsername(username)
-        user = UserController.LoginUser(request, username, password1)
+        UserController.LoginUser(request, username, password1)
+        user = UserController.GetUserByUserName(username)
+        if registration_code:
+            user.profile.registration_code = registration_code
         Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
-        return user
+        return True, []
 
     @classmethod
     def GetUserByUserName(cls, user_name):

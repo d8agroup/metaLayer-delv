@@ -60,12 +60,26 @@ class DashboardsController(object):
         dashboards = sorted(dashboards, key=lambda x: x['last_saved'], reverse=True)
         return dashboards[:count]
 
+    @classmethod
+    def DeleteDashboardById(cls, dashboard_id):
+        dashboard = DashboardsController.GetDashboardById(dashboard_id)
+        dashboard.delete()
+
     def get_saved_dashboards(self, count=0):
         Logger.Info('%s - get_saved_dashboards - started' % __name__)
         saved_dashboards = Dashboard.AllForUser(self.user)
         if count:
             saved_dashboards = saved_dashboards[:count]
         Logger.Info('%s - get_saved_dashboards - finished' % __name__)
+        return saved_dashboards
+
+    def get_live_dashboard(self, count=0):
+        Logger.Info('%s - get_live_dashboard - started' % __name__)
+        saved_dashboards = Dashboard.AllForUser(self.user)
+        saved_dashboards = [d for d in saved_dashboards if 'live' not in d['config'] or d['config']['live']]
+        if count:
+            saved_dashboards = saved_dashboards[:count]
+        Logger.Info('%s - get_live_dashboard - finished' % __name__)
         return saved_dashboards
 
     def get_dashboard_by_id(self, id):
@@ -111,6 +125,13 @@ class DashboardsController(object):
         template.change_community_value('remixes', 1)
         dashboard = Dashboard.Create(self.user, template, True)
         Logger.Info('%s - create_new_dashboard_from_dashboard - finished' % __name__)
+        return dashboard
+
+    def create_new_dashboard_from_settings(self, settings):
+        Logger.Info('%s - create_new_dashboard_from_settings - started' % __name__)
+        Logger.Debug('%s - create_new_dashboard_from_settings - started with settings:%s' % (__name__, settings))
+        dashboard = Dashboard.Create(self.user, settings)
+        Logger.Info('%s - create_new_dashboard_from_settings - finished' % __name__)
         return dashboard
 
     def update_dashboard(self, dashboard):

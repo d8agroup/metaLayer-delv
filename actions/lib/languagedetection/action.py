@@ -12,7 +12,6 @@ class Action(BaseAction):
             'name':'languagedetection',
             'display_name_short':'Language',
             'display_name_long':'Language Detection',
-            'image_large':'/static/images/thedashboard/actions/language_large.png',
             'image_small':'/static/images/thedashboard/actions/language_small.png',
             'instructions':'This actions does not need configuring.',
             'configured':True,

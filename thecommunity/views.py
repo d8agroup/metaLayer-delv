@@ -139,6 +139,7 @@ def login_or_register(request):
             context_instance=RequestContext(request)
         )
     else:
+        request_param = 'None'
         if 'login' in request.POST:
             username = request.POST.get('login_username')
             password = request.POST.get('login_password')
@@ -149,18 +150,29 @@ def login_or_register(request):
                     { 'login_errors':errors },
                     context_instance=RequestContext(request)
                 )
+            request_param = 'login'
         elif 'register' in request.POST:
             username = request.POST.get('register_username')
             password1 = request.POST.get('register_password1')
             password2 = request.POST.get('register_password2')
-            passed, errors = UserController.RegisterUser(request, username, password1, password2)
+            registration_code = request.POST.get('register_code')
+            passed, errors = UserController.RegisterUser(request, username, password1, password2, registration_code)
             if not passed:
                 return render_to_response(
                     'thecommunity/login_or_register/login_or_register.html',
                     { 'register_errors':errors },
                     context_instance=RequestContext(request)
                 )
-        return redirect('/community/%s' % request.user.username)
+            request_param = 'register'
+        if settings.REGISTRATION_CODES['require_code']:
+            user = UserController.GetUserByUserName(request.user.username)
+            if not user.is_staff:
+                registration_code = user.profile.get_registration_type()
+                if not registration_code or registration_code == 'UNRECOGNISED':
+                    uc = UserController(user)
+                    uc.logout_user(request)
+                    return redirect(no_access)
+        return redirect('/community/%s?%s=true' % (request.user.username, request_param))
 
 @login_required(login_url='/')
 def change_password(request):
@@ -203,6 +215,26 @@ def logout(request):
     uc = UserController(request.user)
     uc.logout_user(request)
     return redirect(community_page)
+
+def create_from_template(request):
+    template_name = request.POST['template_name']
+    template = [t for t in settings.DASHBOARD_TEMPLATES if t['name'] == template_name][0]
+    template = template['template']
+    template['username'] = request.user.username
+    dc = DashboardsController(request.user)
+    db = dc.create_new_dashboard_from_settings(template)
+    return redirect('/dashboard/%s' % db.id)
+
+
+def delete_insight(request, insight_id):
+    Logger.Info('%s - dashboard_delete - started' % __name__)
+    Logger.Debug('%s - dashboard_delete - started with id:%s' % (__name__, id))
+    dc = DashboardsController(request.user)
+    db = dc.get_dashboard_by_id(insight_id)
+    if db and db['username'] == request.user.username:
+        db.delete()
+    Logger.Info('%s - dashboard_delete - finished' % __name__)
+    return redirect(user_home, request.user.username)
 
 @login_required(login_url='/')
 def current_subscription(request):
@@ -315,3 +347,11 @@ def load_remixes(request, insight_id, count):
     template_data = _base_template_data()
     template_data['insights']  = DashboardsController.GetRemixes(insight_id, int(count))
     return render_to_response( 'thecommunity/profile_page/insight_remixes.html', template_data )
+
+def no_access(request):
+    template_data = _base_template_data()
+    return render_to_response(
+        'thecommunity/no_access/no_access.html',
+        template_data,
+        context_instance=RequestContext(request)
+    )
