@@ -8,6 +8,7 @@ from userprofiles.models import UserStatistics, UserSubscriptions, UserProfile
 from utils import empty
 import constants
 from integrations import facebook
+from . import _check_password_rules
 
 class UserController(object):
     def __init__(self, user):
@@ -285,19 +286,5 @@ class UserController(object):
         number_of_saved_dashboards = active_subscription_config['config']['number_of_saved_dashboards']
         Logger.Info('%s - UserController.maximum_number_of_saved_dashboards_allowed_by_subscription - finished' % __name__)
         return number_of_saved_dashboards
-
-
-def _check_password_rules(new_password):
-    """
-    Verify that the given password matches the rules for this site.
-    
-    """
-    
-    if len(new_password) < 6:
-        return False, [constants.PASSWORD_TOO_SHORT]
-    
-    return True, []
-
-
 
 
