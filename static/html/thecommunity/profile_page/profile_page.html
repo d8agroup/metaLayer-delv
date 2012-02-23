@@ -10,6 +10,12 @@
     </script>
 {% endblock %}
 
+{% block uncompressed_js %}
+    <script type="text/javascript">var switchTo5x=false;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "69c6c2fe-8907-4984-a615-e46f49074830"}); </script>
+{% endblock %}
+
 {% block page_title %}{{ profile_user.username }}{% endblock %}
 
 {% block body_class %}profile_page{% endblock %}
