@@ -12,7 +12,9 @@ def crop(request, dashboard_id, width, height):
     import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
-        return ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+        image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return response
     file_name = '%s/crop_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, width, height)
     image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
     if not image_data:
@@ -20,7 +22,9 @@ def crop(request, dashboard_id, width, height):
         height = int(height)
         dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
         if not dashboard or not dashboard.has_visualizations():
-            return ImagingController.GenerateNotFoundImage(width, height, None)
+            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         visualization_svg = dashboard.visualization_for_image()
         svg = rsvg.Handle(data=visualization_svg)
         image_height = svg.props.height
@@ -42,7 +46,9 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
-        return ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
+        image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height ), None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return response
     if visualization_id:
         file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, visualization_id, max_width, max_height)
     else:
