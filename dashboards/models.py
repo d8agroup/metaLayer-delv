@@ -141,6 +141,13 @@ class Dashboard(Model):
                         return visualization['snapshot']
         return None
 
+    def visualization_by_id(self, visualization_id):
+        for collection in [c for c in self['collections'] if c['data_points']]:
+            for visualization in collection['visualizations']:
+                if visualization['id'] == visualization_id and visualization['snapshot']:
+                    return visualization['snapshot']
+        return None
+
     def single_data_point_for_image(self):
         for collection in self['collections']:
             for data_point in collection['data_points']:

@@ -37,18 +37,24 @@ def crop(request, dashboard_id, width, height):
     response = HttpResponse(image_data, mimetype='image/png')
     return response
 
-def shrink(request, dashboard_id, max_width, max_height):
+def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     import cairo
     import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
         return ImagingController.GenerateNotFoundImage(max_width, max_height, None)
-    file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, max_width, max_height)
+    if visualization_id:
+        file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, visualization_id, max_width, max_height)
+    else:
+        file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, max_width, max_height)
     image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
     if not image_data:
         max_width = int(max_width)
         max_height = int(max_height)
-        visualization_svg = dashboard.visualization_for_image()
+        if visualization_id:
+            visualization_svg = dashboard.visualization_by_id(visualization_id)
+        else:
+            visualization_svg = dashboard.visualization_for_image()
         svg = rsvg.Handle(data=visualization_svg)
         x = width = svg.props.width
         y = height = svg.props.height
