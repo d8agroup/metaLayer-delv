@@ -3,6 +3,7 @@ from django.contrib.auth.views import password_reset, password_reset_confirm, \
         password_reset_complete, password_reset_done
 from dashboard.userprofiles.forms import SetPasswordForm
 from dashboard.thecommunity.views import *
+from django.views.decorators.cache import cache_page
 
 urlpatterns = patterns('',
     url(r'restricted_access$', no_access),
@@ -44,7 +45,7 @@ urlpatterns = patterns('',
     url(r'delete_insight/(\w{24})$', delete_insight),
     url(r'[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}/account$', user_account),
     url(r'([a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6})$', user_home),
-    url(r'([a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6})/(\w{24})$', insight),
+    url(r'([a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6})/(\w{24})$', cache_page(60*5)(insight)),
     url(r'([\w ]+)', category_page),
-    url(r'^$', community_page),
+    url(r'^$', cache_page(60*5)(community_page)),
 )
