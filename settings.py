@@ -11,7 +11,7 @@ EMAIL_HOST_PASSWORD = 'hellitifyoulike01'
 EMAIL_PORT = 587
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Matthew Griffiths', 'mg@metalayer.com'),
 )
 
 MANAGERS = ADMINS
