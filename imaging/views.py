@@ -36,6 +36,10 @@ def crop(request, dashboard_id, width, height):
             response = HttpResponse(image_data, mimetype='image/png')
             return response
         visualization_svg = dashboard.visualization_for_image()
+        if not visualization_svg:
+            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         svg = rsvg.Handle(data=visualization_svg)
         image_height = svg.props.height
         required_height = height * 1.8
@@ -72,6 +76,10 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
             visualization_svg = dashboard.visualization_by_id(visualization_id)
         else:
             visualization_svg = dashboard.visualization_for_image()
+        if not visualization_svg:
+            image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         svg = rsvg.Handle(data=visualization_svg)
         x = width = svg.props.width
         y = height = svg.props.height
