@@ -106,6 +106,15 @@
 
                 </div>
             </div>
+            <div id="trending_insights" class="corner">
+                <ul>
+                    {% for insight in trending_insights %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </section>
     </section>
     <div class="clrflt"></div>

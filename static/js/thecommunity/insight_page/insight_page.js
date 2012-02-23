@@ -40,6 +40,9 @@
 
     $.fn.insight_page = function(insight)
     {
+        $('.corner').corner('5px');
+        Tipped.create('.tool_tip');
+
         var insight_page = this;
         insight_page.find('#user_and_insight_details, #insight, #social_links').corner('5px');
         //insight_page.find('#trending_insights').insights_trending_insights(9);

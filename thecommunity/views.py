@@ -54,6 +54,7 @@ def insight(request, user_name, insight_id):
     template_data['profile_user'] = user
     template_data['insight'] = dashboard
     template_data['insight_json'] = dashboard_json
+    template_data['trending_insights'] = DashboardsController.GetTendingDashboards(9)
     return render_to_response(
         'thecommunity/insight_page/insight_page.html',
         template_data,
