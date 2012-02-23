@@ -268,6 +268,7 @@ INSIGHT_CATEGORIES = [
 REGISTRATION_CODES = {
     'codes':{
         'TED':['12345', '23456'],
+        'PRIVATE_BETA':['ZM26R']
     },
     'require_code':True
 }
