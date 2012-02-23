@@ -12,7 +12,7 @@ def crop(request, dashboard_id, width, height):
     import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
-        return ImagingController.GenerateNotFoundImage(width, height, None)
+        return ImagingController.GenerateNotFoundImage(int(width), int(height), None)
     file_name = '%s/crop_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, width, height)
     image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
     if not image_data:
@@ -42,7 +42,7 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     import rsvg
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
-        return ImagingController.GenerateNotFoundImage(max_width, max_height, None)
+        return ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
     if visualization_id:
         file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, visualization_id, max_width, max_height)
     else:
