@@ -76,7 +76,9 @@ class UserController(object):
         UserController.LoginUser(request, username, password1)
         user = UserController.GetUserByUserName(username)
         if registration_code:
-            user.profile.registration_code = registration_code
+            profile = user.profile
+            profile.registration_code = registration_code
+            profile.save()
         Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
         return True, []
 

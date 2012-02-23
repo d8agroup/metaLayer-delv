@@ -94,7 +94,6 @@ def link_facebook_profile(request):
         return JSONResponse({'profile_picture': request.user.profile.profile_image() })
     else:
         return JSONResponse({'errors': errors })
-    
 
 def community_page(request):
     template_data = _base_template_data()
