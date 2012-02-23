@@ -142,7 +142,6 @@ class UserController(object):
         
         Logger.Info('%s - UserController.change_email_opt_in - finished' % __name__)
         return True, []
-        
     
     def link_facebook_profile(self, facebook_id, access_token):
         Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)

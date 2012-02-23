@@ -273,6 +273,15 @@ REGISTRATION_CODES = {
     'require_code':True
 }
 
+SOCIAL_SHARING_SERVICES = [
+    'st_sharethis_large',
+    'st_twitter_large',
+    'st_plusone_large',
+    #'st_facebook_large',
+    'st_linkedin_large',
+    'st_fblike_hcount',
+]
+
 from settings_insight_templates import *
 
 import socket

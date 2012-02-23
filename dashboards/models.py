@@ -220,7 +220,7 @@ class DashboardShortUrl(Model):
     @classmethod
     def Create(cls, dashboard_id):
         def generate_random_string():
-            return "".join( [random.choice(string.letters[:26]) for i in xrange(12)] )
+            return "".join( [random.choice(string.letters[:26]) for i in xrange(5)] )
         Logger.Info('%s - ShortUrl.Create - started' % __name__)
         Logger.Debug('%s - ShortUrl.Create - started with dashboard_id:%s ' % (__name__, dashboard_id))
         url_identifier = generate_random_string()

@@ -187,11 +187,8 @@ aside{ width:333px; float:left; }
 .insight.data_insight .image_container { height:110px; display:inline-block;}
 .insight.data_insight .image_container img { width:105px; height:105px; }
 .insight .action_buttons { float:right; margin:5px}
-.insight .like_links { height:40px; overflow:hidden; margin:5px; display:none; }
-.insight .like_links table { width:350px;  border:1px solid #DDD; margin-left:90px;}
-.insight .like_links table td { width:100px; padding:5px; vertical-align:center;}
-.insight .like_links table td.twitter { padding-top:8px;}
-.insight .like_links table td.facebook { padding-top:8px;}
+.insight .like_links { height:40px; margin:5px; display:none; width:350px;  border:1px solid #DDD; margin-left:90px; padding-top:5px;}
+.insight .like_links .st_fblike_hcount { position:relative; bottom:15px;}
 .insight .owner_actions { float:right; padding:15px 5px; }
 .insight .owner_actions a { color:#333; font-weight:bold; padding:0 3px;}
 .insight .owner_actions .divider { color:#555; position:relative; bottom:1px;}
@@ -241,9 +238,10 @@ aside{ width:333px; float:left; }
 .insight_page #social_links { background-color:#FFF; min-height:60px; margin:10px 25px 0 5px; padding-bottom:15px;}
 .insight_page #social_links h2 { font-size:200%; padding:20px; }
 .insight_page #social_links table { width:90%; margin:0 auto;}
-.insight_page #social_links td { width:20%; text-align:center; }
-.insight_page #social_links td.link { width:40%;}
+.insight_page #social_links td { text-align:center; }
+.insight_page #social_links td.link { width:35%;}
 .insight_page #social_links td.link input { width:100%; }
+.insight_page #social_links td.social .st_fblike_hcount { position:relative; bottom:15px;}
 .insight_page #insight { background-color:#FFF; margin:10px 25px 0 5px; min-height:350px; }
 .collections { width:90%; margin:0 auto; padding:20px 0; }
 .collection_1 { width:98%; margin:0 auto; }
