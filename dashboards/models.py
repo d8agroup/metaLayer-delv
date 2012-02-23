@@ -137,14 +137,14 @@ class Dashboard(Model):
         for visualization_type in settings.VISUALIZATIONS_CONFIG['visualization_display_hierarchy']:
             for collection in [c for c in self['collections'] if c['data_points']]:
                 for visualization in collection['visualizations']:
-                    if visualization['name'] == visualization_type and visualization['snapshot']:
+                    if visualization['name'] == visualization_type and 'snapshot' in visualization and visualization['snapshot']:
                         return visualization['snapshot']
         return None
 
     def visualization_by_id(self, visualization_id):
         for collection in [c for c in self['collections'] if c['data_points']]:
             for visualization in collection['visualizations']:
-                if visualization['id'] == visualization_id and visualization['snapshot']:
+                if visualization['id'] == visualization_id and 'snapshot' in visualization and visualization['snapshot']:
                     return visualization['snapshot']
         return None
 

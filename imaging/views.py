@@ -1,12 +1,22 @@
 import StringIO
+import datetime
 from django.conf import settings
 from django.http import HttpResponse
 from dashboards.controllers import DashboardsController
 from imaging.controllers import ImagingController
+from django.views.decorators.http import condition
 
+def last_modified(request, dashboard_id, *args, **kwargs):
+    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+    if dashboard:
+        return datetime.datetime.fromtimestamp(dashboard['last_saved'])
+    return datetime.datetime.now()
+
+@condition(last_modified_func=last_modified)
 def insight_image_for_facebook(request, dashboard_id):
     return crop(request, dashboard_id, 200, 200)
 
+@condition(last_modified_func=last_modified)
 def crop(request, dashboard_id, width, height):
     import cairo
     import rsvg
@@ -41,6 +51,7 @@ def crop(request, dashboard_id, width, height):
     response = HttpResponse(image_data, mimetype='image/png')
     return response
 
+@condition(last_modified_func=last_modified)
 def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     import cairo
     import rsvg
