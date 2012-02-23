@@ -28,41 +28,39 @@
 {% endblock %}
 
 {% block page_body %}
-    {% cache 300 community_page_top_insights %}
-        <div class="banner">
-            <h1>A fast, intuitive way to <span>discover</span> and <strong>share</strong> insights from data. </h1>
-            <article class="banner_left">
-                <div class="slider">
-                    <ul>
-                        {% for insight in top_insights_list %}
-                            <li>
-                                {% include 'thecommunity/shared/insight_image_crop.html' with width=90 height=59 insight=insight %}
-                            </li>
-                        {% endfor %}
-                    </ul>
+    <div class="banner">
+        <h1>A fast, intuitive way to <span>discover</span> and <strong>share</strong> insights from data. </h1>
+        <article class="banner_left">
+            <div class="slider">
+                <ul>
+                    {% for insight in top_insights_list %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=90 height=59 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="slideshow">
+                <div class="slideshow_pic border corner">
+                    {% if top_insights_main %}
+                        {% include 'thecommunity/shared/insight_image_scale.html' with width=350 height=185 insight=top_insights_main %}
+                    {% endif %}
                 </div>
-                <div class="slideshow">
-                    <div class="slideshow_pic border corner">
-                        {% if top_insights_main %}
-                            {% include 'thecommunity/shared/insight_image_scale.html' with width=350 height=185 insight=top_insights_main %}
-                        {% endif %}
-                    </div>
-                    Top Insights of the Day
-                </div>
-                <div class="clrflt"></div>
-            </article>
-
-            <div class="videoarea">
-                <div class="video">
-                    <iframe src="http://player.vimeo.com/video/31801964?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
-                    <iframe src="http://player.vimeo.com/video/31676970?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
-                    <iframe src="http://player.vimeo.com/video/31676791?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
-                </div>
-                <div class="pager"></div>
+                Top Insights of the Day
             </div>
             <div class="clrflt"></div>
+        </article>
+
+        <div class="videoarea">
+            <div class="video">
+                <iframe src="http://player.vimeo.com/video/31801964?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
+                <iframe src="http://player.vimeo.com/video/31676970?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
+                <iframe src="http://player.vimeo.com/video/31676791?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
+            </div>
+            <div class="pager"></div>
         </div>
-    {% endcache %}
+        <div class="clrflt"></div>
+    </div>
     <section class="content"><!--content-->
         <div class="content_left">
             {% if not user.is_authenticated %}
@@ -70,28 +68,26 @@
                 <div class="signup_button"><a href="/community/welcome"><img src="/static/images/thecommunity/sign_up_button.jpg" alt=""></a></div>
                 <br/><!--<p>Are you a data professional or organization? <a href="#">Go Pro!</a></p>-->
             {% endif %}
-            {% cache 300 community_page_trending %}
-                <div class="trading_box">
-                    <h3>What's Trending?</h3>
-                    <ul>
-                        {% for insight in trending_insights %}
-                            <li>
-                                {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="trading_box">
-                    <h3>Recent Insights</h3>
-                    <ul>
-                        {% for insight in recent_challenges %}
-                            <li>
-                                {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endcache %}
+            <div class="trading_box">
+                <h3>What's Trending?</h3>
+                <ul>
+                    {% for insight in trending_insights %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="trading_box">
+                <h3>Recent Insights</h3>
+                <ul>
+                    {% for insight in recent_challenges %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 {#            <div class="discover_area">#}
 {#                <h3>Discover Insights By Category</h3>#}
 {#                <div class="discover_box fltleft">#}
@@ -103,11 +99,8 @@
 {#                <div class="clrflt"></div>#}
 {#            </div>#}
         </div>
-
         {% if user.is_authenticated %}
-            {% cache 300 user.username %}
-                {% include 'thecommunity/community_page/sidebar_logged_in.html' %}
-            {% endcache %}
+            {% include 'thecommunity/community_page/sidebar_logged_in.html' %}
         {% else %}
             {% include 'thecommunity/community_page/sidebar_logged_out.html' %}
         {% endif %}
