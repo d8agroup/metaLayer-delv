@@ -57,8 +57,6 @@ class Action(BaseAction):
         if not api_key or not api_key.strip():
             errors['api_key'].append('You must provide an api key')
 
-        #TODO should validate the api key here
-
         if errors['api_key']:
             return False, errors
         return True, {}
@@ -151,19 +149,8 @@ class LocationGetter(threading.Thread):
 
         if not isinstance(response['document'], dict):
             return False
-        #collection_type = [e for e in config['elements'] if e['name'] == 'collection_type'][0]['value']
         locations = []
         countries(response, locations)
         places(response, locations)
         return locations
-        """
-        if collection_type == 'Countries':
-            locations = []
-            countries(response, locations)
-            return sorted(locations)[0] if locations else False
-        else:
-            locations = []
-            places(response, locations)
-            return sorted(locations)[0] if locations else False
-        """
 

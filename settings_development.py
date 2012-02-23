@@ -71,7 +71,7 @@ CHARGIFY_SETTINGS = {
 }
 
 FACEBOOK_SETTINGS = {
-    'api_key': '140737952711154',
+    'api_key': '256816714397545',
     'requested_permissions': ['offline_access']
 }
 
