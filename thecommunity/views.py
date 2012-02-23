@@ -8,6 +8,8 @@ from dashboards.controllers import DashboardsController
 from logger import Logger
 from userprofiles.controllers import UserController
 from utils import JSONResponse, serialize_to_json
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 def _base_template_data():
     return {
@@ -45,6 +47,8 @@ def user_home(request, user_name):
         context_instance=RequestContext(request)
     )
 
+@cache_page(60 * 5)
+@vary_on_cookie
 def insight(request, user_name, insight_id):
     template_data = _base_template_data()
     DashboardsController.RecordDashboardView(insight_id)
@@ -97,6 +101,7 @@ def link_facebook_profile(request):
     else:
         return JSONResponse({'errors': errors })
 
+@cache_page(60 * 5)
 def community_page(request):
     template_data = _base_template_data()
 
