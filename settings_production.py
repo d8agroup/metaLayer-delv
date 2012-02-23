@@ -70,4 +70,7 @@ FACEBOOK_SETTINGS = {
     'requested_permissions': ['offline_access']
 }
 
+TWITTER_SETTINGS = {
+    'api_key': 'lFEg1EXUmGlOqSto656Etw'
+}
 
