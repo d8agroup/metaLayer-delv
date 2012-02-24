@@ -2,7 +2,7 @@ import logging
 
 DEBUG = True
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 SITE_ID=u'4f1408ebc845b317df00000d'
 

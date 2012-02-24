@@ -2,7 +2,7 @@ import logging
 
 DEBUG = False
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 
 SESSION_COOKIE_SECURE =False
 
