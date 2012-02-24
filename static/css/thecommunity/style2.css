@@ -63,6 +63,8 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .community_content { margin-bottom:1em; }
 .community_content .subsection { margin-bottom:3em; line-height:21px; clear:both; }
 .community_content h2 { font-size:125%; margin-top:.5em; margin-bottom:.5em; }
+.community_content .left { width:426px; float:left; }
+.community_content .right { width:372px; float:right; }
 .slider { width:105px; float:left; }
 .slider ul {}
 .slider ul li { padding:0 0 5px 0; }

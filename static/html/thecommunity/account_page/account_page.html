@@ -53,78 +53,84 @@
 	{% endif %}
 	
 	<div class="community_content">
+		<div>
+			<div class="left">
+				<div class="subsection">
+			
+					<h2>Profile Picture</h2>
+			
+					<div class="profile_pic_container" style="margin-bottom:.5em">
+						{% include 'thecommunity/shared/profile_picture.html' with user=user %}
+					</div>
+			
+					<div>
+						{% if user.profile.linked_via_facebook %}
+							<span id="associate_facebook_profile">Linked to Facebook</span> <br />
+						{% else %}
+							<span id="associate_facebook_profile"><a href="#" onclick="account.facebook.sign_in('{{ facebook_permissions }}');return false;">Associate Facebook profile</a></span> <br />
+						{% endif %}
+				
+						<span id="associate_twitter_profile"><a href="#" onclick="account.twitter.sign_in();return false;">Associate Twitter profile</a></span> <br />
+					</div>
+			
+				</div>
+
+				<div class="subsection" id="change_password">
+			
+					<h2>Change Password</h2>
 		
-		<div class="subsection">
-			
-			<h2>Profile Picture</h2>
-			
-			<div class="profile_pic_container" style="margin-bottom:.5em">
-				{% include 'thecommunity/shared/profile_picture.html' with user=user %}
+					<form name="change-password" method="post" action="/community/change_password">
+						{% csrf_token %}
+
+						<div class="form-row clearfix">
+							<label for="current_password">Current Password:</label>
+							<input name="current_password" type="password" value="{{ current_password }}"/>
+						</div>
+						<div class="form-row clearfix">
+							<label for="new_password">New Password:</label>
+							<input name="new_password" type="password" value="{{ new_password }}"/>
+						</div>
+						<div class="form-row clearfix">
+							<label for="confirm_password">Confirm Password:</label>
+							<input name="confirm_password" type="password" value="{{ confirm_password }}"/>
+						</div>
+						<div class="action-row clearfix">
+							<input type="submit" name="change_password" value="change password" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />
+						</div>
+				
+					</form>
+				</div>
 			</div>
 			
-			<div>
-				{% if user.profile.linked_via_facebook %}
-					<span id="associate_facebook_profile">Linked to Facebook</span> <br />
-				{% else %}
-					<span id="associate_facebook_profile"><a href="#" onclick="account.facebook.sign_in('{{ facebook_permissions }}');return false;">Associate Facebook profile</a></span> <br />
-				{% endif %}
+			<div class="right">
+				<div class="subsection" id="email_opt_in">
+			
+					<h2>Email Opt-In Status</h2>
+			
+					<form name="change-email-opt-in" method="post" action="/community/change_email_opt_in">
+						{% csrf_token %}
 				
-				<span id="associate_twitter_profile"><a href="#" onclick="account.twitter.sign_in();return false;">Associate Twitter profile</a></span> <br />
+						{% if user.profile.email_opt_in %}
+							<div class="form-row clearfix" style="margin-bottom:.5em;">
+								You are currently opted into periodic e-mail updates.
+							</div>
+							<div class="action-row clearfix">
+								<input type="hidden" name="opt_in_status" value="N" />
+								<input type="submit" name="submit" value="opt out" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />
+							</div>
+						{% else %}
+							<div class="form-row clearfix" style="margin-bottom:.5em;">
+								You are currently opted out of periodic e-mail updates.
+							</div>
+							<div class="action-row clearfix">
+								<input type="hidden" name="opt_in_status" value="Y" />
+								<input type="submit" name="submit" value="opt in" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />
+							</div>
+						{% endif %}
+					</form>
+				</div>
 			</div>
-			
-		</div>
-
-		<div class="subsection" id="change_password">
-			
-			<h2>Change Password</h2>
-		
-			<form name="change-password" method="post" action="/community/change_password">
-				{% csrf_token %}
-
-				<div class="form-row clearfix">
-					<label for="current_password">Current Password:</label>
-					<input name="current_password" type="password" value="{{ current_password }}"/>
-				</div>
-				<div class="form-row clearfix">
-					<label for="new_password">New Password:</label>
-					<input name="new_password" type="password" value="{{ new_password }}"/>
-				</div>
-				<div class="form-row clearfix">
-					<label for="confirm_password">Confirm Password:</label>
-					<input name="confirm_password" type="password" value="{{ confirm_password }}"/>
-				</div>
-				<div class="action-row clearfix">
-					<input type="submit" name="change_password" value="change password" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />
-				</div>
-				
-			</form>
-		</div>
-		
-		<div class="subsection" id="email_opt_in">
-			
-			<h2>Email Opt-In Status</h2>
-			
-			<form name="change-email-opt-in" method="post" action="/community/change_email_opt_in">
-				{% csrf_token %}
-				
-				{% if user.profile.email_opt_in %}
-					<div class="form-row clearfix" style="margin-bottom:.5em;">
-						You are currently opted into periodic e-mail updates.
-					</div>
-					<div class="action-row clearfix">
-						<input type="hidden" name="opt_in_status" value="N" />
-						<input type="submit" name="submit" value="opt out" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />
-					</div>
-				{% else %}
-					<div class="form-row clearfix" style="margin-bottom:.5em;">
-						You are currently opted out of periodic e-mail updates.
-					</div>
-					<div class="action-row clearfix">
-						<input type="hidden" name="opt_in_status" value="Y" />
-						<input type="submit" name="submit" value="opt in" class="submit ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />
-					</div>
-				{% endif %}
-			</form>
+			<div class="clrflt"></div>
 		</div>
 		
 	</div>
