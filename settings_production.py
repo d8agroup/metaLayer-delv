@@ -24,6 +24,13 @@ STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 
+CACHES = {
+    'default':{
+        'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION':'108.166.125.118:11211',
+    }
+}
+
 DB_LOGGING = {
     'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
     'database_name':'ml_dashboard_production_logging',
