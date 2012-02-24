@@ -16,6 +16,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+#Django Compressor Settings
+COMPRESS_OFFLINE = False
+COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+COMPRESS_CSS_HASHING_METHOD = 'hash' # not using mtime since it differs between servers.
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
