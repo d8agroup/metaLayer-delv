@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'django_mongodb_engine',
     'djangotoolbox',
     'compressor',
+    'captcha',
 
     'dashboard.actions',
     'dashboard.aggregator',

@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth.views import password_reset, password_reset_confirm, \
         password_reset_complete, password_reset_done
-from dashboard.userprofiles.forms import SetPasswordForm
+from dashboard.userprofiles.forms import SetPasswordForm, PasswordResetForm
 from dashboard.thecommunity.views import *
 
 urlpatterns = patterns('',
@@ -12,6 +12,7 @@ urlpatterns = patterns('',
         {   
             'template_name': 'thecommunity/password_reset/password_reset_form.html', 
             'email_template_name': 'thecommunity/password_reset/password_reset_email.html',
+            'password_reset_form': PasswordResetForm,
             'is_admin_site': True   # setting this parameter causes OOB logic to pull domain from META.HTTP_HOST in settings
                                     # instead of from Sites (which will throw an exception)
                                     # see django.contrib.auth.views:password_reset line 153-154
