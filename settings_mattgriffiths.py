@@ -1,10 +1,12 @@
 import logging
 
+ROOT_URLCONF = 'dashboard.urls_admin'
+
 DEBUG = True
 
 COMPRESS_ENABLED = True
 
-SITE_ID=u'4f1408ebc845b317df00000d'
+SITE_ID=u'4f4350a1c845b31cd500001d'
 
 SITE_HOST='localhost:8000'
 
