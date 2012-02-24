@@ -1,4 +1,5 @@
 {% extends 'thecommunity/base.html' %}
+{% load cache %}
 
 {% block js %}
     <script type="text/javascript" language="JavaScript" src="/static/js/thecommunity/profile_page/profile_page.js"></script>
@@ -55,39 +56,40 @@
                     </div><!--left_mid ends -->
                 {% endifequal %}
 
-                <div class="left_bottom">
-                    <h2>Trending Insights</h2>
-                    <div class="treding_row1">
-                        <ul>
-                            {% for insight in trending_insights_1 %}
-                                <li>
-                                    {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                {% cache cache_timeout profile_page_trending_insights %}
+                    <div class="left_bottom">
+                        <h2>Trending Insights</h2>
+                        <div class="treding_row1">
+                            <ul>
+                                {% for insight in trending_insights_1 %}
+                                    <li>
+                                        {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-                    <div class="treding_row2">
-                        <ul>
-                            {% for insight in trending_insights_2 %}
-                                <li>
-                                    {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                        <div class="treding_row2">
+                            <ul>
+                                {% for insight in trending_insights_2 %}
+                                    <li>
+                                        {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-                    <div class="treding_row3">
-                        <ul>
-                            {% for insight in trending_insights_3 %}
-                                <li>
-                                    {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
-                                </li>
-                            {% endfor %}
-                        </ul>
+                        <div class="treding_row3">
+                            <ul>
+                                {% for insight in trending_insights_3 %}
+                                    <li>
+                                        {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
-
-                </div><!--left_bottom ends -->
+                {% endcache %}
             </aside><!--aside ends -->
 
             <div class="container corner">
