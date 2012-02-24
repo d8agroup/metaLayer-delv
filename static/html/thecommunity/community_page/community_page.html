@@ -33,18 +33,22 @@
         <article class="banner_left">
             <div class="slider">
                 <ul>
-                    {% for insight in top_insights_list %}
-                        <li>
-                            {% include 'thecommunity/shared/insight_image_crop.html' with width=90 height=59 insight=insight %}
-                        </li>
-                    {% endfor %}
+                    {% cache cache_timeout community_page_top_insights_list %}
+                        {% for insight in top_insights_list %}
+                            <li>
+                                {% include 'thecommunity/shared/insight_image_crop.html' with width=90 height=59 insight=insight %}
+                            </li>
+                        {% endfor %}
+                    {% endcache %}
                 </ul>
             </div>
             <div class="slideshow">
                 <div class="slideshow_pic border corner">
-                    {% if top_insights_main %}
-                        {% include 'thecommunity/shared/insight_image_scale.html' with width=350 height=185 insight=top_insights_main %}
-                    {% endif %}
+                    {% cache cache_timeout community_page_top_insight %}
+                        {% if top_insights_main %}
+                            {% include 'thecommunity/shared/insight_image_scale.html' with width=350 height=185 insight=top_insights_main %}
+                        {% endif %}
+                    {% endcache %}
                 </div>
                 Top Insights of the Day
             </div>
@@ -71,21 +75,25 @@
             <div class="trading_box">
                 <h3>What's Trending?</h3>
                 <ul>
-                    {% for insight in trending_insights %}
-                        <li>
-                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
-                        </li>
-                    {% endfor %}
+                    {% cache cache_timeout community_page_trending_insights %}
+                        {% for insight in trending_insights %}
+                            <li>
+                                {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
+                            </li>
+                        {% endfor %}
+                    {% endcache %}
                 </ul>
             </div>
             <div class="trading_box">
                 <h3>Recent Insights</h3>
                 <ul>
-                    {% for insight in recent_challenges %}
-                        <li>
-                            {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
-                        </li>
-                    {% endfor %}
+                    {% cache cache_timeout community_page_recent_insights %}
+                        {% for insight in recent_challenges %}
+                            <li>
+                                {% include 'thecommunity/shared/insight_image_crop.html' with width=115 height=76 insight=insight %}
+                            </li>
+                        {% endfor %}
+                    {% endcache %}
                 </ul>
             </div>
 {#            <div class="discover_area">#}

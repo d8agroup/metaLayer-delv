@@ -15,7 +15,8 @@ def _base_template_data():
         'site_url':settings.SITE_HOST,
         'image_url':settings.IMAGE_HOST,
         'facebook_app_id':settings.FACEBOOK_SETTINGS['api_key'],
-        'social_sharing_services':settings.SOCIAL_SHARING_SERVICES
+        'social_sharing_services':settings.SOCIAL_SHARING_SERVICES,
+        'cache_timeout':settings.CACHE_TIMEOUT,
     }
 
 def xd_receiver(request):
