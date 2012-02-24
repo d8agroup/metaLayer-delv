@@ -2,6 +2,12 @@ import logging
 
 DEBUG = False
 
+#If admin deployment, enable admin urls
+import socket
+if socket.gethostbyname(socket.gethostname()) in ['50.57.128.82']:
+    ROOT_URLCONF = 'dashboard.urls_admin'
+    DEBUG = True
+
 COMPRESS_ENABLED = True
 
 SESSION_COOKIE_SECURE =False
@@ -17,7 +23,6 @@ IMAGE_HOST = SITE_HOST
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
-
 
 DB_LOGGING = {
     'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG

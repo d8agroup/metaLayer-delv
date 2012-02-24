@@ -301,5 +301,4 @@ elif socket.gethostbyname(socket.gethostname()) in ['50.57.227.192']:
 elif socket.gethostname() == 'Todd-McNeals-MacBook-Pro.local':
     from settings_tmcneal import *
 else:
-    #TODO this needs to be changed to support multiple envs
     from settings_production import *
