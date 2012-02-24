@@ -27,7 +27,7 @@ def user_home(request, user_name):
         insight_id = request.GET['insight']
         if user_name != request.user.username:
             DashboardsController.RecordDashboardView(insight_id)
-        return redirect('/community/%s#%s' % (user_name, insight_id))
+        return redirect('/delv/%s#%s' % (user_name, insight_id))
 
     template_data = _base_template_data()
 
@@ -84,7 +84,7 @@ def link_facebook_profile(request):
     """
     
     if not request.method == 'POST':
-        return redirect('/community/%s' % request.user.username)
+        return redirect('/delv/%s' % request.user.username)
     
     facebook_id = request.POST.get('facebook_id')
     access_token = request.POST.get('access_token')
@@ -177,7 +177,7 @@ def login_or_register(request):
                     uc = UserController(user)
                     uc.logout_user(request)
                     return redirect(no_access)
-        return redirect('/community/%s?%s=true' % (request.user.username, request_param))
+        return redirect('/delv/%s?%s=true' % (request.user.username, request_param))
 
 @login_required(login_url='/')
 def change_password(request):
@@ -188,7 +188,7 @@ def change_password(request):
     
     Logger.Info("%s - change_password - started" % __name__)
     if not request.method == 'POST':
-        return redirect('/community/%s' % request.user.username)
+        return redirect('/delv/%s' % request.user.username)
     
     current_password = request.POST.get('current_password')
     new_password = request.POST.get('new_password')
@@ -227,7 +227,7 @@ def change_email_opt_in(request):
     
     Logger.Info("%s - change_email_opt_in - started" % __name__)
     if not request.method == 'POST':
-        return redirect('/community/%s' % request.user.username)
+        return redirect('/delv/%s' % request.user.username)
     
     opt_in_status = request.POST.get('opt_in_status')
     

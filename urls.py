@@ -4,7 +4,7 @@ from django.conf import settings
 from thecommunity.views import xd_receiver
 
 urlpatterns = patterns('',
-    url(r'^community/', include('dashboard.thecommunity.urls')),
+    url(r'^delv/', include('dashboard.thecommunity.urls')),
     url(r'^user/', include('dashboard.thedashboard.urls')),
     url(r'^dashboard/', include('dashboard.thedashboard.urls')),
 
@@ -18,5 +18,6 @@ urlpatterns = patterns('',
 
     url(r'^xd_receiver\.html$', xd_receiver),
 
-    url(r'^$', redirect_to, {'url':'/community/'} ),
+    url(r'^community/', redirect_to, {'url':'/delv/'} ),
+    url(r'^$', redirect_to, {'url':'/delv/'} ),
 )

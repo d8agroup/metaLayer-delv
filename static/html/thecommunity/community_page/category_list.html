@@ -2,7 +2,7 @@
     {% for category in category_list %}
         {%  if category.count > 0 %}
             <li>
-                <a href="/community/{{ category.name }}" class="tool_tip" title='View insights tagged as "{{ category.name }}"'>
+                <a href="/delv/{{ category.name }}" class="tool_tip" title='View insights tagged as "{{ category.name }}"'>
                     <strong>{{ category.name }}</strong>
                 </a>
             </li>

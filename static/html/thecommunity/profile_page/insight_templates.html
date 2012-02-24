@@ -10,7 +10,7 @@
     <div class="insight_template twitter">
         <h3>Your own Twitter word art</h3>
         <p>Create an interesting visualization of the things you talk about on twitter.</p>
-        <form action='/community/create_from_template' method="POST">
+        <form action='/delv/create_from_template' method="POST">
             {% csrf_token %}
             <input type="hidden" name="template_name" value="twitter_personal_words"/>
             <input type="submit" value="Create this insight" class="button"/>
@@ -19,7 +19,7 @@
     <div class="insight_template twitter">
         <h3>The sentiment of your location</h3>
         <p>Create a chart showing the sentiment towards your country, state or town.</p>
-        <form action='/community/create_from_template' method="POST">
+        <form action='/delv/create_from_template' method="POST">
             {% csrf_token %}
             <input type="hidden" name="template_name" value="twitter_sentiment_location"/>
             <input type="submit" value="Create this insight" class="button"/>

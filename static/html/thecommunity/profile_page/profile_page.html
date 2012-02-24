@@ -29,7 +29,7 @@
                 <div class="left_top corner">
                     <div class="profile_image_container">
                         {% ifequal profile_user user %}
-                            <a class="tool_tip" title="Change you profile image" href="/community/{{ profile_user.username }}/account">
+                            <a class="tool_tip" title="Change you profile image" href="/delv/{{ profile_user.username }}/account">
                                 {% include 'thecommunity/shared/profile_picture.html' with user=profile_user %}
                             </a>
                         {% else %}

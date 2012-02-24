@@ -5,10 +5,10 @@
             {% if user.is_authenticated %}
                 <li><a href="/dashboard/remix/{{ insight.id }}"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
             {% else %}
-                <li><a href="/community/welcome"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
+                <li><a href="/delv/welcome"><img src="/static/images/thecommunity/link_rmx.jpg" alt="" /></a></li>
             {% endif %}
         {% endifnotequal %}
-        <li><a href="/community/{{ profile_user.username }}/{{ insight.id }}"><img src="/static/images/thecommunity/link_share.jpg" alt="" /></a></li>
+        <li><a href="/delv/{{ profile_user.username }}/{{ insight.id }}"><img src="/static/images/thecommunity/link_share.jpg" alt="" /></a></li>
     </ul>
 </div>
 <div class="like_links" id="like_links_{{ insight.id }}">

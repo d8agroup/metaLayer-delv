@@ -78,7 +78,7 @@
 			
 			<h2>Change Password</h2>
 		
-			<form name="change-password" method="post" action="/community/change_password">
+			<form name="change-password" method="post" action="/delv/change_password">
 				{% csrf_token %}
 
 				<div class="form-row clearfix">
@@ -104,7 +104,7 @@
 			
 			<h2>Email Opt-In Status</h2>
 			
-			<form name="change-email-opt-in" method="post" action="/community/change_email_opt_in">
+			<form name="change-email-opt-in" method="post" action="/delv/change_email_opt_in">
 				{% csrf_token %}
 				
 				{% if user.profile.email_opt_in %}

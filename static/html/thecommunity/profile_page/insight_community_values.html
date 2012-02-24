@@ -1,7 +1,7 @@
 <div class="community_data">
     <div class="owner_actions">
         {% ifequal user profile_user %}
-            <a href="/dashboard/{{ insight.id }}" class="tool_tip" title='Edit this insight'>edit</a><span class="divider">|</span><a href="/community/delete_insight/{{ insight.id }}" class="tool_tip" title='Delete this insight'>delete</a>
+            <a href="/dashboard/{{ insight.id }}" class="tool_tip" title='Edit this insight'>edit</a><span class="divider">|</span><a href="/delv/delete_insight/{{ insight.id }}" class="tool_tip" title='Delete this insight'>delete</a>
         {% endifequal %}
     </div>
     <ul>

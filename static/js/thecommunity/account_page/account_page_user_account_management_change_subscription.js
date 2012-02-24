@@ -34,7 +34,7 @@
             }
             $.get
                 (
-                    '/community/change_subscription',
+                    '/delv/change_subscription',
                     function(template) { render_service_return_function(change_subscription_container, template); }
                 );
         },
@@ -59,7 +59,7 @@
                         function(e)
                         {
                             e.preventDefault();
-                            var service_url = '/community/change_subscription';
+                            var service_url = '/delv/change_subscription';
                             if (container.find('.purchase_form').length > 0)
                             {
                                 var post_data =
@@ -110,7 +110,7 @@
                 return this;
             };
 
-            var service_url = '/community/change_subscription?subscription_id=' + subscription_id;
+            var service_url = '/delv/change_subscription?subscription_id=' + subscription_id;
             $.get( service_url, function(template) { render_change_to_subscription_callback(change_subscription_container, template)} );
         }
     }
