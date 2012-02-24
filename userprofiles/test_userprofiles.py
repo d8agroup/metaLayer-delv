@@ -5,15 +5,20 @@ from controllers import UserController
 from django.contrib.auth.models import User
 import constants
 
-test_user = None
-controller = None
+test_user = test_user2 = test_user3 = None
+controller = controller2 = controller3 = None
 
 def setup():
     
-    global test_user, controller
+    global test_user, test_user2, test_user3
+    global controller, controller2, controller3
     
     test_user = User.objects.create_user('todd.mcneal.test1@gmail.com', 'todd.mcneal.test1@gmail.com', 'password')
+    test_user2 = User.objects.create_user('todd.mcneal.test2@gmail.com', 'todd.mcneal.test2@gmail.com', 'password')
+    test_user3 = User.objects.create_user('todd.mcneal.test3@gmail.com', 'todd.mcneal.test3@gmail.com', 'password')
     controller = UserController(test_user)
+    controller2 = UserController(test_user2)
+    controller3 = UserController(test_user3)
     
     #atest = User.objects.get_or_create(username='todd.mcneal@gmail.com')[0]
     #atest.set_password('password')
@@ -79,9 +84,42 @@ def test_link_facebook_profile_success():
     facebook_id = 'bogus_fb_id'
     access_token = 'bogus_access_token'
     
-    passed, errors = controller.link_facebook_profile(facebook_id, access_token)
+    passed, errors = controller2.link_facebook_profile(facebook_id, access_token)
     
     assert passed
+    assert test_user2.profile.profile_image() == 'graph.facebook.com/%s/picture?type=normal' % facebook_id, test_user.profile.profile_image()
+
+def test_link_twitter_profile_missing_screen_name():
+    
+    passed, errors = controller.link_twitter_profile(None)
+    
+    assert not passed
+    assert constants.TWITTER_SCREEN_NAME_MISSING in errors, errors
+
+def test_link_twitter_profile_success():
+    
+    twitter_handle = 'bogus_screen'
+    
+    passed, errors = controller3.link_twitter_profile(twitter_handle)
+    
+    assert passed
+    assert test_user3.profile.profile_image() == 'api.twitter.com/1/users/profile_image/%s?type=large' % twitter_handle
+
+def test_link_facebook_and_twitter_success():
+    
+    facebook_id = 'bogus_fb'
+    twitter_handle = 'bogus_twitter'
+    
+    passed, errors = controller.link_facebook_profile(facebook_id, 'bogus_access')
+    
+    assert passed
+    
+    passed, errors = controller.link_twitter_profile(twitter_handle)
+    
+    assert passed
+    
+    assert test_user.profile.linked_via_facebook()
+    assert test_user.profile.linked_via_twitter()
     assert test_user.profile.profile_image() == 'graph.facebook.com/%s/picture?type=normal' % facebook_id, test_user.profile.profile_image()
 
 def test_email_opt_in_missing_status():

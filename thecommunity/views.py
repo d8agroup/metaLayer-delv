@@ -94,7 +94,28 @@ def link_facebook_profile(request):
         return JSONResponse({'profile_picture': request.user.profile.profile_image() })
     else:
         return JSONResponse({'errors': errors })
-    
+
+@login_required(login_url='/')
+@csrf_exempt
+def link_twitter_profile(request):
+    """
+    Associates a Twitter profile to a metaLayer user account.
+
+    """
+
+    if not request.method == 'POST':
+        return redirect('/community/%s' % request.user.username)
+
+    screen_name = request.POST.get('screen_name')
+
+    controller = UserController(request.user)
+    passed, errors = controller.link_twitter_profile(screen_name)
+
+    # return profile pic location to caller so front-end can display profile picture
+    if passed:
+        return JSONResponse({'profile_picture': request.user.profile.profile_image() })
+    else:
+        return JSONResponse({'errors': errors })
 
 def community_page(request):
     template_data = _base_template_data()

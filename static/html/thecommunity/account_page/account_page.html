@@ -70,7 +70,11 @@
 							<span id="associate_facebook_profile"><a href="#" onclick="account.facebook.sign_in('{{ facebook_permissions }}');return false;">Associate Facebook profile</a></span> <br />
 						{% endif %}
 				
-						<span id="associate_twitter_profile"><a href="#" onclick="account.twitter.sign_in();return false;">Associate Twitter profile</a></span> <br />
+						{% if user.profile.linked_via_twitter %}
+							<span id="associate_twitter_profile">Linked to Twitter</span> <br />
+						{% else %}
+							<span id="associate_twitter_profile"><a href="#" onclick="account.twitter.sign_in();return false;">Associate Twitter profile</a></span> <br />
+						{% endif %}
 					</div>
 			
 				</div>
