@@ -20,6 +20,7 @@ MANAGERS = ADMINS
 COMPRESS_OFFLINE = False
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 COMPRESS_CSS_HASHING_METHOD = 'hash' # not using mtime since it differs between servers.
+COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 
 
 # Local time zone for this installation. Choices can be found here:
