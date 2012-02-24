@@ -2,7 +2,7 @@ import logging
 
 DEBUG = True
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 
 SITE_ID=u'4f1408ebc845b317df00000d'
 
@@ -22,6 +22,13 @@ logging.basicConfig(
     level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
 )
+
+CACHES = {
+    'default':{
+        'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION':'127.0.0.1:11211',
+        }
+}
 
 DB_LOGGING = {
     'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
@@ -85,5 +92,8 @@ FACEBOOK_SETTINGS = {
     'requested_permissions': ['offline_access']
 }
 
+TWITTER_SETTINGS = {
+    'api_key': 'lFEg1EXUmGlOqSto656Etw'
+}
 
 

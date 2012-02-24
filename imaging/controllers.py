@@ -9,8 +9,7 @@ class ImagingController(object):
         text_sizes = (14, 10) if width > 100 else (10, 7)
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         context = cairo.Context(surface)
-        rgb = ImagingController._html_color_to_rgb(fill_color)
-        context.set_source_rgb(rgb[0]/255, rgb[1]/255, rgb[2]/255)
+        context.set_source_rgb(0, 0, 0)
         context.rectangle(0, 0, width, height)
         context.fill()
         text = 'metaLayer'

@@ -60,7 +60,13 @@ class Dashboard(Model):
     def Load(cls, id, increment_load_count = False):
         Logger.Info('%s - Dashboard.Load - started' % __name__)
         Logger.Debug('%s - Dashboard.Load - started with is:%s and increment_load_count:%s' % (__name__, id, increment_load_count))
-        dashboard = Dashboard.collection.find_one({'_id':ObjectId(id)})
+        try:
+            object_id = ObjectId(id)
+        except Exception, e:
+            Logger.Error('%s - Load - error: invalid object id supplied: %s' % (__name__, id))
+            Logger.Info('%s - Dashboard.Load - finished' % __name__)
+            return None
+        dashboard = Dashboard.collection.find_one({'_id': object_id})
         if dashboard:
             dashboard['last_saved_pretty'] = dashboard._pretty_date(dashboard['last_saved'])
             dashboard['created_pretty'] = dashboard._pretty_date(dashboard['created'])
@@ -137,8 +143,15 @@ class Dashboard(Model):
         for visualization_type in settings.VISUALIZATIONS_CONFIG['visualization_display_hierarchy']:
             for collection in [c for c in self['collections'] if c['data_points']]:
                 for visualization in collection['visualizations']:
-                    if visualization['name'] == visualization_type and visualization['snapshot']:
+                    if visualization['name'] == visualization_type and 'snapshot' in visualization and visualization['snapshot']:
                         return visualization['snapshot']
+        return None
+
+    def visualization_by_id(self, visualization_id):
+        for collection in [c for c in self['collections'] if c['data_points']]:
+            for visualization in collection['visualizations']:
+                if visualization['id'] == visualization_id and 'snapshot' in visualization and visualization['snapshot']:
+                    return visualization['snapshot']
         return None
 
     def single_data_point_for_image(self):
@@ -220,7 +233,7 @@ class DashboardShortUrl(Model):
     @classmethod
     def Create(cls, dashboard_id):
         def generate_random_string():
-            return "".join( [random.choice(string.letters[:26]) for i in xrange(12)] )
+            return "".join( [random.choice(string.letters[:26]) for i in xrange(5)] )
         Logger.Info('%s - ShortUrl.Create - started' % __name__)
         Logger.Debug('%s - ShortUrl.Create - started with dashboard_id:%s ' % (__name__, dashboard_id))
         url_identifier = generate_random_string()

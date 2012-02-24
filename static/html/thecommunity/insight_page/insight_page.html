@@ -41,23 +41,10 @@
                     $('body').insight_page({{ insight_json|safe }});
                 }
             );
-        /*Facebook*/
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=" + FACEBOOK_APP_ID;
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-        /*twitter*/
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-        /*google+*/
-        (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/plusone.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();
     </script>
+    <script type="text/javascript">var switchTo5x=false;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "69c6c2fe-8907-4984-a615-e46f49074830"}); </script>
 {% endblock %}
 
 {% block page_title %} {{ insight.name }} by {{ profile_user.username }}{% endblock %}
@@ -104,9 +91,12 @@
                     <table>
                         <tr>
                             <td class="link"><input type="text" value="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}" /></td>
-                            <td class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}" data-text="{{ insight.name }}" data-size="small" data-count="none">Tweet</a></td>
-                            <td class="google"><div class="g-plusone" data-annotation="false" data-href="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}"></div></td>
-                            <td class="facebook"><div class="fb-like" data-href="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}" data-send="true" data-show-faces="false" data-font="tahoma" data-layout='button_count'></div></td>
+                            <td class="social">
+                                {% include 'thecommunity/shared/social_sharing.html' with insight=insight short_url=short_url %}
+                            </td>
+{#                            <td class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}" data-text="{{ insight.name }}" data-size="small" data-count="none">Tweet</a></td>#}
+{#                            <td class="google"><div class="g-plusone" data-annotation="false" data-href="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}"></div></td>#}
+{#                            <td class="facebook"><div class="fb-like" data-href="http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}" data-send="true" data-show-faces="false" data-font="tahoma" data-layout='button_count'></div></td>#}
                         </tr>
                     </table>
                 </div>
@@ -115,6 +105,15 @@
                 <div class="collections">
 
                 </div>
+            </div>
+            <div id="trending_insights" class="corner">
+                <ul>
+                    {% for insight in trending_insights %}
+                        <li>
+                            {% include 'thecommunity/shared/insight_image_crop.html' with width=80 height=80 insight=insight %}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </section>
     </section>

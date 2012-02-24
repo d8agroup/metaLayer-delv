@@ -8,6 +8,7 @@ from userprofiles.models import UserStatistics, UserSubscriptions, UserProfile
 from utils import empty
 import constants
 from integrations import facebook
+from . import _check_password_rules
 
 class UserController(object):
     def __init__(self, user):
@@ -75,7 +76,9 @@ class UserController(object):
         UserController.LoginUser(request, username, password1)
         user = UserController.GetUserByUserName(username)
         if registration_code:
-            user.profile.registration_code = registration_code
+            profile = user.profile
+            profile.registration_code = registration_code
+            profile.save()
         Logger.Info('%s - UserController.RegisterUser - finished' % __name__)
         return True, []
 
@@ -84,8 +87,8 @@ class UserController(object):
         return User.objects.get(username=user_name)
         
     def change_password(self, password, new_password1, new_password2):
-        Logger.Info('%s - UserController.ChangePassword - started' % __name__)
-        Logger.Debug('%s - UserController.ChangePassword - started with password:%s and new_password1:%s and new_password2:%s' 
+        Logger.Info('%s - UserController.change_password - started' % __name__)
+        Logger.Debug('%s - UserController.change_password - started with password:%s and new_password1:%s and new_password2:%s' 
                 % (__name__, password, new_password1, new_password2))
         errors = []
         if not self.user:
@@ -118,20 +121,62 @@ class UserController(object):
         self.user.set_password(new_password1)
         self.user.save()
         
+        Logger.Info('%s - UserController.change_password - finished' % __name__)
+        return True, []
+    
+    def change_email_opt_in(self, opt_in_status):
+        Logger.Info('%s - UserController.change_email_opt_in - started' % __name__)
+        Logger.Debug('%s - UserController.change_email_opt_in - started with opt_in_status: %s'
+                % (__name__, opt_in_status))
+        
+        if empty(opt_in_status):
+            return False, [constants.OPT_IN_STATUS_MISSING]
+        
+        profile = self.user.profile
+        
+        if 'email' not in profile.contact_options:
+            profile.contact_options['email'] = {}
+        profile.contact_options['email']['opt_in_status'] = True if opt_in_status == 'Y' else False
+        
+        profile.save()
+        
+        Logger.Info('%s - UserController.change_email_opt_in - finished' % __name__)
         return True, []
     
     def link_facebook_profile(self, facebook_id, access_token):
         Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)
+        Logger.Debug('%s - UserController.link_facebook_profile - started with facebook_id:%s and access_token:%s'
+                % (__name__, facebook_id, access_token))
         
-        #TODO check for errors
+        errors = []
+        if not self.user:
+            errors.append(constants.USER_DOES_NOT_EXIST)
+        
+        if empty(facebook_id):
+            errors.append(constants.FACEBOOK_ID_MISSING)
+        
+        if empty(access_token):
+            errors.append(constants.FACEBOOK_ACCESS_TOKEN_MISSING)
+        
+        if len(errors) > 0:
+            return False, errors
         
         # save Facebook metadata to user profile
         profile = self.user.profile
         profile.linked_accounts = { 'facebook': { 'facebook_id': facebook_id, 'access_token': access_token } }
         profile.save()
         
-        
         Logger.Info('%s - UserController.link_facebook_profile - finished' % __name__)
+        return True, []
+    
+    def link_twitter_profile(self, twitter_id, access_token):
+        Logger.Info('%s - UserController.link_twitter_profile - started' % __name__)
+        Logger.Debug('%s - UserController.link_twitter_profile - started with facebook_id:%s and access_token:%s'
+                % (__name__, facebook_id, access_token))
+        
+        
+        
+        Logger.Info('%s - UserController.link_twitter_profile - finished' % __name__)
         return True, []
 
     def logout_user(self, request):
@@ -242,19 +287,5 @@ class UserController(object):
         number_of_saved_dashboards = active_subscription_config['config']['number_of_saved_dashboards']
         Logger.Info('%s - UserController.maximum_number_of_saved_dashboards_allowed_by_subscription - finished' % __name__)
         return number_of_saved_dashboards
-
-
-def _check_password_rules(new_password):
-    """
-    Verify that the given password matches the rules for this site.
-    
-    """
-    
-    if len(new_password) < 6:
-        return False, [constants.PASSWORD_TOO_SHORT]
-    
-    return True, []
-
-
 
 

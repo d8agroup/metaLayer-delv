@@ -11,10 +11,16 @@ EMAIL_HOST_PASSWORD = 'hellitifyoulike01'
 EMAIL_PORT = 587
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Matthew Griffiths', 'mg@metalayer.com'),
 )
 
 MANAGERS = ADMINS
+
+#Django Compressor Settings
+COMPRESS_OFFLINE = False
+COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+COMPRESS_CSS_HASHING_METHOD = 'hash' # not using mtime since it differs between servers.
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -268,9 +274,19 @@ INSIGHT_CATEGORIES = [
 REGISTRATION_CODES = {
     'codes':{
         'TED':['12345', '23456'],
+        'PRIVATE_BETA':['ZM26R']
     },
     'require_code':True
 }
+
+SOCIAL_SHARING_SERVICES = [
+    'st_sharethis_large',
+    'st_twitter_large',
+    'st_plusone_large',
+    #'st_facebook_large',
+    'st_linkedin_large',
+    'st_fblike_hcount',
+]
 
 from settings_insight_templates import *
 

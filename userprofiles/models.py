@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     linked_accounts = DictField()
     api_keys = ListField()
     registration_code = models.TextField()
+    contact_options = DictField()
 
     def community_values(self):
         dc = DashboardsController(self.user)
@@ -34,6 +35,18 @@ class UserProfile(models.Model):
         #TODO add twitter logic here
         
         return None
+    
+    def email_opt_in(self):
+        """
+        Returns whether or not the user has opted to receive e-mail campaigns.
+        
+        """
+        
+        if 'email' in self.contact_options and 'opt_in_status' in self.contact_options['email'] \
+                and self.contact_options['email']['opt_in_status'] == True:
+            return True
+        
+        return False
     
     def linked_via_facebook(self):
         """
