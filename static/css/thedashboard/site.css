@@ -21,6 +21,7 @@ HEADER
 .help table td { padding:15px; text-align:justify; color:#EEE;}
 .help table td h4 { font-size:130%; text-align:center; margin-bottom:5px;}
 .help table #step_1, .help table #step_2 { width:25%; }
+.help table .arrow { text-align:center; padding:0 0 5px 0;}
 
 /***********************************************************************************************************************
 DASHBOARD

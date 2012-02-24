@@ -4,7 +4,7 @@ ROOT_URLCONF = 'dashboard.urls_admin'
 
 DEBUG = True
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 SITE_ID=u'4f4350a1c845b31cd500001d'
 
