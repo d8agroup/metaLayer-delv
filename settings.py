@@ -1,6 +1,8 @@
 # Django settings for dashboard project.
 import time
 
+SITE_DOWN = False
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

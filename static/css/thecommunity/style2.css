@@ -275,6 +275,12 @@ aside{ width:333px; float:left; }
 #no_access_page #no_access_inner h2 { margin:20px auto; font-size:200%; width:250px;}
 #no_access_page #no_access_inner p { width:400px; margin:0 auto 10px; font-size:120%; text-align:justify;}
 
+#maintenance_page #maintenance_inner { width:800px; margin:20px auto; text-align:center;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
+#maintenance_page #maintenance_inner img { width:500px; border:1px solid;}
+#maintenance_page #maintenance_inner h1 { margin:20px; font-size:300%;}
+#maintenance_page #maintenance_inner h2 { margin:20px auto; font-size:200%; width:250px;}
+#maintenance_page #maintenance_inner p { width:400px; margin:0 auto 10px; font-size:120%; text-align:center;}
+
 .jspVerticalBar { margin:20px;}
 .jspTrack { background-color:#444;}
 .jspDrag { background-color:#1a1a1a; }

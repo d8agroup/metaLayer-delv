@@ -408,3 +408,11 @@ def no_access_with_code(request):
         template_data,
         context_instance=RequestContext(request)
     )
+
+def site_down(request):
+    template_data = _base_template_data()
+    return render_to_response(
+        'thecommunity/site_down/site_down.html',
+        template_data,
+        context_instance=RequestContext(request)
+    )

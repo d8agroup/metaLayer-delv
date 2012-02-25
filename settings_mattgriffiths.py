@@ -1,6 +1,8 @@
 import logging
 
-ROOT_URLCONF = 'dashboard.urls_admin'
+SITE_DOWN = False
+
+#ROOT_URLCONF = 'dashboard.urls_admin'
 
 DEBUG = True
 
