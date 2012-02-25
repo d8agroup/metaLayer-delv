@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     linked_accounts = DictField()
     api_keys = ListField()
     registration_code = models.TextField()
+    registration_status = models.TextField()
     contact_options = DictField()
 
     def community_values(self):

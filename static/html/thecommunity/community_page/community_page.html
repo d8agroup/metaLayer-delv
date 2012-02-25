@@ -7,18 +7,18 @@
             $('.video').cycle({ fx:'fade', timeout:0, pager:'.pager' });
             $('.border').corner('5px');
             Tipped.create('.tool_tip');
-            if (window.location.search.indexOf('register'))
-            {
-                {% if user.profile.get_registration_type %}
-                    {% ifequal user.profile.get_registration_type 'UNRECOGNISED' %}
-                        _gaq.push(['_trackEvent', 'user', 'registration', 'UNRECOGNISED']);
-                    {% else %}
-                        _gaq.push(['_trackEvent', 'user', 'registration', '{{ user.profile.get_registration_type }}']);
-                    {% endifequal %}
-                {% else %}
-                    _gaq.push(['_trackEvent', 'user', 'registration', 'STANDARD']);
-                {% endif %}
-            }
+{#            if (window.location.search.indexOf('register'))#}
+{#            {#}
+{#                {% if user.profile.get_registration_type %}#}
+{#                    {% ifequal user.profile.get_registration_type 'UNRECOGNISED' %}#}
+{#                        _gaq.push(['_trackEvent', 'user', 'registration', 'UNRECOGNISED']);#}
+{#                    {% else %}#}
+{#                        _gaq.push(['_trackEvent', 'user', 'registration', '{{ user.profile.get_registration_type }}']);#}
+{#                    {% endifequal %}#}
+{#                {% else %}#}
+{#                    _gaq.push(['_trackEvent', 'user', 'registration', 'STANDARD']);#}
+{#                {% endif %}#}
+{#            }#}
             if (window.location.search.indexOf('login'))
             {
                 _gaq.push(['_trackEvent', 'user', 'login', null]);

@@ -9,11 +9,15 @@
         <div id="no_access_inner">
             <img src="/static/images/thecommunity/logo_metalayer_large.jpg" />
             <h1>Thanks for signing-up!</h1>
-            <p>
-                We’re slowly rolling out access to metaLayer.com
-                to the general public. Right now it’s only available to our private beta
-                participants.
-            </p>
+            {% if code == True %}
+                <p>Sorry but the code you entered was either invalid or has been used too many times.</p>
+                <p>We're slowly rolling out access to metalayer.com to the general public.</p>
+            {% else %}
+                <p>
+                    We’re slowly rolling out access to metaLayer.com
+                    to the general public. Right now it’s only available to invited guests.
+                </p>
+            {% endif %}
             <p>
                 Over the next few days you’ll receive an email inviting you to use the
                 credentials you just entered to join. Then you can begin visualizing and

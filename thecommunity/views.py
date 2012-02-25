@@ -7,7 +7,7 @@ from django.template.context import RequestContext
 from dashboards.controllers import DashboardsController
 from logger import Logger
 from userprofiles.controllers import UserController
-from utils import JSONResponse, serialize_to_json
+from utils import JSONResponse, serialize_to_json, my_import
 
 def _base_template_data():
     return {
@@ -144,7 +144,6 @@ def login_or_register(request):
             context_instance=RequestContext(request)
         )
     else:
-        request_param = 'None'
         if 'login' in request.POST:
             username = request.POST.get('login_username')
             password = request.POST.get('login_password')
@@ -155,7 +154,9 @@ def login_or_register(request):
                     { 'login_errors':errors },
                     context_instance=RequestContext(request)
                 )
-            request_param = 'login'
+            user = UserController.GetUserByUserName(username)
+            login_policy = getattr(my_import(settings.LOGIN_POLICY['module']), 'LoginPolicy')()
+            return login_policy.process_login(user, request)
         elif 'register' in request.POST:
             username = request.POST.get('register_username')
             password1 = request.POST.get('register_password1')
@@ -168,16 +169,11 @@ def login_or_register(request):
                     { 'register_errors':errors },
                     context_instance=RequestContext(request)
                 )
-            request_param = 'register'
-        if settings.REGISTRATION_CODES['require_code']:
-            user = UserController.GetUserByUserName(request.user.username)
-            if not user.is_staff:
-                registration_code = user.profile.get_registration_type()
-                if not registration_code or registration_code == 'UNRECOGNISED':
-                    uc = UserController(user)
-                    uc.logout_user(request)
-                    return redirect(no_access)
-        return redirect('/delv/%s?%s=true' % (request.user.username, request_param))
+            user = UserController.GetUserByUserName(username)
+            for registration_policy in [getattr(my_import(rp['module']), 'RegistrationPolicy')() for rp in settings.REGISTRATION_POLICIES.values() if rp['active']]:
+                registration_policy.post_registration(user, {'register_code':registration_code})
+            login_policy = getattr(my_import(settings.LOGIN_POLICY['module']), 'LoginPolicy')()
+            return login_policy.process_login(user, request, True)
 
 @login_required(login_url='/')
 def change_password(request):
@@ -398,6 +394,15 @@ def load_remixes(request, insight_id, count):
 
 def no_access(request):
     template_data = _base_template_data()
+    return render_to_response(
+        'thecommunity/no_access/no_access.html',
+        template_data,
+        context_instance=RequestContext(request)
+    )
+
+def no_access_with_code(request):
+    template_data = _base_template_data()
+    template_data['code'] = True
     return render_to_response(
         'thecommunity/no_access/no_access.html',
         template_data,

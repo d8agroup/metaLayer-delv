@@ -6,6 +6,7 @@ from dashboard.thecommunity.views import *
 
 urlpatterns = patterns('',
     url(r'restricted_access$', no_access),
+    url(r'restricted_access/with_code$', no_access_with_code),
     url(r'welcome$', login_or_register),
     url(r'logout', logout),
     url(r'password_reset$', password_reset,
