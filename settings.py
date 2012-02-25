@@ -288,7 +288,7 @@ REGISTRATION_POLICIES = {
         'name':'TED Registration Policy',
         'active':True,
         'module':'userprofiles.registrationpolicies.tedregistrationpolicy',
-        'codes':['9ARIS', 'VLDRL', 'Z2P35', 'W19H7', 'OXM0Z', 'HVWRG', 'GY5A8', 'YRJ31', 'ETPXM', 'DQUM5', 'EUXR0',
+        'codes':['TEDTEST', '9ARIS', 'VLDRL', 'Z2P35', 'W19H7', 'OXM0Z', 'HVWRG', 'GY5A8', 'YRJ31', 'ETPXM', 'DQUM5', 'EUXR0',
                  'VZPOW', 'K92TW', '1R5B4', 'J0GXT', 'KSJC5', 'XJPZY', '0P54A', 'J357U', 'ZWZ4T', '7XH7A', 'IVLHO',
                  'IZKYP', '9MF6R', 'ABKQ7', 'ZPD8U', 'XGD7Y', 'OMLT3', '8B531', '96CM2', 'AU9H1', 'SK22W', 'UL21N',
                  '9ONOV', 'UMY2P', '9TKMC', '4GCIX', '5DYH9', '0QRSU', '37DH9', 'KB7RH', 'MVXQ2', 'H9N8R', '9WKDF',
