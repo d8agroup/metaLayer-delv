@@ -20,7 +20,7 @@ SITE_HOST='metalayer.com'
 
 SITE_HOST_SHORT = 'mlyr.co'
 
-IMAGE_HOST = SITE_HOST
+IMAGE_HOST = '50.57.221.82'
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
