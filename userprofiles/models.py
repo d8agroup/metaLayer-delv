@@ -1,5 +1,4 @@
 from django.conf import settings
-from minimongo import Model, Index
 import time
 from dashboards.controllers import DashboardsController
 from logger import Logger
@@ -65,29 +64,21 @@ class UserProfile(models.Model):
             return 'UNRECOGNISED'
         return None
 
-
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
-
-class UserStatistics(Model):
-    class Meta:
-        host = settings.DATABASES['default']['HOST']
-        port = settings.DATABASES['default']['PORT']
-        database = settings.DATABASES['default']['NAME']
-        collection = 'userprofiles_userstatistics'
-        indices = ( Index('username'), )
+class UserStatistics(models.Model):
+    username = models.TextField()
+    dashboard_template_usage = DictField()
 
     @classmethod
     def GetForUsername(cls, username):
         Logger.Info('%s - UserStatistics.GetForUsername - started' % __name__)
         Logger.Debug('%s - UserStatistics.GetForUsername - started with username:%s' % (__name__, username))
-        user_statistics = UserStatistics.collection.find_one({'username':username})
-        if not user_statistics:
-            user_statistics = UserStatistics({
-                'username':username,
-                'dashboard_template_usage':{}
-            })
-        user_statistics.save()
+        try:
+            user_statistics = UserStatistics.objects.get(username=username)
+        except UserStatistics.DoesNotExist:
+            user_statistics = UserStatistics(username=username)
+            user_statistics.save()
         Logger.Info('%s - UserStatistics.GetForUsername - finished' % __name__)
         return user_statistics
 
@@ -95,41 +86,36 @@ class UserStatistics(Model):
     def increment_dashboard_template_usage(self, dashboard_template_id):
         Logger.Info('%s - UserStatistics.increment_dashboard_template_usage - started' % __name__)
         Logger.Debug('%s - UserStatistics.increment_dashboard_template_usage - started with dashboard_template_id:%s' % (__name__, dashboard_template_id))
-        if not dashboard_template_id in self['dashboard_template_usage'].keys():
-            self['dashboard_template_usage'][dashboard_template_id] = {
+        if not dashboard_template_id in self.dashboard_template_usage.keys():
+            self.dashboard_template_usage[dashboard_template_id] = {
                 'count':0,
                 'last_used':0
             }
-        self['dashboard_template_usage'][dashboard_template_id]['count'] += 1
-        self['dashboard_template_usage'][dashboard_template_id]['last_used'] = time.time()
+        self.dashboard_template_usage[dashboard_template_id]['count'] += 1
+        self.dashboard_template_usage[dashboard_template_id]['last_used'] = time.time()
         self.save()
         Logger.Info('%s - UserStatistics.increment_dashboard_template_usage - finished' % __name__)
 
-class UserSubscriptions(Model):
-    class Meta:
-        host = settings.DATABASES['default']['HOST']
-        port = settings.DATABASES['default']['PORT']
-        database = settings.DATABASES['default']['NAME']
-        collection = 'userprofiles_usersubscriptions'
-        indices = ( Index('username'), )
+class UserSubscriptions(models.Model):
+    username = models.TextField()
+    active_subscription = models.TextField()
+    subscription_history = ListField()
 
     @classmethod
     def InitForUsername(cls, username):
         Logger.Info('%s - UserSubscriptions.InitForUsername - started' % __name__)
         Logger.Info('%s - UserSubscriptions.InitForUsername - started with username:%s' % (__name__, username))
-        user_subscriptions = UserSubscriptions({
-            'username':username,
-            'active_subscription':'subscription_type_1',
-            'subscription_history':[
+        user_subscriptions = UserSubscriptions(
+            username=username,
+            active_subscription='subscription_type_1',
+            subscription_history=[
                 {
                     'subscription_id':'subscription_type_1',
                     'start_time':time.time(),
-                    'extensions':{
-                        'note':'Initial Signup'
-                    }
+                    'extensions':{'note':'Initial Signup'}
                 }
             ]
-        })
+        )
         user_subscriptions.save()
         Logger.Info('%s - UserSubscriptions.InitForUsername - finished' % __name__)
         return user_subscriptions
@@ -138,8 +124,9 @@ class UserSubscriptions(Model):
     def GetForUsername(cls, username):
         Logger.Info('%s - UserSubscriptions.GetForUsername - started' % __name__)
         Logger.Debug('%s - UserSubscriptions.GetForUsername - started with username:%s' % (__name__, username))
-        user_subscriptions = UserSubscriptions.collection.find_one({'username':username})
-        if not user_subscriptions:
+        try:
+            user_subscriptions = UserSubscriptions.objects.get(username=username)
+        except UserSubscriptions.DoesNotExist:
             user_subscriptions = UserSubscriptions.InitForUsername(username)
         Logger.Info('%s - UserSubscriptions.GetForUsername - finished' % __name__)
         return user_subscriptions
@@ -147,7 +134,7 @@ class UserSubscriptions(Model):
     def get_active_subscription(self):
         Logger.Info('%s - UserSubscriptions.get_active_subscription - started' % __name__)
         return_value = None
-        for subscription in self['subscription_history']:
+        for subscription in self.subscription_history:
             if 'end_time' not in subscription:
                 return_value = subscription
         Logger.Info('%s - UserSubscriptions.get_active_subscription - finished' % __name__)
@@ -166,12 +153,12 @@ class UserSubscriptions(Model):
     def subscription_changed(self, new_subscription_id, old_subscription_extension=None, new_subscription_extensions=None):
         Logger.Info('%s - UserSubscriptions.subscription_changed - started' % __name__)
         Logger.Debug('%s - UserSubscriptions.subscription_changed - started with new_subscription_id:%s old_subscription_extension:%s and new_subscription_extensions:%s' % (__name__, new_subscription_id, old_subscription_extension, new_subscription_extensions))
-        self['active_subscription'] = new_subscription_id
-        for subscription in self['subscription_history']:
+        self.active_subscription = new_subscription_id
+        for subscription in self.subscription_history:
             if 'end_time' not in subscription:
                 subscription['end_time'] = time.time()
                 subscription['extensions'] = old_subscription_extension
-        self['subscription_history'].append({
+        self.subscription_history.append({
             'subscription_id':new_subscription_id,
             'start_time':time.time(),
             'extensions':new_subscription_extensions
