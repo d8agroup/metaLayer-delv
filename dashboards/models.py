@@ -106,7 +106,7 @@ class Dashboard(models.Model):
         Logger.Info('%s - Dashboard.Top - started' % __name__)
         Logger.Debug('%s - Dashboard.Top - started with count:%s' % (__name__, count))
         Logger.Info('%s - Dashboard.Top - finished' % __name__)
-        return Dashboard.Trending(count)
+        return Dashboard.Recent(count)
 
     @classmethod
     def Recent(cls, count):
