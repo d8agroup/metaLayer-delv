@@ -29,7 +29,7 @@ DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 logging.basicConfig(
     level = logging.ERROR,
     format = '%(asctime)s %(levelname)s %(message)s',
-    filename= '/var/log/metalayer/errors/log',
+    filename= '/var/log/metalayer/errors.log',
     filemode= 'a+'
 )
 
