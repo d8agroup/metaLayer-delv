@@ -14,8 +14,8 @@ class Action(BaseAction):
             'display_name_long':'Location Detection',
             'image_large':'/static/images/thedashboard/actions/location_small.png',
             'image_small':'/static/images/thedashboard/actions/location_small.png',
-            'instructions':'Yahoo Placemaker will extract location based information from content allowing you to visualize '
-                           'content on a map',
+            'instructions':self.advanced_feature_markup + '<br/>Yahoo Placemaker will extract location based information from ' \
+                           'content allowing you to visualize content on a map',
             'configured':False,
             'elements':[
                 {
