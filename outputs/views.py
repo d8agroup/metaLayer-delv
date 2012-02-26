@@ -45,4 +45,6 @@ def generate_output(request, url_identifier):
     oc = OutputController(output)
     content, content_type = oc.generate_output(search_results)
     Logger.Info('%s - generate_output - finished' % __name__)
-    return HttpResponse(content=content, content_type=content_type)
+    response = HttpResponse(content=content, content_type=content_type)
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
