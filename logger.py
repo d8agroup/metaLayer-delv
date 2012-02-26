@@ -21,10 +21,10 @@ class Logger(object):
     def Info(cls, message):
         import logging
         logger = logging.getLogger(__name__)
-        logger.error('USER %s' % message)
+        logger.info('USER %s' % message)
 
     @classmethod
     def Debug(cls, message):
         import logging
         logger = logging.getLogger(__name__)
-        logger.error('USER %s' % message)
+        logger.debug('USER %s' % message)
