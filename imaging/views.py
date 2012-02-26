@@ -40,7 +40,12 @@ def crop(request, dashboard_id, width, height):
             image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
-        svg = rsvg.Handle(data=visualization_svg)
+        try:
+            svg = rsvg.Handle(data=visualization_svg)
+        except:
+            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         image_height = svg.props.height
         required_height = height * 1.8
         scale = (float(required_height) / float(image_height))
