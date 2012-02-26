@@ -13,16 +13,16 @@ def generate_output(request, url_identifier):
         Logger.Error('%s - generate_output - error - url_identifier:%s not found' % (__name__, url_identifier))
         Logger.Info('%s - generate_output - finished' % __name__)
         return Http404()
-    dashboard_id = short_url['dashboard_id']
-    collection_id = short_url['collection_id']
-    output_id = short_url['output_id']
+    dashboard_id = short_url.dashboard_id
+    collection_id = short_url.collection_id
+    output_id = short_url.output_id
     dashboard = DashboardsController.GetDashboardById(dashboard_id)
     if not dashboard:
         Logger.Error('%s - generate_output - error - dashboard_id:%s not found' % (__name__, dashboard_id))
         Logger.Info('%s - generate_output - finished' % __name__)
         return Http404()
     collection = None
-    for c in dashboard['collections']:
+    for c in dashboard.collections:
         if c['id'] == collection_id:
             collection = c
             break
