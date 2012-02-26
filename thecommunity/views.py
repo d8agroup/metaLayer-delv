@@ -51,7 +51,7 @@ def insight(request, user_name, insight_id):
     DashboardsController.RecordDashboardView(insight_id)
     user = UserController.GetUserByUserName(user_name)
     dashboard = DashboardsController.GetDashboardById(insight_id)
-    dashboard_json = serialize_to_json(dashboard)
+    dashboard_json = serialize_to_json(dashboard.__dict__)
     template_data['profile_user'] = user
     template_data['insight'] = dashboard
     template_data['insight_json'] = dashboard_json
