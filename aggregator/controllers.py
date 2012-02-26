@@ -77,7 +77,7 @@ class _UserThread(threading.Thread):
                 thread = _DataPointThread(data_point_with_actions)
                 thread.start()
                 q.put(thread, True)
-        q = Queue(3)
+        q = Queue(1)
         producer_thread = threading.Thread(target=producer, args=(q, all_data_points_with_actions))
         producer_thread.start()
         Logger.Info('%s - AggregationController._UserThread.run - finished' % __name__)
