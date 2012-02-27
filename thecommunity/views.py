@@ -119,8 +119,8 @@ def link_twitter_profile(request):
 
 def community_page(request):
     template_data = _base_template_data()
-
-    categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
+    
+    categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in settings.INSIGHT_CATEGORIES]
     template_data['category_list_1'] = categories[:int(len(categories)/2)]
     template_data['category_list_2'] = categories[int(len(categories)/2):]
 
@@ -143,16 +143,26 @@ def community_page(request):
     )
 
 def category_page(request, category):
+    template_data = _base_template_data()
+    
     if category not in settings.INSIGHT_CATEGORIES:
         return redirect(community_page)
-    dashboards = DashboardsController.GetDashboardsInCategory(category)
-    dashboards = serialize_to_json([d for d in dashboards])
+    
+    page = request.GET.get('page')
+    num_per_page = request.GET.get('num_per_page')
+    
+    passed, errors, dashboards, attributes = DashboardsController.GetDashboardsInCategory(category, page, num_per_page)
+    
+    if not passed:
+        pass #TODO Show error message
+    
+    template_data['dashboards'] = dashboards
+    template_data['category'] = category
+    template_data = dict(template_data.items() + attributes.items())
+    
     return render_to_response(
         'thecommunity/category_page/category_page.html',
-        {
-            'category':category,
-            'insights_json':dashboards
-        },
+        template_data,
         context_instance=RequestContext(request)
     )
 

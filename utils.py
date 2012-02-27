@@ -133,3 +133,7 @@ def empty(str):
     
     """
     return not str or not str.strip()
+    
+
+
+
