@@ -93,14 +93,18 @@ class Dashboard(models.Model):
     def Trending(cls, count):
         Logger.Info('%s - Dashboard.Trending - started' % __name__)
         Logger.Debug('%s - Dashboard.Trending - started with count:%s' % (__name__, count))
-        dashboards = Dashboard.objects.all()
-        dashboards = [d for d in dashboards if d.active and not d.deleted]
-        dashboards = sorted(dashboards, key=lambda dashboard: dashboard.community['views'], reverse=True)
-        dashboards = dashboards[:int(count)]
-        for dashboard in dashboards:
-            dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+        cache_key = 'dashboards_models_dashboard_trending'
+        cached_values = cache.get(cache_key, -1)
+        if cached_values == -1:
+            dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
+            dashboards = sorted(dashboards, key=lambda dashboard: dashboard.community['views'], reverse=True)
+            dashboards = dashboards[:int(count)]
+            for dashboard in dashboards:
+                dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+            cached_values = dashboards
+            cache.add(cache_key, cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Trending - finished' % __name__)
-        return dashboards
+        return cached_values
 
     @classmethod
     def Top(cls, count):
@@ -120,14 +124,18 @@ class Dashboard(models.Model):
     def Recent(cls, count):
         Logger.Info('%s - Dashboard.Recent - started' % __name__)
         Logger.Debug('%s - Dashboard.Recent - started with count:%s' % (__name__, count))
-        dashboards = Dashboard.objects.all()
-        dashboards = [d for d in dashboards if d.active and not d.deleted]
-        dashboards = sorted(dashboards, key=lambda dashboard: dashboard.last_saved, reverse=True)
-        dashboards = dashboards[:int(count)]
-        for dashboard in dashboards:
-            dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+        cache_key = 'dashboards_models_dashboard_recent'
+        cached_values = cache.get(cache_key, -1)
+        if cached_values == -1:
+            dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
+            dashboards = sorted(dashboards, key=lambda dashboard: dashboard.last_saved, reverse=True)
+            dashboards = dashboards[:int(count)]
+            for dashboard in dashboards:
+                dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+            cached_values = dashboards
+            cache.add(cache_key, cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Recent - finished' % __name__)
-        return dashboards
+        return cached_values
 
     def __getitem__(self, item):
         return getattr(self, item)

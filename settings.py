@@ -31,6 +31,8 @@ CACHE_TIMEOUT = 300
 LOW_LEVEL_CACHE_LIMITS = {
     'imaging_views_last_modified':300,
     'dashboards_models_dashboard_top':300,
+    'dashboards_models_dashboard_trending':300,
+    'dashboards_models_dashboard_recent':300,
 }
 
 # Local time zone for this installation. Choices can be found here:
