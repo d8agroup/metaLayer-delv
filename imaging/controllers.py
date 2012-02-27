@@ -36,7 +36,8 @@ class ImagingController(object):
     def ReadImageFromCache(cls, file_name, expiry_time):
         try:
             if os.path.getmtime(file_name) >= expiry_time:
-                return settings.DYNAMIC_IMAGES_WEB_ROOT + file_name.split('/')[-1]
+                #return settings.DYNAMIC_IMAGES_WEB_ROOT + file_name.split('/')[-1]
+                return open(file_name, 'rb')
             os.remove(file_name)
         except OSError:
             pass
