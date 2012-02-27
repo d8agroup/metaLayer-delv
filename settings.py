@@ -28,6 +28,11 @@ COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 
 CACHE_TIMEOUT = 300
 
+LOW_LEVEL_CACHE_LIMITS = {
+    'imaging_views_last_modified':300,
+    'dashboards_models_dashboard_top':300,
+}
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

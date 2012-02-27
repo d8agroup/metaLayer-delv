@@ -1,6 +1,7 @@
 import StringIO
 import datetime
 from django.conf import settings
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from dashboards.controllers import DashboardsController
@@ -8,10 +9,16 @@ from imaging.controllers import ImagingController
 from django.views.decorators.http import condition
 
 def last_modified(request, dashboard_id, *args, **kwargs):
-    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
-    if dashboard:
-        return datetime.datetime.fromtimestamp(dashboard['last_saved'])
-    return datetime.datetime.now()
+    cache_key = 'imaging_views_last_modified'
+    cache_values = cache.get(cache_key, -1)
+    if cache_values == -1:
+        dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+        if dashboard:
+            cache_values = datetime.datetime.fromtimestamp(dashboard['last_saved'])
+        else:
+            cache_values = datetime.datetime.now()
+        cache.add(cache_key, cache_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
+    return cache_values
 
 @condition(last_modified_func=last_modified)
 def insight_image_for_facebook(request, dashboard_id):

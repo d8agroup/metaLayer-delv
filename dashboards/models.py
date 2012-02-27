@@ -112,7 +112,7 @@ class Dashboard(models.Model):
             dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
             random.shuffle(dashboards)
             cached_values = dashboards[:int(count)]
-            cache.add(cache_key, cached_values, 30)
+            cache.add(cache_key, cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Top - finished' % __name__)
         return cached_values
 
