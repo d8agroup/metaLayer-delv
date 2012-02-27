@@ -60,8 +60,7 @@ def crop(request, dashboard_id, width, height):
     image_data = StringIO.StringIO()
     surface.write_to_png(image_data)
     ImagingController.WriteImageDataToCache(file_name, image_data)
-    response = HttpResponse(image_data, mimetype='image/png')
-    return response
+    return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name.split('/')[-1], permanent=False)
 
 @condition(last_modified_func=last_modified)
 def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
@@ -110,5 +109,4 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     image_data = StringIO.StringIO()
     surface.write_to_png(image_data)
     ImagingController.WriteImageDataToCache(file_name, image_data)
-    response = HttpResponse(image_data, mimetype='image/png')
-    return response
+    return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name.split('/')[-1], permanent=False)
