@@ -18,9 +18,11 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DYNAMIC_IMAGES_WEB_ROOT = '/static/CACHE/images/'
+
 #Django Compressor Settings
 COMPRESS_OFFLINE = False
-COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+#COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 COMPRESS_CSS_HASHING_METHOD = 'hash' # not using mtime since it differs between servers.
 COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 

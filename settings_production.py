@@ -26,6 +26,8 @@ STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 
+DYNAMIC_IMAGES_WEB_ROOT = '/static/CACHE/images/'
+
 logging.basicConfig(
     level = logging.ERROR,
     format = '%(asctime)s %(levelname)s %(message)s',
