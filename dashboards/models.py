@@ -2,6 +2,7 @@ import random
 import string
 from bson.objectid import ObjectId
 from django.conf import settings
+from django.core.cache import cache
 from django.db import models
 import time
 from djangotoolbox.fields import DictField, ListField
@@ -105,8 +106,15 @@ class Dashboard(models.Model):
     def Top(cls, count):
         Logger.Info('%s - Dashboard.Top - started' % __name__)
         Logger.Debug('%s - Dashboard.Top - started with count:%s' % (__name__, count))
+        cache_key = 'dashboards_models_dashboard_top'
+        cached_values = cache.get(cache_key, -1)
+        if cached_values == -1:
+            dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
+            random.shuffle(dashboards)
+            cached_values = dashboards[:int(count)]
+            cache.add(cache_key, cached_values, 30)
         Logger.Info('%s - Dashboard.Top - finished' % __name__)
-        return Dashboard.Recent(count)
+        return cached_values
 
     @classmethod
     def Recent(cls, count):
