@@ -26,7 +26,7 @@ STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 
-SENTRY_DNS = 'http://c5d5ca696c124f538630699532961956:88b6c3cf61af46c2ae07875a4c5ddee9@md.prod.monitor:9000/3'
+SENTRY_DSN = 'http://c5d5ca696c124f538630699532961956:88b6c3cf61af46c2ae07875a4c5ddee9@md.prod.monitor:9000/3'
 
 CACHES = {
     'default':{
