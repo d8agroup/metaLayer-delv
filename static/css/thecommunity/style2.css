@@ -47,8 +47,8 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .logo { width:238px; height:28px; float:left; padding-top:3px;}
 .logo img { height:21px; }
 .logo1 { width:238px; height:21px; float:left; line-height:41px; }
-.logo span { position:relative; bottom:5px; left:6px; font-size:120%; font-style:italic; font-weight:bold; color:red;}
-.logo1 span { position:relative; bottom:5px; left:6px; font-size:120%; font-style:italic; font-weight:bold; color:red;}
+.logo span { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc; }
+.logo1 span { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc; }
 .header_right { width:565px; float:right; }
 .header_search { width:293px; float:left; }
 .header_search_txt { width:250px; height:22px; background:url(/static/images/thecommunity/header_search_txt.jpg) no-repeat left top; border:none; outline:none; float:left; padding:2px 10px; font-size:12px; color:#333; line-height:22px; }

@@ -7,7 +7,7 @@ HEADER
 .headerwrap1 { width:100%; height:41px; min-width:871px; background:#333; }
 .header { width:1000px; padding:6px 0 0 0; margin:0px auto; }
 .logo1 { width:200px; height:21px; float:left; line-height:41px; }
-.logo1 span { position:relative; bottom:5px; left:6px; font-size:120%; font-style:italic; font-weight:bold; color:#F00;}
+.logo1 span { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc;}
 .header_right { width:565px; float:right; }
 .header_logout { width:320px; float:right; }
 .header_logout ul { float:right; }
