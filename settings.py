@@ -20,6 +20,8 @@ MANAGERS = ADMINS
 
 DYNAMIC_IMAGES_WEB_ROOT = '/static/CACHE/images/'
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
 #Django Compressor Settings
 COMPRESS_OFFLINE = False
 #COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
@@ -113,6 +115,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
 )
 
 ROOT_URLCONF = 'dashboard.urls'

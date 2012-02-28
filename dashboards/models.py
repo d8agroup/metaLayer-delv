@@ -261,7 +261,12 @@ class DashboardShortUrl(models.Model):
     def Load(cls, url_identifier):
         Logger.Info('%s - ShortUrl.Load - started' % __name__)
         Logger.Debug('%s - ShortUrl.Load - started with url_identifier:%s' % (__name__, url_identifier))
-        short_url = DashboardShortUrl.objects.get(url_identifier=url_identifier)
+        try:
+            short_url = DashboardShortUrl.objects.get(url_identifier=url_identifier)
+        except DashboardShortUrl.DoesNotExist:
+            Logger.Warn('%s - DashboardShortcutUrl.Load - accessed with url_identifier that does not exists' % __name__)
+            Logger.Debug('%s - DashboardShortcutUrl.Load - accessed with url_identifier that does not exists: %s' % (__name__, url_identifier))
+            short_url = None
         Logger.Info('%s - ShortUrl.Load - finished' % __name__)
         return short_url
 

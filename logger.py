@@ -18,11 +18,11 @@ class Logger(object):
         import logging
         logger = logging.getLogger(__name__)
         if not request:
-            logger.error('USER %s' % message, exc_info=True)
+            logger.error('%s' % message, exc_info=True)
             if exception:
                 logger.error(exception, exc_info=True)
         else:
-            logger.error('USER %s' % message, exc_info=True, extra={'request':request})
+            logger.error('%s' % message, exc_info=True, extra={'request':request})
             if exception:
                 logger.error(exception, exc_info=True, extra={'request':request})
 
@@ -33,11 +33,11 @@ class Logger(object):
         import logging
         logger = logging.getLogger(__name__)
         if not request:
-            logger.warn('USER %s' % message, exc_info=True)
+            logger.warn('%s' % message, exc_info=True)
             if exception:
                 logger.warn(exception, exc_info=True)
         else:
-            logger.warn('USER %s' % message, exc_info=True, extra={'request':request})
+            logger.warn('%s' % message, exc_info=True, extra={'request':request})
             if exception:
                 logger.warn(exception, exc_info=True, extra={'request':request})
 
@@ -47,7 +47,7 @@ class Logger(object):
         yield
         import logging
         logger = logging.getLogger(__name__)
-        logger.info('USER %s' % message)
+        logger.info('%s' % message)
 
     @classmethod
     @async
@@ -56,10 +56,10 @@ class Logger(object):
         import logging
         logger = logging.getLogger(__name__)
         if not request:
-            logger.debug('USER %s' % message, exc_info=True)
+            logger.debug('%s' % message, exc_info=True)
             if exception:
                 logger.debug(exception, exc_info=True)
         else:
-            logger.debug('USER %s' % message, exc_info=True, extra={'request':request})
+            logger.debug('%s' % message, exc_info=True, extra={'request':request})
             if exception:
                 logger.debug(exception, exc_info=True, extra={'request':request})
