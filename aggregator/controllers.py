@@ -24,7 +24,7 @@ class AggregationController(object):
                 thread = _UserThread(user)
                 thread.start()
                 q.put(thread, True)
-        q = Queue(3)
+        q = Queue(1)
         producer_thread = threading.Thread(target=producer, args=(q, self.users))
         producer_thread.start()
         Logger.Info('%s - AggregationController.aggregate - finished' % __name__)
@@ -63,6 +63,11 @@ class _UserThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+        def producer(q, data_points_with_actions):
+            for data_point_with_actions in data_points_with_actions:
+                thread = _DataPointThread(data_point_with_actions)
+                thread.start()
+                q.put(thread, True)
         Logger.Info('%s - AggregationController._UserThread.run - started' % __name__)
         Logger.Debug('%s - AggregationController._UserThread.run - started with user: %s' % (__name__, self.user))
         all_data_points_with_actions = []
@@ -72,14 +77,10 @@ class _UserThread(threading.Thread):
                 actions = collection['actions']
                 for data_point in collection['data_points']:
                     all_data_points_with_actions.append({'data_point':data_point, 'actions':actions})
-        def producer(q, data_points_with_actions):
-            for data_point_with_actions in data_points_with_actions:
-                thread = _DataPointThread(data_point_with_actions)
-                thread.start()
-                q.put(thread, True)
-        q = Queue(3)
-        producer_thread = threading.Thread(target=producer, args=(q, all_data_points_with_actions))
-        producer_thread.start()
+        if all_data_points_with_actions:
+            q = Queue(1)
+            producer_thread = threading.Thread(target=producer, args=(q, all_data_points_with_actions))
+            producer_thread.start()
         Logger.Info('%s - AggregationController._UserThread.run - finished' % __name__)
 
 class _DataPointThread(threading.Thread):

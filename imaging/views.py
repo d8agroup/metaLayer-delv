@@ -1,16 +1,25 @@
 import StringIO
 import datetime
 from django.conf import settings
+from django.core.cache import cache
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from dashboards.controllers import DashboardsController
 from imaging.controllers import ImagingController
 from django.views.decorators.http import condition
+from logger import Logger
 
 def last_modified(request, dashboard_id, *args, **kwargs):
-    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
-    if dashboard:
-        return datetime.datetime.fromtimestamp(dashboard['last_saved'])
-    return datetime.datetime.now()
+    cache_key = 'imaging_views_last_modified'
+    cache_values = cache.get(cache_key, -1)
+    if cache_values == -1:
+        dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+        if dashboard:
+            cache_values = datetime.datetime.fromtimestamp(dashboard['last_saved'])
+        else:
+            cache_values = datetime.datetime.now()
+        cache.add(cache_key, cache_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
+    return cache_values
 
 @condition(last_modified_func=last_modified)
 def insight_image_for_facebook(request, dashboard_id):
@@ -26,6 +35,9 @@ def crop(request, dashboard_id, width, height):
         response = HttpResponse(image_data, mimetype='image/png')
         return response
     file_name = '%s/crop_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, width, height)
+    #image_redirect = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
+    #if image_redirect:
+        #return redirect(image_redirect, permanent=False)
     image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
     if not image_data:
         width = int(width)
@@ -37,10 +49,19 @@ def crop(request, dashboard_id, width, height):
             return response
         visualization_svg = dashboard.visualization_for_image()
         if not visualization_svg:
+            Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
+            Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
             image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
-        svg = rsvg.Handle(data=visualization_svg)
+        try:
+            svg = rsvg.Handle(data=visualization_svg)
+        except Exception, e:
+            Logger.Warn('%s - crop - error reading svg' % __name__)
+            Logger.Debug('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
+            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         image_height = svg.props.height
         required_height = height * 1.8
         scale = (float(required_height) / float(image_height))
@@ -68,6 +89,11 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
         file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, visualization_id, max_width, max_height)
     else:
         file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, max_width, max_height)
+
+#    image_redirect = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
+#    if image_redirect:
+#        return redirect(image_redirect, permanent=False)
+
     image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
     if not image_data:
         max_width = int(max_width)
@@ -77,10 +103,18 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
         else:
             visualization_svg = dashboard.visualization_for_image()
         if not visualization_svg:
+            Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
+            Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
             image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
-        svg = rsvg.Handle(data=visualization_svg)
+        try:
+            svg = rsvg.Handle(data=visualization_svg)
+        except Exception, e:
+            Logger.Warn('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
+            image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         x = width = svg.props.width
         y = height = svg.props.height
         y_scale = x_scale = 1

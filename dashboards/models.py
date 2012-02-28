@@ -2,6 +2,7 @@ import random
 import string
 from bson.objectid import ObjectId
 from django.conf import settings
+from django.core.cache import cache
 from django.db import models
 import time
 from djangotoolbox.fields import DictField, ListField
@@ -92,34 +93,49 @@ class Dashboard(models.Model):
     def Trending(cls, count):
         Logger.Info('%s - Dashboard.Trending - started' % __name__)
         Logger.Debug('%s - Dashboard.Trending - started with count:%s' % (__name__, count))
-        dashboards = Dashboard.objects.all()
-        dashboards = [d for d in dashboards if d.active and not d.deleted]
-        dashboards = sorted(dashboards, key=lambda dashboard: dashboard.community['views'], reverse=True)
-        dashboards = dashboards[:int(count)]
-        for dashboard in dashboards:
-            dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+        cache_key = 'dashboards_models_dashboard_trending'
+        cached_values = cache.get('%s_%i' % (cache_key, count), -1)
+        if cached_values == -1:
+            dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
+            dashboards = sorted(dashboards, key=lambda dashboard: dashboard.community['views'], reverse=True)
+            dashboards = dashboards[:int(count)]
+            for dashboard in dashboards:
+                dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+            cached_values = dashboards
+            cache.add('%s_%i' % (cache_key, count), cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Trending - finished' % __name__)
-        return dashboards
+        return cached_values
 
     @classmethod
     def Top(cls, count):
         Logger.Info('%s - Dashboard.Top - started' % __name__)
         Logger.Debug('%s - Dashboard.Top - started with count:%s' % (__name__, count))
+        cache_key = 'dashboards_models_dashboard_top'
+        cached_values = cache.get(cache_key, -1)
+        if cached_values == -1:
+            dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
+            random.shuffle(dashboards)
+            cached_values = dashboards[:int(count)]
+            cache.add(cache_key, cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Top - finished' % __name__)
-        return Dashboard.Recent(count)
+        return cached_values
 
     @classmethod
     def Recent(cls, count):
         Logger.Info('%s - Dashboard.Recent - started' % __name__)
         Logger.Debug('%s - Dashboard.Recent - started with count:%s' % (__name__, count))
-        dashboards = Dashboard.objects.all()
-        dashboards = [d for d in dashboards if d.active and not d.deleted]
-        dashboards = sorted(dashboards, key=lambda dashboard: dashboard.last_saved, reverse=True)
-        dashboards = dashboards[:int(count)]
-        for dashboard in dashboards:
-            dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+        cache_key = 'dashboards_models_dashboard_recent'
+        cached_values = cache.get(cache_key, -1)
+        if cached_values == -1:
+            dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
+            dashboards = sorted(dashboards, key=lambda dashboard: dashboard.last_saved, reverse=True)
+            dashboards = dashboards[:int(count)]
+            for dashboard in dashboards:
+                dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
+            cached_values = dashboards
+            cache.add(cache_key, cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Recent - finished' % __name__)
-        return dashboards
+        return cached_values
 
     def __getitem__(self, item):
         return getattr(self, item)
@@ -175,8 +191,10 @@ class Dashboard(models.Model):
     def tz(self):
         start_times = [c['search_filters']['time'].split('%20TO%20')[0].strip('[') for c in self.collections if 'time' in c['search_filters']]
         end_times = [c['search_filters']['time'].split('%20TO%20')[1].strip(']') for c in self.collections if 'time' in c['search_filters']]
-        start_time = self._pretty_date(min([int(t) for t in start_times])) if not '*' in start_times else 'Historic'
-        end_time = self._pretty_date(max([int(t) for t in end_times])) if not '*' in end_times else 'Now'
+        start_times = [int(t) for t in start_times] if '*' not in start_times else []
+        start_time = self._pretty_date(min(start_times)) if start_times else 'Historic'
+        end_times = [int(t) for t in end_times] if '*' not in end_times else []
+        end_time = self._pretty_date(max(end_times)) if end_times else 'Now'
         if start_time == end_time:
             return start_time
         return '%s to %s' % (start_time, end_time)
@@ -245,7 +263,12 @@ class DashboardShortUrl(models.Model):
     def Load(cls, url_identifier):
         Logger.Info('%s - ShortUrl.Load - started' % __name__)
         Logger.Debug('%s - ShortUrl.Load - started with url_identifier:%s' % (__name__, url_identifier))
-        short_url = DashboardShortUrl.objects.get(url_identifier=url_identifier)
+        try:
+            short_url = DashboardShortUrl.objects.get(url_identifier=url_identifier)
+        except DashboardShortUrl.DoesNotExist:
+            Logger.Warn('%s - DashboardShortcutUrl.Load - accessed with url_identifier that does not exists' % __name__)
+            Logger.Debug('%s - DashboardShortcutUrl.Load - accessed with url_identifier that does not exists: %s' % (__name__, url_identifier))
+            short_url = None
         Logger.Info('%s - ShortUrl.Load - finished' % __name__)
         return short_url
 

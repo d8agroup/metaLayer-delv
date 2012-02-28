@@ -1,6 +1,6 @@
 import logging
 
-
+SITE_DOWN = False
 
 DEBUG = False
 
@@ -20,24 +20,19 @@ SITE_HOST='metalayer.com'
 
 SITE_HOST_SHORT = 'mlyr.co'
 
-IMAGE_HOST = SITE_HOST
+IMAGE_HOST = '50.57.203.80'
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
+
+SENTRY_DSN = 'http://afe11d6c7f4145e7b0bc4de73b93fa18:38f4968b114c40f886de3abe745689ca@108.166.111.61:9000/3'
 
 CACHES = {
     'default':{
         'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION':'108.166.125.118:11211',
     }
-}
-
-DB_LOGGING = {
-    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
-    'database_name':'ml_dashboard_production_logging',
-    'database_host':'mongodb://metalayer:M3taM3ta@arrow.mongohq.com:27094/ml_dashboard_production_logging',
-    'database_port':27094
 }
 
 DATABASES = {

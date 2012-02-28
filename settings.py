@@ -18,13 +18,24 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DYNAMIC_IMAGES_WEB_ROOT = '/static/CACHE/images/'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
 #Django Compressor Settings
 COMPRESS_OFFLINE = False
-COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+#COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 COMPRESS_CSS_HASHING_METHOD = 'hash' # not using mtime since it differs between servers.
 COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 
 CACHE_TIMEOUT = 300
+
+LOW_LEVEL_CACHE_LIMITS = {
+    'imaging_views_last_modified':300,
+    'dashboards_models_dashboard_top':300,
+    'dashboards_models_dashboard_trending':300,
+    'dashboards_models_dashboard_recent':300,
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -104,6 +115,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
 )
 
 ROOT_URLCONF = 'dashboard.urls'
@@ -119,6 +131,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django_mongodb_engine',
+    'raven.contrib.django',
     'djangotoolbox',
     'compressor',
 
@@ -144,6 +157,7 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -163,6 +177,50 @@ LOGGING = {
 }
 
 DB_LOGGING = {}
+"""
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'sentry': {
+            'level': 'WARNING',
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'WARNING',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        },
+    }
 
 SUBSCRIPTIONS_SETTINGS = {
     'allow_subscription_migrations':True,
