@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from dashboards.controllers import DashboardsController
 from imaging.controllers import ImagingController
 from django.views.decorators.http import condition
+from logger import Logger
 
 def last_modified(request, dashboard_id, *args, **kwargs):
     cache_key = 'imaging_views_last_modified'
@@ -53,7 +54,8 @@ def crop(request, dashboard_id, width, height):
             return response
         try:
             svg = rsvg.Handle(data=visualization_svg)
-        except:
+        except Exception, e:
+            Logger.Warn('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
             image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
@@ -101,7 +103,13 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
             image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
-        svg = rsvg.Handle(data=visualization_svg)
+        try:
+            svg = rsvg.Handle(data=visualization_svg)
+        except Exception, e:
+            Logger.Warn('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
+            image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
+            response = HttpResponse(image_data, mimetype='image/png')
+            return response
         x = width = svg.props.width
         y = height = svg.props.height
         y_scale = x_scale = 1

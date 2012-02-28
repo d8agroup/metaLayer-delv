@@ -1,6 +1,6 @@
 import logging
 
-SITE_DOWN = False
+SITE_DOWN = True
 
 DEBUG = False
 
