@@ -51,8 +51,15 @@ class Logger(object):
 
     @classmethod
     @async
-    def Debug(cls, message):
+    def Debug(cls, message, request=None, exception=None):
         yield
         import logging
         logger = logging.getLogger(__name__)
-        logger.debug('USER %s' % message)
+        if not request:
+            logger.debug('USER %s' % message, exc_info=True)
+            if exception:
+                logger.debug(exception, exc_info=True)
+        else:
+            logger.debug('USER %s' % message, exc_info=True, extra={'request':request})
+            if exception:
+                logger.debug(exception, exc_info=True, extra={'request':request})

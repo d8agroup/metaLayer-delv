@@ -49,13 +49,16 @@ def crop(request, dashboard_id, width, height):
             return response
         visualization_svg = dashboard.visualization_for_image()
         if not visualization_svg:
+            Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
+            Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
             image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
         try:
             svg = rsvg.Handle(data=visualization_svg)
         except Exception, e:
-            Logger.Warn('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
+            Logger.Warn('%s - crop - error reading svg' % __name__)
+            Logger.Debug('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
             image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response
@@ -100,6 +103,8 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
         else:
             visualization_svg = dashboard.visualization_for_image()
         if not visualization_svg:
+            Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
+            Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
             image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
             response = HttpResponse(image_data, mimetype='image/png')
             return response

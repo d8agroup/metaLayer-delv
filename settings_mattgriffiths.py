@@ -22,7 +22,7 @@ DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-SENTRY_DSN = 'http://13d763685d254251a8648d344ac44de2:e02ea9d33a3e48f8a6b6500482674658@md.prod.monitor:9000/2'
+SENTRY_DSN = 'http://cb7488e51e224f0ab7a04d53f8dede4b:b1a294ea3aab42148f4cab2b21c0c429@108.166.111.61:9000/4'
 
 CACHES = {
     'default':{
