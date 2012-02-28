@@ -26,12 +26,7 @@ STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 
-logging.basicConfig(
-    level = logging.ERROR,
-    format = '%(asctime)s %(levelname)s %(message)s',
-    filename= '/var/log/metalayer/errors.log',
-    filemode= 'a+'
-)
+SENTRY_DNS = 'http://c5d5ca696c124f538630699532961956:88b6c3cf61af46c2ae07875a4c5ddee9@md.prod.monitor:9000/3'
 
 CACHES = {
     'default':{

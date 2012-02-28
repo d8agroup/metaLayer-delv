@@ -22,22 +22,12 @@ DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-logging.basicConfig(
-    level = logging.DEBUG,
-    format = '%(asctime)s %(levelname)s %(message)s',
-)
+SENTRY_DSN = 'http://13d763685d254251a8648d344ac44de2:e02ea9d33a3e48f8a6b6500482674658@md.prod.monitor:9000/2'
 
 CACHES = {
     'default':{
         'BACKEND':'django.core.cache.backends.dummy.DummyCache',
     }
-}
-
-DB_LOGGING = {
-    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
-    'database_name':'ml_dashboard',
-    'database_host':'localhost',
-    'database_port':27017
 }
 
 DATABASES = {
@@ -48,15 +38,6 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': 27017,                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
-ENDPOINTS = {
-    'datapoints':{
-        'metalayer_aggregator':{
-            'add_source':'http://md.dev.01/aggregator/sources/add',
-            'remove_source':'http://md.dev.01/aggregator/sources/remove'
-        }
     }
 }
 
