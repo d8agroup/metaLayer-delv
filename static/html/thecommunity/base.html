@@ -38,6 +38,10 @@
         document.createElement('aside');
         document.createElement('section');
         document.createElement('footer');
+        $(document).ready(function(){
+            if($('.messages li').length > 0)
+                setTimeout(function(){ $('.messages').slideUp('slow'); }, 5000);
+        })
     </script>
 </head>
 
