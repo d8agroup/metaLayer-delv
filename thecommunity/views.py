@@ -23,6 +23,7 @@ def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
 
 def user_home(request, user_name):
+    Logger.Error('%s - user_home - started' % __name__)
     if 'insight' in request.GET:
         insight_id = request.GET['insight']
         if user_name != request.user.username:

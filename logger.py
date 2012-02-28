@@ -12,19 +12,32 @@ def async(gen):
 
 class Logger(object):
     @classmethod
-    def Error(cls, message):
+    @async
+    def Error(cls, message, request=None, exception=None):
+        yield
         import logging
         logger = logging.getLogger(__name__)
-        logger.error('USER %s' % message)
+        if not request:
+            logger.error('USER %s' % message, exc_info=True)
+            if exception:
+                logger.error(exception, exc_info=True)
+        else:
+            logger.error('USER %s' % message, exc_info=True, extra={'request':request})
+            if exception:
+                logger.error(exception, exc_info=True, extra={'request':request})
 
     @classmethod
+    @async
     def Info(cls, message):
+        yield
         import logging
         logger = logging.getLogger(__name__)
         logger.info('USER %s' % message)
 
     @classmethod
+    @async
     def Debug(cls, message):
+        yield
         import logging
         logger = logging.getLogger(__name__)
         logger.debug('USER %s' % message)
