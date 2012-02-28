@@ -191,8 +191,10 @@ class Dashboard(models.Model):
     def tz(self):
         start_times = [c['search_filters']['time'].split('%20TO%20')[0].strip('[') for c in self.collections if 'time' in c['search_filters']]
         end_times = [c['search_filters']['time'].split('%20TO%20')[1].strip(']') for c in self.collections if 'time' in c['search_filters']]
-        start_time = self._pretty_date(min([int(t) for t in start_times])) if not '*' in start_times else 'Historic'
-        end_time = self._pretty_date(max([int(t) for t in end_times])) if not '*' in end_times else 'Now'
+        start_times = [int(t) for t in start_times] if '*' not in start_times else []
+        start_time = self._pretty_date(min(start_times)) if start_times else 'Historic'
+        end_times = [int(t) for t in end_times] if '*' not in end_times else []
+        end_time = self._pretty_date(max(end_times)) if end_times else 'Now'
         if start_time == end_time:
             return start_time
         return '%s to %s' % (start_time, end_time)
