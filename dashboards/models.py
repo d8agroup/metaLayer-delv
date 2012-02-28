@@ -97,11 +97,8 @@ class Dashboard(models.Model):
         cached_values = cache.get('%s_%i' % (cache_key, count), -1)
         if cached_values == -1:
             dashboards = [d for d in Dashboard.objects.filter(active=True, deleted=False)]
-            dashboards = sorted(dashboards, key=lambda dashboard: dashboard.community['views'], reverse=True)
-            dashboards = dashboards[:int(count)]
-            for dashboard in dashboards:
-                dashboard.last_saved_pretty = dashboard._pretty_date(dashboard.last_saved)
-            cached_values = dashboards
+            random.shuffle(dashboards)
+            cached_values = dashboards[:int(count)]
             cache.add('%s_%i' % (cache_key, count), cached_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
         Logger.Info('%s - Dashboard.Trending - finished' % __name__)
         return cached_values
