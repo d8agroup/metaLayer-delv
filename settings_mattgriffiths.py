@@ -4,8 +4,6 @@ SITE_DOWN = False
 
 DEBUG = True
 
-COMPRESS_ENABLED = False
-
 SITE_ID=u'4f4350a1c845b31cd500001d'
 
 SITE_HOST='localhost:8000'
@@ -14,7 +12,9 @@ SITE_HOST_SHORT = SITE_HOST
 
 IMAGE_HOST = SITE_HOST
 
-STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
+STATICFILES_DIRS = (
+    '/home/matt/code/metaLayer/dashboard/static/',
+)
 
 DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
 

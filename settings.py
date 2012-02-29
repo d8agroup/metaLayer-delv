@@ -22,11 +22,6 @@ DYNAMIC_IMAGES_WEB_ROOT = '/static/CACHE/images/'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-#Django Compressor Settings
-COMPRESS_OFFLINE = False
-#COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
-COMPRESS_CSS_HASHING_METHOD = 'hash' # not using mtime since it differs between servers.
-COMPRESS_CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 
 CACHE_TIMEOUT = 300
 
@@ -90,8 +85,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.

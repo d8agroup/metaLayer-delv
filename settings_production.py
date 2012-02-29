@@ -10,8 +10,6 @@ if socket.gethostbyname(socket.gethostname()) in ['50.57.128.82']:
     ROOT_URLCONF = 'dashboard.urls_admin'
     DEBUG = True
 
-COMPRESS_ENABLED = False
-
 SESSION_COOKIE_SECURE =False
 
 SITE_ID=u'4f421f767a9c1b687b00001d'

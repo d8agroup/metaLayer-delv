@@ -3,8 +3,6 @@ YOUR_CODE_ROOT = '/projects/metalayer/dashboard/'
 
 DEBUG = True
 
-COMPRESS_ENABLED = False
-
 SITE_ID=u'4f13fca68451d31efe00001d'
 
 SITE_HOST='localhost:8000'
@@ -14,6 +12,10 @@ SITE_HOST_SHORT = SITE_HOST
 IMAGE_HOST = '50.57.227.192'
 
 STATIC_ROOT = '%sstatic/' % YOUR_CODE_ROOT
+
+STATICFILES_DIRS = (
+    YOUR_CODE_ROOT + 'static/',
+)
 
 DYNAMIC_IMAGES_ROOT = '%simaging/CACHE/' % YOUR_CODE_ROOT
 
