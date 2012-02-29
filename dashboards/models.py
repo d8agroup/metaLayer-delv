@@ -154,8 +154,11 @@ class Dashboard(models.Model):
     def has_visualizations(self):
         for collection in [c for c in self.collections if c['data_points']]:
             if collection['visualizations']:
-                return True
+                for visualization in collection['visualizations']:
+                    if 'snapshot' in visualization and visualization['snapshot']:
+                        return True
         return False
+
 
     def visualization_for_image(self):
         for visualization_type in settings.VISUALIZATIONS_CONFIG['visualization_display_hierarchy']:

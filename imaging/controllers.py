@@ -10,18 +10,18 @@ class ImagingController(object):
         text_sizes = (14, 10) if width > 100 else (10, 7)
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         context = cairo.Context(surface)
-        context.set_source_rgb(0, 0, 0)
+        context.set_source_rgb(1.0, 1.0, 1.0)
         context.rectangle(0, 0, width, height)
         context.fill()
         text = 'metaLayer'
-        context.set_source_rgb(1.0, 1.0, 1.0) # white
+        context.set_source_rgb(0, 0, 0)
         context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
         context.set_font_size(text_sizes[0])
         x, y, w, h = context.text_extents(text)[:4]
         context.move_to((width / 2) - (w / 2) - x, (height / 2) - (h / 2) - y)
         context.show_text(text)
         text = 'no image'
-        context.set_source_rgb(1.0, 1.0, 1.0) # white
+        context.set_source_rgb(0, 0, 0)
         context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         context.set_font_size(text_sizes[1])
         x, y, w, h = context.text_extents(text)[:4]
