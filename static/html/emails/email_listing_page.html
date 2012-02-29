@@ -1,0 +1,21 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block body_class %}emails{% endblock %}
+
+{% block page_body %}
+<div id="emails_page">
+    {% include 'thecommunity/shared/messages.html' %}
+    <div id="emails_page_inner">
+        <h1>Currently active emails:</h1>
+        <table>
+            {% for email in emails %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <th>{{ email.description }}</th>
+                    <td><a href="/emails/view/{{ email.id }}" target="_blank">view</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

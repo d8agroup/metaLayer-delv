@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     'dashboard.customtags',
     'dashboard.dashboards',
     'dashboard.datapoints',
+    'dashboard.emails',
     'dashboard.imaging',
     'dashboard.outputs',
     'dashboard.search',
@@ -398,7 +399,7 @@ REGISTRATION_POLICIES = {
         'name':'Initial Code Registration Policy',
         'active':True,
         'module':'userprofiles.registrationpolicies.initialcoderegistrationpolicy',
-        'codes':['ZM26R'],
+        'codes':['TESTCODE_1', 'ZM26R', 'STRATA1'],
         'usage_limit':50
     },
 }
@@ -417,6 +418,7 @@ SOCIAL_SHARING_SERVICES = [
 ]
 
 from settings_insight_templates import *
+from settings_emails import *
 
 import socket
 if socket.gethostname() in ['mattgriffiths']:
@@ -431,5 +433,7 @@ else:
     from settings_production import *
 
 if DEBUG:
-    INSTALLED_APPS += ('debug_toolbar',)
-    MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
+    #INSTALLED_APPS += ('debug_toolbar',)
+    #MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
+    #DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False, }
+    ROOT_URLCONF = 'dashboard.urls_admin'

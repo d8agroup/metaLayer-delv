@@ -2,8 +2,6 @@ import logging
 
 SITE_DOWN = False
 
-#ROOT_URLCONF = 'dashboard.urls_admin'
-
 DEBUG = True
 
 COMPRESS_ENABLED = False

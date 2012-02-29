@@ -139,8 +139,13 @@ def category_page(request, category):
 
 def login_or_register(request):
     if not request.method == 'POST':
+        template_data = {
+            'code':request.GET.get('code'),
+            'email':request.GET.get('email'),
+        }
         return render_to_response(
             'thecommunity/login_or_register/login_or_register.html',
+            template_data,
             context_instance=RequestContext(request)
         )
     else:

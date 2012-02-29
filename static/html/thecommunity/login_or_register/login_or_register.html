@@ -62,7 +62,7 @@
                             {% csrf_token %}
                             <div class="form-row clearfix">
                                 <label for='register_username'>Your Email *</label>
-                                <input type="text" name="register_username" id='register_username' />
+                                <input type="text" name="register_username" id='register_username' value="{{ email }}" />
                             </div>
                             <div class="form-row clearfix">
                                 <label for='register_password1'>Your Password *</label>
@@ -74,7 +74,7 @@
                             </div>
                             <div class="form-row clearfix">
                                 <label for='register_code'>Registration code?</label>
-                                <input type="text" name='register_code' id='register_code' />
+                                <input type="text" name='register_code' id='register_code' value="{{ code }}" />
                             </div>
                             <p class="instructions">* denotes required fields</p>
                             <div class="action-row clearfix">
