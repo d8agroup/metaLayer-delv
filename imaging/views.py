@@ -10,24 +10,6 @@ from imaging.controllers import ImagingController
 from django.views.decorators.http import condition
 from logger import Logger
 
-def dashboard_exists_and_has_visualization(dashboard_id, width, height):
-    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
-    if not dashboard or not dashboard.has_visualizations():
-        image_data = ImagingController.GenerateNotFoundImage(width, height, None)
-        response = HttpResponse(image_data, mimetype='image/png')
-        return None, response
-    return dashboard, None
-
-def current_dashboard_image_exists(file_name, dashboard_last_saved):
-    try:
-        name = settings.DYNAMIC_IMAGES_ROOT + file_name
-        if os.path.getmtime(name) >= dashboard_last_saved:
-            return True, redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
-        os.remove(name)
-    except OSError:
-        pass
-    return False, None
-
 def last_modified(request, dashboard_id, *args, **kwargs):
     cache_key = 'imaging_views_last_modified'
     cache_values = cache.get(cache_key, -1)
@@ -43,8 +25,6 @@ def last_modified(request, dashboard_id, *args, **kwargs):
 def build_file_name(type, id, width, height):
     return '%s_%s_%i_%i.png' % (type, id, width, height)
 
-
-
 @condition(last_modified_func=last_modified)
 def insight_image_for_facebook(request, dashboard_id):
     return crop(request, dashboard_id, 200, 200)
@@ -56,16 +36,22 @@ def crop(request, dashboard_id, width, height):
     width = int(width)
     height = int(height)
 
-    dashboard, response = dashboard_exists_and_has_visualization(dashboard_id, width, height)
-    if not dashboard:
-        return response
+    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+    if not dashboard or not dashboard.has_visualizations():
+        image_data = ImagingController.GenerateNotFoundImage(width, height, None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return None, response
 
     file_name = build_file_name('crop', dashboard_id, width, height)
     dashboard_last_saved = dashboard['last_saved']
 
-    exists, response = current_dashboard_image_exists(file_name, dashboard_last_saved)
-    if exists:
-        return response
+    try:
+        name = settings.DYNAMIC_IMAGES_ROOT + file_name
+        if os.path.getmtime(name) >= dashboard_last_saved:
+            return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
+        os.remove(name)
+    except OSError:
+        pass
 
     visualization_svg = dashboard.visualization_for_image()
     if not visualization_svg:
@@ -82,6 +68,7 @@ def crop(request, dashboard_id, width, height):
         image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
         response = HttpResponse(image_data, mimetype='image/png')
         return response
+
     image_height = svg.props.height
     required_height = height * 1.8
     scale = (float(required_height) / float(image_height))
@@ -92,69 +79,76 @@ def crop(request, dashboard_id, width, height):
     svg.render_cairo(context)
     image_data = StringIO.StringIO()
     surface.write_to_png(image_data)
-    ImagingController.WriteImageDataToCache(file_name, image_data)
-    response = HttpResponse(image_data, mimetype='image/png')
-    return response
+    ImagingController.WriteImageDataToCache(settings.DYNAMIC_IMAGES_ROOT + file_name, image_data)
+    return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
 
 @condition(last_modified_func=last_modified)
 def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     import cairo
     import rsvg
+    max_width = int(max_width)
+    max_height = int(max_height)
+
     dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
     if not dashboard or not dashboard.has_visualizations():
-        image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height ), None)
+        image_data = ImagingController.GenerateNotFoundImage(max_width, max_height, None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return None, response
+
+    if visualization_id:
+        file_name = 'shrink_%s_%i_%i.png' % (visualization_id, max_width, max_height)
+    else:
+        file_name = 'shrink_%s_%i_%i.png' % (dashboard_id, max_width, max_height)
+
+    dashboard_last_saved = dashboard['last_saved']
+
+    try:
+        name = settings.DYNAMIC_IMAGES_ROOT + file_name
+        if os.path.getmtime(name) >= dashboard_last_saved:
+            return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
+        os.remove(name)
+    except OSError:
+        pass
+
+    max_width = int(max_width)
+    max_height = int(max_height)
+    if visualization_id:
+        visualization_svg = dashboard.visualization_by_id(visualization_id)
+    else:
+        visualization_svg = dashboard.visualization_for_image()
+    if not visualization_svg:
+        Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
+        Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
+        image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
         response = HttpResponse(image_data, mimetype='image/png')
         return response
-    if visualization_id:
-        file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, visualization_id, max_width, max_height)
-    else:
-        file_name = '%s/shrink_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, max_width, max_height)
+    try:
+        svg = rsvg.Handle(data=visualization_svg)
+    except Exception, e:
+        Logger.Warn('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
+        image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return response
 
-#    image_redirect = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
-#    if image_redirect:
-#        return redirect(image_redirect, permanent=False)
-
-    image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
-    if not image_data:
-        max_width = int(max_width)
-        max_height = int(max_height)
-        if visualization_id:
-            visualization_svg = dashboard.visualization_by_id(visualization_id)
-        else:
-            visualization_svg = dashboard.visualization_for_image()
-        if not visualization_svg:
-            Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
-            Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
-            image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
-            response = HttpResponse(image_data, mimetype='image/png')
-            return response
-        try:
-            svg = rsvg.Handle(data=visualization_svg)
-        except Exception, e:
-            Logger.Warn('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
-            image_data = ImagingController.GenerateNotFoundImage(int(max_width), int(max_height), None)
-            response = HttpResponse(image_data, mimetype='image/png')
-            return response
-        x = width = svg.props.width
-        y = height = svg.props.height
-        y_scale = x_scale = 1
-        if (max_height != 0 and width > max_width) or (max_height != 0 and height > max_height):
-            x = max_width
-            y = float(max_width)/float(width) * height
-            if y > max_height:
-                y = max_height
-                x = float(max_height)/float(height) * width
-            x_scale = float(x)/svg.props.width
-            y_scale = float(y)/svg.props.height
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, x, y)
-        context = cairo.Context(surface)
-        context.scale(x_scale, y_scale)
-        svg.render_cairo(context)
-        image_data = StringIO.StringIO()
-        surface.write_to_png(image_data)
-        ImagingController.WriteImageDataToCache(file_name, image_data)
-    response = HttpResponse(image_data, mimetype='image/png')
-    return response
+    x = width = svg.props.width
+    y = height = svg.props.height
+    y_scale = x_scale = 1
+    if (max_height != 0 and width > max_width) or (max_height != 0 and height > max_height):
+        x = max_width
+        y = float(max_width)/float(width) * height
+        if y > max_height:
+            y = max_height
+            x = float(max_height)/float(height) * width
+        x_scale = float(x)/svg.props.width
+        y_scale = float(y)/svg.props.height
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, x, y)
+    context = cairo.Context(surface)
+    context.scale(x_scale, y_scale)
+    svg.render_cairo(context)
+    image_data = StringIO.StringIO()
+    surface.write_to_png(image_data)
+    ImagingController.WriteImageDataToCache(settings.DYNAMIC_IMAGES_ROOT + file_name, image_data)
+    return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
 
 
 
