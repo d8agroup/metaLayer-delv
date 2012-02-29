@@ -24,6 +24,8 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 SENTRY_DSN = 'http://cb7488e51e224f0ab7a04d53f8dede4b:b1a294ea3aab42148f4cab2b21c0c429@108.166.111.61:9000/4'
 
+INTERNAL_IPS = ('127.0.0.1',)
+
 CACHES = {
     'default':{
         'BACKEND':'django.core.cache.backends.dummy.DummyCache',

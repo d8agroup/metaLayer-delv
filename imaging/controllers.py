@@ -52,4 +52,5 @@ class ImagingController(object):
             output.close()
             image_data.seek(0)
         except Exception, e:
-            Logger.Error('%s - ImagingController.WriteImageDataToCache - error: %s' % (__name__, e))
+            Logger.Error('%s - ImagingController.WriteImageDataToCache - error writing to cache' % __name__)
+            Logger.Debug('%s - ImagingController.WriteImageDataToCache - error: %s' % (__name__, e))

@@ -429,3 +429,7 @@ elif socket.gethostname() == 'Todd-McNeals-MacBook-Pro.local':
     from settings_tmcneal import *
 else:
     from settings_production import *
+
+if DEBUG:
+    INSTALLED_APPS += ('debug_toolbar',)
+    MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
