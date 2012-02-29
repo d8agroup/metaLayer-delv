@@ -4,10 +4,29 @@ from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import redirect
+import os
 from dashboards.controllers import DashboardsController
 from imaging.controllers import ImagingController
 from django.views.decorators.http import condition
 from logger import Logger
+
+def dashboard_exists_and_has_visualization(dashboard_id, width, height):
+    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+    if not dashboard or not dashboard.has_visualizations():
+        image_data = ImagingController.GenerateNotFoundImage(width, height, None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return None, response
+    return dashboard, None
+
+def current_dashboard_image_exists(file_name, dashboard_last_saved):
+    try:
+        name = settings.DYNAMIC_IMAGES_ROOT + file_name
+        if os.path.getmtime(name) >= dashboard_last_saved:
+            return True, redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
+        os.remove(name)
+    except OSError:
+        pass
+    return False, None
 
 def last_modified(request, dashboard_id, *args, **kwargs):
     cache_key = 'imaging_views_last_modified'
@@ -21,6 +40,11 @@ def last_modified(request, dashboard_id, *args, **kwargs):
         cache.add(cache_key, cache_values, settings.LOW_LEVEL_CACHE_LIMITS[cache_key])
     return cache_values
 
+def build_file_name(type, id, width, height):
+    return '%s_%s_%i_%i.png' % (type, id, width, height)
+
+
+
 @condition(last_modified_func=last_modified)
 def insight_image_for_facebook(request, dashboard_id):
     return crop(request, dashboard_id, 200, 200)
@@ -29,50 +53,46 @@ def insight_image_for_facebook(request, dashboard_id):
 def crop(request, dashboard_id, width, height):
     import cairo
     import rsvg
-    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
-    if not dashboard or not dashboard.has_visualizations():
+    width = int(width)
+    height = int(height)
+
+    dashboard, response = dashboard_exists_and_has_visualization(dashboard_id, width, height)
+    if not dashboard:
+        return response
+
+    file_name = build_file_name('crop', dashboard_id, width, height)
+    dashboard_last_saved = dashboard['last_saved']
+
+    exists, response = current_dashboard_image_exists(file_name, dashboard_last_saved)
+    if exists:
+        return response
+
+    visualization_svg = dashboard.visualization_for_image()
+    if not visualization_svg:
+        Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
+        Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
         image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
         response = HttpResponse(image_data, mimetype='image/png')
         return response
-    file_name = '%s/crop_%s_%s_%s.png' % (settings.DYNAMIC_IMAGES_ROOT, dashboard_id, width, height)
-    #image_redirect = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
-    #if image_redirect:
-        #return redirect(image_redirect, permanent=False)
-    image_data = ImagingController.ReadImageFromCache(file_name, dashboard['last_saved'])
-    if not image_data:
-        width = int(width)
-        height = int(height)
-        dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
-        if not dashboard or not dashboard.has_visualizations():
-            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
-            response = HttpResponse(image_data, mimetype='image/png')
-            return response
-        visualization_svg = dashboard.visualization_for_image()
-        if not visualization_svg:
-            Logger.Warn('%s - crop - empty visualization_svg extracted' % __name__)
-            Logger.Debug('%s - crop - empty visualization_svg extracted from dashboard with id: %s' % (__name__, dashboard_id))
-            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
-            response = HttpResponse(image_data, mimetype='image/png')
-            return response
-        try:
-            svg = rsvg.Handle(data=visualization_svg)
-        except Exception, e:
-            Logger.Warn('%s - crop - error reading svg' % __name__)
-            Logger.Debug('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
-            image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
-            response = HttpResponse(image_data, mimetype='image/png')
-            return response
-        image_height = svg.props.height
-        required_height = height * 1.8
-        scale = (float(required_height) / float(image_height))
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-        context = cairo.Context(surface)
-        context.scale(scale, scale)
-        context.translate((width + width/4) * -1, (height / 2) * -1)
-        svg.render_cairo(context)
-        image_data = StringIO.StringIO()
-        surface.write_to_png(image_data)
-        ImagingController.WriteImageDataToCache(file_name, image_data)
+    try:
+        svg = rsvg.Handle(data=visualization_svg)
+    except Exception, e:
+        Logger.Warn('%s - crop - error reading svg' % __name__)
+        Logger.Debug('%s - crop - error reading svg:%s' % (__name__, visualization_svg), exception=Exception, request=request)
+        image_data = ImagingController.GenerateNotFoundImage(int(width), int(height), None)
+        response = HttpResponse(image_data, mimetype='image/png')
+        return response
+    image_height = svg.props.height
+    required_height = height * 1.8
+    scale = (float(required_height) / float(image_height))
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+    context = cairo.Context(surface)
+    context.scale(scale, scale)
+    context.translate((width + width/4) * -1, (height / 2) * -1)
+    svg.render_cairo(context)
+    image_data = StringIO.StringIO()
+    surface.write_to_png(image_data)
+    ImagingController.WriteImageDataToCache(file_name, image_data)
     response = HttpResponse(image_data, mimetype='image/png')
     return response
 
@@ -135,3 +155,6 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
         ImagingController.WriteImageDataToCache(file_name, image_data)
     response = HttpResponse(image_data, mimetype='image/png')
     return response
+
+
+
