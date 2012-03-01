@@ -8,8 +8,8 @@ TEMPLATE_DEBUG = DEBUG
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mrmatthewgriffiths@gmail.com'
-EMAIL_HOST_PASSWORD = 'hellitifyoulike01'
+EMAIL_HOST_USER = 'no-reply@metalayer.com'
+EMAIL_HOST_PASSWORD = '##M3taM3ta'
 EMAIL_PORT = 587
 
 ADMINS = (
@@ -410,6 +410,11 @@ SOCIAL_SHARING_SERVICES = [
     'st_linkedin_large',
     'st_fblike_hcount',
 ]
+
+INVITES = {
+    'active':True,
+    'per_user_limit':3,
+}
 
 from settings_insight_templates import *
 from settings_emails import *

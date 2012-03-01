@@ -50,10 +50,10 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .header { width:861px; padding:6px 0 0 0; margin:0px auto; }
 .logo { width:238px; height:28px; float:left; padding-top:3px;}
 .logo img { height:21px; }
-.logo1 { width:238px; height:21px; float:left; line-height:41px; }
-.logo span { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc; }
-.logo1 span { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc; }
-.header_right { width:565px; float:right; }
+.logo1 { width:450px; height:21px; float:left; line-height:41px; }
+.logo span.beta { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc; }
+.logo1 span.beta { position:relative; bottom:5px; left:6px; font-size:110%; font-style:italic; color:#cccccc; }
+.header_right { width:300px; float:right; }
 .header_search { width:293px; float:left; }
 .header_search_txt { width:250px; height:22px; background:url(/static/images/thecommunity/header_search_txt.jpg) no-repeat left top; border:none; outline:none; float:left; padding:2px 10px; font-size:12px; color:#333; line-height:22px; }
 .header_search_but { width:23px; height:26px; background:url(/static/images/thecommunity/header_search_but.jpg) no-repeat left top; text-indent:-9999px; font-size:0px; color:#f0f0f0; float:left; border:0; cursor:pointer; }
@@ -124,7 +124,6 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 #main_wrapper{ background:url(/static/images/thecommunity/main_bg.jpg) 0 0 repeat; width:0 auto; padding:0; }
 .headerwrap1 { width:100%; height:41px; margin-bottom:12px; min-width:871px; background:#333; }
 .header { width:872px; padding:6px 0 0 0; margin:0px auto; }
-.header_right { width:565px; float:right; }
 .header_logout { width:320px; float:right; }
 .header_logout ul { float:right; }
 .header_logout ul li { font-size:12px; color:#FFF; line-height:28px; font-weight:bold; float:left; padding:0px 10px 0 5px; background:url(/static/images/thecommunity/header-login_sep.png) no-repeat right center; }
@@ -288,14 +287,36 @@ aside{ width:333px; float:left; }
 #maintenance_page #maintenance_inner h2 { margin:20px auto; font-size:200%; width:250px;}
 #maintenance_page #maintenance_inner p { width:400px; margin:0 auto 10px; font-size:120%; text-align:center;}
 
+.invite_outer { background-color:#FFF; border:1px solid #DDD; position:fixed; top:70px; left:-11px; padding:2px; }
+.invite_outer.over { left:-7px; }
+.invite_inner { background:#333; height:120px; width:40px;}
+.invite_inner img { position:relative; left:7px; top:4px;}
+
+#invite_page { min-height:500px;}
+#invite_page #invite_inner { width:800px; margin:20px auto; text-align:center;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
+#invite_page #invite_inner img { width:500px; }
+#invite_page #invite_inner h1 { margin:30px 10px; font-size:300%;}
+#invite_page #invite_inner h2 { margin:20px auto; font-size:200%; width:500px; font-style:italic;}
+#invite_page #invite_inner p { width:500px; margin:0 auto 10px; font-size:120%; text-align:center;}
+#invite_page #invite_inner form { padding:20px 0;}
+#invite_page #invite_inner input[type=text] { width:300px; height:25px; padding: 0 5px;}
+#invite_page #invite_inner .errors { width:400px; margin:20px auto 0; text-align:left; }
+#invite_page #invite_inner .errors p { width:100%; margin:0; font-size:100%; text-align:left;}
+
 #emails_page { min-height:500px;}
 #emails_page_inner { width:816px; margin:20px auto; text-align:center;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
 #emails_page_inner h1 { margin:20px; font-size:300%;}
 #emails_page_inner table { width:90%; margin:0 auto; }
 #emails_page_inner table td { padding:10px 0;}
 #emails_page_inner table th { text-align:left; padding:10px 0 10px 10px;}
+#emails_page_inner .sending_options { text-align:left; width:400px; margin:10px auto; border:1px solid; padding:10px; }
+#emails_page_inner .sending_options h3 { padding:10px 0; font-size:120%; }
+#emails_page_inner .sending_options textarea { width:90%; }
+#emails_page_inner .sending_options .help { font-size:80%; font-style:italic; padding:10px 0;}
 
 .jspVerticalBar { margin:20px;}
 .jspTrack { background-color:#444;}
 .jspDrag { background-color:#1a1a1a; }
 .jspCap { height:30px;}
+
+a#fdbk_tab { top:205px !important;}

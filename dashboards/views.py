@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import redirect
-from constants import USER_MESSAGES
+from dashboard.constants import USER_MESSAGES
 from dashboards.controllers import DashboardsController
 from dashboards.models import DashboardShortUrl
 from django.contrib import messages

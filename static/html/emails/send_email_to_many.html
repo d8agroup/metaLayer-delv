@@ -1,0 +1,29 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block body_class %}emails{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.button').button();
+        })
+    </script>
+{% endblock %}
+
+{% block page_body %}
+    <div id="emails_page">
+        {% include 'thecommunity/shared/messages.html' %}
+        <div id="emails_page_inner">
+            <h1>{{ email.description }}</h1>
+            <h2>Send this email to one or many people</h2>
+            <div class="sending_options">
+                <h3>Option 1 - Send to one or many email addresses</h3>
+                <form action="" method="POST">
+                    <textarea name="email_addresses"></textarea>
+                    <p class="help">Add one or more comma separated emails above.</p>
+                    <input type="submit" value="send" class="button" name='send_to_list' />
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

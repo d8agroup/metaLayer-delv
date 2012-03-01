@@ -35,6 +35,10 @@
         $(document).ready(function(){
             if($('.messages li').length > 0)
                 setTimeout(function(){ $('.messages').slideUp('slow'); }, 5000);
+            $('.button').button();
+            $('.invite_outer')
+                .mouseenter( function() { $('.invite_outer').addClass('over'); } )
+                .mouseleave( function() { $('.invite_outer').removeClass('over'); } );
         })
     </script>
 </head>
@@ -65,6 +69,15 @@
         </div>
     </footer>
 </div>
+{% if invites_left %}
+    <div class="invite_outer">
+        <div class="invite_inner">
+            <a class="invite" href="/delv/invite">
+                <img src="/static/images/thecommunity/invite.png">
+            </a>
+        </div>
+    </div>
+{% endif %}
 <div id="modal_container"></div>
 {% include 'get_satisfaction.html' %}
 {% include 'ga_tracking.html' %}

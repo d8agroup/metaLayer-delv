@@ -19,13 +19,7 @@
                     <div id='login'>
                         <h3>Login</h3>
                         {% if login_errors %}
-                            <div class="ui-widget">
-                                <div class="ui-state-error ui-corner-all" style="padding: 1em .7em;">
-                                    {% for error in login_errors %}
-                                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>{{ error }}</p>
-                                    {%  endfor %}
-                                </div>
-                            </div>
+                            {% include 'thecommunity/shared/errors.html' with errors=login_errors %}
                         {% endif %}
                         <form method="POST">
                             {% csrf_token %}
@@ -50,13 +44,7 @@
                     <div id='register'>
                         <h3>Register</h3>
                         {% if register_errors %}
-                            <div class="ui-widget">
-                                <div class="ui-state-error ui-corner-all" style="padding: 1em .7em;">
-                                    {% for error in register_errors %}
-                                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>{{ error }}</p>
-                                    {%  endfor %}
-                                </div>
-                            </div>
+                            {% include 'thecommunity/shared/errors.html' with errors=register_errors %}
                         {% endif %}
                         <form method="POST">
                             {% csrf_token %}

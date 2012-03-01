@@ -1,0 +1,7 @@
+<div class="ui-widget errors">
+    <div class="ui-state-error ui-corner-all" style="padding: 1em .7em;">
+        {% for error in errors %}
+            <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>{{ error }}</p>
+        {%  endfor %}
+    </div>
+</div>

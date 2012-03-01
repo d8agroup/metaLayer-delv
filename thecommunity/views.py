@@ -1,23 +1,31 @@
 from random import randint
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.shortcuts import redirect, render_to_response
 from django.template.context import RequestContext
+from django.core.validators import email_re
+import constants
 from dashboards.controllers import DashboardsController
+from invites.controllers import InviteController
 from logger import Logger
 from userprofiles.controllers import UserController
 from utils import JSONResponse, serialize_to_json, my_import
 
-def _base_template_data():
-    return {
-        'short_url':settings.SITE_HOST_SHORT,
-        'site_url':settings.SITE_HOST,
-        'image_url':settings.IMAGE_HOST,
-        'facebook_app_id':settings.FACEBOOK_SETTINGS['api_key'],
-        'social_sharing_services':settings.SOCIAL_SHARING_SERVICES,
-        'cache_timeout':settings.CACHE_TIMEOUT,
+def _base_template_data(request):
+    template_data = {
+        'short_url': settings.SITE_HOST_SHORT,
+        'site_url': settings.SITE_HOST,
+        'image_url': settings.IMAGE_HOST,
+        'facebook_app_id': settings.FACEBOOK_SETTINGS['api_key'],
+        'social_sharing_services': settings.SOCIAL_SHARING_SERVICES,
+        'cache_timeout': settings.CACHE_TIMEOUT,
     }
+    if request.user:
+        template_data['invites_left'] = InviteController.InsightsRemainingForUser(request.user)
+    return template_data
+
 
 def xd_receiver(request):
     return render_to_response('thecommunity/xd_receiver.html')
@@ -29,7 +37,7 @@ def user_home(request, user_name):
             DashboardsController.RecordDashboardView(insight_id)
         return redirect('/delv/%s#%s' % (user_name, insight_id))
 
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
 
     uc = UserController
     user = uc.GetUserByUserName(user_name)
@@ -47,7 +55,7 @@ def user_home(request, user_name):
     )
 
 def insight(request, user_name, insight_id):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     DashboardsController.RecordDashboardView(insight_id)
     user = UserController.GetUserByUserName(user_name)
     dashboard = DashboardsController.GetDashboardById(insight_id)
@@ -64,7 +72,7 @@ def insight(request, user_name, insight_id):
 
 @login_required(login_url='/')
 def user_account(request):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     template_data['facebook_api_key'] = settings.FACEBOOK_SETTINGS['api_key']
     template_data['facebook_permissions'] = ','.join(settings.FACEBOOK_SETTINGS['requested_permissions'])
     template_data['twitter_api_key'] = settings.TWITTER_SETTINGS['api_key']
@@ -99,7 +107,7 @@ def link_facebook_profile(request):
         return JSONResponse({'errors': errors })
 
 def community_page(request):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
 
     #categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
     template_data['category_list_1'] = []#categories[:int(len(categories)/2)]
@@ -140,8 +148,8 @@ def category_page(request, category):
 def login_or_register(request):
     if not request.method == 'POST':
         template_data = {
-            'code':request.GET.get('code'),
-            'email':request.GET.get('email'),
+            'code':request.GET['code'] if 'code' in request.GET else '',
+            'email':request.GET['email'] if 'email' in request.GET else '',
         }
         return render_to_response(
             'thecommunity/login_or_register/login_or_register.html',
@@ -180,6 +188,28 @@ def login_or_register(request):
             login_policy = getattr(my_import(settings.LOGIN_POLICY['module']), 'LoginPolicy')()
             return login_policy.process_login(user, request, True)
 
+@login_required(login_url='/delv/welcome')
+def invite(request):
+    template_data = _base_template_data(request)
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if not email:
+            template_data['errors'] = [constants.USER_MESSAGES['email_not_supplied']]
+        elif not email_re.match(email):
+            template_data['errors'] = [constants.USER_MESSAGES['email_invalid']]
+        if 'errors' not in template_data:
+            if InviteController.SendInviteFromUser(request.user, email):
+                template_data = _base_template_data(request)
+                messages.info(request, constants.USER_MESSAGES['invite_sent'] % email)
+            else:
+                messages.error(request, constants.USER_MESSAGES['invite_failed'])
+    return render_to_response(
+        'thecommunity/invite_page/invite_page.html',
+        template_data,
+        context_instance=RequestContext(request)
+    )
+
+
 @login_required(login_url='/')
 def change_password(request):
     """
@@ -198,7 +228,7 @@ def change_password(request):
     controller = UserController(request.user)
     passed, errors = controller.change_password(current_password, new_password, confirm_password)
     
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     
     if errors:
         template_data['messages'] = errors
@@ -235,7 +265,7 @@ def change_email_opt_in(request):
     controller = UserController(request.user)
     passed, errors = controller.change_email_opt_in(opt_in_status)
     
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     
     if errors:
         template_data['messages'] = errors
@@ -393,12 +423,12 @@ def load_recent_insights(request, count):
     return JSONResponse({'recent_insights':recent_insights})
 
 def load_remixes(request, insight_id, count):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     template_data['insights']  = DashboardsController.GetRemixes(insight_id, int(count))
     return render_to_response( 'thecommunity/profile_page/insight_remixes.html', template_data )
 
 def no_access(request):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     return render_to_response(
         'thecommunity/no_access/no_access.html',
         template_data,
@@ -406,7 +436,7 @@ def no_access(request):
     )
 
 def no_access_with_code(request):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     template_data['code'] = True
     return render_to_response(
         'thecommunity/no_access/no_access.html',
@@ -415,7 +445,7 @@ def no_access_with_code(request):
     )
 
 def site_down(request):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     return render_to_response(
         'thecommunity/site_down/site_down.html',
         template_data,
