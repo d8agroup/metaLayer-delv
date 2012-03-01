@@ -413,7 +413,7 @@ SOCIAL_SHARING_SERVICES = [
 
 INVITES = {
     'active':True,
-    'per_user_limit':3,
+    'per_user_limit':0,
 }
 
 from settings_insight_templates import *
