@@ -12,6 +12,8 @@ SITE_HOST_SHORT = SITE_HOST
 
 IMAGE_HOST = SITE_HOST
 
+STATIC_HOST = SITE_HOST
+
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 logging.basicConfig(

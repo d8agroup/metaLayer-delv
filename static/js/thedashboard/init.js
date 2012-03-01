@@ -108,17 +108,17 @@ $(document).ready
             "</div>"
         );
 
-        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
-        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
-        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
-        $.get('/static/html/thedashboard/search_widget/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
-        $.get('/static/html/thedashboard/data_points/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
-        $.get('/static/html/thedashboard/actions/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
-        $.get('/static/html/thedashboard/outputs/output_url.html', function(t) { $.template('output_url', t)});
-        $.get('/static/html/thedashboard/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
-        $.get('/static/html/thedashboard/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
-        $.get('/static/html/thedashboard/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
-        $.get('/static/html/thedashboard/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
-        $.get('/static/html/thedashboard/modals/api_key_line.html', function(t) { $.template('api_key_line', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/search_widget/dashboard_search_widget_search_filters.html', function(t) { $.template('dashboard_search_widget_search_filters', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/search_widget/dashboard_search_widget_options_panel.html', function(t) { $.template('dashboard_search_widget_options_panel', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/search_widget/dashboard_search_widget_data_point.html', function(t) { $.template('dashboard_search_widget_data_point', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/search_widget/dashboard_search_widget_action.html', function(t) { $.template('dashboard_search_widget_action', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/data_points/dashboard_unconfigured_data_point.html', function(t) { $.template('dashboard_unconfigured_data_point', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/actions/dashboard_unconfigured_action.html', function(t) { $.template('dashboard_unconfigured_action', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/outputs/output_url.html', function(t) { $.template('output_url', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/visualizations/visualization_header.html', function(t) { $.template('visualization_header', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/visualizations/visualization_container.html', function(t) { $.template('visualization_container', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/visualizations/unconfigured_visualization_container.html', function(t) { $.template('unconfigured_visualization_container', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/visualizations/unconfigurable_visualization_container.html', function(t) { $.template('unconfigurable_visualization_container', t)});
+        $.get('http://' + html_host + '/static/html/thedashboard/modals/api_key_line.html', function(t) { $.template('api_key_line', t)});
     }
 );

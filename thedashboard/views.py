@@ -46,7 +46,8 @@ def dashboard_load(request, id):
         {
             'dashboard_id':db['id'],
             'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES,
-            'api_keys': api_keys
+            'api_keys': api_keys,
+            'static_host':settings.STATIC_HOST,
         },
         context_instance=RequestContext(request))
 

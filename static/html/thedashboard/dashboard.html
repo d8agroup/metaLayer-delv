@@ -41,9 +41,9 @@
     <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualization.js"></script>
     <script type="text/javascript" src="/static/js/thedashboard/on_exit_modal.js"></script>
     <script type="text/javascript" src="/static/js/thedashboard/modal_api_key_manager.js"></script>
-    <script type="text/javascript" src="/static/js/thedashboard/init.js"></script>
     <script type="text/javascript">
         EMBEDDED_MODE = false;
+        var html_host = '{{ static_host }}';
 
         $(document).ready
             (
@@ -71,6 +71,7 @@
                 }
             )
     </script>
+    <script type="text/javascript" src="/static/js/thedashboard/init.js"></script>
 </head>
 <body data-username='{{ user.username }}' class="{% block body_class %}{% endblock %}">
     <form id='csrf_form'>

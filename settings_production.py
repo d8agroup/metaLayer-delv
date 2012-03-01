@@ -20,6 +20,8 @@ SITE_HOST_SHORT = 'mlyr.co'
 
 IMAGE_HOST = '50.57.203.80'
 
+STATIC_HOST = '108.166.125.184'
+
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
