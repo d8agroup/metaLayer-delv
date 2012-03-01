@@ -101,9 +101,9 @@ def link_facebook_profile(request):
 def community_page(request):
     template_data = _base_template_data()
 
-    categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
-    template_data['category_list_1'] = categories[:int(len(categories)/2)]
-    template_data['category_list_2'] = categories[int(len(categories)/2):]
+    #categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
+    template_data['category_list_1'] = []#categories[:int(len(categories)/2)]
+    template_data['category_list_2'] = []#categories[int(len(categories)/2):]
 
     top_insights = DashboardsController.GetTopDashboards(4)
     if top_insights:
