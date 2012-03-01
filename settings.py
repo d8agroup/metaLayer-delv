@@ -417,7 +417,6 @@ INVITES = {
 }
 
 from settings_insight_templates import *
-from settings_emails import *
 
 import socket
 if socket.gethostname() in ['mattgriffiths']:
