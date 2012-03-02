@@ -116,7 +116,8 @@ class LocationGetter(threading.Thread):
             Logger.Debug('%s - LocationGetter.run - mapped location from Yahoo:%s' % (__name__, result))
             self.result = result
         except Exception, e:
-            Logger.Error('%s - LocationGetter.run - error:%s' % (__name__, e))
+            Logger.Warn('%s - LocationGetter.run - error contacting Yahoo Service' % __name__)
+            Logger.Debug('%s - LocationGetter.run - error contacting Yahoo Service:%e' % (__name__, e))
             self.result = None
 
     def extract_content(self):
