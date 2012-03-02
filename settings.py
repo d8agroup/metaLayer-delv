@@ -396,10 +396,16 @@ REGISTRATION_POLICIES = {
         'codes':['TESTCODE_1', 'ZM26R', 'STRATA1'],
         'usage_limit':50
     },
+    'InviteRegistrationPolicy':{
+        'name':'User sent invite registration policy',
+        'active':True,
+        'module':'userprofiles.registrationpolicies.inviteregistrationpolicy',
+    },
 }
 
 LOGIN_POLICY = {
-    'module':'userprofiles.loginpolicies.defaultloginpolicy'
+    #'module':'userprofiles.loginpolicies.defaultloginpolicy'
+    'module':'userprofiles.loginpolicies.alertuserstoinvitesloginpolicy'
 }
 
 SOCIAL_SHARING_SERVICES = [

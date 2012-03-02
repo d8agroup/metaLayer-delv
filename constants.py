@@ -3,6 +3,7 @@ USER_MESSAGES = {
 
     'invite_sent':'Your invite was sent to %s',
     'invite_failed':'Sorry, we tried to send that invite but something went wrong. We know about this issue and will work to fix it.',
+    'invite_message_on_login':'Enjoying metaLayer? why not invite a friend join, you have %i invite%s left',
 
     #Form errors
     'email_not_supplied':'You didn\'t enter an email address.',

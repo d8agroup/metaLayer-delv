@@ -82,4 +82,9 @@ TWITTER_SETTINGS = {
     'api_key': 'lFEg1EXUmGlOqSto656Etw'
 }
 
+INVITES = {
+    'active':True,
+    'per_user_limit':1,
+}
+
 

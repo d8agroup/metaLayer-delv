@@ -36,3 +36,17 @@ class InviteController(object):
             invite.delete()
             return False
         return True
+
+    @classmethod
+    def AcceptUserRegistrationWithCode(cls, register_code):
+        try:
+            invite = Invite.objects.get(code=register_code)
+            if invite.used:
+                raise Exception()
+            invite.used = True
+            invite.save()
+            return True
+        except Exception, e:
+            Logger.Warn('%s - InviteController.AcceptUserRegistrationWithCode - Invite with matching code not found or already used' % __name__)
+            Logger.Debug('%s - InviteController.AcceptUserRegistrationWithCode - Invite with matching code not found or already used: %s' % (__name__, register_code))
+        return False
