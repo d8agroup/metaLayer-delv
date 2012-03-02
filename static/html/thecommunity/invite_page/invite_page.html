@@ -10,7 +10,7 @@
             <img class="metalayer_logo" src="/static/images/thecommunity/logo_metalayer_large.jpg">
             <h1>Invite your friends to join metaLayer!</h1>
             {% if invites_left %}
-                <h2>You currently have {{ invites_left }} invites left</h2>
+                <h2>You currently have {{ invites_left }} invite{% if invites_left > 1 %}s{% endif %} left</h2>
                 <p>
                     We're slowly rolling out access to metalayer.com to the general public and we
                     appreciate your help in spreading the word!
