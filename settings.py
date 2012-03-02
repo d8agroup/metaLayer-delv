@@ -22,6 +22,7 @@ DYNAMIC_IMAGES_WEB_ROOT = '/static/CACHE/images/'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
+CUSTOM_ADMIN_ROOT = 'administration'
 
 CACHE_TIMEOUT = 300
 

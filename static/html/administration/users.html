@@ -1,0 +1,29 @@
+{% extends 'administration/base.html' %}
+
+{% block admin_page %}
+    <h1>View and Manage Users</h1>
+    <div class="admin_container">
+        <h2>Registration Statistics</h2>
+        <div class="admin_container">
+            <h3>Overall Stats</h3>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                    <th>Today &rarr; 7 days ago</th>
+                    <th>8 &rarr; 14 days ago</th>
+                    <th>15 &rarr; 21 days ago</th>
+                    <th>22 &rarr; 28 days ago</th>
+                </tr>
+                <tr>
+                    <th>Registrations</th>
+                    <td>{{ registrations_overall_total }}</td>
+                    <td>{{ registrations_overall_past_1 }}</td>
+                    <td>{{ registrations_overall_past_2 }}</td>
+                    <td>{{ registrations_overall_past_3 }}</td>
+                    <td>{{ registrations_overall_past_3 }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}

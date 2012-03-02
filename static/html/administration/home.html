@@ -1,0 +1,14 @@
+{% extends 'administration/base.html' %}
+
+{% block admin_page %}
+
+    <h1>Metalayer Admin Section</h1>
+    <p>Choose a section of the application to administer</p>
+    <ul>
+        <li class="list_option">
+            <p>Manage Users - See stats, send emails to users etc</p>
+            <a href="/{{ admin_root }}/users" class="button">Users</a>
+        </li>
+    </ul>
+
+{% endblock %}
