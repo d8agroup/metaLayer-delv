@@ -1,81 +1,77 @@
-{% load compress %}
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
     <title>{% block title %}{% endblock %}</title>
-    {% compress css %}
-        <link rel="stylesheet" href="/static/css/thedashboard/reset.css" />
-        <link rel="stylesheet" href="/static/css/thedashboard/hacks.css" />
-        <link rel="stylesheet" href="/static/css/thedashboard/base.css" />
-        <link rel="stylesheet" href="/static/css/lib/jquery-ui-vader.css"/>
-        <link rel="stylesheet" href="/static/css/thedashboard/site.css" />
-        <link rel="stylesheet" href="/static/css/lib/jscrollpane.css" />
-        <link rel="stylesheet" href="/static/css/lib/jqmodal.css" />
-    {% endcompress %}
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="stylesheet" href="/static/css/thedashboard/reset.css" />
+    <link rel="stylesheet" href="/static/css/thedashboard/hacks.css" />
+    <link rel="stylesheet" href="/static/css/thedashboard/base.css" />
+    <link rel="stylesheet" href="/static/css/lib/jquery-ui-vader.css"/>
+    <link rel="stylesheet" href="/static/css/thedashboard/site.css" />
+    <link rel="stylesheet" href="/static/css/lib/jscrollpane.css" />
+    <link rel="stylesheet" href="/static/css/lib/jqmodal.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/d3.js"></script>
     <script type="text/javascript" src="/static/js/lib/d3.layout.cloud.js"></script>
-    {% compress js %}
-        <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.jqmodal.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/header.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/header_dashboard_name.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/site.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_collection.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_data_points_and_actions.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_control_panel.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_search_filters.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_search_results.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_search_results_content_items.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_unconfigured_data_point.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_unconfigured_action.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_collections_panel.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_widget_panel.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_outputs.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualizations.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualization.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/on_exit_modal.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/modal_api_key_manager.js"></script>
-        <script type="text/javascript" src="/static/js/thedashboard/init.js"></script>
-        <script type="text/javascript">
-            EMBEDDED_MODE = false;
+    <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.em.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.jqmodal.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/header.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/header_dashboard_name.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/site.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_collection.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_data_points_and_actions.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_control_panel.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_search_filters.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_search_results.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_search_results_content_items.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_unconfigured_data_point.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_search_widget_unconfigured_action.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_collections_panel.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_widget_panel.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_outputs.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualizations.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/dashboard_visualization.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/on_exit_modal.js"></script>
+    <script type="text/javascript" src="/static/js/thedashboard/modal_api_key_manager.js"></script>
+    <script type="text/javascript">
+        EMBEDDED_MODE = false;
+        var html_host = '{{ static_host }}';
 
-            $(document).ready
-                (
-                    function()
-                    {
-                        setTimeout
-                            (
-                                function()
-                                {
-                                    var dashboard_id = '{{ dashboard_id }}';
-                                    $.get
-                                        (
-                                            '/dashboard/load/' + dashboard_id,
-                                            function(data)
-                                            {
-                                                $('.dashboard').dashboard({'dashboard':data.dashboard});
-                                                $('.header').header({'dashboard':data.dashboard});
-                                                $('#on_exit_modal').on_exit_modal();
-                                            },
-                                            'JSON'
-                                        );
-                                },
-                                100
-                            );
-                    }
-                )
-        </script>
-    {% endcompress %}
+        $(document).ready
+            (
+                function()
+                {
+                    setTimeout
+                        (
+                            function()
+                            {
+                                var dashboard_id = '{{ dashboard_id }}';
+                                $.get
+                                    (
+                                        '/dashboard/load/' + dashboard_id,
+                                        function(data)
+                                        {
+                                            $('.dashboard').dashboard({'dashboard':data.dashboard});
+                                            $('.header').header({'dashboard':data.dashboard});
+                                            $('#on_exit_modal').on_exit_modal();
+                                        },
+                                        'JSON'
+                                    );
+                            },
+                            100
+                        );
+                }
+            )
+    </script>
+    <script type="text/javascript" src="/static/js/thedashboard/init.js"></script>
 </head>
 <body data-username='{{ user.username }}' class="{% block body_class %}{% endblock %}">
     <form id='csrf_form'>

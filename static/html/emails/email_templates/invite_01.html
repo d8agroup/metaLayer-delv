@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<body style="margin:0 auto;font-family:Arial;">
+    <div style="background-color:#333333;">
+        <img src="http://{{ image_host }}/static/images/thecommunity/inner_logo.jpg"
+             alt="metalayer logo"
+             style="margin:5px;"/>
+    </div>
+    <h1 style="font-size:20px;text-align:center;">
+        {% if invitee %}
+            {{ invitee }} has invited you to join metaLayer
+        {% else %}
+            You have been invited you to join metaLayer
+        {% endif %}
+    </h1>
+    <div style="text-align:center;">
+        <img src="http://{{ image_host }}/static/images/thecommunity/logo_metalayer_medium.png"
+             alt="metalayer logo"
+             style=""/>
+    </div>
+    <h2 style="text-align:center;font-size:15px;font-style:italic;">A fast, intuitive way to <span style="color:blue;">discover</span> and <span style="color:red">share</span> insights from data.</h2>
+    <div style="text-align:center;">
+        <a href="http://{{ site_host }}/delv/welcome?code={{ code }}&email={{ email }}">
+            <img src="http://{{ image_host }}/static/images/thecommunity/sign_up_button.jpg" alt="sign up now button" />
+        </a>
+    </div>
+    <div style="text-align: center; width:400px;margin:0 auto;">
+        <p style="font-weight:bold; width:300px; margin:10px auto;">visit http://metalayer.com/delv/welcome and enter the code {{ code }} in the registration box to sign up!</p>
+        <p style="text-align:justify">
+            The world is swimming in ever-expanding amounts of data. But data alone is useless without the ability to interpret it. Why rely upon experts or complicated products to spoon-feed insights to you?
+        </p>
+        <p style="text-align:justify">
+            At metaLayer, we believe asking simple questions about the world's information shouldn't require years of special training. It should be intuitive, visual, and easy to do.
+        </p>
+        <p style="text-align:justify">
+            Simply input the content you care about and get back the insights you crave!
+        </p>
+    </div>
+</body>
+</html>

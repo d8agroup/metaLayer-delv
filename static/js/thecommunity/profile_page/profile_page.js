@@ -25,7 +25,7 @@
                     {
                         remixes.load
                             (
-                                '/community/remixes/' + insight_id + '/5',
+                                '/delv/remixes/' + insight_id + '/5',
                                 function()
                                 {
                                     run_helpers();

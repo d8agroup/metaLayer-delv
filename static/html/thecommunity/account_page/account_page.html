@@ -82,9 +82,8 @@
 				<div class="subsection" id="change_password">
 			
 					<h2>Change Password</h2>
-		
-					<form name="change-password" method="post" action="/community/change_password">
-						{% csrf_token %}
+			<form name="change-password" method="post" action="/delv/change_password">
+				{% csrf_token %}
 
 						<div class="form-row clearfix">
 							<label for="current_password">Current Password:</label>
@@ -111,8 +110,8 @@
 			
 					<h2>Email Opt-In Status</h2>
 			
-					<form name="change-email-opt-in" method="post" action="/community/change_email_opt_in">
-						{% csrf_token %}
+			<form name="change-email-opt-in" method="post" action="/delv/change_email_opt_in">
+				{% csrf_token %}
 				
 						{% if user.profile.email_opt_in %}
 							<div class="form-row clearfix" style="margin-bottom:.5em;">

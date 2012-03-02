@@ -131,6 +131,9 @@ class Visualization(VisualizationBase):
         facets = [fg for fg in search_result['facet_groups'] if fg['name'] == data_dimensions_value['value']][0]['facets']
         words = [{'text':f['name'], 'size':f['count']} for f in facets]
 
+        if not words:
+            return ''
+
         color_scheme = [e for e in config['elements'] if e['name'] == 'colorscheme'][0]['value']
         colors = self._generate_colors(color_scheme, 100)
 

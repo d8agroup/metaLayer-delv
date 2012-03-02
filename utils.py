@@ -1,4 +1,5 @@
 from threading import Thread
+from bson.objectid import ObjectId
 from django.db.models.base import ModelBase
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -98,7 +99,12 @@ def serialize_to_json(obj,*args,**kwargs):
     kwargs['ensure_ascii'] = kwargs.get('ensure_ascii',False)
     kwargs['cls'] = kwargs.get('cls',LazyJSONEncoder)
     dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime.datetime) else None
-    return simplejson.dumps(obj, default=dthandler, *args,**kwargs)
+    def handler(obj):
+        if isinstance(obj, datetime.datetime): return obj.isoformat()
+        if isinstance(obj, ObjectId): return '%s' % obj
+        return None
+
+    return simplejson.dumps(obj, default=handler, *args,**kwargs)
 
 class JSONResponse(HttpResponse):
     """ JSON response class """

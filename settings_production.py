@@ -1,28 +1,38 @@
 import logging
 
-DEBUG = True
+SITE_DOWN = False
 
-COMPRESS_ENABLED = True
+DEBUG = False
+
+#If admin deployment, enable admin urls
+import socket
+if socket.gethostbyname(socket.gethostname()) in ['50.57.128.82']:
+    ROOT_URLCONF = 'dashboard.urls_admin'
+    DEBUG = True
 
 SESSION_COOKIE_SECURE =False
 
-SITE_ID=u'4f2bbe147a9c1b698d00001d'
+SITE_ID=u'4f421f767a9c1b687b00001d'
 
 SITE_HOST='metalayer.com'
 
 SITE_HOST_SHORT = 'mlyr.co'
 
-IMAGE_HOST = SITE_HOST
+IMAGE_HOST = '50.57.203.80'
+
+STATIC_HOST = '108.166.125.184'
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
 DYNAMIC_IMAGES_ROOT = '/usr/local/metaLayer-dashboard/dashboard/imaging/CACHE/'
 
-DB_LOGGING = {
-    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
-    'database_name':'ml_dashboard_production_logging',
-    'database_host':'mongodb://metalayer:M3taM3ta@arrow.mongohq.com:27094/ml_dashboard_production_logging',
-    'database_port':27094
+SENTRY_DSN = 'http://afe11d6c7f4145e7b0bc4de73b93fa18:38f4968b114c40f886de3abe745689ca@108.166.111.61:9000/3'
+
+CACHES = {
+    'default':{
+        'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION':'108.166.125.118:11211',
+    }
 }
 
 DATABASES = {

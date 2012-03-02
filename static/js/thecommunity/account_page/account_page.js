@@ -19,7 +19,7 @@ var account = {
 
                $.ajax({
                   type: "POST",
-                  url: "/community/save_facebook_profile",
+                  url: "/delv/save_facebook_profile",
                   data: "facebook_id=" + response.authResponse.userID + "&access_token=" + response.authResponse.accessToken,
                   dataType: "json",
                   success: function(response) {

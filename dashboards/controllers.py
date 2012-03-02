@@ -46,7 +46,7 @@ class DashboardsController(object):
 
     @classmethod
     def GetCategoryCount(cls, c):
-        return Dashboard.collection.find({'config.categories':c}).count()
+        return len([d for d in Dashboard.objects.all() if 'categories' in d.config and c in d.config['categories']])
 
     @classmethod
     def GetDashboardsInCategory(cls, category, page=None, num_per_page=None):
@@ -100,7 +100,7 @@ class DashboardsController(object):
 
     @classmethod
     def GetRemixes(cls, insight_id, count):
-        dashboards = Dashboard.collection.find({'community.parent':insight_id})
+        dashboards = [d for d in Dashboard.objects.all() if d.community['parent'] == insight_id]
         dashboards = sorted(dashboards, key=lambda x: x['last_saved'], reverse=True)
         return dashboards[:count]
 
@@ -142,7 +142,7 @@ class DashboardsController(object):
             if 'data_points' in c and c['data_points']:
                 should_be_saved = True
         if should_be_saved:
-            dashboard['active'] = False
+            dashboard.active = False
             dashboard.save()
         else:
             dashboard.remove()
@@ -182,11 +182,11 @@ class DashboardsController(object):
         Logger.Info('%s - update_dashboard - started' % __name__)
         Logger.Debug('%s - update_dashboard - started with dashboard:%s' % (__name__, dashboard))
         db = Dashboard.Load(dashboard['id'])
-        db['collections'] = dashboard['collections']
-        db['name'] = dashboard['name']
+        db.collections = dashboard['collections']
+        db.name = dashboard['name']
         if 'config' in dashboard:
-            db['config'] = dashboard['config']
-        db['last_saved'] = time.time()
+            db.config = dashboard['config']
+        db.last_saved = time.time()
         db.save()
         Logger.Info('%s - update_dashboard - finished' % __name__)
 
@@ -195,7 +195,7 @@ class DashboardsController(object):
         Logger.Debug('%s - delete_dashboards_to_match_subscription - started with maximum_number_of_dashboards:%s' % (__name__, maximum_number_of_dashboards))
         dashboards_to_be_deleted = self.get_saved_dashboards()[maximum_number_of_dashboards:]
         for dashboard in dashboards_to_be_deleted:
-            dashboard['active'] = False
+            dashboard.active = False
             dashboard.save()
         Logger.Info('%s - delete_dashboards_to_match_subscription - finished' % __name__)
 

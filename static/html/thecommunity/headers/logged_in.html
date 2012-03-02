@@ -1,14 +1,16 @@
 <header class="headerwrap1">
     <div class="header">
-        <div class="logo1"><a href="/"><img src="/static/images/thecommunity/inner_logo.jpg" alt=""></a></div>
+        <div class="logo1">
+            <a href="/"><img src="/static/images/thecommunity/delve_logo_tiny_w.png" alt=""></a><span class="beta">beta!</span>
+        </div>
         <div class="header_right">
             <div class="header_logout">
                 <ul>
-                    <li><a href="/community">Community</a></li>
-                    <li><a href="/community/{{ user.username }}">Home</a></li>
-                    <li><a href="/community/{{ user.username }}/account">Account</a></li>
+                    <li><a href="/delv">Home</a></li>
+                    <li><a href="/delv/{{ user.username }}">Activity</a></li>
+                    <li><a href="/delv/{{ user.username }}/account">Account</a></li>
                     <li><a href="/dashboard/new/1">Create</a></li>
-                    <li class="nobg"><a href="/community/logout">Logout</a></li>
+                    <li class="nobg"><a href="/delv/logout">Logout</a></li>
                 </ul>
             </div>
         </div>

@@ -1,7 +1,4 @@
-import datetime
 from threading import Thread
-from django.conf import settings
-from minimongo.model import Model
 
 def async(gen):
     def func(*args, **kwargs):
@@ -16,57 +13,53 @@ def async(gen):
 class Logger(object):
     @classmethod
     @async
-    def Error(cls, message):
-        if settings.DB_LOGGING:
-            yield
-            if settings.DB_LOGGING['logging_level'] >= 0:
-                LogMessage.Create('ERROR', message)
+    def Error(cls, message, request=None, exception=None):
+        yield
+        import logging
+        logger = logging.getLogger(__name__)
+        if not request:
+            logger.error('%s' % message, exc_info=True)
+            if exception:
+                logger.error(exception, exc_info=True)
         else:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error('USER %s' % message)
-            yield
+            logger.error('%s' % message, exc_info=True, extra={'request':request})
+            if exception:
+                logger.error(exception, exc_info=True, extra={'request':request})
+
+    @classmethod
+    @async
+    def Warn(cls, message, request=None, exception=None):
+        yield
+        import logging
+        logger = logging.getLogger(__name__)
+        if not request:
+            logger.warn('%s' % message, exc_info=True)
+            if exception:
+                logger.warn(exception, exc_info=True)
+        else:
+            logger.warn('%s' % message, exc_info=True, extra={'request':request})
+            if exception:
+                logger.warn(exception, exc_info=True, extra={'request':request})
 
     @classmethod
     @async
     def Info(cls, message):
-        if settings.DB_LOGGING:
-            yield
-            if settings.DB_LOGGING['logging_level'] > 0:
-                LogMessage.Create('INFO', message)
-        else:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error('USER %s' % message)
-            yield
+        yield
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info('%s' % message)
 
     @classmethod
     @async
-    def Debug(cls, message):
-        if settings.DB_LOGGING:
-            yield
-            if settings.DB_LOGGING['logging_level'] > 1:
-                LogMessage.Create('DEBUG', message)
+    def Debug(cls, message, request=None, exception=None):
+        yield
+        import logging
+        logger = logging.getLogger(__name__)
+        if not request:
+            logger.debug('%s' % message, exc_info=True)
+            if exception:
+                logger.debug(exception, exc_info=True)
         else:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error('USER %s' % message)
-            yield
-
-
-class LogMessage(Model):
-    class Meta:
-        host = settings.DB_LOGGING['database_host']
-        port = settings.DB_LOGGING['database_port']
-        database = settings.DB_LOGGING['database_name']
-        collection = 'log_messages'
-        #indices = ( Index('username'), )
-
-    @classmethod
-    def Create(cls, level, message):
-        lm = LogMessage({
-            'date':datetime.datetime.utcnow(),
-            'level':level,
-            'message':message
-        })
-        lm.save()
+            logger.debug('%s' % message, exc_info=True, extra={'request':request})
+            if exception:
+                logger.debug(exception, exc_info=True, extra={'request':request})

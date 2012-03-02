@@ -1,30 +1,26 @@
-{% load compress %}
-
 <!DOCTYPE HTML>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>MetaLayer.com | {% block page_title %}Drag and Drop Insights{% endblock %}</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
     <script type="text/javascript">
-        var FACEBOOK_APP_ID = '{{ facebook_app_id }}'
+        var FACEBOOK_APP_ID = '{{ facebook_app_id }}';
+        var IMAGE_URL = '{{ image_url }}';
     </script>
     {% block meta %}{% endblock %}
-    {% compress css %}
-        <link href="/static/css/lib/tipped.css" rel='stylesheet' type="text/css"/>
-        <link href="/static/css/lib/Aristo.css" rel='stylesheet' type="text/css"/>
-        <link href="/static/css/lib/jscrollpane2.css" rel='stylesheet' type="text/css"/>
-        <link href="/static/css/thecommunity/style2.css" rel="stylesheet" type="text/css"/>
-    {% endcompress %}
-    {% compress js %}
-        <script type="text/javascript" src="/static/js/lib/jquery.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.cycle.all.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
-        <script type="text/javascript" src="/static/js/lib/tipped.js"></script>
-        <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane2.js"></script>
-        {% block js %}{% endblock %}
-    {% endcompress %}
+    <link href="/static/css/lib/tipped.css" rel='stylesheet' type="text/css"/>
+    <link href="/static/css/lib/Aristo.css" rel='stylesheet' type="text/css"/>
+    <link href="/static/css/lib/jscrollpane2.css" rel='stylesheet' type="text/css"/>
+    <link href="/static/css/thecommunity/style2.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/static/js/lib/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.cycle.all.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/tipped.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane2.js"></script>
+    {% block js %}{% endblock %}
     {% block uncompressed_js %}{% endblock %}
     <!--[if lt IE 8]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -36,6 +32,14 @@
         document.createElement('aside');
         document.createElement('section');
         document.createElement('footer');
+        $(document).ready(function(){
+            if($('.messages li').length > 0)
+                setTimeout(function(){ $('.messages').slideUp('slow'); }, 5000);
+            $('.button').button();
+            $('.invite_outer')
+                .mouseenter( function() { $('.invite_outer').addClass('over'); } )
+                .mouseleave( function() { $('.invite_outer').removeClass('over'); } );
+        })
     </script>
 </head>
 
@@ -46,6 +50,7 @@
     {% else %}
         {% include 'thecommunity/headers/logged_out.html' %}
     {% endif %}
+    {% include 'thecommunity/shared/messages.html' %}
     {% block page_body %}{% endblock %}
     <footer class="footerwrap">
         <div class="footer">
@@ -65,7 +70,17 @@
         </div>
     </footer>
 </div>
+{% if invites_left %}
+    <div class="invite_outer">
+        <div class="invite_inner">
+            <a class="invite" href="/delv/invite">
+                <img src="/static/images/thecommunity/invite.png">
+            </a>
+        </div>
+    </div>
+{% endif %}
 <div id="modal_container"></div>
+{% include 'get_satisfaction.html' %}
 {% include 'ga_tracking.html' %}
 </body>
 </html>

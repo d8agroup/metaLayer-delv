@@ -2,8 +2,6 @@ import logging
 
 DEBUG = False
 
-COMPRESS_ENABLED = True
-
 SESSION_COOKIE_SECURE = False
 
 SITE_ID=u'4f1d5db8c845b30a5600001d'
@@ -13,6 +11,8 @@ SITE_HOST='50.57.164.87'
 SITE_HOST_SHORT = SITE_HOST
 
 IMAGE_HOST = SITE_HOST
+
+STATIC_HOST = SITE_HOST
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 

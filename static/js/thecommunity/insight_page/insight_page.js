@@ -40,10 +40,23 @@
 
     $.fn.insight_page = function(insight)
     {
+        $('.corner').corner('5px');
+        Tipped.create('.tool_tip');
+
         var insight_page = this;
         insight_page.find('#user_and_insight_details, #insight, #social_links').corner('5px');
         //insight_page.find('#trending_insights').insights_trending_insights(9);
         var collections_container = insight_page.find('.collections');
+        if (insight.collections.length > 1 && insight.collections[1].data_points != null && insight.collections[1].data_points.length > 0)
+        {
+            var width = "362";
+            var height = "220";
+        }
+        else
+        {
+            var width = "471";
+            var height = "250";
+        }
         for (var c=0; c<insight.collections.length; c++)
         {
             var collection = insight.collections[c];
@@ -55,8 +68,14 @@
             for (var v=0; v<collection.visualizations.length; v++)
             {
                 var visualization = collection.visualizations[v];
-                var visualization_container = $("<div class='visualization' id='v_" + visualization.id + "'></div>");
+                var visualization_container = $
+                    (
+                        "<div class='visualization' id='v_" + visualization.id + "'>" +
+                            "<img src='http://" + IMAGE_URL + "/i/s/" + width + "/" + height + "/" + insight.id + "/" + visualization.id + ".png'/> " +
+                        "</div>"
+                    );
                 collection_html.append(visualization_container);
+                /*
                 var timestamp = new Date;
                 timestamp = timestamp.getTime();
                 $.ajax
@@ -75,6 +94,7 @@
                             dataType:'script'
                         }
                     );
+                */
             }
             
             

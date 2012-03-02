@@ -1,3 +1,6 @@
 [submodule "chargifyapi"]
 	path = chargifyapi
 	url = git@github.com:metaLayer/chargifyapi.git
+[submodule "compressor"]
+	path = compressor
+	url = git@github.com:metaLayer/compressor.git

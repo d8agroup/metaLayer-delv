@@ -46,7 +46,8 @@ def dashboard_load(request, id):
         {
             'dashboard_id':db['id'],
             'INSIGHT_CATEGORIES':settings.INSIGHT_CATEGORIES,
-            'api_keys': api_keys
+            'api_keys': api_keys,
+            'static_host':settings.STATIC_HOST,
         },
         context_instance=RequestContext(request))
 
@@ -85,7 +86,7 @@ def dashboard(request, id):
     dc = DashboardsController(request.user)
     db = dc.get_dashboard_by_id(id)
     Logger.Info('%s - dashboard - finished' % __name__)
-    return JSONResponse({'dashboard':db})
+    return JSONResponse({'dashboard':db.__dict__})
 
 def dashboard_get_all_widgets(request):
     Logger.Info('%s - dashboard_get_all_data_points - started' % __name__)

@@ -1,4 +1,5 @@
 {% extends 'thecommunity/base.html' %}
+{% load cache %}
 
 {% block js %}
     <script type="text/javascript">
@@ -6,18 +7,18 @@
             $('.video').cycle({ fx:'fade', timeout:0, pager:'.pager' });
             $('.border').corner('5px');
             Tipped.create('.tool_tip');
-            if (window.location.search.indexOf('register'))
-            {
-                {% if user.profile.get_registration_type %}
-                    {% ifequal user.profile.get_registration_type 'UNRECOGNISED' %}
-                        _gaq.push(['_trackEvent', 'user', 'registration', 'UNRECOGNISED']);
-                    {% else %}
-                        _gaq.push(['_trackEvent', 'user', 'registration', '{{ user.profile.get_registration_type }}']);
-                    {% endifequal %}
-                {% else %}
-                    _gaq.push(['_trackEvent', 'user', 'registration', 'STANDARD']);
-                {% endif %}
-            }
+{#            if (window.location.search.indexOf('register'))#}
+{#            {#}
+{#                {% if user.profile.get_registration_type %}#}
+{#                    {% ifequal user.profile.get_registration_type 'UNRECOGNISED' %}#}
+{#                        _gaq.push(['_trackEvent', 'user', 'registration', 'UNRECOGNISED']);#}
+{#                    {% else %}#}
+{#                        _gaq.push(['_trackEvent', 'user', 'registration', '{{ user.profile.get_registration_type }}']);#}
+{#                    {% endifequal %}#}
+{#                {% else %}#}
+{#                    _gaq.push(['_trackEvent', 'user', 'registration', 'STANDARD']);#}
+{#                {% endif %}#}
+{#            }#}
             if (window.location.search.indexOf('login'))
             {
                 _gaq.push(['_trackEvent', 'user', 'login', null]);
@@ -52,7 +53,7 @@
 
         <div class="videoarea">
             <div class="video">
-                <iframe src="http://player.vimeo.com/video/31801964?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
+                <iframe src="http://player.vimeo.com/video/35603517?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
                 <iframe src="http://player.vimeo.com/video/31676970?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
                 <iframe src="http://player.vimeo.com/video/31676791?title=0&amp;byline=0&amp;portrait=0" width="340" height='190' ></iframe>
             </div>
@@ -64,8 +65,8 @@
         <div class="content_left">
             {% if not user.is_authenticated %}
                 <h2>We're making the world's information easier to understand, visualize and share!</h2>
-                <div class="signup_button"><a href="/community/welcome"><img src="/static/images/thecommunity/sign_up_button.jpg" alt=""></a></div>
-                <br/><!--<p>Are you a data professional or organization? <a href="#">Go Pro!</a></p>-->
+                <div class="signup_button"><a href="/delv/welcome"><img src="/static/images/thecommunity/sign_up_button.jpg" alt=""></a></div>
+                <br/><p>Are you a data professional or organization? <a href="#">Go Pro</a></p>
             {% endif %}
             <div class="trading_box">
                 <h3>What's Trending?</h3>

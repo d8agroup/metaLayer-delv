@@ -1,16 +1,11 @@
-from django.conf import settings
-from minimongo import Model, Index
+from django.db import models
 from hashlib import md5
 import time
 from logger import Logger
 
-class RunRecord(Model):
-    class Meta:
-        host = settings.DATABASES['default']['HOST']
-        port = settings.DATABASES['default']['PORT']
-        database = settings.DATABASES['default']['NAME']
-        collection = 'aggregator_runrecord'
-        indices = ( Index('key'), )
+class RunRecord(models.Model):
+    key = models.TextField()
+    last_success = models.FloatField()
 
     @classmethod
     def GenerateUniqueKey(cls, actions, data_point):
@@ -28,10 +23,11 @@ class RunRecord(Model):
         Logger.Info('%s - RunRecord.LastSuccess - started' % __name__)
         Logger.Debug('%s - RunRecord.LastSuccess - started with data_point:%s and actions:%s' % (__name__, data_point, actions))
         key = cls.GenerateUniqueKey(actions, data_point)
-        run_record = RunRecord.collection.find_one({'key':key})
-        if not run_record:
+        try:
+            run_record = RunRecord.objects.get(key=key)
+        except RunRecord.DoesNotExist:
             return None
-        last_success = run_record['last_success']
+        last_success = run_record.last_success
         Logger.Info('%s - RunRecord.LastSuccess - started' % __name__)
         return last_success
 
@@ -40,9 +36,10 @@ class RunRecord(Model):
         Logger.Info('%s - RunRecord.RecordRun - started' % __name__)
         Logger.Debug('%s - RunRecord.RecordRun - started with data_point:%s and actions:%s' % (__name__, data_point, actions))
         key = cls.GenerateUniqueKey(actions, data_point)
-        run_record = RunRecord.collection.find_one({'key':key})
-        if not run_record:
-            run_record = RunRecord({'key':key})
-        run_record['last_success'] = time.mktime(time.gmtime())
+        try:
+            run_record = RunRecord.objects.get(key=key)
+        except RunRecord.DoesNotExist:
+            run_record = RunRecord(key=key)
+        run_record.last_success = time.mktime(time.gmtime())
         run_record.save()
         Logger.Info('%s - RunRecord.RecordRun - finished' % __name__)

@@ -19,13 +19,7 @@
                     <div id='login'>
                         <h3>Login</h3>
                         {% if login_errors %}
-                            <div class="ui-widget">
-                                <div class="ui-state-error ui-corner-all" style="padding: 1em .7em;">
-                                    {% for error in login_errors %}
-                                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>{{ error }}</p>
-                                    {%  endfor %}
-                                </div>
-                            </div>
+                            {% include 'thecommunity/shared/errors.html' with errors=login_errors %}
                         {% endif %}
                         <form method="POST">
                             {% csrf_token %}
@@ -38,7 +32,7 @@
                                 <input type="password" name='login_password' id='login_password' />
                             </div>
 							<div class="form-row clearfix">
-								<a href="/community/password_reset">Forgot Password?</a>
+								<a href="/delv/password_reset">Forgot Password?</a>
 							</div>
                             <div class="action-row clearfix">
                                 <input type="submit" class="submit" value="login" name='login'/>
@@ -50,19 +44,13 @@
                     <div id='register'>
                         <h3>Register</h3>
                         {% if register_errors %}
-                            <div class="ui-widget">
-                                <div class="ui-state-error ui-corner-all" style="padding: 1em .7em;">
-                                    {% for error in register_errors %}
-                                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>{{ error }}</p>
-                                    {%  endfor %}
-                                </div>
-                            </div>
+                            {% include 'thecommunity/shared/errors.html' with errors=register_errors %}
                         {% endif %}
                         <form method="POST">
                             {% csrf_token %}
                             <div class="form-row clearfix">
                                 <label for='register_username'>Your Email *</label>
-                                <input type="text" name="register_username" id='register_username' />
+                                <input type="text" name="register_username" id='register_username' value="{{ email }}" />
                             </div>
                             <div class="form-row clearfix">
                                 <label for='register_password1'>Your Password *</label>
@@ -74,7 +62,7 @@
                             </div>
                             <div class="form-row clearfix">
                                 <label for='register_code'>Registration code?</label>
-                                <input type="text" name='register_code' id='register_code' />
+                                <input type="text" name='register_code' id='register_code' value="{{ code }}" />
                             </div>
                             <p class="instructions">* denotes required fields</p>
                             <div class="action-row clearfix">

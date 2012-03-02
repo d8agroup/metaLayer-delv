@@ -64,6 +64,12 @@ class Visualization(VisualizationBase):
             ]
         }
 
+    def generate_search_query_data(self, config, search_configuration):
+        data_queries = [
+            {'name':dd['value']['value'], 'type':'basic_facet', 'limit':15} for dd in config['data_dimensions'] if dd['value']
+        ]
+        return [data_queries]
+
     def render_javascript_based_visualization(self, config, search_results_collection, search_configuration):
         search_results = search_results_collection[0]
         facets = [f['facets'] for f in search_results['facet_groups'] if f['name'] == config['data_dimensions'][0]['value']['value']][0]

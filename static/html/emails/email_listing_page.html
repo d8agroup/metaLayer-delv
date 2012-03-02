@@ -1,0 +1,27 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block body_class %}emails{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.button').button();
+        })
+    </script>
+{% endblock %}
+
+{% block page_body %}
+<div id="emails_page">
+    {% include 'thecommunity/shared/messages.html' %}
+    <div id="emails_page_inner">
+        <h1>Currently active emails:</h1>
+        <table>
+                <tr>
+                    <th valign="center">The email that gets sent to people when a user clicks invite</th>
+                    <td valign="center"><a href="/emails/view/invite" class="button">view</a></td>
+                    <td valign="center"></td>
+                </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -14,8 +14,8 @@ class Action(BaseAction):
             'display_name_long':'Location Detection',
             'image_large':'/static/images/thedashboard/actions/location_small.png',
             'image_small':'/static/images/thedashboard/actions/location_small.png',
-            'instructions':'Yahoo Placemaker will extract location based information from content allowing you to visualize '
-                           'content on a map',
+            'instructions':self.advanced_feature_markup + '<br/>Yahoo Placemaker will extract location based information from ' \
+                           'content allowing you to visualize content on a map',
             'configured':False,
             'elements':[
                 {
@@ -45,6 +45,11 @@ class Action(BaseAction):
                         'display_name':'Yahoo Placemaker Location',
                         'name':'location',
                         'type':'location_string',
+                    },
+                    {
+                        'display_name':'Yahoo Placemaker Points',
+                        'name':'point',
+                        'type':'location_point',
                     }
                 ]
             }
@@ -72,8 +77,10 @@ class Action(BaseAction):
             while len(finished) < content_count:
                 thread = q.get(True)
                 thread.join()
-                content_id, location = thread.get_result()
-                finished.append({'id':content_id, 'location':location})
+                content_id, result = thread.get_result()
+                location = result['locations'] if result else False
+                point = result['points'] if result else False
+                finished.append({'id':content_id, 'location':location, 'point':point})
         q = Queue(3)
         producer_thread = threading.Thread(target=producer, args=(q, config, content))
         consumer_thread = threading.Thread(target=consumer, args=(q, len(content)))
@@ -109,7 +116,8 @@ class LocationGetter(threading.Thread):
             Logger.Debug('%s - LocationGetter.run - mapped location from Yahoo:%s' % (__name__, result))
             self.result = result
         except Exception, e:
-            Logger.Error('%s - LocationGetter.run - error:%s' % (__name__, e))
+            Logger.Warn('%s - LocationGetter.run - error contacting Yahoo Service' % __name__)
+            Logger.Debug('%s - LocationGetter.run - error contacting Yahoo Service:%e' % (__name__, e))
             self.result = None
 
     def extract_content(self):
@@ -122,35 +130,46 @@ class LocationGetter(threading.Thread):
         return text
 
     def _map_location(self, config, response):
-        def countries(a,v):
+        def countries(a,v,p):
             if isinstance(a, dict):
                 if 'type' in a and a['type'] == 'Country':
                     if 'name' in a and a['name'] not in v:
                         v.append(a['name'])
+                    if 'centroid' in a:
+                        latlong = '%s,%s' % (a['centroid']['latitude'], a['centroid']['longitude'])
+                        if latlong not in p:
+                            p.append(latlong)
                 for key in a.keys():
-                    countries(a[key], v)
+                    countries(a[key], v, p)
             elif isinstance(a, list):
                 for b in a:
-                    countries(b, v)
+                    countries(b, v, p)
             else:
                 return
-        def places(a,v):
+        def places(a,v,p):
             if isinstance(a, dict):
                 if 'type' in a and a['type'] != 'Country':
                     if 'name' in a and a['name'] not in v:
                         v.append(a['name'])
+                    if 'centroid' in a:
+                        latlong = '%s,%s' % (a['centroid']['latitude'], a['centroid']['longitude'])
+                        if latlong not in p:
+                            p.append(latlong)
                 for key in a.keys():
-                    places(a[key], v)
+                    places(a[key], v, p)
             elif isinstance(a, list):
                 for b in a:
-                    places(b, v)
+                    places(b, v, p)
             else:
                 return
 
         if not isinstance(response['document'], dict):
             return False
+        names = []
         locations = []
-        countries(response, locations)
-        places(response, locations)
-        return locations
+
+        countries(response, names, locations)
+        places(response, names, locations)
+
+        return {'locations':names, 'points':locations}
 

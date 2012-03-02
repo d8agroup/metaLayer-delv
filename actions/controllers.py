@@ -100,6 +100,7 @@ class ActionController(object):
         def get_postfix(type):
             if type == 'string': return 's'
             if type == 'location_string': return 's'
+            if type == 'location_point': return 's'
             return '_s'
         return 'action_%s_%s_%s' % (self.action['name'], prop['name'], get_postfix(prop['type']))
 
@@ -108,5 +109,6 @@ class ActionController(object):
             return value
         if type == 'string': return '_none'
         if type == 'location_string': return '_none'
+        if type == 'location_point': return '_none'
         return '_s'
 

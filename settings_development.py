@@ -1,7 +1,5 @@
 DEBUG = True
 
-COMPRESS_ENABLED = False
-
 SITE_ID=u'4f13fca68451d31efe00001d'
 
 SITE_HOST='dev.metalayer.com'
@@ -9,6 +7,8 @@ SITE_HOST='dev.metalayer.com'
 SITE_HOST_SHORT = SITE_HOST
 
 IMAGE_HOST = SITE_HOST
+
+STATIC_HOST = SITE_HOST
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
 
@@ -79,4 +79,7 @@ TWITTER_SETTINGS = {
     'api_key': 'lFEg1EXUmGlOqSto656Etw'
 }
 
-
+INVITES = {
+    'active':True,
+    'per_user_limit':1,
+}

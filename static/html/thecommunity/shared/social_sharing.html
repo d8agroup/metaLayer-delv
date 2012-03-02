@@ -1,0 +1,5 @@
+<div class="social_sharing">
+    {% for service in social_sharing_services %}
+        <span class='{{ service }}' st_url='http://{{ short_url }}/d/{{ insight.short_url.url_identifier }}' st_title='{{ insight.name }}' st_image='http://{{ site_url }}/i/facebook/{{ insight.id }}.png' st_summary='{{ insight.config.description }}'></span>
+    {% endfor %}
+</div>

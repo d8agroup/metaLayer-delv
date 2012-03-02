@@ -1,0 +1,37 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block page_title %} Invite your friends to join metalayer{% endblock %}
+
+{% block body_class %}invite{% endblock %}
+
+{% block page_body %}
+    <div id="invite_page">
+        <div id="invite_inner" class="clearfix">
+            <img class="metalayer_logo" src="/static/images/thecommunity/delve_logo_small.png">
+            <h1>Invite your friends to join metaLayer!</h1>
+            {% if invites_left %}
+                <h2>You currently have {{ invites_left }} invite{% if invites_left > 1 %}s{% endif %} left</h2>
+                <p>
+                    We're slowly rolling out access to metalayer.com to the general public and we
+                    appreciate your help in spreading the word!
+                </p>
+                {% if errors %}
+                    {% include 'thecommunity/shared/errors.html' %}
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="email" />
+                    <input type="submit" value="Invite!" class="button" />
+                </form>
+            {% else %}
+                <div class="no_invites_left">
+                    <h2>Sorry you have used all your invites</h2>
+                    <p>
+                        We're slowly rolling out access to metalayer.com to the general public and we
+                        appreciate your help in spreading the word!
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

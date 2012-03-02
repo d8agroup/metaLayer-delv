@@ -11,6 +11,6 @@
         {
             $(container).html(template);
         };
-        $.get('/community/current_subscription', function(data) { handle_get_return_function(current_subscription_container, data); });
+        $.get('/delv/current_subscription', function(data) { handle_get_return_function(current_subscription_container, data); });
     }
 })( jQuery );

@@ -1,10 +1,10 @@
 import logging
 
+SITE_DOWN = False
+
 DEBUG = True
 
-COMPRESS_ENABLED = False
-
-SITE_ID=u'4f1408ebc845b317df00000d'
+SITE_ID=u'4f4350a1c845b31cd500001d'
 
 SITE_HOST='localhost:8000'
 
@@ -12,22 +12,24 @@ SITE_HOST_SHORT = SITE_HOST
 
 IMAGE_HOST = SITE_HOST
 
-STATIC_ROOT = '/home/matt/code/metaLayer/dashboard/static/'
+STATIC_HOST = SITE_HOST
+
+STATICFILES_DIRS = (
+    '/home/matt/code/metaLayer/dashboard/static/',
+)
 
 DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-logging.basicConfig(
-    level = logging.DEBUG,
-    format = '%(asctime)s %(levelname)s %(message)s',
-)
+SENTRY_DSN = 'http://cb7488e51e224f0ab7a04d53f8dede4b:b1a294ea3aab42148f4cab2b21c0c429@108.166.111.61:9000/4'
 
-DB_LOGGING = {
-    'logging_level':0, #0=ERROR, 1=INFO, 2=DEBUG
-    'database_name':'ml_dashboard',
-    'database_host':'localhost',
-    'database_port':27017
+INTERNAL_IPS = ('127.0.0.1',)
+
+CACHES = {
+    'default':{
+        'BACKEND':'django.core.cache.backends.dummy.DummyCache',
+    }
 }
 
 DATABASES = {
@@ -38,15 +40,6 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': 27017,                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
-ENDPOINTS = {
-    'datapoints':{
-        'metalayer_aggregator':{
-            'add_source':'http://md.dev.01/aggregator/sources/add',
-            'remove_source':'http://md.dev.01/aggregator/sources/remove'
-        }
     }
 }
 
@@ -87,6 +80,11 @@ FACEBOOK_SETTINGS = {
 
 TWITTER_SETTINGS = {
     'api_key': 'lFEg1EXUmGlOqSto656Etw'
+}
+
+INVITES = {
+    'active':True,
+    'per_user_limit':1,
 }
 
 

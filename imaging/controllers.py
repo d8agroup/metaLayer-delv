@@ -1,3 +1,4 @@
+from django.conf import settings
 import os
 import StringIO
 from logger import Logger
@@ -9,19 +10,18 @@ class ImagingController(object):
         text_sizes = (14, 10) if width > 100 else (10, 7)
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         context = cairo.Context(surface)
-        rgb = ImagingController._html_color_to_rgb(fill_color)
-        context.set_source_rgb(rgb[0]/255, rgb[1]/255, rgb[2]/255)
+        context.set_source_rgb(1.0, 1.0, 1.0)
         context.rectangle(0, 0, width, height)
         context.fill()
         text = 'metaLayer'
-        context.set_source_rgb(1.0, 1.0, 1.0) # white
+        context.set_source_rgb(0, 0, 0)
         context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
         context.set_font_size(text_sizes[0])
         x, y, w, h = context.text_extents(text)[:4]
         context.move_to((width / 2) - (w / 2) - x, (height / 2) - (h / 2) - y)
         context.show_text(text)
         text = 'no image'
-        context.set_source_rgb(1.0, 1.0, 1.0) # white
+        context.set_source_rgb(0, 0, 0)
         context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         context.set_font_size(text_sizes[1])
         x, y, w, h = context.text_extents(text)[:4]
@@ -36,7 +36,8 @@ class ImagingController(object):
     def ReadImageFromCache(cls, file_name, expiry_time):
         try:
             if os.path.getmtime(file_name) >= expiry_time:
-                return open(file_name, 'rb').read()
+                #return settings.DYNAMIC_IMAGES_WEB_ROOT + file_name.split('/')[-1]
+                return open(file_name, 'rb')
             os.remove(file_name)
         except OSError:
             pass
@@ -51,4 +52,5 @@ class ImagingController(object):
             output.close()
             image_data.seek(0)
         except Exception, e:
-            Logger.Error('%s - ImagingController.WriteImageDataToCache - error: %s' % (__name__, e))
+            Logger.Error('%s - ImagingController.WriteImageDataToCache - error writing to cache' % __name__)
+            Logger.Debug('%s - ImagingController.WriteImageDataToCache - error: %s' % (__name__, e))
