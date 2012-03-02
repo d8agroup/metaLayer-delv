@@ -3,7 +3,7 @@ import re
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from administration.utils import staff_member_required, _base_template_data
+from administration.utils import staff_member_required, _base_template_data, match_registration_status, match_registration_code
 
 
 @staff_member_required
@@ -31,24 +31,24 @@ def users(request):
         template_data['by_registration_status'].append(
             {
                 'name':status[0],
-                'total':len([u for u in user_objects if re.search(status[1], u.profile.registration_status)]),
-                'past_1':len([u for u in users_past_1 if re.search(status[1], u.profile.registration_status)]),
-                'past_2':len([u for u in users_past_2 if re.search(status[1], u.profile.registration_status)]),
-                'past_3':len([u for u in users_past_3 if re.search(status[1], u.profile.registration_status)]),
-                'past_4':len([u for u in users_past_4 if re.search(status[1], u.profile.registration_status)]),
+                'total':len([u for u in user_objects if match_registration_status(status[1], u)]),
+                'past_1':len([u for u in users_past_1 if match_registration_status(status[1], u)]),
+                'past_2':len([u for u in users_past_2 if match_registration_status(status[1], u)]),
+                'past_3':len([u for u in users_past_3 if match_registration_status(status[1], u)]),
+                'past_4':len([u for u in users_past_4 if match_registration_status(status[1], u)]),
             }
         )
 
     template_data['by_registration_type'] = []
-    for registration_type in [('TED Code', r'^TED.*'), ('METALAYER Code', r'^METALAYER.*')]:
+    for registration_type in [('TED Code', r'^TED.*'), ('METALAYER Code', r'^METALAYER.*'), ('Invited', r'^INVITE.*')]:
         template_data['by_registration_type'].append(
             {
                 'name':registration_type[0],
-                'total':len([u for u in user_objects if re.search(registration_type[1], u.profile.registration_code)]),
-                'past_1':len([u for u in users_past_1 if re.search(registration_type[1], u.profile.registration_code)]),
-                'past_2':len([u for u in users_past_2 if re.search(registration_type[1], u.profile.registration_code)]),
-                'past_3':len([u for u in users_past_3 if re.search(registration_type[1], u.profile.registration_code)]),
-                'past_4':len([u for u in users_past_4 if re.search(registration_type[1], u.profile.registration_code)]),
+                'total':len([u for u in user_objects if match_registration_code(registration_type[1], u)]),
+                'past_1':len([u for u in users_past_1 if match_registration_code(registration_type[1], u)]),
+                'past_2':len([u for u in users_past_2 if match_registration_code(registration_type[1], u)]),
+                'past_3':len([u for u in users_past_3 if match_registration_code(registration_type[1], u)]),
+                'past_4':len([u for u in users_past_4 if match_registration_code(registration_type[1], u)]),
             }
         )
 

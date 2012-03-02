@@ -1,7 +1,5 @@
 from invites.controllers import InviteController
 
-__author__ = 'matt'
-
 class RegistrationPolicy(object):
     def post_registration(self, user, registration_form_values):
         if 'register_code' not in registration_form_values or not registration_form_values['register_code']:
