@@ -26,11 +26,7 @@ def build_file_name(type, id, width, height):
     return '%s_%s_%i_%i.png' % (type, id, width, height)
 
 @condition(last_modified_func=last_modified)
-def insight_image_for_facebook(request, dashboard_id):
-    return crop(request, dashboard_id, 200, 200)
-
-@condition(last_modified_func=last_modified)
-def crop(request, dashboard_id, width, height):
+def crop(request, dashboard_id, width='200', height='200'):
     import cairo
     import rsvg
     width = int(width)
