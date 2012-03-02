@@ -53,7 +53,6 @@ def users(request):
                 'past_4':len([u for u in users_past_4 if match_registration_code(registration_type[1], u)]),
             }
         )
-    """
     user_profiles = UserProfile.objects.all()
     template_data['by_registration_type'] = []
     for registration_type in [('TED Code', r'^TED.*'), ('METALAYER Code', r'^METALAYER.*'), ('Invited', r'^INVITE.*')]:
@@ -63,5 +62,6 @@ def users(request):
                 'total':len([u for u in user_profiles if match_registration_code(registration_type[1], u)])
             }
         )
+    """
 
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
