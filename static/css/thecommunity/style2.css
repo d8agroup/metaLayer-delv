@@ -321,9 +321,10 @@ aside{ width:333px; float:left; }
 #admin_page h2 { text-align:center; font-size:170%; }
 #admin_page h3 { font-size:150%; padding:10px 0;}
 #admin_page p { padding:10px 0; }
-#admin_page table { width:95%; margin:0 auto; border-bottom:1px solid #DDD;}
+#admin_page table { width:95%; margin:0 auto; }
 #admin_page th { padding:10px 5px; text-align:center; background-color:#DDD;}
-#admin_page td { padding:10px 5px; text-align:center; border-right:1px solid #DDD;}
+#admin_page th.first_column { width:180px;}
+#admin_page td { padding:10px 5px; text-align:center; border-right:1px solid #DDD; border-bottom:1px solid #DDD;}
 #admin_page .admin_container { padding:20px 10px;}
 
 #admin_page .list_option { width:700px; margin:0 auto; }
