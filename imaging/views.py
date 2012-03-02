@@ -25,7 +25,7 @@ def last_modified(request, dashboard_id, *args, **kwargs):
 def build_file_name(type, id, width, height):
     return '%s_%s_%i_%i.png' % (type, id, width, height)
 
-@condition(last_modified_func=last_modified)
+#@condition(last_modified_func=last_modified)
 def crop(request, dashboard_id, width='200', height='200'):
     import cairo
     import rsvg
@@ -78,7 +78,7 @@ def crop(request, dashboard_id, width='200', height='200'):
     ImagingController.WriteImageDataToCache(settings.DYNAMIC_IMAGES_ROOT + file_name, image_data)
     return redirect(settings.DYNAMIC_IMAGES_WEB_ROOT + file_name, permanent=False)
 
-@condition(last_modified_func=last_modified)
+#@condition(last_modified_func=last_modified)
 def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     import cairo
     import rsvg
