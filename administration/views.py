@@ -60,7 +60,7 @@ def users(request):
         template_data['by_registration_type'].append(
             {
                 'name':registration_type[0],
-                'total':len([u for u in user_profiles if re.match(registration_type[1], u.registration_code)])
+                'total':len([u for u in user_profiles if match_registration_code(registration_type[1], u)])
             }
         )
 

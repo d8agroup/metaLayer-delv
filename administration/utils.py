@@ -19,8 +19,7 @@ def match_registration_status(regex, user):
     registration_status = user_profile.registration_status
     return re.search(regex, registration_status)
 
-def match_registration_code(regex, user):
-    user_profile = user.profile
+def match_registration_code(regex, user_profile):
     registration_code = user_profile.registration_code
     return re.search(regex, registration_code)
 
