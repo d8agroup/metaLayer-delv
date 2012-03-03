@@ -1,13 +1,73 @@
-{% extends 'thecommunity/base.html' %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MetaLayer.com | Administration</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    {% block meta %}{% endblock %}
+    <link href="/static/css/lib/tipped.css" rel='stylesheet' type="text/css"/>
+    <link href="/static/css/lib/Aristo.css" rel='stylesheet' type="text/css"/>
+    <link href="/static/css/lib/jscrollpane2.css" rel='stylesheet' type="text/css"/>
+    <link href="/static/css/thecommunity/style2.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/static/js/lib/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.cycle.all.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.corner.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/tipped.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane2.js"></script>
+    {% block js %}{% endblock %}
+    {% block uncompressed_js %}{% endblock %}
+    <!--[if lt IE 8]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        document.createElement('header');
+        document.createElement('nav');
+        document.createElement('article');
+        document.createElement('aside');
+        document.createElement('section');
+        document.createElement('footer');
+        $(document).ready(function(){
+            if($('.messages li').length > 0)
+                setTimeout(function(){ $('.messages').slideUp('slow'); }, 5000);
+            $('.button').button();
+            $('.invite_outer')
+                    .mouseenter( function() { $('.invite_outer').addClass('over'); } )
+                    .mouseleave( function() { $('.invite_outer').removeClass('over'); } );
+        })
+    </script>
+</head>
 
-{% block page_title %} Management{% endblock %}
-
-{% block body_class %}administration{% endblock %}
-
-{% block page_body %}
-    <div id="admin_page">
-        <div id="admin_inner">
-           {% block admin_page %}{% endblock %}
+<body class="administration">
+<div id="outer">
+    <header class="headerwrap1">
+        <div class="header">
+            <div class="logo1">
+                <a href="/"><img src="/static/images/thecommunity/delve_logo_tiny_w.png" alt=""></a><span class="beta">beta!</span>
+            </div>
+            <div class="header_right">
+                <div class="header_logout">
+                    <ul>
+                        <li class="nobg"><a href="/{{ admin_root }}">Admin Home</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clrflt"></div>
         </div>
-    </div>
-{% endblock %}
+    </header>    {% include 'thecommunity/shared/messages.html' %}
+    {% block page_body %}
+        <div id="admin_page">
+            <div id="admin_inner">
+                {% block admin_page %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+    <footer class="footerwrap">
+        <div class="footer">
+            <div class="footer_nav"></div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
