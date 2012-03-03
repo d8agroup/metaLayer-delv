@@ -27,41 +27,23 @@ def users(request):
     template_data['registrations_overall_past_3'] = len(users_past_3)
     template_data['registrations_overall_past_4'] = len(users_past_4)
 
+    user_profiles = UserProfile.objects.all()
     template_data['by_registration_status'] = []
     for status in [('Held', r'[WAITING|DECLINED]'), ('Let in','APPROVED')]:
         template_data['by_registration_status'].append(
             {
                 'name':status[0],
-                'total':len([u for u in user_objects if match_registration_status(status[1], u)]),
-                'past_1':len([u for u in users_past_1 if match_registration_status(status[1], u)]),
-                'past_2':len([u for u in users_past_2 if match_registration_status(status[1], u)]),
-                'past_3':len([u for u in users_past_3 if match_registration_status(status[1], u)]),
-                'past_4':len([u for u in users_past_4 if match_registration_status(status[1], u)]),
+                'total':len([u for u in user_profiles if re.search(status[1], u.registration_status)])
             }
         )
 
-    """
     template_data['by_registration_type'] = []
-    for registration_type in [('TED Code', r'^TED.*'), ('METALAYER Code', r'^METALAYER.*'), ('Invited', r'^INVITE.*')]:
+    for status in [('TED Code', r'^TED.*'), ('METALAYER Code', r'^METALAYER.*'), ('Invited', r'^INVITE.*')]:
         template_data['by_registration_type'].append(
             {
-                'name':registration_type[0],
-                'total':len([u for u in user_objects if match_registration_code(registration_type[1], u)]),
-                'past_1':len([u for u in users_past_1 if match_registration_code(registration_type[1], u)]),
-                'past_2':len([u for u in users_past_2 if match_registration_code(registration_type[1], u)]),
-                'past_3':len([u for u in users_past_3 if match_registration_code(registration_type[1], u)]),
-                'past_4':len([u for u in users_past_4 if match_registration_code(registration_type[1], u)]),
+                'name':status[0],
+                'total':len([u for u in user_profiles if re.search(status[1], u.registration_code)])
             }
         )
-    user_profiles = UserProfile.objects.all()
-    template_data['by_registration_type'] = []
-    for registration_type in [('TED Code', r'^TED.*'), ('METALAYER Code', r'^METALAYER.*'), ('Invited', r'^INVITE.*')]:
-        template_data['by_registration_type'].append(
-            {
-                'name':registration_type[0],
-                'total':len([u for u in user_profiles if match_registration_code(registration_type[1], u)])
-            }
-        )
-    """
 
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))

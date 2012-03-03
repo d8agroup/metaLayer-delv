@@ -30,20 +30,12 @@
             <table>
                 <tr>
                     <th class="first_column"></th>
-                    <th>Total</th>
-                    <th>Today &rarr; 7 days ago</th>
-                    <th>8 &rarr; 14 days ago</th>
-                    <th>15 &rarr; 21 days ago</th>
-                    <th>22 &rarr; 28 days ago</th>
+                    <th>Total users in each registration status</th>
                 </tr>
                 {% for registration_status in by_registration_status %}
                     <tr>
                         <th>{{ registration_status.name }}</th>
                         <td>{{ registration_status.total }}</td>
-                        <td>{{ registration_status.past_1 }}</td>
-                        <td>{{ registration_status.past_2 }}</td>
-                        <td>{{ registration_status.past_3 }}</td>
-                        <td>{{ registration_status.past_3 }}</td>
                     </tr>
                 {% endfor %}
             </table>
