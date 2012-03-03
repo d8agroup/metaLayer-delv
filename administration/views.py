@@ -3,8 +3,7 @@ import re
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from administration.utils import staff_member_required, _base_template_data, match_registration_status, match_registration_code, safe_extract_user_profile
-from userprofiles.models import UserProfile
+from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile
 
 
 @staff_member_required
