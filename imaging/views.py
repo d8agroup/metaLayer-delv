@@ -36,7 +36,7 @@ def crop(request, dashboard_id, width='200', height='200'):
     if not dashboard or not dashboard.has_visualizations():
         image_data = ImagingController.GenerateNotFoundImage(width, height, None)
         response = HttpResponse(image_data, mimetype='image/png')
-        return None, response
+        return response
 
     file_name = build_file_name('crop', dashboard_id, width, height)
     dashboard_last_saved = dashboard['last_saved']
@@ -89,7 +89,7 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     if not dashboard or not dashboard.has_visualizations():
         image_data = ImagingController.GenerateNotFoundImage(max_width, max_height, None)
         response = HttpResponse(image_data, mimetype='image/png')
-        return None, response
+        return response
 
     if visualization_id:
         file_name = 'shrink_%s_%i_%i.png' % (visualization_id, max_width, max_height)
