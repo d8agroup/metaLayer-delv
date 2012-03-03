@@ -3,7 +3,7 @@ import re
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from administration.utils import staff_member_required, _base_template_data, match_registration_status, match_registration_code
+from administration.utils import staff_member_required, _base_template_data, match_registration_status, match_registration_code, safe_extract_user_profile
 from userprofiles.models import UserProfile
 
 
@@ -27,7 +27,7 @@ def users(request):
     template_data['registrations_overall_past_3'] = len(users_past_3)
     template_data['registrations_overall_past_4'] = len(users_past_4)
 
-    user_profiles = UserProfile.objects.all()
+    user_profiles = [up for up in [safe_extract_user_profile(u) for u in user_objects] if up]
     template_data['by_registration_status'] = []
     for status in [('Held', r'[WAITING|DECLINED]'), ('Let in','APPROVED')]:
         template_data['by_registration_status'].append(
