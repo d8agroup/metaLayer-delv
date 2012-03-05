@@ -27,5 +27,28 @@
                 {% endfor %}
             </table>
         </div>
+        <div class="admin_container">
+            <h3>Data Point Usage</h3>
+            <table>
+                <tr>
+                    <th class="first_column"></th>
+                    <th>Total</th>
+                    <th>Today &rarr; 7 days ago</th>
+                    <th>8 &rarr; 14 days ago</th>
+                    <th>15 &rarr; 21 days ago</th>
+                    <th>22 &rarr; 28 days ago</th>
+                </tr>
+                {% for stat in data_point_usage %}
+                    <tr>
+                        <th>{{ stat.name }}</th>
+                        <td>{{ stat.total }}</td>
+                        <td>{{ stat.past1 }}</td>
+                        <td>{{ stat.past2 }}</td>
+                        <td>{{ stat.past3 }}</td>
+                        <td>{{ stat.past4 }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 {% endblock %}

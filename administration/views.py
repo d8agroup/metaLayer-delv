@@ -3,7 +3,7 @@ import re
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile
+from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile, dashboard_is_using_data_point
 from dashboards.models import Dashboard
 
 
@@ -89,6 +89,40 @@ def insights(request):
         },
     ]
 
+    template_data['data_point_usage'] = [
+        {
+            'name':'Using Twitter',
+            'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'twittersearch')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'twittersearch')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'twittersearch')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_data_point(d, 'twittersearch')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'twittersearch')]),
+        },
+        {
+            'name':'Using Feed',
+            'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'feed')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'feed')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'feed')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_data_point(d, 'feed')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'feed')]),
+        },
+        {
+            'name':'Using Google News',
+            'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'googlenewssearch')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
+        },
+        {
+            'name':'Using Google Plus',
+            'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
+        },
+    ]
 
 
     return render_to_response('administration/insights.html', template_data, context_instance=RequestContext(request))
