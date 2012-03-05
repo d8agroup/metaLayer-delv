@@ -49,13 +49,46 @@ def users(request):
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
 
 def insights(request):
+    def filter_by_past(dbs, start, end):
+        return [d for d in dbs if
+                datetime.datetime.fromtimestamp(d.created) < (datetime.datetime.now() + datetime.timedelta(days=(start * -1))) and
+                datetime.datetime.fromtimestamp(d.created) >= (datetime.datetime.now() + datetime.timedelta(days=(end * -1)))]
+
     template_data = _base_template_data(request)
     dashboards = Dashboard.objects.all()
 
-    template_data['overall_stats'] = {
-        'total_created':len(dashboards),
-        'total_currently_on_site':len([d for d in dashboards if d.deleted == False]),
-        'total_always_on':len([d for d in dashboards if 'live' in d.config and d.config['live'] == True])
-    }
+    dashboards_past_1 = filter_by_past(dashboards, 0, 7)
+    dashboards_past_2 = filter_by_past(dashboards, 7, 14)
+    dashboards_past_3 = filter_by_past(dashboards, 14, 21)
+    dashboards_past_4 = filter_by_past(dashboards, 21, 28)
+
+    template_data['stats'] = [
+        {
+            'name':'Total Created',
+            'total':len(dashboards),
+            'past1':len(dashboards_past_1),
+            'past2':len(dashboards_past_2),
+            'past3':len(dashboards_past_3),
+            'past4':len(dashboards_past_4)
+        },
+        {
+            'name':'Total live on Delv',
+            'total':len([d for d in dashboards if d.deleted == False]),
+            'past1':len([d for d in dashboards_past_1 if d.deleted == False]),
+            'past2':len([d for d in dashboards_past_2 if d.deleted == False]),
+            'past3':len([d for d in dashboards_past_3 if d.deleted == False]),
+            'past4':len([d for d in dashboards_past_4 if d.deleted == False]),
+        },
+        {
+            'name':'Total Always On',
+            'total':len([d for d in dashboards if 'live' in d.config and d.config['live'] == True]),
+            'past1':len([d for d in dashboards_past_1 if 'live' in d.config and d.config['live'] == True]),
+            'past2':len([d for d in dashboards_past_2 if 'live' in d.config and d.config['live'] == True]),
+            'past3':len([d for d in dashboards_past_3 if 'live' in d.config and d.config['live'] == True]),
+            'past4':len([d for d in dashboards_past_4 if 'live' in d.config and d.config['live'] == True]),
+        },
+    ]
+
+
 
     return render_to_response('administration/insights.html', template_data, context_instance=RequestContext(request))

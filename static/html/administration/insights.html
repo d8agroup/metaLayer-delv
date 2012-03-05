@@ -9,16 +9,22 @@
             <table>
                 <tr>
                     <th class="first_column"></th>
-                    <th>Total Created</th>
-                    <th>Total Live on Delv</th>
-                    <th>Total always on</th>
+                    <th>Total</th>
+                    <th>Today &rarr; 7 days ago</th>
+                    <th>8 &rarr; 14 days ago</th>
+                    <th>15 &rarr; 21 days ago</th>
+                    <th>22 &rarr; 28 days ago</th>
                 </tr>
-                <tr>
-                    <th>Insights</th>
-                    <td>{{ overall_stats.total_created }}</td>
-                    <td>{{ overall_stats.total_currently_on_site }}</td>
-                    <td>{{ overall_stats.total_always_on }}</td>
-                </tr>
+                {% for stat in stats %}
+                    <tr>
+                        <th>{{ stat.name }}</th>
+                        <td>{{ stat.total }}</td>
+                        <td>{{ stat.past1 }}</td>
+                        <td>{{ stat.past2 }}</td>
+                        <td>{{ stat.past3 }}</td>
+                        <td>{{ stat.past4 }}</td>
+                    </tr>
+                {% endfor %}
             </table>
         </div>
     </div>
