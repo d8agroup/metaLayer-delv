@@ -22,7 +22,8 @@ def safe_extract_user_profile(user):
 
 def dashboard_is_using_data_point(dashboard, data_point):
     for collection in dashboard.collections:
-        for dp in collection['data_points']:
-            if dp['type'] == data_point:
-                return True
+        if 'data_points' in collection:
+            for dp in collection['data_points']:
+                if dp['type'] == data_point:
+                    return True
     return False
