@@ -14,7 +14,8 @@ def test_dashboards_in_category_bogus_category():
     passed, errors, dashboards, attributes = DashboardsController.GetDashboardsInCategory("bogus category")
     
     assert passed
-    assert dashboards.count() == 0, dashboard.count()
+    #assert dashboards.count() == 0, dashboards.count()
+    assert len(dashboards) == 0, len(dashboards)
 
 def test_dashboards_in_category_invalid_page_parameter():
     
