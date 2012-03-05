@@ -27,3 +27,19 @@ def dashboard_is_using_data_point(dashboard, data_point):
                 if dp['type'] == data_point:
                     return True
     return False
+
+def dashboard_is_using_action(dashboard, action):
+    for collection in dashboard.collections:
+        if 'actions' in collection:
+            for a in collection['actions']:
+                if a['name'] == action:
+                    return True
+    return False
+
+def dashboard_is_using_visualization(dashboard, viz):
+    for collection in dashboard.collections:
+        if 'visualizations' in collection:
+            for v in collection['visualizations']:
+                if v['name'] == viz:
+                    return True
+    return False

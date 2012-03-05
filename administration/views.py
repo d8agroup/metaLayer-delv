@@ -3,7 +3,8 @@ import re
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile, dashboard_is_using_data_point
+from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile
+from administration.utils import dashboard_is_using_action, dashboard_is_using_data_point, dashboard_is_using_visualization
 from dashboards.models import Dashboard
 
 
@@ -91,7 +92,7 @@ def insights(request):
 
     template_data['data_point_usage'] = [
         {
-            'name':'Using Twitter',
+            'name':'Twitter',
             'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'twittersearch')]),
             'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'twittersearch')]),
             'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'twittersearch')]),
@@ -99,7 +100,7 @@ def insights(request):
             'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'twittersearch')]),
         },
         {
-            'name':'Using Feed',
+            'name':'Feed',
             'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'feed')]),
             'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'feed')]),
             'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'feed')]),
@@ -107,7 +108,7 @@ def insights(request):
             'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'feed')]),
         },
         {
-            'name':'Using Google News',
+            'name':'Google News',
             'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'googlenewssearch')]),
             'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
             'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
@@ -115,12 +116,90 @@ def insights(request):
             'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'googlenewssearch')]),
         },
         {
-            'name':'Using Google Plus',
+            'name':'Google Plus',
             'total':len([d for d in dashboards if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
             'past1':len([d for d in dashboards_past_1 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
             'past2':len([d for d in dashboards_past_2 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
             'past3':len([d for d in dashboards_past_3 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
             'past4':len([d for d in dashboards_past_4 if dashboard_is_using_data_point(d, 'googleplusactivitysearch')]),
+        },
+    ]
+    
+    template_data['action_usage'] = [
+        {
+            'name':'Tagging',
+            'total':len([d for d in dashboards if dashboard_is_using_action(d, 'datalayertagging')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_action(d, 'datalayertagging')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_action(d, 'datalayertagging')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_action(d, 'datalayertagging')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_action(d, 'datalayertagging')]),
+        },
+        {
+            'name':'Language',
+            'total':len([d for d in dashboards if dashboard_is_using_action(d, 'languagedetection')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_action(d, 'languagedetection')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_action(d, 'languagedetection')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_action(d, 'languagedetection')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_action(d, 'languagedetection')]),
+        },
+        {
+            'name':'Sentiment',
+            'total':len([d for d in dashboards if dashboard_is_using_action(d, 'localsentimentanalysis')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_action(d, 'localsentimentanalysis')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_action(d, 'localsentimentanalysis')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_action(d, 'localsentimentanalysis')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_action(d, 'localsentimentanalysis')]),
+        },
+        {
+            'name':'Location',
+            'total':len([d for d in dashboards if dashboard_is_using_action(d, 'yahooplacemaker')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_action(d, 'yahooplacemaker')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_action(d, 'yahooplacemaker')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_action(d, 'yahooplacemaker')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_action(d, 'yahooplacemaker')]),
+        },
+    ]
+
+    template_data['visualization_usage'] = [
+        {
+            'name':'Words',
+            'total':len([d for d in dashboards if dashboard_is_using_visualization(d, 'd3cloud')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_visualization(d, 'd3cloud')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_visualization(d, 'd3cloud')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_visualization(d, 'd3cloud')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_visualization(d, 'd3cloud')]),
+        },
+        {
+            'name':'Area Chart',
+            'total':len([d for d in dashboards if dashboard_is_using_visualization(d, 'googleareachart')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_visualization(d, 'googleareachart')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_visualization(d, 'googleareachart')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_visualization(d, 'googleareachart')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_visualization(d, 'googleareachart')]),
+        },
+        {
+            'name':'Bar Chart',
+            'total':len([d for d in dashboards if dashboard_is_using_visualization(d, 'googlebarchart')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_visualization(d, 'googlebarchart')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_visualization(d, 'googlebarchart')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_visualization(d, 'googlebarchart')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_visualization(d, 'googlebarchart')]),
+        },
+        {
+            'name':'Map',
+            'total':len([d for d in dashboards if dashboard_is_using_visualization(d, 'googlegeochart')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_visualization(d, 'googlegeochart')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_visualization(d, 'googlegeochart')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_visualization(d, 'googlegeochart')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_visualization(d, 'googlegeochart')]),
+        },
+        {
+            'name':'Pie',
+            'total':len([d for d in dashboards if dashboard_is_using_visualization(d, 'googlepiechart')]),
+            'past1':len([d for d in dashboards_past_1 if dashboard_is_using_visualization(d, 'googlepiechart')]),
+            'past2':len([d for d in dashboards_past_2 if dashboard_is_using_visualization(d, 'googlepiechart')]),
+            'past3':len([d for d in dashboards_past_3 if dashboard_is_using_visualization(d, 'googlepiechart')]),
+            'past4':len([d for d in dashboards_past_4 if dashboard_is_using_visualization(d, 'googlepiechart')]),
         },
     ]
 
