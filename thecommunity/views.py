@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render_to_response
 from django.template.context import RequestContext
 from django.core.validators import email_re
 import constants
-from dashboards.controllers import DashboardsController
+from metalayercore.dashboards.controllers import DashboardsController
 from invites.controllers import InviteController
 from logger import Logger
 from userprofiles.controllers import UserController

@@ -5,9 +5,8 @@ from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import redirect
 import os
-from dashboards.controllers import DashboardsController
+from metalayercore.dashboards.controllers import DashboardsController
 from imaging.controllers import ImagingController
-from django.views.decorators.http import condition
 from logger import Logger
 
 def last_modified(request, dashboard_id, *args, **kwargs):

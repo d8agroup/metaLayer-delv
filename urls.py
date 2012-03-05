@@ -14,11 +14,11 @@ else:
         url(r'^user/', include('dashboard.thedashboard.urls')),
         url(r'^dashboard/', include('dashboard.thedashboard.urls')),
 
-        url(r'^system/aggregator/', include('dashboard.aggregator.urls')),
+        url(r'^system/aggregator/', include('dashboard.metalayercore.aggregator.urls')),
 
-        url(r'^o/', include('dashboard.outputs.urls')),
+        url(r'^o/', include('dashboard.metalayercore.outputs.urls')),
         url(r'^i/', include('dashboard.imaging.urls')),
-        url(r'^d/', include('dashboard.dashboards.urls')),
+        url(r'^d/', include('dashboard.metalayercore.dashboards.urls')),
 
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
 

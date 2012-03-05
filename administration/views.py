@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile
 from administration.utils import dashboard_is_using_action, dashboard_is_using_data_point, dashboard_is_using_visualization
-from dashboards.models import Dashboard
+from metalayercore.dashboards.models import Dashboard
 
 
 @staff_member_required

@@ -7,16 +7,15 @@ from django.contrib.auth.decorators import login_required
 from django.utils import simplejson as json
 from django.conf import settings
 import time
-from actions.controllers import ActionController
-from aggregator.controllers import AggregationController
-from datapoints.controllers import DataPointController
+from metalayercore.actions.controllers import ActionController
+from metalayercore.aggregator.controllers import AggregationController
+from metalayercore.datapoints.controllers import DataPointController
 from logger import Logger
-from outputs.controllers import OutputController
-from search.controllers import SearchController
-from userprofiles.controllers import UserController
-from dashboards.controllers import DashboardsController
+from metalayercore.outputs.controllers import OutputController
+from metalayercore.search.controllers import SearchController
+from metalayercore.dashboards.controllers import DashboardsController
 from utils import JSONResponse
-from visualizations.controllers import VisualizationController
+from metalayercore.visualizations.controllers import VisualizationController
 
 ################################################################################
 # ASYNC REQUESTS                                                               #

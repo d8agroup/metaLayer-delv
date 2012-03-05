@@ -1,6 +1,6 @@
 from django.conf import settings
 import time
-from dashboards.controllers import DashboardsController
+from metalayercore.dashboards.controllers import DashboardsController
 from logger import Logger
 from django.db import models
 from django.contrib.auth.models import User
