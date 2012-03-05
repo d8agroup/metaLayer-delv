@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile
+from dashboards.models import Dashboard
 
 
 @staff_member_required
@@ -46,3 +47,15 @@ def users(request):
         )
 
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
+
+def insights(request):
+    template_data = _base_template_data(request)
+    dashboards = Dashboard.objects.all()
+
+    template_data['overall_stats'] = {
+        'total_created':len(dashboards),
+        'total_currently_on_site':len([d for d in dashboards if d.deleted == False]),
+        'total_always_on':len([d for d in dashboards if 'live' in d.config and d.config['live'] == True])
+    }
+
+    return render_to_response('administration/insights.html', template_data, context_instance=RequestContext(request))

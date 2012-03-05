@@ -1,0 +1,25 @@
+{% extends 'administration/base.html' %}
+
+{% block admin_page %}
+    <h1>View and Manage Insights</h1>
+    <div class="admin_container">
+        <h2>Insight Statistics</h2>
+        <div class="admin_container">
+            <h3>Overall Stats</h3>
+            <table>
+                <tr>
+                    <th class="first_column"></th>
+                    <th>Total Created</th>
+                    <th>Total Live on Delv</th>
+                    <th>Total always on</th>
+                </tr>
+                <tr>
+                    <th>Insights</th>
+                    <td>{{ overall_stats.total_created }}</td>
+                    <td>{{ overall_stats.total_currently_on_site }}</td>
+                    <td>{{ overall_stats.total_always_on }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
