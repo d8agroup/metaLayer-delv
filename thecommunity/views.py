@@ -87,6 +87,29 @@ def user_account(request):
 @csrf_exempt
 def link_facebook_profile(request):
     """
+    Associates a Facebook profile to a metaLayer user account.
+    
+    """
+    
+    if not request.method == 'POST':
+        return redirect('/delv/%s' % request.user.username)
+    
+    facebook_id = request.POST.get('facebook_id')
+    access_token = request.POST.get('access_token')
+    
+    controller = UserController(request.user)
+    passed, errors = controller.link_facebook_profile(facebook_id, access_token)
+    
+    # return profile pic location to caller so front-end can display profile picture
+    if passed:
+        return JSONResponse({'profile_picture': request.user.profile.profile_image() })
+    else:
+        return JSONResponse({'errors': errors })
+
+@login_required(login_url='/')
+@csrf_exempt
+def link_twitter_profile(request):
+    """
     Associates a Twitter profile to a metaLayer user account.
 
     """
@@ -111,6 +134,11 @@ def community_page(request):
     #categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
     template_data['category_list_1'] = []#categories[:int(len(categories)/2)]
     template_data['category_list_2'] = []#categories[int(len(categories)/2):]
+    #template_data = _base_template_data(request)
+    #
+    ##categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
+    #template_data['category_list_1'] = []#categories[:int(len(categories)/2)]
+    #template_data['category_list_2'] = []#categories[int(len(categories)/2):]
 
     top_insights = DashboardsController.GetTopDashboards(4)
     if top_insights:
@@ -131,7 +159,7 @@ def community_page(request):
     )
 
 def category_page(request, category):
-    template_data = _base_template_data()
+    template_data = _base_template_data(request)
     
     if category not in settings.INSIGHT_CATEGORIES:
         return redirect(community_page)

@@ -424,6 +424,12 @@ INVITES = {
     'per_user_limit':0,
 }
 
+RECAPTCHA_PUBLIC_KEY = '6LcnGc4SAAAAACAXu9mAk_s62WhvnMT4FipbYefP'
+RECAPTCHA_PRIVATE_KEY = '6LcnGc4SAAAAAByfe23UvORk4G3VvpUzyef1ZMj_'
+RECAPTCHA_USE_SSL = False
+
+MAX_INSIGHTS_PER_PAGE = 10
+
 from settings_insight_templates import *
 
 import socket
