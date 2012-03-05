@@ -87,19 +87,18 @@ def user_account(request):
 @csrf_exempt
 def link_facebook_profile(request):
     """
-    Associates a Facebook profile to a metaLayer user account.
-    
+    Associates a Twitter profile to a metaLayer user account.
+
     """
-    
+
     if not request.method == 'POST':
-        return redirect('/delv/%s' % request.user.username)
-    
-    facebook_id = request.POST.get('facebook_id')
-    access_token = request.POST.get('access_token')
-    
+        return redirect('/community/%s' % request.user.username)
+
+    screen_name = request.POST.get('screen_name')
+
     controller = UserController(request.user)
-    passed, errors = controller.link_facebook_profile(facebook_id, access_token)
-    
+    passed, errors = controller.link_twitter_profile(screen_name)
+
     # return profile pic location to caller so front-end can display profile picture
     if passed:
         return JSONResponse({'profile_picture': request.user.profile.profile_image() })
@@ -132,16 +131,26 @@ def community_page(request):
     )
 
 def category_page(request, category):
+    template_data = _base_template_data()
+    
     if category not in settings.INSIGHT_CATEGORIES:
         return redirect(community_page)
-    dashboards = DashboardsController.GetDashboardsInCategory(category)
-    dashboards = serialize_to_json([d for d in dashboards])
+    
+    page = request.GET.get('page')
+    num_per_page = request.GET.get('num_per_page')
+    
+    passed, errors, dashboards, attributes = DashboardsController.GetDashboardsInCategory(category, page, num_per_page)
+    
+    if not passed:
+        pass #TODO Show error message
+    
+    template_data['dashboards'] = dashboards
+    template_data['category'] = category
+    template_data = dict(template_data.items() + attributes.items())
+    
     return render_to_response(
         'thecommunity/category_page/category_page.html',
-        {
-            'category':category,
-            'insights_json':dashboards
-        },
+        template_data,
         context_instance=RequestContext(request)
     )
 

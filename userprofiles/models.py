@@ -32,7 +32,8 @@ class UserProfile(models.Model):
         if 'facebook' in self.linked_accounts and 'facebook_id' in self.linked_accounts['facebook']:
             return 'graph.facebook.com/%s/picture?type=normal' % self.linked_accounts['facebook']['facebook_id']
         
-        #TODO add twitter logic here
+        if 'twitter' in self.linked_accounts and 'screen_name' in self.linked_accounts['twitter']:
+            return 'api.twitter.com/1/users/profile_image/%s?type=large' % self.linked_accounts['twitter']['screen_name']
         
         return None
     
@@ -54,6 +55,13 @@ class UserProfile(models.Model):
         
         """
         return 'facebook' in self.linked_accounts and 'facebook_id' in self.linked_accounts['facebook']
+    
+    def linked_via_twitter(self):
+        """
+        Returns true if the user has linked their metaLayer account with their Twitter profile.
+        
+        """
+        return 'twitter' in self.linked_accounts and 'screen_name' in self.linked_accounts['twitter']
 
 
     def get_registration_type(self):

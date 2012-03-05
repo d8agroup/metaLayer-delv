@@ -1,14 +1,58 @@
 {% extends 'thecommunity/base.html' %}
 
 {% block page_body %}
-    <div class="category_page" id="page">
-        <div class="page_block">
-            <h3>Insights in the {{ category }} category</h3>
-            <div class="page_block_inner">
-                <ul id="insight_list">
-                    <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle.gif" />
+	<section id="main_wrapper" style="margin-bottom:12px;">
+		<section class="main" style="padding-bottom:4px; min-height:250px;">
+			
+			<div class="container corner" style="border-radius: 6px 6px 6px 6px; width:830px; padding:10px; float:none;">
+	            <h2>Insights in the {{ category }} category</h2>
+				
+                <ul class="activity">
+                    {% for insight in dashboards %}
+                        {% if insight.has_visualizations %}
+                            {% include 'thecommunity/profile_page/insight_visualization.html'  %}
+                        {% else %}
+                            {% include 'thecommunity/profile_page/insight_data.html'  %}
+                        {% endif %}
+                    {% endfor %}
                 </ul>
-            </div>
-        </div>
-    </div>
+
+				
+
+				<div style="padding-left:16px;">
+					<div style="float:left">
+						{# Page: {{ page }} of {{ max_page }} #}
+						Pages:
+						{% for num in pages %}
+							{% if num == page %}
+								{{ num }}
+							{% else %}
+								<a href="/community/{{ category }}?page={{ num }}&amp;num_per_page={{ num_per_page }}">{{ num }}</a>
+							{% endif %}
+						{% endfor %}
+					</div>
+
+					<div style="float:right;margin-right:1.5em;color:#999">
+						{% if prev_page %}
+						<a href="/community/{{ category }}?page={{ prev_page }}&amp;num_per_page={{ num_per_page }}">prev page</a>
+						{% else %}
+						prev page
+						{% endif %}
+
+						|
+
+						{% if next_page %}
+						<a href="/community/{{ category }}?page={{ next_page }}&amp;num_per_page={{ num_per_page }}">next page</a>
+						{% else %}
+						next page
+						{% endif %}
+					</div>
+					<div style="clear:both"></div>
+				</div>
+				
+			</div>
+			
+        </section>
+    </section>
+
 {% endblock %}

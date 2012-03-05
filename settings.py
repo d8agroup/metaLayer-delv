@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'raven.contrib.django',
     'djangotoolbox',
     'compressor',
+    'captcha',
 
     'dashboard.metalayercore.actions',
     'dashboard.metalayercore.aggregator',

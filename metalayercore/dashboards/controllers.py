@@ -1,6 +1,9 @@
 import time
 from metalayercore.dashboards.models import Dashboard, DashboardTemplate
 from logger import Logger
+from math import ceil
+from django.conf import settings
+import constants
 
 class DashboardsController(object):
     def __init__(self, user):
@@ -46,8 +49,49 @@ class DashboardsController(object):
         return len([d for d in Dashboard.objects.all() if 'categories' in d.config and c in d.config['categories']])
 
     @classmethod
-    def GetDashboardsInCategory(cls, category):
-        return [d for d in Dashboard.objects.all() if 'categories' in d.config and c in d.config['categories']]
+    def GetDashboardsInCategory(cls, category, page=None, num_per_page=None):
+        
+        errors = []
+        
+        try:
+            page = int(page) if page is not None else 1
+        except ValueError:
+            errors.append(constants.PAGE_NUMBER_INVALID)
+        
+        try:
+            num_per_page = int(num_per_page) if num_per_page is not None else settings.MAX_INSIGHTS_PER_PAGE
+        except ValueError:
+            errors.append(constants.NUM_PER_PAGE_INVALID)
+        
+        if len(errors) > 0:
+            return False, errors, None, None
+        
+        all_dashboards = Dashboard.collection.find({'config.categories':category})
+        
+        attributes = {}
+
+        start = (page - 1) * num_per_page
+        end = (page - 1) * num_per_page + num_per_page
+        max_page = int(ceil(float(all_dashboards.count()) / float(num_per_page)))
+        
+        dashboards = all_dashboards[start:end]
+        
+        # since we can't iterate over or use the len() function on the dashboards collection, we 
+        # use some math here to calculate the length of the collection.
+        if start + num_per_page <= dashboards.count():
+            dashboard_count = num_per_page
+        else:
+            dashboard_count = dashboards.count() - start
+        
+        attributes['count'] = dashboard_count
+        attributes['next_page'] = page + 1 if max_page > page else None
+        attributes['prev_page'] = page - 1 if page > 1 and dashboard_count > 0 else None
+        attributes['num_per_page'] = num_per_page
+        attributes['max_page'] = max_page
+        attributes['page'] = page
+        attributes['pages'] = _pagination(page, max_page)
+        
+        return True, [], dashboards, attributes
 
     @classmethod
     def RecordDashboardView(cls, dashboard_id):
@@ -154,4 +198,24 @@ class DashboardsController(object):
             dashboard.active = False
             dashboard.save()
         Logger.Info('%s - delete_dashboards_to_match_subscription - finished' % __name__)
+
+def _pagination(current_page, max_page):
+    """
+    Generates a list of pages to display for the purposes of pagination.
+    
+    """
+    
+    rounded_page = int(round(current_page, -1))
+    
+    if rounded_page < current_page:
+        start_page = rounded_page + 1
+        end_page = min(rounded_page + 10, max_page)
+    else:
+        start_page = rounded_page - 9
+        end_page = min(rounded_page, max_page)
+    
+    return range(start_page, end_page + 1)
+    
+    
+    
 

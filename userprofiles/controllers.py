@@ -163,18 +163,39 @@ class UserController(object):
         
         # save Facebook metadata to user profile
         profile = self.user.profile
-        profile.linked_accounts = { 'facebook': { 'facebook_id': facebook_id, 'access_token': access_token } }
+        
+        if 'facebook' not in profile.linked_accounts:
+            profile.linked_accounts['facebook'] = {}
+        
+        profile.linked_accounts['facebook'] = { 'facebook_id': facebook_id, 'access_token': access_token }
         profile.save()
         
         Logger.Info('%s - UserController.link_facebook_profile - finished' % __name__)
         return True, []
     
-    def link_twitter_profile(self, twitter_id, access_token):
+    def link_twitter_profile(self, screen_name):
         Logger.Info('%s - UserController.link_twitter_profile - started' % __name__)
-        Logger.Debug('%s - UserController.link_twitter_profile - started with facebook_id:%s and access_token:%s'
-                % (__name__, facebook_id, access_token))
+        Logger.Debug('%s - UserController.link_twitter_profile - started with screen_name:%s'
+                % (__name__, screen_name))
         
+        errors = []
+        if not self.user:
+            errors.append(constants.USER_DOES_NOT_EXIST)
         
+        if empty(screen_name):
+            errors.append(constants.TWITTER_SCREEN_NAME_MISSING)
+        
+        if len(errors) > 0:
+            return False, errors
+        
+        # save Twitter metadata to user profile
+        profile = self.user.profile
+        
+        if 'twitter' not in profile.linked_accounts:
+            profile.linked_accounts['twitter'] = {}
+        
+        profile.linked_accounts['twitter'] = { 'screen_name': screen_name }
+        profile.save()
         
         Logger.Info('%s - UserController.link_twitter_profile - finished' % __name__)
         return True, []

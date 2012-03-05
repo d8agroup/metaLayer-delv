@@ -16,5 +16,8 @@ PASSWORD_TOO_SHORT = 'Your password must be at least 6 characters long'
 FACEBOOK_ID_MISSING = 'Facebook ID is missing from request'
 FACEBOOK_ACCESS_TOKEN_MISSING = 'Facebook access token is missing from request'
 
+# link twitter profile
+TWITTER_SCREEN_NAME_MISSING = 'Twitter screen name is missing from request'
+
 # user options
 OPT_IN_STATUS_MISSING = 'Opt-in status is missing from request'

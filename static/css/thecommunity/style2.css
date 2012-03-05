@@ -72,6 +72,8 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .community_content { margin-bottom:1em; }
 .community_content .subsection { margin-bottom:3em; line-height:21px; clear:both; }
 .community_content h2 { font-size:125%; margin-top:.5em; margin-bottom:.5em; }
+.community_content .left { width:426px; float:left; }
+.community_content .right { width:372px; float:right; }
 .slider { width:105px; float:left; }
 .slider ul {}
 .slider ul li { padding:0 0 5px 0; }
@@ -232,7 +234,7 @@ aside{ width:333px; float:left; }
 #reset_password .form-row input, #reset_password_confirm .form-row input { display:inline-block; width:200px; }
 #reset_password .action-row input, #reset_password_confirm .action-row input { width:200px; margin:20px 0; }
 #reset_password input[type=button], #reset_password input[type=submit] { width: 200px; }
-#reset_password_confirm .errorlist { background: none repeat scroll 0 0 #FCF0F0; border: 1px solid #E2D0D0; border-radius: 0 0 0 0 !important; color: #280B0B; border-radius: 3px 3px 3px 3px; padding: 1em 0.7em; width:375px; margin-top:1em; margin-bottom: 1em;}
+#reset_password_confirm .errorlist, #reset_password .errorlist { background: none repeat scroll 0 0 #FCF0F0; border: 1px solid #E2D0D0; border-radius: 0 0 0 0 !important; color: #280B0B; border-radius: 3px 3px 3px 3px; padding: 1em 0.7em; width:375px; margin-top:1em; margin-bottom: 1em;}
 
 .insight_page #user_and_insight_details { background-color:#FFF; margin:0 25px 0 5px; min-height:150px; padding-bottom:15px;}
 .insight_page .user_details h2 { font-size:200%; padding:20px; float:right;}
