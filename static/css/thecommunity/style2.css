@@ -203,9 +203,14 @@ aside{ width:333px; float:left; }
 .insight .owner_actions .divider { color:#555; position:relative; bottom:1px;}
 .insight .community_data { background-color:#DDD; padding:0 20px; }
 .insight .community_data li { display:inline-block; padding:15px; color:#555;}
-.insight .remixes { background-color:#DDD; height:112px; display:none; }
-.insight .remixes ul { border-top:1px dashed #AAA; margin:0 10px; }
-.insight .remixes ul li { display:inline-block; padding:15px 5px; }
+.insight .remixes, .insight .comments { background-color:#DDD; min-height:112px; display:none; }
+.insight .remixes ul, .insight .comments ul { border-top:1px dashed #AAA; margin:0 10px; }
+.insight .remixes ul li, .insight .comments ul li { display:inline-block; padding:15px 5px; width:100%; }
+.insight .comments_list .entry { padding-top: 1em; padding-bottom: 1em; }
+.insight .comments_list .entry_body { padding-top: .5em; padding-bottom: .5em; }
+.insight .comments_list .entry_writer { font-size: 80%; }
+.insight .write_comment { padding-top: .5em; padding-bottom: .5em; margin-top: .5em; }
+.insight h6.comment_heading { padding-left: 0; padding-top: .5em; padding-bottom: .5em; }
 .profile_page .image_outer {position:relative; bottom:3px}
 
 .profile_pic_container { border:1px solid #D9D9D9; height:81px; min-height:81px; width:81px; }

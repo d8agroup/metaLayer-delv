@@ -1,0 +1,32 @@
+{% if insight %}
+	{% if comments %}
+	<div class="comments_list">
+		{% for comment in comments %}
+			<div class="entry">
+				<div class="entry_body">
+					{{ comment.comment }}
+				</div>
+				<div class="entry_writer">Written by: <strong>{{ comment.user.username }}</strong> - {{comment.created}}</div>
+			</div>
+		{% endfor %}
+	</div>
+		
+	{% else %}
+	
+		<div style="text-align:center">No Comments Posted</div>
+		
+	{% endif %}
+	
+	<div class="write_comment">
+	<h6 class="comment_heading">Write your comment:</h6>
+	
+	<form action="/delv/insights/comments/{{ insight.id }}" method="post">
+		{% csrf_token %}
+		<input type="text" name="comment" />
+		<button name="submit">Post Comment</button>
+	</form>
+	</div>
+	
+{% else %}
+	Invalid insight ID
+{% endif %}

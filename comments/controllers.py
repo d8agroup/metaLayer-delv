@@ -1,5 +1,5 @@
 from logger import Logger
-from models import CommentFlag
+from models import CommentFlag, Comment
 
 class CommentsController(object):
     
@@ -23,4 +23,23 @@ class CommentsController(object):
         Logger.Info('%s - flag_inappropriate - finished' % __name__)
         return True, []
     
+    @classmethod
+    def CreateComment(cls, user, insight, comment):
+        
+        # check that comment is not empty
+        if not comment or len(comment.strip()) == 0:
+            return False, ['Comment is empty']
+        
+        #TODO invoke profanity filter here
+        
+        comment = Comment(user=user, comment=comment, insight=insight)
+        comment.save()
+        
+        return True, []
     
+    @classmethod
+    def GetComments(cls, insight):
+        try:
+            return Comment.objects.filter(insight=insight)
+        except Comment.DoesNotExist:
+            return []

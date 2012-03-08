@@ -13,10 +13,10 @@ IMAGE_HOST = '50.57.227.192'
 
 STATIC_HOST = SITE_HOST
 
-STATIC_ROOT = '%sstatic/' % YOUR_CODE_ROOT
+#STATIC_ROOT = '%sstatic/' % YOUR_CODE_ROOT
 
 STATICFILES_DIRS = (
-    YOUR_CODE_ROOT + 'static/',
+    '/projects/metalayer/dashboard/static/',
 )
 
 DYNAMIC_IMAGES_ROOT = '%simaging/CACHE/' % YOUR_CODE_ROOT

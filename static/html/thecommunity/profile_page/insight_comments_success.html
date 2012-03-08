@@ -1,0 +1,24 @@
+{% extends 'thecommunity/base.html' %}
+
+{% block page_title %} comment posted{% endblock %}
+
+{% block page_body %}
+
+{% block meta %}
+<meta http-equiv="refresh" content="5; url=/delv/{{ user.username }}" />
+{% endblock %}
+
+<div class="community_content">
+	
+<div class="subsection" id="reset_password">
+
+<h2>Comment Posted</h2>
+
+<p>Your comment has been posted!  You will now be redirected back to your activity page, or you can <a href="/delv/{{ user.username }}">click here</a> to go there immediately.</p>
+
+</div>
+
+</div>
+
+{% endblock %}
+

@@ -8,6 +8,7 @@ from django.template.context import RequestContext
 from django.core.validators import email_re
 import constants
 from metalayercore.dashboards.controllers import DashboardsController
+from comments.controllers import CommentsController
 from invites.controllers import InviteController
 from logger import Logger
 from userprofiles.controllers import UserController
@@ -463,6 +464,35 @@ def load_remixes(request, insight_id, count):
     template_data = _base_template_data(request)
     template_data['insights']  = DashboardsController.GetRemixes(insight_id, int(count))
     return render_to_response( 'thecommunity/profile_page/insight_remixes.html', template_data )
+
+def insight_comments(request, insight_id):
+    
+    insight = DashboardsController.GetDashboardById(insight_id, increment_load_count=False)
+    
+    if not insight:
+        return render_to_response('thecommunity/profile_page/insight_comments_failure.html',
+            template_data,
+            context_instance=RequestContext(request))
+    
+    template_data = _base_template_data(request)
+    
+    if request.method == 'GET':
+    
+        template_data['insight'] = insight
+        template_data['comments'] = CommentsController.GetComments(insight)
+        
+        return render_to_response('thecommunity/profile_page/insight_comments.html',
+            template_data,
+            context_instance=RequestContext(request))
+    
+    else:
+        comment = request.POST.get('comment')
+        
+        CommentsController.CreateComment(request.user, insight, comment)
+        
+        return render_to_response('thecommunity/profile_page/insight_comments_success.html',
+            template_data,
+            context_instance=RequestContext(request))
 
 def no_access(request):
     template_data = _base_template_data(request)

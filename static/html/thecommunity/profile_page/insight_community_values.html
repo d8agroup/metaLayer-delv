@@ -15,10 +15,20 @@
         {% else %}
             <li>{{ insight.community.remixes|floatformat }} Remixes</li>
         {% endif %}
+		<li>
+			<a class="comments_link tool_tip" title="View and write comments of this insight" data-insight_id="{{ insight.id }}">
+				Comments
+			</a>
+		</li>
     </ul>
 </div>
 <div class="remixes" id="remixes_{{ insight.id }}">
     <ul>
         <li class="waiting">Loading<img src="/static/images/thecommunity/loading_circle_333333.gif" /></li>
+    </ul>
+</div>
+<div class="comments" id="comments_{{ insight.id }}">
+    <ul>
+        <li>Loading Comments<img src="/static/images/thecommunity/loading_circle_333333.gif" /></li>
     </ul>
 </div>
