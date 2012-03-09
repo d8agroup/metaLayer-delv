@@ -7,3 +7,6 @@
 [submodule "metalayercore"]
 	path = metalayercore
 	url = git@github.com:metaLayer/metaLayer-metalayercore.git
+[submodule "thedashboard"]
+	path = thedashboard
+	url = git@github.com:metaLayer/metaLayer-dashboard.git
