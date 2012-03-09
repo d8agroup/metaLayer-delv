@@ -14,9 +14,7 @@ IMAGE_HOST = SITE_HOST
 
 STATIC_HOST = SITE_HOST
 
-STATICFILES_DIRS = (
-    '/home/matt/code/metaLayer/dashboard/static/',
-)
+STATICFILES_DIRS = ( '/home/matt/code/metaLayer/dashboard/static/', )
 
 DYNAMIC_IMAGES_ROOT = '/home/matt/code/metaLayer/dashboard/imaging/CACHE/'
 
@@ -43,9 +41,7 @@ DATABASES = {
     }
 }
 
-TEMPLATE_DIRS = (
-    '/home/matt/code/metaLayer/dashboard/static/html/'
-)
+TEMPLATE_DIRS = ( '/home/matt/code/metaLayer/dashboard/static/html/', )
 
 SOLR_CONFIG = {
     'default_page_size':100,
