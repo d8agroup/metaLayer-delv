@@ -6,3 +6,7 @@ static/CACHE/css
 static/CACHE/js
 static/CACHE/images
 imaging/CACHE/*.png
+static/css/thedashboard
+static/images/thedashboard
+static/html/thedashboard
+static/js/thedashboard
