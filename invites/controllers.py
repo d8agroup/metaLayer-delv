@@ -4,6 +4,7 @@ from django.conf import settings
 from emails.controllers import EmailController
 from invites.models import Invite
 from logger import Logger
+from userprofiles.controllers import UserController
 
 class InviteController(object):
     @classmethod
@@ -22,6 +23,14 @@ class InviteController(object):
     def SendInviteFromUser(cls, user, to_user_email):
         if not cls.InsightsRemainingForUser(user):
             return False
+
+        existing_user = UserController.GetUserByUserName(to_user_email)
+        if existing_user:
+            if existing_user.profile.registration_status in ['WAITING', 'DECLINED']:
+                existing_user.delete()
+            else:
+                return True
+
         invite = Invite(user=user, code='', to_email=to_user_email )
         code = "".join( [random.choice(string.letters[:26]) for i in xrange(5)] ).upper()
         while Invite.objects.filter(code=code).count():
