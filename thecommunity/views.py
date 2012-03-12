@@ -328,7 +328,11 @@ def logout(request):
     return redirect(community_page)
 
 def create_from_template(request):
-    template_name = request.POST['template_name']
+    template_name = request.POST.get('template_name')
+    if not template_name:
+        Logger.Warn('%s - create_from_template - No template_name supplied in POST')
+        messages.error(request, 'Sorry, we could not create that insight for you. Please try again later.')
+        return redirect(community_page)
     template = [t for t in settings.DASHBOARD_TEMPLATES if t['name'] == template_name][0]
     template = template['template']
     template['username'] = request.user.username
