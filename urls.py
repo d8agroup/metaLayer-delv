@@ -25,5 +25,5 @@ else:
         url(r'^xd_receiver\.html$', xd_receiver),
 
         url(r'^community/', redirect_to, {'url':'/delv/'} ),
-        url(r'^$', redirect_to, {'url':'/delv/'} ),
+        url(r'^$', redirect_to, {'url':'/delv/'}, False ),
     )

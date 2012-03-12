@@ -88,16 +88,16 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="discover_area">
-                <h3>Discover Insights By Category</h3>
-                <div class="discover_box fltleft">
-                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_1 %}
-                </div>
-                <div class="discover_box2 fltright">
-                    {% include 'thecommunity/community_page/category_list.html' with category_list=category_list_2 %}
-                </div>
-                <div class="clrflt"></div>
-            </div>
+            <!--<div class="discover_area">-->
+                <!--<h3>Discover Insights By Category</h3>-->
+                <!--<div class="discover_box fltleft">-->
+                    <!--{% include 'thecommunity/community_page/category_list.html' with category_list=category_list_1 %}-->
+                <!--</div>-->
+                <!--<div class="discover_box2 fltright">-->
+                    <!--{% include 'thecommunity/community_page/category_list.html' with category_list=category_list_2 %}-->
+                <!--</div>-->
+                <!--<div class="clrflt"></div>-->
+            <!--</div>-->
         </div>
         {% if user.is_authenticated %}
             {% include 'thecommunity/community_page/sidebar_logged_in.html' %}
