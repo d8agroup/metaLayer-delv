@@ -55,5 +55,13 @@
                 {% endfor %}
             </table>
         </div>
+        <div class="admin_container">
+            <h3>All Users</h3>
+            <ul class="users clearfix">
+                {% for user in all_users %}
+                    <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}

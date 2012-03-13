@@ -47,6 +47,9 @@ def users(request):
             }
         )
 
+    sorted([u for u in user_objects], key=lambda a: a.username)
+    template_data['all_users'] = user_objects
+
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
 
 def insights(request):
