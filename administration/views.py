@@ -58,6 +58,7 @@ def users(request):
         user_email_domains[user_email_domain] += 1
 
     user_email_domains = [{'name':k,'total':v} for k, v in user_email_domains.items()]
+    sorted(user_email_domains, key=lambda e: e['total'], reverse=True)
     template_data['user_email_domains'] = user_email_domains
 
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
