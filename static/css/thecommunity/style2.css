@@ -320,7 +320,7 @@ aside{ width:333px; float:left; }
 #admin_page { min-height:500px; }
 #admin_page #admin_inner { width:800px; margin:20px auto;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
 #admin_page h1 { text-align:center; font-size:200%; }
-#admin_page h2 { text-align:center; font-size:170%; }
+#admin_page h2 { text-align:center; font-size:170%; margin-top:20px; }
 #admin_page h3 { font-size:150%; padding:10px 0;}
 #admin_page p { padding:10px 0; }
 #admin_page table { width:95%; margin:0 auto; }

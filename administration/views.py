@@ -50,6 +50,16 @@ def users(request):
     sorted([u for u in user_objects], key=lambda a: a.username)
     template_data['all_users'] = user_objects
 
+    user_email_domains = {}
+    for user in user_objects:
+        user_email_domain = user.username.split('@')[1]
+        if not user_email_domain in user_email_domains:
+            user_email_domains[user_email_domain] = 0
+        user_email_domains[user_email_domain] += 1
+
+    user_email_domains = [{'name':k,'total':v} for k, v in user_email_domains.items()]
+    template_data['user_email_domains'] = user_email_domains
+
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
 
 def insights(request):

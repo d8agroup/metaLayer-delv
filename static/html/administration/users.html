@@ -55,6 +55,22 @@
                 {% endfor %}
             </table>
         </div>
+        <h2>Users Emails</h2>
+        <div class="admin_container">
+            <h3>Users by email domain</h3>
+            <table>
+                <tr>
+                    <th class="first_column"></th>
+                    <th>Total users with this email domain</th>
+                </tr>
+                {% for domain in user_email_domains %}
+                    <tr>
+                        <th>{{ domain.name }}</th>
+                        <td>{{ domain.total }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
         <div class="admin_container">
             <h3>All Users</h3>
             <ul class="users clearfix">
