@@ -54,11 +54,15 @@ def users(request):
     for user in user_objects:
         user_email_domain = user.username.split('@')[1]
         if not user_email_domain in user_email_domains:
-            user_email_domains[user_email_domain] = 0
-        user_email_domains[user_email_domain] += 1
+            user_email_domains[user_email_domain] = { 'held':0, 'let_in':0 }
+        for user_profile in user_profiles:
+            if user_profile.user == user:
+                if user_profile.registration_status == 'APPROVED':
+                    user_email_domains[user_email_domain]['let_in'] += 1
+                else:
+                    user_email_domains[user_email_domain]['held'] += 1
 
-    user_email_domains = [{'name':k,'total':v} for k, v in user_email_domains.items()]
-    sorted(user_email_domains, key=lambda e: e['total'], reverse=True)
+    user_email_domains = [{'name':k,'held':v['held'],'let_in':v['let_in']} for k, v in user_email_domains.items()]
     template_data['user_email_domains'] = user_email_domains
 
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))

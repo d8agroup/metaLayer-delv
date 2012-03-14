@@ -61,12 +61,14 @@
             <table>
                 <tr>
                     <th class="first_column"></th>
-                    <th>Total users with this email domain</th>
+                    <th>Let In Users</th>
+                    <th>Held Users</th>
                 </tr>
                 {% for domain in user_email_domains %}
                     <tr>
                         <th>{{ domain.name }}</th>
-                        <td>{{ domain.total }}</td>
+                        <td>{{ domain.let_in }}</td>
+                        <td>{{ domain.held }}</td>
                     </tr>
                 {% endfor %}
             </table>
