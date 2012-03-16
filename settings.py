@@ -31,6 +31,7 @@ LOW_LEVEL_CACHE_LIMITS = {
     'dashboards_models_dashboard_top':300,
     'dashboards_models_dashboard_trending':300,
     'dashboards_models_dashboard_recent':300,
+    'imaging_views_cached_dashboard':600,
 }
 
 # Local time zone for this installation. Choices can be found here:

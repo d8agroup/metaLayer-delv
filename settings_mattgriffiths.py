@@ -24,6 +24,48 @@ SENTRY_DSN = 'http://cb7488e51e224f0ab7a04d53f8dede4b:b1a294ea3aab42148f4cab2b21
 
 INTERNAL_IPS = ('127.0.0.1',)
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console'],
+        },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'sentry': {
+            'level': 'WARNING',
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'WARNING',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        },
+    }
+
 CACHES = {
     'default':{
         'BACKEND':'django.core.cache.backends.dummy.DummyCache',
