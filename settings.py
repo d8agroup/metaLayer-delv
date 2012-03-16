@@ -286,7 +286,6 @@ ACTIONS_CONFIG = {
     'enabled_actions':[
         'localsentimentanalysis',
         'yahooplacemaker',
-        'languagedetection',
         'datalayertagging'
     ]
 }
