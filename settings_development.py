@@ -83,3 +83,12 @@ INVITES = {
     'active':True,
     'per_user_limit':1,
 }
+
+ACTIONS_CONFIG = {
+    'enabled_actions':[
+        'localsentimentanalysis',
+        'yahooplacemaker',
+        'datalayertagging',
+        'kloutsharedapikey',
+    ]
+}

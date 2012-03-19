@@ -287,7 +287,8 @@ ACTIONS_CONFIG = {
     'enabled_actions':[
         'localsentimentanalysis',
         'yahooplacemaker',
-        'datalayertagging'
+        'datalayertagging',
+        #'kloutsharedapikey',
     ]
 }
 
