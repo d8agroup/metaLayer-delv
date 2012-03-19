@@ -25,13 +25,27 @@ def build_file_name(type, id, width, height):
     return '%s_%s_%i_%i.png' % (type, id, width, height)
 
 #@condition(last_modified_func=last_modified)
+def _get_cached_dashboard(dashboard_id):
+    raw_cache_key = 'imaging_views_cached_dashboard'
+    cache_key = raw_cache_key + '_%s' % dashboard_id
+    cached_value = cache.get(cache_key, -1)
+    if cached_value == -1:
+        dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+        if dashboard:
+            cached_value = dashboard
+            cache.add(cache_key, cached_value, settings.LOW_LEVEL_CACHE_LIMITS[raw_cache_key])
+        else:
+            cached_value = None
+    return cached_value
+
+
 def crop(request, dashboard_id, width='200', height='200'):
     import cairo
     import rsvg
     width = int(width)
     height = int(height)
 
-    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+    dashboard = _get_cached_dashboard(dashboard_id)
     if not dashboard or not dashboard.has_visualizations():
         image_data = ImagingController.GenerateNotFoundImage(width, height, None)
         response = HttpResponse(image_data, mimetype='image/png')
@@ -84,7 +98,7 @@ def shrink(request, dashboard_id, max_width, max_height, visualization_id=None):
     max_width = int(max_width)
     max_height = int(max_height)
 
-    dashboard = DashboardsController.GetDashboardById(dashboard_id, False)
+    dashboard = _get_cached_dashboard(dashboard_id)
     if not dashboard or not dashboard.has_visualizations():
         image_data = ImagingController.GenerateNotFoundImage(max_width, max_height, None)
         response = HttpResponse(image_data, mimetype='image/png')

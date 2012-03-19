@@ -31,6 +31,7 @@ LOW_LEVEL_CACHE_LIMITS = {
     'dashboards_models_dashboard_top':300,
     'dashboards_models_dashboard_trending':300,
     'dashboards_models_dashboard_recent':300,
+    'imaging_views_cached_dashboard':600,
 }
 
 # Local time zone for this installation. Choices can be found here:
@@ -285,7 +286,6 @@ ACTIONS_CONFIG = {
     'enabled_actions':[
         'localsentimentanalysis',
         'yahooplacemaker',
-        'languagedetection',
         'datalayertagging'
     ]
 }
@@ -443,6 +443,7 @@ elif socket.gethostname() == 'Todd-McNeals-MacBook-Pro.local':
     from settings_tmcneal import *
 else:
     from settings_production import *
+
 
 if DEBUG:
     #INSTALLED_APPS += ('debug_toolbar',)

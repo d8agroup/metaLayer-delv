@@ -84,7 +84,10 @@ class UserController(object):
 
     @classmethod
     def GetUserByUserName(cls, user_name):
-        return User.objects.get(username=user_name)
+        try:
+            return User.objects.get(username=user_name)
+        except User.DoesNotExist:
+            return None
         
     def change_password(self, password, new_password1, new_password2):
         Logger.Info('%s - UserController.change_password - started' % __name__)

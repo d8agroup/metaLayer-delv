@@ -88,7 +88,7 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .content { width:840px; padding:10px 0 20px 15px; margin:0px auto; }
 .content_left { width:426px; float:left; padding:6px 0 0 0; }
 .content_left h2 { font-size:20px; color:#333; line-height:24px; font-weight:bold; font-style:italic; text-align:center; padding:0 0 8px 0; margin:0px; }
-.signup_button { width:308px; height:77px; margin:0px auto; }
+.signup_button { width:308px; height:77px; margin:0px auto 20px; }
 .content_left p { font-size:12px; color:#333; font-weight:bold; line-height:28px; text-align:center; display:block; padding:0 0 22px 0; margin:0px; }
 .content_left p a { text-decoration:underline; color:#2e6098; }
 .trading_box { width:391px; height:129px; background:#FFF; margin-bottom:14px; padding:12px 0 0 18px; position:relative; border:#d6dcd6 3px solid; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; behavior:url(PIE.htc); box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; }
@@ -325,7 +325,7 @@ aside{ width:333px; float:left; }
 #admin_page { min-height:500px; }
 #admin_page #admin_inner { width:800px; margin:20px auto;  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background:#FFF; box-shadow:0px 0px 8px #c7c7c7; -moz-box-shadow:0px 0px 8px #c7c7c7; -webkit-box-shadow:0px 0px 8px #c7c7c7; padding:20px;}
 #admin_page h1 { text-align:center; font-size:200%; }
-#admin_page h2 { text-align:center; font-size:170%; }
+#admin_page h2 { text-align:center; font-size:170%; margin-top:20px; }
 #admin_page h3 { font-size:150%; padding:10px 0;}
 #admin_page p { padding:10px 0; }
 #admin_page table { width:95%; margin:0 auto; }
@@ -336,6 +336,8 @@ aside{ width:333px; float:left; }
 
 #admin_page .list_option { width:700px; margin:0 auto; }
 #admin_page .list_option p { display:inline-block; width:60%; font-size:120%; font-weight:bold; }
+
+#admin_page .users li { display:inline-block; width:30%; padding:5px;}
 
 
 .jspVerticalBar { margin:20px;}
