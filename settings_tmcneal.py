@@ -77,6 +77,10 @@ TWITTER_SETTINGS = {
     'api_key': 'lFEg1EXUmGlOqSto656Etw'
 }
 
+FEATURE_ENABLEMENT = {
+    'insight_comments':'enabled',
+}
+
 
 
 

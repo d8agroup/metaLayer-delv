@@ -32,6 +32,7 @@ LOW_LEVEL_CACHE_LIMITS = {
     'dashboards_models_dashboard_trending':300,
     'dashboards_models_dashboard_recent':300,
     'imaging_views_cached_dashboard':600,
+    'community_page_category_list':3600,
 }
 
 # Local time zone for this installation. Choices can be found here:
@@ -422,6 +423,11 @@ SOCIAL_SHARING_SERVICES = [
 INVITES = {
     'active':True,
     'per_user_limit':0,
+}
+
+FEATURE_ENABLEMENT = {
+    'insight_comments':'disabled',
+    'browse_by_category':'disabled',
 }
 
 RECAPTCHA_PUBLIC_KEY = '6LcnGc4SAAAAACAXu9mAk_s62WhvnMT4FipbYefP'

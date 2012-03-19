@@ -15,11 +15,13 @@
         {% else %}
             <li>{{ insight.community.remixes|floatformat }} Remixes</li>
         {% endif %}
-		<li>
-			<a class="comments_link tool_tip" title="View and write comments of this insight" data-insight_id="{{ insight.id }}">
-				Comments
-			</a>
-		</li>
+        {% if feature_enablement.insight_comments  == 'enabled' %}
+            <li>
+                <a class="comments_link tool_tip" title="View and write comments of this insight" data-insight_id="{{ insight.id }}">
+                    Comments
+                </a>
+            </li>
+        {% endif %}
     </ul>
 </div>
 <div class="remixes" id="remixes_{{ insight.id }}">

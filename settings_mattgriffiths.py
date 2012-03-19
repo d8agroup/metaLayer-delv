@@ -124,5 +124,3 @@ INVITES = {
     'active':True,
     'per_user_limit':1,
 }
-
-

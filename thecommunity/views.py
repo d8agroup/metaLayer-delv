@@ -1,6 +1,7 @@
 from random import randint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.shortcuts import redirect, render_to_response
@@ -22,6 +23,7 @@ def _base_template_data(request):
         'facebook_app_id': settings.FACEBOOK_SETTINGS['api_key'],
         'social_sharing_services': settings.SOCIAL_SHARING_SERVICES,
         'cache_timeout': settings.CACHE_TIMEOUT,
+        'feature_enablement':settings.FEATURE_ENABLEMENT,
     }
     if request.user:
         template_data['invites_left'] = InviteController.InsightsRemainingForUser(request.user)
@@ -132,14 +134,14 @@ def link_twitter_profile(request):
 def community_page(request):
     template_data = _base_template_data(request)
 
-    #categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
-    template_data['category_list_1'] = []#categories[:int(len(categories)/2)]
-    template_data['category_list_2'] = []#categories[int(len(categories)/2):]
-    #template_data = _base_template_data(request)
-    #
-    ##categories = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
-    #template_data['category_list_1'] = []#categories[:int(len(categories)/2)]
-    #template_data['category_list_2'] = []#categories[int(len(categories)/2):]
+    cache_key = 'community_page_category_list'
+    cached_value = cache.get(cache_key, -1)
+    if cached_value == -1:
+        cached_value = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
+        cache.add(cache_key, cached_value, settings.LOW_LEVEL_CACHE_LIMITS['community_page_category_list'])
+    categories = cached_value
+    template_data['category_list_1'] = categories[:int(len(categories)/2)]
+    template_data['category_list_2'] = categories[int(len(categories)/2):]
 
     top_insights = DashboardsController.GetTopDashboards(4)
     if top_insights:
