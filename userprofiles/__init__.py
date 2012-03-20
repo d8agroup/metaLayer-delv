@@ -1,3 +1,4 @@
+import constants
 
 def _check_password_rules(new_password):
     """
@@ -6,6 +7,6 @@ def _check_password_rules(new_password):
     """
     
     if len(new_password) < 6:
-        return False, [constants.PASSWORD_TOO_SHORT]
+        return False, [constants.USER_MESSAGES['password_too_short']]
     
     return True, []
