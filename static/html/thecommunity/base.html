@@ -39,7 +39,13 @@
             $('.invite_outer')
                 .mouseenter( function() { $('.invite_outer').addClass('over'); } )
                 .mouseleave( function() { $('.invite_outer').removeClass('over'); } );
+			
+	        $('#account_heading').hover(
+				function() { $("#account_heading .subheader_list").show(); }, 
+				function() { $("#account_heading .subheader_list").hide(); }
+			);
         })
+		
     </script>
 </head>
 

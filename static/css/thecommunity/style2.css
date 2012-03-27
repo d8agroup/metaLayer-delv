@@ -132,6 +132,9 @@ body { background:url(/static/images/thecommunity/body_bg.jpg) repeat left top; 
 .header_logout ul li { font-size:12px; color:#FFF; line-height:28px; font-weight:bold; float:left; padding:0px 10px 0 5px; background:url(/static/images/thecommunity/header-login_sep.png) no-repeat right center; }
 .header_logout  ul li a { text-decoration:none; color:#FFF; }
 .header_logout ul li.nobg { background:none; padding:0 0 0 5px; }
+ul.header_list { position: relative; }
+ul.subheader_list { position: absolute; top: 32px; background-color: #333; min-width: 150px; z-index:900; padding: .5em .5em .75em .5em; -moz-border-radius:0 0 6px 6px; -webkit-border-radius:0 0 6px 6px; border-radius:0 0 6px 6px; display:none; }
+ul.subheader_list li { float: none; background: none repeat scroll 0 0 transparent; }
 section{ width:872px; padding:7px 0 0 10px; margin:0px auto; min-height: 500px;}
 aside{ width:333px; float:left; }
 .left{ width:310px; }
@@ -346,3 +349,4 @@ aside{ width:333px; float:left; }
 .jspCap { height:30px;}
 
 a#fdbk_tab { top:205px !important;}
+
