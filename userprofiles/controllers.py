@@ -95,35 +95,35 @@ class UserController(object):
                 % (__name__, password, new_password1, new_password2))
         errors = []
         if not self.user:
-            errors.append(constants.USER_DOES_NOT_EXIST)
-        
+            errors.append(constants.USER_MESSAGES['user_does_not_exist'])
+
         if empty(password):
-            errors.append(constants.PASSWORD_BLANK)
-        
+            errors.append(constants.USER_MESSAGES['password_blank'])
+
         if empty(new_password1):
-            errors.append(constants.NEW_PASSWORD_BLANK)
-        
+            errors.append(constants.USER_MESSAGES['new_password_blank'])
+
         if empty(new_password2):
-            errors.append(constants.CONFIRM_PASSWORD_BLANK)
-        
+            errors.append(constants.USER_MESSAGES['confirm_password_blank'])
+
         if new_password1 != new_password2:
-            errors.append(constants.NEW_PASSWORD_MISMATCH)
-        
+            errors.append(constants.USER_MESSAGES['new_password_mismatch'])
+
         if len(errors) > 0:
             return False, errors
-        
+
         if not self.user.check_password(password):
-            return False, [constants.PASSWORD_INCORRECT]
-        
+            return False, [constants.USER_MESSAGES['password_incorrect']]
+
         # Verify password rules
         passed, rules_errors = _check_password_rules(new_password1)
         if not passed:
             return False, rules_errors
-        
+
         # Request is valid. Let's change the password.
         self.user.set_password(new_password1)
         self.user.save()
-        
+
         Logger.Info('%s - UserController.change_password - finished' % __name__)
         return True, []
     
@@ -131,18 +131,18 @@ class UserController(object):
         Logger.Info('%s - UserController.change_email_opt_in - started' % __name__)
         Logger.Debug('%s - UserController.change_email_opt_in - started with opt_in_status: %s'
                 % (__name__, opt_in_status))
-        
+
         if empty(opt_in_status):
-            return False, [constants.OPT_IN_STATUS_MISSING]
-        
+            return False, [constants.USER_MESSAGES['opt_in_status_missing']]
+
         profile = self.user.profile
-        
+
         if 'email' not in profile.contact_options:
             profile.contact_options['email'] = {}
         profile.contact_options['email']['opt_in_status'] = True if opt_in_status == 'Y' else False
-        
+
         profile.save()
-        
+
         Logger.Info('%s - UserController.change_email_opt_in - finished' % __name__)
         return True, []
     
@@ -150,29 +150,29 @@ class UserController(object):
         Logger.Info('%s - UserController.link_facebook_profile - started' % __name__)
         Logger.Debug('%s - UserController.link_facebook_profile - started with facebook_id:%s and access_token:%s'
                 % (__name__, facebook_id, access_token))
-        
+
         errors = []
         if not self.user:
-            errors.append(constants.USER_DOES_NOT_EXIST)
-        
+            errors.append(constants.USER_MESSAGES['user_does_not_exist'])
+
         if empty(facebook_id):
-            errors.append(constants.FACEBOOK_ID_MISSING)
-        
+            errors.append(constants.USER_MESSAGES['facebook_id_missing'])
+
         if empty(access_token):
-            errors.append(constants.FACEBOOK_ACCESS_TOKEN_MISSING)
-        
+            errors.append(constants.USER_MESSAGES['facebook_access_token_missing'])
+
         if len(errors) > 0:
             return False, errors
-        
+
         # save Facebook metadata to user profile
         profile = self.user.profile
-        
+
         if 'facebook' not in profile.linked_accounts:
             profile.linked_accounts['facebook'] = {}
-        
+
         profile.linked_accounts['facebook'] = { 'facebook_id': facebook_id, 'access_token': access_token }
         profile.save()
-        
+
         Logger.Info('%s - UserController.link_facebook_profile - finished' % __name__)
         return True, []
     
@@ -180,26 +180,26 @@ class UserController(object):
         Logger.Info('%s - UserController.link_twitter_profile - started' % __name__)
         Logger.Debug('%s - UserController.link_twitter_profile - started with screen_name:%s'
                 % (__name__, screen_name))
-        
+
         errors = []
         if not self.user:
-            errors.append(constants.USER_DOES_NOT_EXIST)
-        
+            errors.append(constants.USER_MESSAGES['user_does_not_exist'])
+
         if empty(screen_name):
-            errors.append(constants.TWITTER_SCREEN_NAME_MISSING)
-        
+            errors.append(constants.USER_MESSAGES['twitter_screen_name_missing'])
+
         if len(errors) > 0:
             return False, errors
-        
+
         # save Twitter metadata to user profile
         profile = self.user.profile
-        
+
         if 'twitter' not in profile.linked_accounts:
             profile.linked_accounts['twitter'] = {}
-        
+
         profile.linked_accounts['twitter'] = { 'screen_name': screen_name }
         profile.save()
-        
+
         Logger.Info('%s - UserController.link_twitter_profile - finished' % __name__)
         return True, []
 

@@ -496,9 +496,9 @@ def insight_comments(request, insight_id):
         
         CommentsController.CreateComment(request.user, insight, comment)
         
-        return render_to_response('thecommunity/profile_page/insight_comments_success.html',
-            template_data,
-            context_instance=RequestContext(request))
+        messages.info(request, constants.USER_MESSAGES['comment_created'])
+        
+        return redirect('/delv/%s' % request.user.username)
 
 def no_access(request):
     template_data = _base_template_data(request)

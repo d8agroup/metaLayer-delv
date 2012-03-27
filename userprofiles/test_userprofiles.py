@@ -29,21 +29,21 @@ def test_password_incorrect():
     passed, errors = controller.change_password('wrong_password', 'new_password', 'new_password')
     
     assert not passed
-    assert constants.PASSWORD_INCORRECT in errors, errors
+    assert constants.USER_MESSAGES['password_incorrect'] in errors, errors
 
 def test_password_mismatch():
     
     passed, errors = controller.change_password('password', 'new_password', 'new_password1')
     
     assert not passed
-    assert constants.NEW_PASSWORD_MISMATCH in errors, errors
+    assert constants.USER_MESSAGES['new_password_mismatch'] in errors, errors
 
 def test_new_password_too_short():
     
     passed, errors = controller.change_password('password', 'short', 'short')
     
     assert not passed
-    assert constants.PASSWORD_TOO_SHORT in errors, errors
+    assert constants.USER_MESSAGES['password_too_short'] in errors, errors
 
 def test_change_password_success():
     
@@ -56,9 +56,9 @@ def test_passwords_blank():
     passed, errors = controller.change_password('', '', '')
     
     assert not passed
-    assert constants.NEW_PASSWORD_BLANK in errors, errors
-    assert constants.CONFIRM_PASSWORD_BLANK in errors, errors
-    assert constants.PASSWORD_BLANK in errors, errors
+    assert constants.USER_MESSAGES['new_password_blank'] in errors, errors
+    assert constants.USER_MESSAGES['confirm_password_blank'] in errors, errors
+    assert constants.USER_MESSAGES['password_blank'] in errors, errors
 
 def test_get_profile_image_none():
     
@@ -69,14 +69,14 @@ def test_link_facebook_profile_missing_facebook_id():
     passed, errors = controller.link_facebook_profile('', 'bogus_access_token')
     
     assert not passed
-    assert constants.FACEBOOK_ID_MISSING in errors, errors
+    assert constants.USER_MESSAGES['facebook_id_missing'] in errors, errors
 
 def test_link_facebook_profile_missing_access_token():
     
     passed, errors = controller.link_facebook_profile('bogus_facebook_id', None)
     
     assert not passed
-    assert constants.FACEBOOK_ACCESS_TOKEN_MISSING in errors, errors
+    assert constants.USER_MESSAGES['facebook_access_token_missing'] in errors, errors
 
 def test_link_facebook_profile_success():
     
@@ -94,7 +94,7 @@ def test_link_twitter_profile_missing_screen_name():
     passed, errors = controller.link_twitter_profile(None)
     
     assert not passed
-    assert constants.TWITTER_SCREEN_NAME_MISSING in errors, errors
+    assert constants.USER_MESSAGES['twitter_screen_name_missing'] in errors, errors
 
 def test_link_twitter_profile_success():
     
@@ -127,7 +127,7 @@ def test_email_opt_in_missing_status():
     passed, errors = controller.change_email_opt_in(None)
     
     assert not passed
-    assert constants.OPT_IN_STATUS_MISSING in errors, errors
+    assert constants.USER_MESSAGES['opt_in_status_missing'] in errors, errors
 
 def test_email_opt_in_success():
     

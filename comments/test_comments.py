@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 from models import Comment, CommentFlag
 from metalayercore.dashboards.models import Dashboard, DashboardTemplate
 
-test_user = test_comment = test_dashboard = test_template = controller = None
+test_user = test_comment = test_dashboard = test_template = None
 
 def setup():
     
-    global test_user, test_comment, test_dashboard, test_template, controller
+    global test_user, test_comment, test_dashboard, test_template
     
     test_user = User.objects.create_user('todd.mcneal.test1@gmail.com', 'todd.mcneal.test1@gmail.com', 'password')
     test_template = DashboardTemplate.AllForUser(test_user)[0]
@@ -18,23 +18,6 @@ def setup():
     test_dashboard.save()
     test_comment = Comment(user=test_user, comment='test_comment', insight=test_dashboard)
     test_comment.save()
-    controller = CommentsController(test_comment)
-
-def test_flag_inappropriate_duplicate_flag():
-    
-    flagging_user = User.objects.create_user('todd.mcneal.test2@gmail.com', 'todd.mcneal.test2@gmail.com', 'password')
-    
-    test = []
-    
-    success, errors = controller.flag_inappropriate(flagging_user)
-    
-    if not success:
-        assert False, errors
-    
-    success, errors = controller.flag_inappropriate(flagging_user)
-    
-    if success:
-        assert False, 'should have flagged this as a duplicate'
 
 def test_retrieve_comments_no_comments():
     
@@ -62,6 +45,52 @@ def test_write_comment_success():
     success, errors = CommentsController.CreateComment(test_user, test_dashboard, 'my_test_comment')
     
     assert success
+
+def test_profanity_1():
+    
+    result = CommentsController._filter_profanity('shit')
+    
+    assert result == '****', result
+
+def test_profanity_2():
+    
+    result = CommentsController._filter_profanity('ass')
+    
+    assert result == '***', result
+
+def test_profanity_3():
+    
+    result = CommentsController._filter_profanity('test test ass and test')
+    
+    assert result == 'test test *** and test', result
+
+def test_profanity_preserve_spaces_1():
+    
+    result = CommentsController._filter_profanity('test1 -    test 2')
+    
+    assert result == 'test1 -    test 2', result
+
+def test_profanity_preserve_spaces_2():
+    
+    result = CommentsController._filter_profanity('test1 -    fuck --  test 2')
+    
+    assert result == 'test1 -    **** --  test 2', result
+
+def test_flag_inappropriate_duplicate_flag():
+    
+    flagging_user = User.objects.create_user('todd.mcneal.test2@gmail.com', 'todd.mcneal.test2@gmail.com', 'password')
+    
+    test = []
+    
+    success, errors = CommentsController.FlagInappropriate(test_comment, flagging_user)
+    
+    if not success:
+        assert False, errors
+    
+    success, errors = CommentsController.FlagInappropriate(test_comment, flagging_user)
+    
+    if success:
+        assert False, 'should have flagged this as a duplicate'
 
 def teardown():
     pass
