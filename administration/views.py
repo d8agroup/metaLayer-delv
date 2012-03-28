@@ -6,6 +6,7 @@ from django.template.context import RequestContext
 from administration.utils import staff_member_required, _base_template_data, safe_extract_user_profile
 from administration.utils import dashboard_is_using_action, dashboard_is_using_data_point, dashboard_is_using_visualization
 from metalayercore.dashboards.models import Dashboard
+from userprofiles.models import UserProfile
 
 
 @staff_member_required
@@ -67,6 +68,7 @@ def users(request):
 
     return render_to_response('administration/users.html', template_data, context_instance=RequestContext(request))
 
+@staff_member_required
 def insights(request):
     def filter_by_past(dbs, start, end):
         return [d for d in dbs if
@@ -223,3 +225,19 @@ def insights(request):
 
 
     return render_to_response('administration/insights.html', template_data, context_instance=RequestContext(request))
+
+@staff_member_required
+def emaillists(request):
+    ups = UserProfile.objects.filter(registration_status='APPROVED')
+    registered_users = []
+    for up in ups:
+        try:
+            registered_users.append(up.user)
+        except User.DoesNotExist:
+            pass
+    registered_users = ', '.join([u.username for u in registered_users])
+    return render_to_response(
+        'administration/emaillists.html',
+        { 'registered_users':registered_users },
+        context_instance=RequestContext(request)
+    )

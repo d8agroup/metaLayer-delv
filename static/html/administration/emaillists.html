@@ -1,0 +1,12 @@
+{% extends 'administration/base.html' %}
+
+{% block admin_page %}
+    <h1>Email Lists</h1>
+    <div class="admin_container">
+        <h2>Currently Active (let in) users</h2>
+        <div class="admin_container">
+            <h3>Email Addresses</h3>
+            <textarea cols="90" rows="10">{{ registered_users }}</textarea>
+        </div>
+    </div>
+{% endblock %}

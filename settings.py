@@ -456,5 +456,5 @@ if DEBUG:
     #INSTALLED_APPS += ('debug_toolbar',)
     #MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
     #DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False, }
-    #ROOT_URLCONF = 'dashboard.urls_admin'
+    ROOT_URLCONF = 'dashboard.urls_admin'
     pass
