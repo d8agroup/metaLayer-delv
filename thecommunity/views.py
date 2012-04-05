@@ -1,6 +1,7 @@
 from random import randint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
@@ -13,6 +14,7 @@ from comments.controllers import CommentsController
 from invites.controllers import InviteController
 from logger import Logger
 from userprofiles.controllers import UserController
+from userprofiles.models import UserProfile
 from utils import JSONResponse, serialize_to_json, my_import
 
 def _base_template_data(request):
@@ -51,6 +53,8 @@ def user_home(request, user_name):
     template_data['trending_insights_2'] = trending_insights[3:6]
     template_data['trending_insights_3'] = trending_insights[6:9]
     template_data['my_activity'] = DashboardsController(user).get_saved_dashboards(20)
+    template_data['is_following'] = request.user.profile.is_following(user.profile)
+    
     return render_to_response(
         'thecommunity/profile_page/profile_page.html',
         template_data,
@@ -249,6 +253,39 @@ def invite(request):
         context_instance=RequestContext(request)
     )
 
+@login_required(login_url='/')
+@csrf_exempt
+def follow_user(request):
+    
+    if request.method != 'POST':
+        response = JSONResponse({'errors':[constants.USER_MESSAGES['method_not_supported']]})
+        response.status_code = 500
+        return response
+    
+    user_id = request.POST.get('follow_user')
+    
+    if not user_id:
+        response = JSONResponse({'errors':[constants.USER_MESSAGES['user_not_supplied']]})
+        response.status_code = 500
+        return response
+    
+    try:
+        user = User.objects.get(id=user_id)
+        user_profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        response = JSONResponse({'errors':[constants.USER_MESSAGES['user_does_not_exist']]})
+        response.status_code = 500
+        return response
+    
+    controller = UserController(request.user)
+    passed, errors = controller.follow_user(user_profile)
+    
+    if not passed:
+        response = JSONResponse({'errors':errors})
+        response.status_code = 500
+        return response
+    
+    return JSONResponse({'status':'OK'})
 
 @login_required(login_url='/')
 def change_password(request):

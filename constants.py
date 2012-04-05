@@ -29,5 +29,12 @@ USER_MESSAGES = {
     'twitter_screen_name_missing':'Twitter screen name is missing from request',
     
     # user options
-    'opt_in_status_missing':'Opt-in status is missing from request'
+    'opt_in_status_missing':'Opt-in status is missing from request',
+    
+    # follow user
+    'user_not_supplied': 'User ID has not been supplied in request.',
+    'already_following_user': 'You are already following this user.',
+    
+    # generic errors
+    'method_not_supported':'Method not supported',
 }

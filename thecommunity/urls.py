@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'restricted_access/with_code$', no_access_with_code),
     url(r'welcome$', login_or_register),
     url(r'logout', logout),
+    url(r'follow_user$', follow_user),
     url(r'password_reset$', password_reset,
         {   
             'template_name': 'thecommunity/password_reset/password_reset_form.html', 

@@ -138,10 +138,13 @@ ul.subheader_list li { float: none; background: none repeat scroll 0 0 transpare
 section{ width:872px; padding:7px 0 0 10px; margin:0px auto; min-height: 500px;}
 aside{ width:333px; float:left; }
 .left{ width:310px; }
-.left_top { width:310px; padding-bottom:20px; background-color:#FFF; height:80px; padding:10px 0 10px;}
+.left_top { width:310px; padding-bottom:20px; background-color:#FFF; min-height:80px; padding:10px 0 10px;}
 .left_top .profile_image_container { float:left; margin:0 10px; }
-.left_top h2 { color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:10px 0; margin-bottom:7px; }
+.left_top h2 { color:#333; font-family:Arial, Helvetica, sans-serif; font-size:15px; padding:10px 0; margin-bottom:7px; overflow: hidden; }
 .left_top span{ color:#7e7d7d; font-family:Arial, Helvetica, sans-serif; font-size:12px; padding:0; }
+.left_top .button_bar {  padding-top:1em; padding-bottom:.5em; clear:both; margin-left:14px; }
+.left_top .button_bar .ui-button-text { font-size: 12px; }
+.left_top .following { color: #999; font-weight: bold; }
 .usr_info{ background:url(/static/images/thecommunity/user_info_bg.jpg) top center repeat-x; height:95px; width:290px; margin:24px 0 0 10px; }
 .usr_info ul{ }
 .usr_info ul li{ background:url(/static/images/thecommunity/user_info_nav_sep.jpg) center right no-repeat; display:inline; float:left; padding-left:12px; padding-right:10px; }

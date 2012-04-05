@@ -208,6 +208,24 @@ class UserController(object):
         logout(request)
         Logger.Info('%s - UserController.logout_user - finished' % __name__)
         return
+    
+    def follow_user(self, user_to_be_followed):
+        Logger.Info('%s - UserController.follow_user - started' % __name__)
+        Logger.Debug('%s - UserController.follow_user - started with user_to_be_followed:%r' % (__name__, user_to_be_followed))
+        
+        user_profile = UserProfile.objects.get(user=self.user)
+        if user_profile.is_following(user_to_be_followed):
+            return False, [constants.USER_MESSAGES['already_following_user']]
+        
+        user_profile.accounts_followed_by_user.append(user_to_be_followed.id)
+        
+        user_to_be_followed.followers.append(self.user.id)
+        
+        user_profile.save()
+        user_to_be_followed.save()
+        
+        Logger.Info('%s - UserController.follow_user - finished' % __name__)
+        return True, []
 
     def register_dashboard_template_use(self, dashboard_template_id):
         Logger.Info('%s - UserController.register_dashboard_template_use - started' % __name__)

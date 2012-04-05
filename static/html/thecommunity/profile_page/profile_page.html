@@ -37,7 +37,19 @@
                         {% endifequal %}
                     </div>
                     <h2>{{ profile_user.username }}</h2>
-                    <span><strong>{{ profile_user.profile.community_values.number_of_insights }}</strong> insights</span>
+                    <span><strong>{{ profile_user.profile.community_values.number_of_insights }}</strong> insights</span> <br />
+					<span><strong>{{ profile_user.followers|length }}</strong> followers</span> <br />
+					
+					<div class="button_bar">
+						{% ifequal profile_user user %}
+						{% else %}
+							{% if is_following %}
+								<span class="following">You are following this user</span>
+							{% else %}
+								<span class="button follow" data-user-id="{{ profile_user.id }}">Follow User</span>
+							{% endif %}
+						{% endifequal %}
+					</div>
                 </div><!--left_top ends -->
 
                 {% ifequal profile_user user %}

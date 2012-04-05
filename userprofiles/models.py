@@ -13,6 +13,19 @@ class UserProfile(models.Model):
     registration_code = models.TextField()
     registration_status = models.TextField()
     contact_options = DictField()
+    followers = ListField() # Accounts that are following the user
+    accounts_followed_by_user = ListField() # Accounts that the user is following.
+    
+    def is_following(self, user):
+        """
+        Returns true if the current user is following a user with the specified id.
+        
+        """
+        for id in self.accounts_followed_by_user:
+            if id == user.id:
+                return True
+                
+        return False
 
     def community_values(self):
         dc = DashboardsController(self.user)

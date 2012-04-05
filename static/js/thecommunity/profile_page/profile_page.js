@@ -93,6 +93,26 @@
             link.html('Hide Templates');
         }
     }
+    
+    var follow_click = function(event, button)
+    {
+          $.ajax({
+             type: "POST",
+             url: "/delv/follow_user",
+             data: "follow_user=" + button.data('user-id'),
+             dataType: "json",
+             success: function(response) {
+                button.parent().html('<span class="following">You are following this user</span>')
+             },
+             error: function(response) {
+                jsonResponse = $.parseJSON(response.responseText);
+                if(jsonResponse.errors)
+                  alert('Error occurred: ' + jsonResponse.errors);
+                else
+                  alert('An error occurred when attempting to follow user.');
+             }
+          });
+    }
 
     var init_social_buttons = function()
     {
@@ -123,5 +143,6 @@
         $('.like_link').click(function(event){like_click(event, $(this));});
         $('.comments_link').click(function(event){comments_click(event, $(this));});
         $('.show_templates').click(function(event){show_templates_click(event, $(this)); })
+        $('.follow').click(function(event){follow_click(event, $(this)); })
     };
 })(jQuery);
