@@ -87,8 +87,7 @@ TEMPLATE_DIRS = ( '/home/matt/code/metaLayer/dashboard/static/html/', )
 
 SOLR_CONFIG = {
     'default_page_size':100,
-    'solr_url':'http://50.57.164.216:8080/solr',
-    #'solr_url':'http://md.dev.01:8080/solr',
+    'solr_url':'http://dev.metalayer.com:8080/solr',
     'solr_params':'wt=json&facet=on&sort=time+desc&rows=100&facet.mincount=1',
     'solr_facets':{
         'source_display_name':{
