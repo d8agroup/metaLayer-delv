@@ -20,6 +20,7 @@
     <script type="text/javascript" src="/static/js/lib/jquery.templates.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/tipped.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane2.js"></script>
+    {% block no_follow %}<meta name="robots" content="noindex">{% endblock %}
     {% block js %}{% endblock %}
     {% block uncompressed_js %}{% endblock %}
     <!--[if lt IE 8]>
