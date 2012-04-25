@@ -14,7 +14,7 @@ SESSION_COOKIE_SECURE =False
 
 SITE_ID=u'4f421f767a9c1b687b00001d'
 
-SITE_HOST='metalayer.com'
+SITE_HOST='delv.co'
 
 SITE_HOST_SHORT = 'mlyr.co'
 
