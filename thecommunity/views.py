@@ -134,14 +134,17 @@ def link_twitter_profile(request):
 def community_page(request):
     template_data = _base_template_data(request)
 
-    cache_key = 'community_page_category_list'
-    cached_value = cache.get(cache_key, -1)
-    if cached_value == -1:
-        cached_value = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
-        cache.add(cache_key, cached_value, settings.LOW_LEVEL_CACHE_LIMITS['community_page_category_list'])
-    categories = cached_value
-    template_data['category_list_1'] = categories[:int(len(categories)/2)]
-    template_data['category_list_2'] = categories[int(len(categories)/2):]
+#    cache_key = 'community_page_category_list'
+#    cached_value = cache.get(cache_key, -1)
+#    if cached_value == -1:
+#        cached_value = [{'name': c, 'count': DashboardsController.GetCategoryCount(c)} for c in  settings.INSIGHT_CATEGORIES]
+#        cache.add(cache_key, cached_value, settings.LOW_LEVEL_CACHE_LIMITS['community_page_category_list'])
+#    categories = cached_value
+#    template_data['category_list_1'] = categories[:int(len(categories)/2)]
+#    template_data['category_list_2'] = categories[int(len(categories)/2):]
+
+    template_data['category_list_1'] = []
+    template_data['category_list_2'] = []
 
     top_insights = DashboardsController.GetTopDashboards(4)
     if top_insights:
