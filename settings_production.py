@@ -20,6 +20,7 @@ SITE_HOST_SHORT = 'mlyr.co'
 
 IMAGE_HOST = '50.57.203.80'
 
+#STATIC_HOST = '108.166.125.184'
 STATIC_HOST = SITE_HOST
 
 STATIC_ROOT = '/usr/local/metaLayer-dashboard/dashboard/static/'
@@ -54,20 +55,7 @@ SOLR_CONFIG = {
     'default_page_size':100,
     'solr_url':'http://108.166.104.151:8080/solr',
     'solr_params':'wt=json&facet=on&sort=time+desc&rows=100&facet.mincount=1',
-    'solr_facets':{
-        'source_display_name':{
-            'display_name':'Source',
-            'enabled':True,
-            },
-        'channel_type':{
-            'display_name':'Type',
-            'enabled':True,
-            },
-        'tags':{
-            'display_name':'Tags',
-            'enabled':True,
-            }
-    }
+    'solr_facets':{}
 }
 
 CHARGIFY_SETTINGS = {
