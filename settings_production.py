@@ -5,10 +5,12 @@ SITE_DOWN = False
 DEBUG = False
 
 #If admin deployment, enable admin urls
-import socket
-if socket.gethostbyname(socket.gethostname()) in ['50.57.128.82']:
-    ROOT_URLCONF = 'dashboard.urls_admin'
-    DEBUG = True
+#import socket
+#if socket.gethostbyname(socket.gethostname()) in ['50.57.128.82']:
+#    ROOT_URLCONF = 'dashboard.urls_admin'
+#    DEBUG = True
+
+ROOT_URLCONF = 'dashboard.urls_admin'
 
 SESSION_COOKIE_SECURE =False
 
@@ -18,7 +20,8 @@ SITE_HOST='delv.co'
 
 SITE_HOST_SHORT = 'mlyr.co'
 
-IMAGE_HOST = '50.57.203.80'
+#IMAGE_HOST = '50.57.203.80'
+IMAGE_HOST = SITE_HOST
 
 #STATIC_HOST = '108.166.125.184'
 STATIC_HOST = SITE_HOST
